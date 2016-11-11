@@ -4,8 +4,11 @@ var _hapi = require('hapi');
 
 var server = new _hapi.Server();
 
+console.log(process.env.PORT);
+
 server.connection({
-  port: 8000,
+  port: process.env.PORT || 8000,
+  host: '0.0.0.0',
   routes: {
     cors: true
   }
@@ -13,7 +16,7 @@ server.connection({
 
 server.route({
   method: 'GET',
-  path: '/',
+  path: '/api/test',
   handler: function handler(request, reply) {
     reply('Hello');
   }
