@@ -1,0 +1,15 @@
+{
+  "name": "webchat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^3.9.1",
+    "foreman": "^2.0.0",
+    "inert": "^4.0.2",
+    "isomorphic-fetch": "^2.2.1"
+  }
+}
