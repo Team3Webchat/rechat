@@ -3,7 +3,7 @@ import { Server } from 'hapi'
 const server = new Server()
 
 server.connection({
-  port: 8000,
+  port: process.env.PORT || 8000,
   host: '0.0.0.0',
   routes: {
     cors: true,
