@@ -16,7 +16,13 @@ server.route({
   method: 'GET',
   path: '/api/test',
   handler: (request, reply) => {
-    reply('Hello')
+    const dummyData = {
+      name: 'WebChat',
+      customer: 'Lars',
+      institution: 'Linneaus University',
+    }
+
+    reply(dummyData)
   }
 })
 
