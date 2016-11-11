@@ -2,6 +2,8 @@ import { Server } from 'hapi'
 
 const server = new Server()
 
+console.log(process.env.PORT)
+
 server.connection({
   port: process.env.PORT || 8000,
   host: '0.0.0.0',
