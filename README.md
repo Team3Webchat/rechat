@@ -2,13 +2,17 @@
 
 ## Setup
 * Clone the repository `git clone https://github.com/Team3Webchat/rechat.git`
-* Make sure all dependencies are installed
+* Make sure all dependencies are installed  
 ```sh
-  npm install
-  cd server
-  npm install
-  cd ../ui
-  npm install
+# If on windows
+npm install
+cd server
+npm install
+cd ../ui
+npm install
+
+# If on linux (should work on mac aswell)
+./tools/install.sh n # replace n with y to use yarn instead of npm
 ```
 * Setup database todo
 * Seed database todo
