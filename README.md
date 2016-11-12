@@ -17,6 +17,14 @@ npm install
 * Setup database todo
 * Seed database todo
 
+Some global npm packages needs to be installed to get eslint
+up and running, this is due to the nature of create-react-app and how
+it hides the eslint dependency. Just copy paste the row below into your terminal
+
+```sh
+npm install -g eslint-config-react-app@0.3.0 eslint@3.8.1 babel-eslint@7.0.0 eslint-plugin-react@6.4.1 eslint-plugin-import@2.0.1 eslint-plugin-jsx-a11y@2.2.3 eslint-plugin-flowtype@2.21.0
+```
+
 ## Running 
 ### Server
 Be sure to be in the server directory

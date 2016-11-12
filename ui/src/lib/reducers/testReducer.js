@@ -2,7 +2,7 @@ import { REQUEST_TEST_DATA, RECEIVE_TEST_DATA } from '../actions'
 
 const initialState = {
   isFetching: false,
-  data: null
+  data: null,
 }
 
 function testReducer(state = initialState, action) {
@@ -16,7 +16,7 @@ function testReducer(state = initialState, action) {
       return {
         ...initialState,
         isFetching: false,
-        data: action.payload
+        data: action.payload,
       }
     default:
       return state

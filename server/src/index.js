@@ -1,18 +1,9 @@
-import http from 'http'
-import express from 'express'
-import cors from 'cors'
-import bodyParser from 'body-parser'
+import { startServer } from './api'
 
-const app = express()
-app.server = http.createServer()
+// make blubird the default promise,
 
-// 3rd party middlewares
-const jsonParser = bodyParser.json()
+Promise = require('bluebird') // eslint-disable-line no-global-assign
 
-app.use(cors())
-app.use(jsonParser)
+startServer()
 
-
-app.server.listen(process.env.PORT || 8000)
-console.log(`Started on port ${app.server.address().port}`)
 
