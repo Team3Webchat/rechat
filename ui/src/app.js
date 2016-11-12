@@ -10,16 +10,6 @@ import routes from './routes'
 import './app.css';
 
 class App extends Component {
-  constructor() {
-    super()
-    fetch('http://localhost:8000/api/test')
-      .then(response => {
-        return response.json()
-      })
-      .then(json => {
-        console.log(json)
-      })
-  }
   render() {
     return (
       <div className="App">
