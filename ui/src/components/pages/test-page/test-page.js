@@ -5,6 +5,12 @@ import { fetchTestData } from '../../../lib/actions'
 
 import './style.css'
 
+/**
+ * This is an example container component
+ * 
+ * @class TestPage
+ * @extends {Component}
+ */
 class TestPage extends Component {
 
   componentDidMount() {
@@ -29,8 +35,6 @@ class TestPage extends Component {
     )
   }
 }
-
-
 
 const mapStateToProps = state => {
   return  {

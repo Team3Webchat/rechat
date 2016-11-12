@@ -7,13 +7,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1"
+    "isomorphic-fetch": "^2.2.1",
+    "pg": "^6.1.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.25.0"
   },
   "engines": {
     "node": "6.x.x"
   },
   "devDependencies": {
-    "eslint": "3.5.0",
-    "eslint-plugin-import": "^2.2.0"
+    "babel-eslint": "^6.1.2",
+    "eslint": "^3.5.0",
+    "eslint-config-react-app": "^0.3.0",
+    "eslint-plugin-flowtype": "^2.18.1",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^5.2.2"
   }
 }

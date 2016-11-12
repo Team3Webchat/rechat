@@ -14,12 +14,19 @@ export function receiveTestData(payload) {
   }
 }
 
-export function fetchTestData() {
-  return function(dispatch) {
-    dispatch(requestTestData())
 
-    return fetch('http://localhost:8000/api/health')
-      .then(response => response.json())
-      .then(json => dispatch(receiveTestData(json)))
+export function fetchTestData() {
+  return async function(dispatch) {
+    dispatch(requestTestData())
+    try {
+      const res = await fetch('http://localhost:8000/api/health')
+      const data = await res.json()
+
+      dispatch(receiveTestData(data))
+    } catch (e) {
+      console.log('fail')
+    }
+    
+
   }
 }

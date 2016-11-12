@@ -4,7 +4,7 @@
     "semi": ["error", "never"],
     "quotes": ["error", "single"],
     "comma-dangle": ["error", "always-multiline"],
-    "import/no-webpack-loader-syntax": 2,
+    "import/no-webpack-loader-syntax": 0,
     "react/no-danger-with-children": 0,
     "react/style-prop-object": 0
   }
