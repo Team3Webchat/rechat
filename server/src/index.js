@@ -1,35 +1,18 @@
-import { Server } from 'hapi'
+import http from 'http'
+import express from 'express'
+import cors from 'cors'
+import bodyParser from 'body-parser'
 
-const server = new Server()
+const app = express()
+app.server = http.createServer()
 
-console.log(process.env.PORT)
+// 3rd party middlewares
+const jsonParser = bodyParser.json()
 
-server.connection({
-  port: process.env.PORT || 8000,
-  host: '0.0.0.0',
-  routes: {
-    cors: true,
-    }
-})
+app.use(cors());
+app.use(jsonParser)
 
-server.route({
-  method: 'GET',
-  path: '/api/test',
-  handler: (request, reply) => {
-    const dummyData = {
-      name: 'WebChat',
-      customer: 'Lars',
-      institution: 'Linneaus University',
-    }
 
-    reply(dummyData)
-  }
-})
-
-server.start((err) => {
-  if (err)
-    throw err
-
-  console.log(`Server running at ${server.info.uri}`)
-})
+app.server.listen(process.env.PORT || 8000)
+console.log(`Started on port ${app.server.address().port}`)
 
