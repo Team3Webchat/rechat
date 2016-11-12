@@ -9,7 +9,7 @@ app.server = http.createServer()
 // 3rd party middlewares
 const jsonParser = bodyParser.json()
 
-app.use(cors());
+app.use(cors())
 app.use(jsonParser)
 
 

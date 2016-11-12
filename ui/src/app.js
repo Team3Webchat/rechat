@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Router, Route, IndexRoute, hashHistory } from 'react-router'
+import React, { Component } from 'react'
+import { Router } from 'react-router'
 import { Provider } from 'react-redux'
 import store, { history } from './lib/store'
 
@@ -7,7 +7,7 @@ import routes from './routes'
 
 
 
-import './app.css';
+import './app.css'
 
 class App extends Component {
   render() {
@@ -19,8 +19,8 @@ class App extends Component {
           </Router>
         </Provider>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

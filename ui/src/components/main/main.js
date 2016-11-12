@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { Layout } from 'react-mdl'
 import { Link } from 'react-router'
 
