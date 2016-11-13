@@ -24,14 +24,15 @@ async function createServer() {
   app.use(passport.initialize())
   
 
+
   // logger
   app.use(expressWinston.logger({
     transports: [
       new winston.transports.Console({
-        json: true,
-        colorized: true,
+        formatter: ({level, message, meta}) => `${new Date().toTimeString()} ${level}: ${message}`,
       }),
     ],
+
   }))
 
   // bootstrap routes
@@ -42,7 +43,7 @@ async function createServer() {
     transports: [
       new winston.transports.Console({
         json: true,
-        colorized: true,
+        colorize: true,
       }),
     ],
   }))
