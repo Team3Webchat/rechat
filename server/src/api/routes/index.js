@@ -1,6 +1,8 @@
 import { Router } from 'express'
 
-const router = new Router()
+import authRouter from './auth'
+
+const router = Router()
 
 router.route('/health')
   .get((req, res) => {
@@ -8,5 +10,7 @@ router.route('/health')
       status: 'OK',
     })
   })
+  
+router.use(authRouter)
 
 export default router

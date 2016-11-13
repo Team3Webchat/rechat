@@ -7,7 +7,6 @@ import helmet from 'helmet'
 import httpStatus from 'http-status'
 import winston from 'winston'
 import expressWinston from 'express-winston'
-import jwt from 'jsonwebtoken'
 
 import routes from './routes'
 import passport from './../lib/auth'
@@ -42,38 +41,7 @@ function createServer() {
    * TEST CODE REMOVE
    */
   // First login to receive a token
-  const secret = 'supersecret'
-  app.post('/login', function(req, res, next) {
-    passport.authenticate('local', function(err, user, info) {
-      if (err) return next(err)
-      if (!user) {
-        return res.status(401).json({ status: 'error', code: 'unauthorized' })
-      } else {
-        return res.json({ token: jwt.sign({id: user.id}, secret) })
-      }
-    })(req, res, next)
-  })
-
-  // All routes from this point on need to authenticate with bearer:
-  // Authorization: Bearer <token here>
-  app.all('*', function(req, res, next) {
-    passport.authenticate('bearer', function(err, user, info) {
-      if (err) return next(err)
-      if (user) {
-        req.user = user
-        return next()
-      } else {
-        return res.status(401).json({ status: 'error', code: 'unauthorized' })
-      }
-    })(req, res, next)
-  })
-
-  app.get('/message', function(req, res) {
-    return res.json({
-      status: 'ok',
-      message: 'Congratulations ' + req.user.username + '. You have a token.',
-    })
-  })
+  
 
 
   // error logger, should be after routes
