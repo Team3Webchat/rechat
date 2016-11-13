@@ -9,9 +9,10 @@ import winston from 'winston'
 import expressWinston from 'express-winston'
 
 import routes from './routes'
-import passport from './../lib/auth'
+import passport from '../lib/auth'
+import { connectToDb } from '../lib/db'
 
-function createServer() {
+async function createServer() {
 
   const app = express()
 
@@ -36,14 +37,6 @@ function createServer() {
   // bootstrap routes
   app.use('/api', routes)
 
-  /**
-   * 
-   * TEST CODE REMOVE
-   */
-  // First login to receive a token
-  
-
-
   // error logger, should be after routes
   app.use(expressWinston.errorLogger({
     transports: [
@@ -53,6 +46,8 @@ function createServer() {
       }),
     ],
   }))
+
+  await connectToDb()
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
@@ -66,7 +61,7 @@ function createServer() {
 
 
 export async function startServer() {
-  const server = createServer()  
+  const server = await createServer()  
   const port = process.env.PORT || 8000
   
   await server.listen(port)
