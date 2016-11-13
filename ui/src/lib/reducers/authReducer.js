@@ -1,8 +1,8 @@
-
+import jwtDecode from 'jwt-decode'
 
 import {
   LOGIN_USER_REQUEST,
-  LOGIN_USER_SUCESS,
+  LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
   LOGOUT_USER,
 } from '../actions/authActions'
@@ -15,21 +15,23 @@ const initialState = {
   statusText: null,
 }
 
-function authReducer(state = initialState, action) {
+function auth(state = initialState, action) {
   switch(action.type) {
     case LOGIN_USER_REQUEST:
       return {
         ...state,
         isAuthenticating: true,
       }
-    case LOGIN_USER_SUCESS:
+    case LOGIN_USER_SUCCESS:
+      const decoded = jwtDecode(action.payload.token)
+
       return {
         ...state,
         isAuthenticating: false,
         isAuthenticated: true,
-        username: action.payload.username,
+        username: decoded.username,
         token: action.payload.token,
-        statusText: `Welcome ${action.payload.username}`,
+        statusText: `Welcome ${decoded.username}`,
       }
     case LOGIN_USER_FAILURE: 
       return {
@@ -52,4 +54,4 @@ function authReducer(state = initialState, action) {
   }
 }
 
-export default authReducer
+export default auth
