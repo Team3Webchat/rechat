@@ -47,7 +47,7 @@ async function createServer() {
     ],
   }))
 
-  await connectToDb()
+  // await connectToDb()
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
