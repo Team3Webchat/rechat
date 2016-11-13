@@ -6,10 +6,19 @@ import store, { history } from './lib/store'
 import Main from './components/main/main'
 import TestPage from './components/pages/test-page/test-page'
 import TestPage2 from './components/pages/test-page-2/test-page-2'
+import SignInContainer from './components/pages/sign-in/sign-in-container'
+
+import { loginUserSuccess } from './lib/actions/authActions'
+
+import './app.css'
+
+const token = localStorage.getItem('token')
+// if (token) {
+//   store.dispatch(loginUserSuccess(token))
+// }
 
 function requireAuth(nextState, replace) {
-  console.log('React Router onEnter callback')
-  if (true) {
+  if (!store.getState().auth.isAuthenticated) {
     replace({
       pathname: '/sign-in',
       state: {
@@ -19,7 +28,13 @@ function requireAuth(nextState, replace) {
   }
 }
 
-import './app.css'
+function doesNotRequireAuth(nextState, replace) {
+  if (store.getState().auth.isAuthenticated) {
+    replace({
+      pathname: '/',
+    })
+  }
+}
 
 class App extends Component {
   render() {
@@ -27,7 +42,7 @@ class App extends Component {
       <div className="App">
         <Provider store={store}>
           <Router history={history}>
-            <Route path='/sign-in' />
+            <Route path='/sign-in' component={SignInContainer} onEnter={doesNotRequireAuth}/>
             <Route path='/' component={Main} onEnter={requireAuth}>
               <IndexRedirect to="testpage" />
               <Route path='testpage' component={TestPage} />

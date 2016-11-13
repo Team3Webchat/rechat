@@ -20,7 +20,6 @@ const store = createStore(
   )
 )
 
-store.dispatch(loginUser('test', 'test'))
 
 export const history = syncHistoryWithStore(hashHistory, store)
 export default store

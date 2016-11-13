@@ -11,13 +11,13 @@ export function loginUserRequest() {
   }
 }
 
-export function loginUserSuccess(user) {
-  localStorage.setItem('token', user.token) // move this elswhere later
+export function loginUserSuccess(token) {
+  console.log("loginUserSucess()")
+  localStorage.setItem('token', token) // move this elswhere later
   return {
     type: LOGIN_USER_SUCCESS,
     payload: {
-      username: user.username,
-      token: user.token,
+      token,
     },
   }
 }
@@ -49,7 +49,7 @@ export function loginUser(username, password) {
           username,
           password,
         }),
-        /*credentials: 'include', */
+        /*credentials: 'include', */ // Server has wildcard for cors atm
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -58,11 +58,7 @@ export function loginUser(username, password) {
       const json = await res.json()
       const decodedToken = jwtDecode(json.token)
       console.log(decodedToken)
-      const payload = {
-        username: decodedToken.username,
-        token: json.token,
-      }
-      dispatch(loginUserSuccess(payload))
+      dispatch(loginUserSuccess(json.token))
     } catch(e) {
       dispatch(loginUserFailure({
         response: {
