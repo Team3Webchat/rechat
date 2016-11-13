@@ -1,4 +1,9 @@
 # Rechat
+Make sure to use an editor that has an eslint extension, so we can enforce a styleguide
+on the code. 
+Recommended editors:  
+* [VS Code](https://code.visualstudio.com/)  
+* [Atom](https://atom.io/)
 
 ## Setup
 * Clone the repository `git clone https://github.com/Team3Webchat/rechat.git`
