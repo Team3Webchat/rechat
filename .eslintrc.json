@@ -7,6 +7,7 @@
     "indent": ["error", 2],
     "import/no-webpack-loader-syntax": 0,
     "react/no-danger-with-children": 0,
-    "react/style-prop-object": 0
+    "react/style-prop-object": 0,
+    "brace-style":["error"]
   }
 }

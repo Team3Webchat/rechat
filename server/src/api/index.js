@@ -20,9 +20,9 @@ async function createServer() {
   app.use(cors())
   app.use(bodyParser.json())
   app.use(logger('dev'))
-  app.use(helmet()) 
+  app.use(helmet())
   app.use(passport.initialize())
-  
+
 
   // logger
   app.use(expressWinston.logger({
@@ -61,9 +61,9 @@ async function createServer() {
 
 
 export async function startServer() {
-  const server = await createServer()  
+  const server = await createServer()
   const port = process.env.PORT || 8000
-  
+
   await server.listen(port)
-  console.log(`Started on port ${server.address().port}`)  
+  console.log(`Started on port ${server.address().port}`)
 }
