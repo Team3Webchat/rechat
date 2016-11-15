@@ -1,7 +1,8 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 import { push } from 'react-router-redux'
-
+import { Textfield, Button, Spinner } from 'react-mdl'
 import { loginUser } from '../../../lib/actions/authActions'
 
 import SignInForm from './sign-in-form'
@@ -28,7 +29,7 @@ class SignInContainer extends Component {
     e.preventDefault()
     const { username, password } = this.state
     const { loginUser } = this.props
-    
+
     loginUser(username, password)
   }
 
@@ -52,6 +53,7 @@ class SignInContainer extends Component {
   render() {
     console.log('render() this.state:', this.state.isAuthenticating)
     return (
+      <div>
       <SignInForm
         onChange={this.handleChange}
         onSubmit={this.handleSubmit}
@@ -59,14 +61,26 @@ class SignInContainer extends Component {
         password={this.state.password}
         isAuthenticating={this.state.isAuthenticating}
       />
+    <Link to="/register">
+      <Button
+          primary
+          raised
+          ripple
+          type='submit'
+        >
+          Register
+        </Button>
+
+        </Link>
+    </div>
     )
-  } 
+  }
 }
 
 const mapStateToProps = state => {
   console.log(state)
   return {
-    nextPathname: state.routing.locationBeforeTransitions.state.nextPathname || null, 
+    nextPathname: state.routing.locationBeforeTransitions.state.nextPathname || null,
     isAuthenticated: state.auth.isAuthenticated,
     isAuthenticating: state.auth.isAuthenticating,
     message: state.auth.statusText,
