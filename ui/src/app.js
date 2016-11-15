@@ -29,16 +29,16 @@ function requireAuth(nextState, replace) {
   }
 }
 
-// function register(nextState, replace) {
-//   if (!store.getState().auth.isAuthenticated) {
-//     replace({
-//       pathname: '/register',
-//       state: {
-//         nextPathname: nextState.location.pathname,
-//       },
-//     })
-//   }
-// }
+function register(nextState, replace) {
+  if (!store.getState().auth.isAuthenticated) {
+    replace({
+      pathname: '/register',
+      state: {
+        nextPathname: nextState.location.pathname,
+      },
+    })
+  }
+}
 
 function doesNotRequireAuth(nextState, replace) {
   if (store.getState().auth.isAuthenticated) {

@@ -1,14 +1,70 @@
-import React, { PropTypes } from 'react'
+import React, { PropTypes, Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+import { push } from 'react-router-redux'
 import { Textfield, Button, Spinner } from 'react-mdl'
 import RegisterForm from './register-form'
-const RegisterContainer = (props) => {
-  //const { onChange, onSubmit, username, password, isAuthenticating } = props
+  class RegisterContainer extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        username: '',
+        password: '',
+        email: '',
+        isAuthenticating: false,
+      }
+    }
+    render() {
 
-  return (
-    <div>
-      <RegisterForm />
+      return (
+        <div>
+      <RegisterForm
+        onChange={this.handleChange}
+        onSubmit={this.handleSubmit}
+        username={this.state.username}
+        password={this.state.password}
+        email={this.state.email}
+        isAuthenticating={this.state.isAuthenticating}
+      />
+    <Link to="/sign-in">
+      <Button
+          primary
+          raised
+          ripple
+          type='submit'
+        >
+          Back To Login Page
+        </Button>
+
+        </Link>
     </div>
-  )
+      )
+    }
+  }
+
+const mapStateToProps = state => {
+  console.log(state)
+  return {
+    nextPathname: state.routing.locationBeforeTransitions.state.nextPathname || null,
+    isAuthenticated: state.auth.isAuthenticated,
+    isAuthenticating: state.auth.isAuthenticating,
+    message: state.auth.statusText,
+  }
 }
 
+const mapDispatchToProps = dispatch => {
+  return {
+    // createUser: (username, password, email) => {
+    //   dispatch(createUser(username, password, email))
+    // },
+    redirectOnRegister: (nextPathname) => {
+      dispatch(push(nextPathname))
+    },
+  }
+}
+
+// export default connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(RegisterContainer)
 export default RegisterContainer
