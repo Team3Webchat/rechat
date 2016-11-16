@@ -10,7 +10,9 @@ import expressWinston from 'express-winston'
 
 import routes from './routes'
 import passport from '../lib/auth'
-import { connectToDb } from '../lib/db'
+
+import models, { sequelize } from './models'
+
 
 async function createServer() {
 
@@ -48,7 +50,16 @@ async function createServer() {
     ],
   }))
 
-  // await connectToDb()
+  console.log(models.user)
+
+  models.user.create({
+    username: 'Hej',
+    password: 'Hej123',
+  })
+  .then(data => {
+    console.log(data)
+  })
+
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {

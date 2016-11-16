@@ -4,60 +4,61 @@ import { Link } from 'react-router'
 import { push } from 'react-router-redux'
 import { Textfield, Button, Spinner } from 'react-mdl'
 import RegisterForm from './register-form'
-  class RegisterContainer extends Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-        username: '',
-        password: '',
-        email: '',
-        isAuthenticating: false,
-      }
-    }
 
-    handleChange = key => {
-      return function(e) {
-        const state = {}
-        state[key] = e.target.value
-        this.setState(state)
-      }.bind(this)
-    }
-
-    handleSubmit = e => {
-      e.preventDefault()
-      const { username, password, email } = this.state
-      console.log(username, password, email)
-
-     
-    }
-
-    render() {
-
-      return (
-        <div>
-      <RegisterForm
-        onChange={this.handleChange}
-        onSubmit={this.handleSubmit}
-        username={this.state.username}
-        password={this.state.password}
-        email={this.state.email}
-        isAuthenticating={this.state.isAuthenticating}
-      />
-    <Link to="/sign-in">
-      <Button
-          primary
-          raised
-          ripple
-          type='submit'
-        >
-          Back To Login Page
-        </Button>
-
-        </Link>
-    </div>
-      )
+class RegisterContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: '',
+      email: '',
+      isAuthenticating: false,
     }
   }
+
+  handleChange = key => {
+    return function(e) {
+      const state = {}
+      state[key] = e.target.value
+      this.setState(state)
+    }.bind(this)
+  }
+
+  handleSubmit = e => {
+    e.preventDefault()
+    const { username, password, email } = this.state
+    console.log(username, password, email)
+
+
+  }
+
+  render() {
+
+    return (
+      <div>
+    <RegisterForm
+      onChange={this.handleChange}
+      onSubmit={this.handleSubmit}
+      username={this.state.username}
+      password={this.state.password}
+      email={this.state.email}
+      isAuthenticating={this.state.isAuthenticating}
+    />
+  <Link to="/sign-in">
+    <Button
+        primary
+        raised
+        ripple
+        type='submit'
+      >
+        Back To Login Page
+      </Button>
+
+      </Link>
+  </div>
+    )
+  }
+}
 
 const mapStateToProps = state => {
   console.log(state)

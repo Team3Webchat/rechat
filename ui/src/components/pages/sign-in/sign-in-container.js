@@ -70,8 +70,7 @@ class SignInContainer extends Component {
         >
           Register
         </Button>
-
-        </Link>
+      </Link>
     </div>
     )
   }
