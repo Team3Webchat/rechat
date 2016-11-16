@@ -1,6 +1,0 @@
-{
-  "development":  {
-    "url": "postgres://hvceryny:h1qEbp_GdSk33ArYSIk0c5EFvNRvv8vG@horton.elephantsql.com:5432/hvceryny",
-    "dialect": "postgres"
-  }
-}

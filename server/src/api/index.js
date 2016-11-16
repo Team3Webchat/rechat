@@ -10,8 +10,7 @@ import expressWinston from 'express-winston'
 
 import routes from './routes'
 import passport from '../lib/auth'
-
-import models, { sequelize } from './models'
+import { sequelize, user } from './models' 
 
 
 async function createServer() {
@@ -37,6 +36,8 @@ async function createServer() {
 
   }))
 
+  console.log(sequelize)
+
   // bootstrap routes
   app.use('/api', routes)
 
@@ -49,17 +50,6 @@ async function createServer() {
       }),
     ],
   }))
-
-  console.log(models.user)
-
-  models.user.create({
-    username: 'Hej',
-    password: 'Hej123',
-  })
-  .then(data => {
-    console.log(data)
-  })
-
 
   // catch 404 and forward to error handler
   app.use((req, res, next) => {

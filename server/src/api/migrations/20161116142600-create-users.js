@@ -10,22 +10,25 @@ module.exports = {
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
 
-    queryInterface.createTable('users', {
+    return queryInterface.createTable('users', {
       id: {
         type: Sequelize.UUID,
-        autoIncrement: true,
-        unique: true,
         primaryKey: true,
+        defaultValue: Sequelize.UUIDV1,
+        unique: true,
+        allowNull: false
       },
       username: {
         type: Sequelize.STRING,
         unique: true,
         notEmpty: true,
+        allowNull: false
       },
       password: {
         type: Sequelize.STRING,
-        min: 6,
-      },
+        notEmpty: true,
+        allowNull: false
+      }
     })
   },
 
@@ -37,6 +40,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-    queryInterface.dropTable('users')
+    return queryInterface.dropTable('users')
   }
 };
