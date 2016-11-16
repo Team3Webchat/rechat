@@ -1,4 +1,6 @@
-# Rechat
+# Rechat  
+**[Deployed site can be found here](https://team3webchat.github.io/rechat/)**  
+
 Make sure to use an editor that has an eslint extension, so we can enforce a styleguide
 on the code.
 Recommended editors:  
@@ -7,6 +9,7 @@ Recommended editors:
 
 ## Setup
 * Clone the repository `git clone https://github.com/Team3Webchat/rechat.git`
+* Make sure you are inside the newly created directory `cd rechat`
 * Make sure all dependencies are installed  
 ```sh
 # If on windows
