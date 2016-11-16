@@ -14,6 +14,23 @@ import RegisterForm from './register-form'
         isAuthenticating: false,
       }
     }
+
+    handleChange = key => {
+      return function(e) {
+        const state = {}
+        state[key] = e.target.value
+        this.setState(state)
+      }.bind(this)
+    }
+
+    handleSubmit = e => {
+      e.preventDefault()
+      const { username, password, email } = this.state
+      console.log(username, password, email)
+
+     
+    }
+
     render() {
 
       return (
