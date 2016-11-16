@@ -50,17 +50,6 @@ async function createServer() {
     ],
   }))
 
-  console.log(models.user)
-
-  models.user.create({
-    username: 'Hej',
-    password: 'Hej123',
-  })
-  .then(data => {
-    console.log(data)
-  })
-
-
   // catch 404 and forward to error handler
   app.use((req, res, next) => {
     const err = new Error('API not found', httpStatus.NOT_FOUND)
