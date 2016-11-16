@@ -10,8 +10,7 @@ import expressWinston from 'express-winston'
 
 import routes from './routes'
 import passport from '../lib/auth'
-
-import models, { sequelize } from './models'
+import { sequelize, user } from './models' 
 
 
 async function createServer() {
@@ -36,6 +35,8 @@ async function createServer() {
     ],
 
   }))
+
+  console.log(sequelize)
 
   // bootstrap routes
   app.use('/api', routes)
