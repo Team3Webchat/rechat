@@ -13,6 +13,7 @@ const RegisterForm = (props) => {
         label="Username"
         required
         value={username}
+        onChange={onChange('username')}
       />
       </div>
       <div>
@@ -20,6 +21,7 @@ const RegisterForm = (props) => {
         type="password"
         label="Password"
         required
+        onChange={onChange('password')}
         value={password}
         />
       </div>
@@ -29,6 +31,7 @@ const RegisterForm = (props) => {
         label="Email"
         required
         value={email}
+        onChange={onChange('email')}
         />
       </div>
       <div>
