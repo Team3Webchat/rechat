@@ -14,10 +14,12 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('users', [{
+    return queryInterface.bulkInsert('Users', [{
       id: uuid.v4(),
       username: 'user',
-      password: bcrypt.hashSync('password', bcrypt.genSaltSync(10))
+      password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {})
   },
 
@@ -30,6 +32,6 @@ module.exports = {
       return queryInterface.bulkDelete('Person', null, {});
     */
 
-    return queryInterface.bulkDelete('user', null, {})
+    return queryInterface.bulkDelete('Users', null, {})
   }
 };

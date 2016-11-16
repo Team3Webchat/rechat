@@ -36,8 +36,6 @@ async function createServer() {
 
   }))
 
-  console.log(sequelize)
-
   // bootstrap routes
   app.use('/api', routes)
 

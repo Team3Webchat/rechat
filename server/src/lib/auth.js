@@ -2,34 +2,32 @@ import jwt from 'jsonwebtoken'
 import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import BearerStrategy from 'passport-http-bearer'
+import Promise from 'bluebird'
+import bcrypt from 'bcrypt'
 
-// Just dummy data for now until a db is implemented
-const jwtSecret = 'supersecret'
-const users = [
-  { id: 0, username: 'test', password: 'test'},
-  { id: 1, username: 'tast', password: 'test'},
-  { id: 2, username: 'tyst', password: 'test'},
-  { id: 3, username: 'tysk', password: 'test'},
-]
+import models from '../api/models'
 
-const localCb = (username, password, cb) => {
-  const user = users.filter(u => 
-    u.username === username && 
-    u.password === password
-  )[0]
-  return cb(null, user ? user : false)
+const { User } = models
+
+Promise.promisifyAll(jwt)
+Promise.promisifyAll(bcrypt)
+
+const jwtSecret = 'supersecret' // TODO: super secret secret 
+
+async function localAuth(username, password, cb) {
+  const user = await User.findOne({ where: { username }})
+  const isCorrectPassword = await bcrypt.compareAsync(password, user.password)
+  return cb(null, isCorrectPassword ? user : false)
 }
 
-const bearerCb = (token, cb) => {
-  jwt.verify(token, jwtSecret, (err, decoded) => {
-    if (err) return cb(err)
-    const user = users[decoded.id]
-    return cb(null, user ? user : false)
-  })
+async function bearerAuth(token, cb) {
+  const decoded = await jwt.verifyAsync(token, jwtSecret)
+  const user = await User.findById(decoded.id)
+  return cb(null, user ? user : false)   
 }
 
-passport.use(new LocalStrategy(localCb))
-passport.use(new BearerStrategy(bearerCb))
+passport.use(new LocalStrategy(localAuth))
+passport.use(new BearerStrategy(bearerAuth))
 
 export function login(req, res, next) {
   passport.authenticate('local', (err, user, info) => {
@@ -37,8 +35,20 @@ export function login(req, res, next) {
       return next(err)
     if (!user) 
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
-    else 
-      return res.json({ token: jwt.sign({ id: user.id, username: user.username }, jwtSecret) })
+  
+    return res.json({ token: jwt.sign({ id: user.id, username: user.username }, jwtSecret) })
+  })(req, res, next)
+}
+
+export function authenticateToken(req, res, next) {
+  passport.authenticate('bearer', (err, user, info) => {
+    if (err)
+      return next(err)
+    if (!user)
+      return res.status(401).json({ status: 'error' , code: 'unauthorized'})
+
+    req.user = user
+    return next()
   })(req, res, next)
 }
 
