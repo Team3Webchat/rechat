@@ -1,14 +1,29 @@
 import { Router } from 'express'
 import { authenticateToken } from '../../lib/auth'
 import models from '../models'
+import bcrypt from 'bcrypt'
 
 const { User } = models
 const usersRouter = Router()
 
 usersRouter.route('/users')
   .post((req, res) => {
+    const { username, password } = req.body
+    User.create({
+      username,
+      password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+    })
+      .then(result => {
+        console.log(result)
+        return res.status(200).json({ message: 'Successful registration'})
+      })
+      .catch(err => {
+        console.log(err)
+        return res.status(400).json(err)
+      })
 
   })
+  .all(authenticateToken)
   .get((req, res) => {
     User.findAndCountAll({ attributes: { exclude: ['password']}})
       .then(result => {
@@ -19,6 +34,5 @@ usersRouter.route('/users')
       })
   })
 
-usersRouter.all('*', authenticateToken)
 
 export default usersRouter
