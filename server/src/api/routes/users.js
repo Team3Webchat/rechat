@@ -2,20 +2,22 @@ import { Router } from 'express'
 import { authenticateToken } from '../../lib/auth'
 import models from '../models'
 import bcrypt from 'bcrypt'
+import { login } from '../../lib/auth'
 
 const { User } = models
 const usersRouter = Router()
 
 usersRouter.route('/users')
-  .post((req, res) => {
-    const { username, password } = req.body
+  .post((req, res, next) => {
+    const { email, password } = req.body
     User.create({
-      username,
+      email,
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
     })
       .then(result => {
         console.log(result)
-        return res.status(200).json({ message: 'Successful registration'})
+        return login(req, res, next, 'Sucessful registration!')
+        // return res.status(200).json({ message: 'Successful registration'})
       })
       .catch(err => {
         console.log(err)

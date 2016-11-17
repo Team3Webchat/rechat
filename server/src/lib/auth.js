@@ -15,7 +15,9 @@ Promise.promisifyAll(bcrypt)
 const jwtSecret = 'supersecret' // TODO: super secret secret 
 
 async function localAuth(username, password, cb) {
-  const user = await User.findOne({ where: { username }})
+  console.log("LOCAL AUTH")
+  const user = await User.findOne({ where: { email: username }})
+  console.log(user)
   const isCorrectPassword = await bcrypt.compareAsync(password, user.password)
   return cb(null, isCorrectPassword ? user : false)
 }
@@ -26,17 +28,22 @@ async function bearerAuth(token, cb) {
   return cb(null, user ? user : false)   
 }
 
-passport.use(new LocalStrategy(localAuth))
+passport.use(new LocalStrategy({
+  usernameField: 'email',
+  passwordField: 'password',
+},localAuth))
 passport.use(new BearerStrategy(bearerAuth))
 
-export function login(req, res, next) {
+export function login(req, res, next, message) {
+  console.log(req.body)
   passport.authenticate('local', (err, user, info) => {
+    console.log(info)
     if (err) 
       return next(err)
     if (!user) 
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
   
-    return res.json({ token: jwt.sign({ id: user.id, username: user.username }, jwtSecret) })
+    return res.json({ message, token: jwt.sign({ id: user.id, email: user.email }, jwtSecret) })
   })(req, res, next)
 }
 
