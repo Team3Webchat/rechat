@@ -14,9 +14,9 @@ import { loginUserSuccess } from './lib/actions/authActions'
 import './app.css'
 
 const token = localStorage.getItem('token')
-// if (token) {
-//   store.dispatch(loginUserSuccess(token))
-// }
+if (token) {
+  store.dispatch(loginUserSuccess({token, message: 'Welcome back'}))
+}
 
 function requireAuth(nextState, replace) {
   if (!store.getState().auth.isAuthenticated) {
