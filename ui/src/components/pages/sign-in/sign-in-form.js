@@ -23,6 +23,7 @@ const SignInForm = (props) => {
         value={password}
         />
       </div>
+      
       <div>
       { isAuthenticating 
           ? <Spinner /> 

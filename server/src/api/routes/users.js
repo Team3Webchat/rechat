@@ -10,6 +10,7 @@ const usersRouter = Router()
 usersRouter.route('/users')
   .post((req, res, next) => {
     const { email, password } = req.body
+    console.log(email, password)
     User.create({
       email,
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),

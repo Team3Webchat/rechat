@@ -5,7 +5,7 @@ import { push } from 'react-router-redux'
 import { Textfield, Button, Spinner } from 'react-mdl'
 import RegisterForm from './register-form'
 
-import { registerUser } from '../../lib/actions/registerActions'
+import { registerUser } from '../../../lib/actions/registerActions'
 
 class RegisterContainer extends Component {
   constructor(props) {
@@ -13,8 +13,9 @@ class RegisterContainer extends Component {
     this.state = {
       email: '',
       password: '',
-      email: '',
+      passwordConfirm: '',
       isAuthenticating: false,
+      feedbackMessage: '',
     }
   }
 
@@ -28,10 +29,16 @@ class RegisterContainer extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { email, password, email } = this.state
-    console.log(email, password, email)
+    const { email, password, passwordConfirm } = this.state
+    if (password !== passwordConfirm) {
+      return this.setState({
+        message: 'The password and the password confirmation does not match',
+      })
+    }
 
-
+    this.props.doRegisterUser({email, password})
+    console.log('registered')
+    this.props.redirectOnRegister()
   }
 
   render() {
@@ -43,7 +50,7 @@ class RegisterContainer extends Component {
       onSubmit={this.handleSubmit}
       email={this.state.email}
       password={this.state.password}
-      email={this.state.email}
+      passwordConfirm={this.state.passwordConfirm}
       isAuthenticating={this.state.isAuthenticating}
     />
   <Link to="/sign-in">
@@ -65,7 +72,6 @@ class RegisterContainer extends Component {
 const mapStateToProps = state => {
   console.log(state)
   return {
-    nextPathname: state.routing.locationBeforeTransitions.state.nextPathname || null,
     isAuthenticating: state.auth.isAuthenticating,
     message: state.auth.statusText,
   }
@@ -73,11 +79,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    registerUser: ({email, password, email}) => {
-      dispatch(registerUser({email, password, email}))
+    doRegisterUser: ({email, password}) => {
+      dispatch(registerUser({email, password}))
     },
     redirectOnRegister: (nextPathname) => {
-      dispatch(push(nextPathname))
+      dispatch(push('/'))
     },
   }
 }

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { Textfield, Button, Spinner } from 'react-mdl'
 
 const RegisterForm = (props) => {
-  const { onChange, onSubmit, email, password, isAuthenticating } = props
+  const { onChange, onSubmit, email, password, passwordConfirm, isAuthenticating } = props
 
   //There is an error right now with the fields, you can't write any text in them
   return (
@@ -12,6 +12,7 @@ const RegisterForm = (props) => {
       <Textfield
         label="Email"
         required
+        type="email"
         value={email}
         onChange={onChange('email')}
       />
@@ -27,12 +28,12 @@ const RegisterForm = (props) => {
       </div>
       <div>
       <Textfield
-        type="email"
-        label="Email"
+        type="password"
+        label="Confirm password"
         required
-        value={email}
-        onChange={onChange('email')}
-        />
+        onChange={onChange('passwordConfirm')}
+        value={passwordConfirm}/>
+    
       </div>
       <div>
       { isAuthenticating 
