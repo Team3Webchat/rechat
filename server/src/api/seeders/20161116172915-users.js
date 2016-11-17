@@ -16,7 +16,7 @@ module.exports = {
     */
     return queryInterface.bulkInsert('Users', [{
       id: uuid.v4(),
-      username: 'user',
+      email: 'user@test.com',
       password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
       createdAt: new Date(),
       updatedAt: new Date()

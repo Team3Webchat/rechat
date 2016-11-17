@@ -5,7 +5,7 @@ import { login } from '../../lib/auth'
 const authRouter = Router()
 
 authRouter.route('/login')
-  .post(login)
+  .post((req, res, next) => login(req, res, next, 'Successful authentication'))
 
 
 

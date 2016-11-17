@@ -1,5 +1,6 @@
 import jwtDecode from 'jwt-decode'
 
+// Login actions
 export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST'
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS'
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE'
@@ -11,13 +12,13 @@ export function loginUserRequest() {
   }
 }
 
-export function loginUserSuccess(token) {
-  console.log("loginUserSucess()")
+export function loginUserSuccess({token, message}) {
   localStorage.setItem('token', token) // move this elswhere later
   return {
     type: LOGIN_USER_SUCCESS,
     payload: {
       token,
+      message,
     },
   }
 }
@@ -39,14 +40,14 @@ export function logout() {
   }
 }
 
-export function loginUser(username, password) {
+export function loginUser(email, password) {
   return async function(dispatch) {
     dispatch(loginUserRequest())
     try {
       const res = await fetch('http://localhost:8000/api/login', {
         method: 'POST',
         body: JSON.stringify({
-          username,
+          email,
           password,
         }),
         /*credentials: 'include', */ // Server has wildcard for cors atm
@@ -58,7 +59,7 @@ export function loginUser(username, password) {
       const json = await res.json()
       const decodedToken = jwtDecode(json.token)
       console.log(decodedToken)
-      dispatch(loginUserSuccess(json.token))
+      dispatch(loginUserSuccess({token: json.token, message: json.message}))
     } catch(e) {
       dispatch(loginUserFailure({
         response: {
@@ -70,3 +71,4 @@ export function loginUser(username, password) {
     
   }
 }
+

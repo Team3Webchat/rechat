@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react'
 import { Textfield, Button, Spinner } from 'react-mdl'
 
 const RegisterForm = (props) => {
-  const { onChange, onSubmit, username, password, isAuthenticating, email } = props
+  const { onChange, onSubmit, email, password, passwordConfirm, isAuthenticating } = props
 
   //There is an error right now with the fields, you can't write any text in them
   return (
@@ -10,10 +10,11 @@ const RegisterForm = (props) => {
     <form onSubmit={onSubmit}>
       <div>
       <Textfield
-        label="Username"
+        label="Email"
         required
-        value={username}
-        onChange={onChange('username')}
+        type="email"
+        value={email}
+        onChange={onChange('email')}
       />
       </div>
       <div>
@@ -27,12 +28,12 @@ const RegisterForm = (props) => {
       </div>
       <div>
       <Textfield
-        type="email"
-        label="Email"
+        type="password"
+        label="Confirm password"
         required
-        value={email}
-        onChange={onChange('email')}
-        />
+        onChange={onChange('passwordConfirm')}
+        value={passwordConfirm}/>
+    
       </div>
       <div>
       { isAuthenticating 
@@ -41,7 +42,7 @@ const RegisterForm = (props) => {
               primary 
               raised 
               ripple
-              disabled={username.length === 0 || password.length === 0 || email.length === 0}
+              disabled={email.length === 0 || password.length === 0 || email.length === 0}
               type="submit"
             >
               Create Account
@@ -60,7 +61,7 @@ const RegisterForm = (props) => {
 RegisterForm.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
 }

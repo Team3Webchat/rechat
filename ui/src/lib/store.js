@@ -7,7 +7,7 @@ import createLogger from 'redux-logger'
 import rootReducer from './reducers'
 
 import { loginUser, logout } from './actions/authActions'
-
+import { registerUser } from './actions/registerActions'
 const logger = createLogger()
 const routing = routerMiddleware(hashHistory)
 
@@ -23,4 +23,5 @@ const store = createStore(
 
 export const history = syncHistoryWithStore(hashHistory, store)
 export default store
+
 

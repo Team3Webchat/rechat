@@ -5,14 +5,17 @@ import { push } from 'react-router-redux'
 import { Textfield, Button, Spinner } from 'react-mdl'
 import RegisterForm from './register-form'
 
+import { registerUser } from '../../../lib/actions/registerActions'
+
 class RegisterContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
-      password: '',
       email: '',
+      password: '',
+      passwordConfirm: '',
       isAuthenticating: false,
+      feedbackMessage: '',
     }
   }
 
@@ -26,10 +29,16 @@ class RegisterContainer extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { username, password, email } = this.state
-    console.log(username, password, email)
+    const { email, password, passwordConfirm } = this.state
+    if (password !== passwordConfirm) {
+      return this.setState({
+        message: 'The password and the password confirmation does not match',
+      })
+    }
 
-
+    this.props.doRegisterUser({email, password})
+    console.log('registered')
+    this.props.redirectOnRegister()
   }
 
   render() {
@@ -39,9 +48,9 @@ class RegisterContainer extends Component {
     <RegisterForm
       onChange={this.handleChange}
       onSubmit={this.handleSubmit}
-      username={this.state.username}
-      password={this.state.password}
       email={this.state.email}
+      password={this.state.password}
+      passwordConfirm={this.state.passwordConfirm}
       isAuthenticating={this.state.isAuthenticating}
     />
   <Link to="/sign-in">
@@ -63,8 +72,6 @@ class RegisterContainer extends Component {
 const mapStateToProps = state => {
   console.log(state)
   return {
-    nextPathname: state.routing.locationBeforeTransitions.state.nextPathname || null,
-    isAuthenticated: state.auth.isAuthenticated,
     isAuthenticating: state.auth.isAuthenticating,
     message: state.auth.statusText,
   }
@@ -72,17 +79,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // createUser: (username, password, email) => {
-    //   dispatch(createUser(username, password, email))
-    // },
+    doRegisterUser: ({email, password}) => {
+      dispatch(registerUser({email, password}))
+    },
     redirectOnRegister: (nextPathname) => {
-      dispatch(push(nextPathname))
+      dispatch(push('/'))
     },
   }
 }
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(RegisterContainer)
-export default RegisterContainer
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegisterContainer)
+

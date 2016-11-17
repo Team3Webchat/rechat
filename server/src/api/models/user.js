@@ -7,11 +7,12 @@ export default (sequelize, DataTypes) => sequelize.define('User',
       unique: true,
       allowNull: false,
     },
-    username: {
+    email: { // TODO pg email validation
       type: DataTypes.STRING,
       unique: true,
       notEmpty: true,
       allowNull: false,
+      isEmail: true,
     },
     password: {
       type: DataTypes.STRING,
