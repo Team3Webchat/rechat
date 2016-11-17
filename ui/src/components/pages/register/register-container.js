@@ -38,7 +38,7 @@ class RegisterContainer extends Component {
 
     this.props.doRegisterUser({email, password})
     console.log('registered')
-    this.props.redirectOnRegister()
+    //this.props.redirectOnRegister()
   }
 
   render() {

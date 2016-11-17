@@ -79,7 +79,9 @@ class SignInContainer extends Component {
 const mapStateToProps = state => {
   console.log(state)
   return {
-    nextPathname: state.routing.locationBeforeTransitions.state.nextPathname || null,
+    nextPathname: state.routing.locationBeforeTransitions.state 
+      ? state.routing.locationBeforeTransitions.state.nextPathname 
+      : '/',
     isAuthenticated: state.auth.isAuthenticated,
     isAuthenticating: state.auth.isAuthenticating,
     message: state.auth.statusText,

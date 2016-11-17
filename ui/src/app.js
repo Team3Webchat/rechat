@@ -29,21 +29,14 @@ function requireAuth(nextState, replace) {
   }
 }
 
-function register(nextState, replace) {
-  if (!store.getState().auth.isAuthenticated) {
-    replace({
-      pathname: '/register',
-      state: {
-        nextPathname: nextState.location.pathname,
-      },
-    })
-  }
-}
 
 function doesNotRequireAuth(nextState, replace) {
   if (store.getState().auth.isAuthenticated) {
     replace({
       pathname: '/',
+      state: {
+        nextPathname: null,
+      },
     })
   }
 }
@@ -59,7 +52,7 @@ class App extends Component {
           <Router history={history}>
 
             <Route path='/sign-in' component={SignInContainer} onEnter={doesNotRequireAuth}/>
-            <Route path='/register' component={RegisterContainer}/>
+            <Route path='/register' component={RegisterContainer} onEnter={doesNotRequireAuth}/>
             <Route path='/' component={Main} onEnter={requireAuth}>
               <IndexRedirect to="testpage" />
               <Route path='testpage' component={TestPage} />
