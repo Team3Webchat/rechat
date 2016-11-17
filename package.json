@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "deploy-server": "./tools/deploy.sh server",
+    "deploy-ui": "./tools/deploy.sh ui"
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
