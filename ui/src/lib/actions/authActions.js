@@ -1,6 +1,9 @@
 import jwtDecode from 'jwt-decode'
 import { push } from 'react-router-redux'
 
+import { baseUrl } from './'
+
+
 // Login actions
 export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST'
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS'
@@ -49,7 +52,7 @@ export function loginUser(email, password) {
   return async function(dispatch) {
     dispatch(loginUserRequest())
     try {
-      const res = await fetch('http://localhost:8000/api/login', {
+      const res = await fetch(baseUrl + 'login', {
         method: 'POST',
         body: JSON.stringify({
           email,

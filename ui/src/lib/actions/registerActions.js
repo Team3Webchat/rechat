@@ -1,4 +1,5 @@
 import { push } from 'react-router-redux'
+import { baseUrl } from './'
 
 // Register actions
 export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST'
@@ -34,7 +35,7 @@ export function registerUser({ email, password }) {
   return async function(dispatch) {
     dispatch(registerUserRequest())
     try {
-      const res = await fetch('http://localhost:8000/api/users', {
+      const res = await fetch(baseUrl + 'users', {
         method: 'POST',
         body: JSON.stringify({
           email,

@@ -20,15 +20,22 @@ var localAuth = function () {
           case 3:
             user = _context.sent;
 
-            console.log(user);
-            _context.next = 7;
+            if (user) {
+              _context.next = 6;
+              break;
+            }
+
+            return _context.abrupt('return', (null, false));
+
+          case 6:
+            _context.next = 8;
             return _bcrypt2.default.compareAsync(password, user.password);
 
-          case 7:
+          case 8:
             isCorrectPassword = _context.sent;
             return _context.abrupt('return', cb(null, isCorrectPassword ? user : false));
 
-          case 9:
+          case 10:
           case 'end':
             return _context.stop();
         }

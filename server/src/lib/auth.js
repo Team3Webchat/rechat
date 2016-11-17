@@ -17,7 +17,7 @@ const jwtSecret = 'supersecret' // TODO: super secret secret
 async function localAuth(username, password, cb) {
   console.log("LOCAL AUTH")
   const user = await User.findOne({ where: { email: username }})
-  console.log(user)
+  if (!user) return (null, false)
   const isCorrectPassword = await bcrypt.compareAsync(password, user.password)
   return cb(null, isCorrectPassword ? user : false)
 }
