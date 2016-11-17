@@ -32,5 +32,8 @@ if [ $DEPLOY_SERVER -eq 1 ]; then
 fi
 
 if [ $DEPLOY_UI -eq 1 ]; then
-  echo "Not implemented yet.."
+  cd ui
+  npm run deploy
+  cd ..
+  echo "UI deployed"
 fi

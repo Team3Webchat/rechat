@@ -2,6 +2,7 @@ export const REQUEST_TEST_DATA = 'REQUEST_TEST_DATA'
 export const RECEIVE_TEST_DATA = 'RECEIVE_TEST_DATA'
 
 const env = process.env.NODE_ENV || 'production'
+
 export const baseUrl = env === 'production' 
   ? 'https://apirechat.herokuapp.com/api/'
   : 'http://localhost:8000/api/'
