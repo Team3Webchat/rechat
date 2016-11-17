@@ -47,6 +47,18 @@ Be sure to be in the ui directory
 ```sh
   git pull origin master
 ```
+* Make sure u have all the dependencies
+```sh
+# If on windows
+npm install
+cd server
+npm install
+cd ../ui
+npm install
+
+# If on linux (should work on mac aswell)
+sudo ./tools/install.sh n # replace n with y to use yarn instead of npm
+```
 * Create a new local branch to work on
 ```sh
 git checkout -b your-branch
