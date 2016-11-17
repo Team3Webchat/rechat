@@ -1,4 +1,5 @@
 import jwtDecode from 'jwt-decode'
+import { push } from 'react-router-redux'
 
 // Login actions
 export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST'
@@ -33,10 +34,13 @@ export function loginUserFailure(error) {
   }
 }
 
-export function logout() {
+export function logout(message = 'Bye bye! Please come again!') {
   localStorage.removeItem('token')
   return {
     type: LOGOUT_USER,
+    payload: {
+      message,
+    },
   }
 }
 

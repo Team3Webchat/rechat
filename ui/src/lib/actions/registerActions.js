@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux'
+
 // Register actions
 export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST'
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS'
@@ -49,6 +51,7 @@ export function registerUser({ email, password }) {
       const json = await res.json()
       const { message, token } = json
       dispatch(registerUserSuccess({ token, message}))
+      dispatch(push('/'))
 
     } catch(e) {
       dispatch(registerUserFailure())

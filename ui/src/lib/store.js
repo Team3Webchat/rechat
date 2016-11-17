@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { hashHistory } from 'react-router'
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
@@ -11,13 +11,15 @@ import { registerUser } from './actions/registerActions'
 const logger = createLogger()
 const routing = routerMiddleware(hashHistory)
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(
   rootReducer,
-  applyMiddleware(
-    thunk,
-    logger,
-    routing
-  )
+  composeEnhancers(
+    applyMiddleware(
+      thunk,
+      logger,
+      routing
+  ))
 )
 
 
