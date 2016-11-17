@@ -2,4 +2,19 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background: #607D8B;
 }
+
+.signin-register {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex: 1;
+}
+
+.buttons {
+  margin: 8px;
+}
+

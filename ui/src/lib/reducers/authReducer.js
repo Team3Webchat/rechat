@@ -18,8 +18,7 @@ const initialState = {
   email: null,
   isAuthenticated: false,
   isAuthenticating: false,
-  statusText: null,
-  message: null,
+  failure: false,
 }
 
 function auth(state = initialState, action) {
@@ -39,15 +38,13 @@ function auth(state = initialState, action) {
       email: decoded.email,
       token: action.payload.token,
       message: action.payload.message,
-      statusText: `Welcome ${decoded.email}`,
+      failure: false,
     }
   case LOGIN_USER_FAILURE: 
     return {
       ...state,
       isAuthenticating: false,
-      statusText: `Authentication error: 
-          ${action.payload.status} 
-          ${action.payload.statusText}`,
+      failure: true,
     }
   case LOGOUT_USER:
     return {
@@ -55,7 +52,7 @@ function auth(state = initialState, action) {
       isAuthenticated: false,
       token: null,
       email: null,
-      statusText: 'You have successfully logged out.',
+      failure: false,
     }
   case REGISTER_USER_REQUEST: {
     return {
@@ -67,9 +64,7 @@ function auth(state = initialState, action) {
     return {
       ...state,
       isAuthenticating: false,
-      statusText: `Registration error:
-        ${action.payload.status}
-        ${action.payload.statusText}`,
+      failure: true,
     }
   }
   case REGISTER_USER_SUCCESS: {
@@ -82,8 +77,7 @@ function auth(state = initialState, action) {
       email: decoded.email,
       token: action.payload.token,
       message: action.payload.message,
-      statusText: `$Welcome ${decoded.email}. 
-        You successfully registered an account!`,
+      failure: false,
     }
   }
   default:

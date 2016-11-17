@@ -45,26 +45,15 @@ class RegisterContainer extends Component {
 
     return (
       <div>
-    <RegisterForm
-      onChange={this.handleChange}
-      onSubmit={this.handleSubmit}
-      email={this.state.email}
-      password={this.state.password}
-      passwordConfirm={this.state.passwordConfirm}
-      isAuthenticating={this.state.isAuthenticating}
-    />
-  <Link to="/sign-in">
-    <Button
-        primary
-        raised
-        ripple
-        type='submit'
-      >
-        Back To Login Page
-      </Button>
-
-      </Link>
-  </div>
+        <RegisterForm
+          onChange={this.handleChange}
+          onSubmit={this.handleSubmit}
+          email={this.state.email}
+          password={this.state.password}
+          passwordConfirm={this.state.passwordConfirm}
+          isAuthenticating={this.state.isAuthenticating}
+        />
+      </div>
     )
   }
 }

@@ -1,46 +1,38 @@
 import React, { PropTypes } from 'react'
-import { Textfield, Button, Spinner } from 'react-mdl'
+import { Link } from 'react-router'
+import { Textfield, Button, Spinner, Card } from 'react-mdl'
 
 const SignInForm = (props) => {
   const { onChange, onSubmit, email, password, isAuthenticating } = props
   console.log(isAuthenticating)
   return (
-    <form onSubmit={onSubmit}>
-      <div>
-      <Textfield
-        label="Email"
-        required
-        onChange={onChange('email')}
-        value={email}
-      />
-      </div>
-      <div>
-      <Textfield
-        type="password"
-        label="Password"
-        required
-        onChange={onChange('password')}
-        value={password}
-        />
-      </div>
-      
-      <div>
-      { isAuthenticating 
-          ? <Spinner /> 
-          : <Button
-              primary 
-              raised 
-              ripple
-              disabled={email.length === 0 || password.length === 0}
-              type="submit"
-            >
-              Sign in
-            </Button>
-      }
-      
-      </div>
-    </form>
-
+    <div className="signin-register">
+      <Card shadow={0} className="signin-register-card">
+        <form onSubmit={onSubmit}>
+          <div>
+            <Textfield label="Email" required type="email"
+              onChange={onChange('email')} value={email} />
+          </div>
+          <div>
+            <Textfield type="password" label="Password" required
+              onChange={onChange('password')} value={password} />
+          </div>
+            { isAuthenticating ? <Spinner /> 
+                : <div>
+                    <Button primary raised ripple type="submit" className="buttons"
+                      disabled={email.length === 0 || password.length === 0} >
+                      Sign in
+                    </Button>
+                    <Link to="/register">
+                      <Button primary raised ripple type='submit' className="buttons" >
+                        Register
+                      </Button>
+                    </Link>
+                  </div>
+               }
+        </form>
+      </Card>
+    </div>
   )
 }
 
