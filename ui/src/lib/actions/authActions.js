@@ -14,6 +14,7 @@ export function loginUserRequest() {
 }
 
 export function loginUserSuccess({token, message}) {
+  console.log(token)
   localStorage.setItem('token', token) // move this elswhere later
   return {
     type: LOGIN_USER_SUCCESS,

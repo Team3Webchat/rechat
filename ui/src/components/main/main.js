@@ -1,12 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Layout, Button } from 'react-mdl'
+import { Layout, Button, Header, Navigation, Drawer } from 'react-mdl'
 import { push } from 'react-router-redux'
 
 import { logout } from '../../lib/actions/authActions'
 
+import './style.css'
+
 const Main = (props) => {
-  const { isLoggedIn, email, doLogout } = props
+  const { email, doLogout } = props
   return (
     <div>
       <Layout>
