@@ -5,11 +5,13 @@ import { push } from 'react-router-redux'
 import { Textfield, Button, Spinner } from 'react-mdl'
 import RegisterForm from './register-form'
 
+import { registerUser } from '../../lib/actions/registerActions'
+
 class RegisterContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
+      email: '',
       password: '',
       email: '',
       isAuthenticating: false,
@@ -26,8 +28,8 @@ class RegisterContainer extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { username, password, email } = this.state
-    console.log(username, password, email)
+    const { email, password, email } = this.state
+    console.log(email, password, email)
 
 
   }
@@ -39,7 +41,7 @@ class RegisterContainer extends Component {
     <RegisterForm
       onChange={this.handleChange}
       onSubmit={this.handleSubmit}
-      username={this.state.username}
+      email={this.state.email}
       password={this.state.password}
       email={this.state.email}
       isAuthenticating={this.state.isAuthenticating}
@@ -64,7 +66,6 @@ const mapStateToProps = state => {
   console.log(state)
   return {
     nextPathname: state.routing.locationBeforeTransitions.state.nextPathname || null,
-    isAuthenticated: state.auth.isAuthenticated,
     isAuthenticating: state.auth.isAuthenticating,
     message: state.auth.statusText,
   }
@@ -72,17 +73,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    // createUser: (username, password, email) => {
-    //   dispatch(createUser(username, password, email))
-    // },
+    registerUser: ({email, password, email}) => {
+      dispatch(registerUser({email, password, email}))
+    },
     redirectOnRegister: (nextPathname) => {
       dispatch(push(nextPathname))
     },
   }
 }
 
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(RegisterContainer)
-export default RegisterContainer
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(RegisterContainer)
+

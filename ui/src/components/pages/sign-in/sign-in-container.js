@@ -11,7 +11,7 @@ class SignInContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      username: '',
+      email: '',
       password: '',
       isAuthenticating: false,
     }
@@ -27,10 +27,10 @@ class SignInContainer extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { username, password } = this.state
+    const { email, password } = this.state
     const { loginUser } = this.props
 
-    loginUser(username, password)
+    loginUser(email, password)
   }
 
   componentDidMount() {
@@ -57,7 +57,7 @@ class SignInContainer extends Component {
       <SignInForm
         onChange={this.handleChange}
         onSubmit={this.handleSubmit}
-        username={this.state.username}
+        email={this.state.email}
         password={this.state.password}
         isAuthenticating={this.state.isAuthenticating}
       />
@@ -89,8 +89,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   console.log(dispatch)
   return {
-    loginUser: (username, password) => {
-      dispatch(loginUser(username, password))
+    loginUser: (email, password) => {
+      dispatch(loginUser(email, password))
     },
     redirectOnLogin: (nextPathname) => {
       dispatch(push(nextPathname))
