@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { authenticateToken } from '../../lib/auth'
 import models from '../models'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt-nodejs'
 import { login } from '../../lib/auth'
 
 const { User } = models
