@@ -3,7 +3,7 @@ import passport from 'passport'
 import LocalStrategy from 'passport-local'
 import BearerStrategy from 'passport-http-bearer'
 import Promise from 'bluebird'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt-nodejs'
 
 import models from '../api/models'
 
@@ -12,7 +12,7 @@ const { User } = models
 Promise.promisifyAll(jwt)
 Promise.promisifyAll(bcrypt)
 
-const jwtSecret = 'supersecret' // TODO: super secret secret 
+const jwtSecret = 'supersecret' // TODO: super secret secret
 
 async function localAuth(username, password, cb) {
   console.log("LOCAL AUTH")
@@ -25,7 +25,7 @@ async function localAuth(username, password, cb) {
 async function bearerAuth(token, cb) {
   const decoded = await jwt.verifyAsync(token, jwtSecret)
   const user = await User.findById(decoded.id)
-  return cb(null, user ? user : false)   
+  return cb(null, user ? user : false)
 }
 
 passport.use(new LocalStrategy({
@@ -38,11 +38,11 @@ export function login(req, res, next, message) {
   console.log(req.body)
   passport.authenticate('local', (err, user, info) => {
     console.log(info)
-    if (err) 
+    if (err)
       return next(err)
-    if (!user) 
+    if (!user)
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
-  
+
     return res.json({ message, token: jwt.sign({ id: user.id, email: user.email }, jwtSecret) })
   })(req, res, next)
 }
