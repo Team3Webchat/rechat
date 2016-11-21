@@ -12,6 +12,8 @@ class Search extends Component {
     super(props)
     this.state = {
       email: '',
+      isDoneSearching: null,
+      isSearching: null,
     }
   }
 
@@ -26,7 +28,7 @@ class Search extends Component {
   handleSubmit = e => {
     e.preventDefault()
     const { email } = this.state
-      //skicka till dispatch sökning
+    //skicka till dispatch sökning
     console.log(this.props)
     const { doSearchEmail } = this.props
     doSearchEmail({email})
@@ -34,7 +36,18 @@ class Search extends Component {
     console.log(this.state)
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { isDoneSearching } = nextProps
+
+    if (this.props.isDoneSearching !== nextProps.isDoneSearching)
+      this.setState({
+        isDoneSearching: !this.state.isDoneSearching,
+      })
+  }
+
   render() {
+    const { isDoneSearching, isSearching } = this.state
+    console.log(isDoneSearching);
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -47,19 +60,25 @@ class Search extends Component {
           onChange={this.handleChange('email')}
         />
         </div>
-        
-        <div>
-            <Button
-                className="buttons"
-                primary 
-                raised 
-                ripple
-                type="submit"
-            >
-                Search
-            </Button>
-        </div>
-      </form>
+        { isSearching ? <Spinner />
+        :  <div>
+              <Button
+                  className="buttons"
+                  primary
+                  raised
+                  ripple
+                  type="submit"
+              >
+                  Search
+              </Button>
+          </div>
+        }
+        </form>
+        { isDoneSearching &&
+          <div id="searchBox">
+            <h3>heeej</h3>
+          </div>
+        }
       </div>
     )
   }
@@ -68,6 +87,8 @@ class Search extends Component {
 const mapStateToProps = state => {
   return {
     token: state.auth.token,
+    isDoneSearching: state.search.isDoneSearching,
+    isSearching: state.search.isSearching,
   }
 }
 
