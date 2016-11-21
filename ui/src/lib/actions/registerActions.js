@@ -50,7 +50,6 @@ export function registerUser({ email, password, firstname, lastname }) {
         },  
       })
 
-      console.log(res)
       const json = await res.json()
       const { message, token } = json
       dispatch(registerUserSuccess({ token, message}))

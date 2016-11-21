@@ -5,9 +5,7 @@ import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import createLogger from 'redux-logger'
 
 import rootReducer from './reducers'
-
-import { loginUser, logout } from './actions/authActions'
-import { registerUser } from './actions/registerActions'
+import { resetFlashMessage } from './actions/flashActions'
 const logger = createLogger()
 const routing = routerMiddleware(hashHistory)
 
@@ -26,9 +24,18 @@ const store = createStore(
 export const history = syncHistoryWithStore(hashHistory, store)
 export default store
 
+// Just simple helper getters for the store, should probably be
+// somewhere else
+
 export function getToken() {
   return store.getState().auth.token
 }
 
-console.log(getToken())
+export function getFlashMessage() {
+  const { flash } = store.getState().flash
+  store.dispatch(resetFlashMessage())
+  return flash
+}
+
+
 

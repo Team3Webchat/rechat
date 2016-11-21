@@ -63,7 +63,7 @@ class RegisterContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
+
   return {
     isAuthenticating: state.auth.isAuthenticating,
     message: state.auth.statusText,

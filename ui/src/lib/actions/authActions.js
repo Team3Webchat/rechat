@@ -16,34 +16,33 @@ export function loginUserRequest() {
   }
 }
 
-export function loginUserSuccess({token, message}) {
-  console.log(token)
+export function loginUserSuccess({token, flash}) {
+
   localStorage.setItem('token', token) // move this elswhere later
   return {
     type: LOGIN_USER_SUCCESS,
     payload: {
       token,
-      message,
+      flash,
     },
   }
 }
 
-export function loginUserFailure(error) {
+export function loginUserFailure({flash}) {
   return {
     type: LOGIN_USER_FAILURE,
     payload: {
-      status: error.response.status,
-      statusTest: error.response.statusText,
+      flash,
     },
   }
 }
 
-export function logout(message = 'Bye bye! Please come again!') {
+export function logout({ flash }) {
   localStorage.removeItem('token')
   return {
     type: LOGOUT_USER,
     payload: {
-      message,
+      flash,
     },
   }
 }
@@ -52,6 +51,7 @@ export function loginUser(email, password) {
   return async function(dispatch) {
     dispatch(loginUserRequest())
     try {
+      console.log('fetch')
       const res = await fetch(baseUrl + 'login', {
         method: 'POST',
         body: JSON.stringify({
@@ -64,15 +64,23 @@ export function loginUser(email, password) {
           'Content-Type': 'application/json',
         },
       })
+      console.log(res)
       const json = await res.json()
+      console.log(json)
       const decodedToken = jwtDecode(json.token)
-      console.log(decodedToken)
-      dispatch(loginUserSuccess({token: json.token, message: json.message}))
+      dispatch(loginUserSuccess({
+        token: json.token, 
+        flash: {
+          message: 'Successful login',
+          type: 'success',
+        },
+      }))
     } catch(e) {
+      console.log('Error signing user in')
       dispatch(loginUserFailure({
-        response: {
-          status: 403,
-          statusText: 'Invalid Token',
+        flash: {
+          message: 'Wrong credentials, try again',
+          type: 'fail',
         },
       }))
     }
