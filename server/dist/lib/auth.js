@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-// TODO: super secret secret 
+// TODO: super secret secret
 
 var localAuth = function () {
   var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(username, password, cb) {
@@ -20,22 +20,25 @@ var localAuth = function () {
           case 3:
             user = _context.sent;
 
+            console.log(user);
+
             if (user) {
-              _context.next = 6;
+              _context.next = 8;
               break;
             }
 
-            return _context.abrupt('return', (null, false));
-
-          case 6:
-            _context.next = 8;
-            return _bcrypt2.default.compareAsync(password, user.password);
+            console.log(' No User ');
+            return _context.abrupt('return', cb(null, false));
 
           case 8:
+            _context.next = 10;
+            return _bcryptNodejs2.default.compareAsync(password, user.password);
+
+          case 10:
             isCorrectPassword = _context.sent;
             return _context.abrupt('return', cb(null, isCorrectPassword ? user : false));
 
-          case 10:
+          case 12:
           case 'end':
             return _context.stop();
         }
@@ -103,9 +106,9 @@ var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _bcrypt = require('bcrypt');
+var _bcryptNodejs = require('bcrypt-nodejs');
 
-var _bcrypt2 = _interopRequireDefault(_bcrypt);
+var _bcryptNodejs2 = _interopRequireDefault(_bcryptNodejs);
 
 var _models = require('../api/models');
 
@@ -119,7 +122,7 @@ var User = _models2.default.User;
 
 
 _bluebird2.default.promisifyAll(_jsonwebtoken2.default);
-_bluebird2.default.promisifyAll(_bcrypt2.default);
+_bluebird2.default.promisifyAll(_bcryptNodejs2.default);
 
 var jwtSecret = 'supersecret';
 
@@ -133,9 +136,15 @@ function login(req, res, next, message) {
   console.log(req.body);
   _passport2.default.authenticate('local', function (err, user, info) {
     console.log(info);
-    if (err) return next(err);
-    if (!user) return res.status(401).json({ status: 'error', code: 'unauthorized' });
+    if (err) {
+      console.log(' Err ');
+      return next(err);
+    }
 
+    if (!user) {
+      console.log('No User found');
+      return res.status(401).json({ status: 'error', code: 'unauthorized' });
+    }
     return res.json({ message: message, token: _jsonwebtoken2.default.sign({ id: user.id, email: user.email }, jwtSecret) });
   })(req, res, next);
 }

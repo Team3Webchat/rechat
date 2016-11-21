@@ -12,9 +12,9 @@ var _models = require('../models');
 
 var _models2 = _interopRequireDefault(_models);
 
-var _bcrypt = require('bcrypt');
+var _bcryptNodejs = require('bcrypt-nodejs');
 
-var _bcrypt2 = _interopRequireDefault(_bcrypt);
+var _bcryptNodejs2 = _interopRequireDefault(_bcryptNodejs);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -25,12 +25,15 @@ var usersRouter = (0, _express.Router)();
 usersRouter.route('/users').post(function (req, res, next) {
   var _req$body = req.body,
       email = _req$body.email,
-      password = _req$body.password;
+      password = _req$body.password,
+      firstname = _req$body.firstname,
+      lastname = _req$body.lastname;
 
-  console.log(email, password);
   User.create({
     email: email,
-    password: _bcrypt2.default.hashSync(password, _bcrypt2.default.genSaltSync(10))
+    firstname: firstname,
+    lastname: lastname,
+    password: _bcryptNodejs2.default.hashSync(password, _bcryptNodejs2.default.genSaltSync(10))
   }).then(function (result) {
     console.log(result);
     return (0, _auth.login)(req, res, next, 'Sucessful registration!');

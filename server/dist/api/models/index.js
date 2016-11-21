@@ -43,7 +43,6 @@ _fs2.default.readdirSync(__dirname).filter(function (file) {
   return file.indexOf('.') !== 0 && file !== 'index.js';
 }).forEach(function (file) {
   var model = sequelize.import(_path2.default.join(__dirname, file));
-  console.log('Model name: ', model);
   models[model.name] = model;
 });
 
@@ -52,8 +51,6 @@ Object.keys(models).forEach(function (model) {
     models[model].associate(models);
   }
 });
-
-console.log(models);
 
 exports.default = models;
 exports.sequelize = sequelize;

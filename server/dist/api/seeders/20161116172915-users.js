@@ -1,6 +1,6 @@
 'use strict';
 
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
 var uuid = require('uuid');
 
 module.exports = {
@@ -19,7 +19,9 @@ module.exports = {
       email: 'user@test.com',
       password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
       createdAt: new Date(),
-      updatedAt: new Date()
+      updatedAt: new Date(),
+      firstname: 'Benny',
+      lastname: 'Svensson'
     }], {});
   },
 
