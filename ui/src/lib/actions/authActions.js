@@ -66,8 +66,10 @@ export function loginUser(email, password) {
       })
       const json = await res.json()
       const decodedToken = jwtDecode(json.token)
-      console.log(decodedToken)
-      dispatch(loginUserSuccess({token: json.token, message: json.message}))
+      dispatch(loginUserSuccess({
+        token: json.token, 
+        message: json.message,
+      }))
     } catch(e) {
       dispatch(loginUserFailure({
         response: {

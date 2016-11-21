@@ -11,11 +11,13 @@ const SignInForm = (props) => {
         <form onSubmit={onSubmit}>
           <div>
             <Textfield label="Email" required type="email"
-              onChange={onChange('email')} value={email} />
+              onChange={onChange('email')} value={email}
+              error="Please enter your email" />
           </div>
           <div>
             <Textfield type="password" label="Password" required
-              onChange={onChange('password')} value={password} />
+              onChange={onChange('password')} value={password}
+              error="Please enter your password" />
           </div>
             { isAuthenticating ? <Spinner /> 
                 : <div>
