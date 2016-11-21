@@ -11,31 +11,23 @@ const RegisterForm = ({ onChange, onSubmit, email, password,
     <Card shadow={0} className="signin-register-card">
       <form onSubmit={onSubmit}>
         <div>
-          <Textfield label="Email" required type="email"
+          <Textfield label="Email" required type="email" floatingLabel
             value={email} onChange={onChange('email')} />
         </div>
         <div>
-          <Textfield label="First name" required
+          <Textfield label="First name" required floatingLabel
             value={firstname} onChange={onChange('firstname')} />
-          <Textfield label="Last name" required
+          <Textfield label="Last name" required floatingLabel
             value={lastname} onChange={onChange('lastname')} />
         </div>
         <div>
-        <Textfield
-          type="password"
-          label="Password"
-          required
-          onChange={onChange('password')}
-          value={password}
+        <Textfield type="password" label="Password" required floatingLabel
+          onChange={onChange('password')} value={password}
           />
         </div>
         <div>
-        <Textfield
-          type="password"
-          label="Confirm password"
-          required
-          onChange={onChange('passwordConfirm')}
-          value={passwordConfirm}/>
+        <Textfield type="password" label="Confirm password" required floatingLabel
+          onChange={onChange('passwordConfirm')} value={passwordConfirm}/>
         </div>
         <div>
           
@@ -44,22 +36,15 @@ const RegisterForm = ({ onChange, onSubmit, email, password,
         { isAuthenticating 
             ? <Spinner /> 
             : <div>
-                <Button
-                  className="buttons"
-                  primary 
-                  raised 
-                  ripple
+                <Button className="buttons" primary raised ripple
                   disabled={email.length === 0 || password.length === 0 || email.length === 0}
                   type="submit"
                 >
                   Register
                 </Button>
                 <Link to="/sign-in">
-                  <Button className="buttons"
-                      primary
-                      raised
-                      ripple
-                      type='submit'
+                  <Button className="buttons" primary raised 
+                    ripple type='submit'
                     >
                       Back
                     </Button>
