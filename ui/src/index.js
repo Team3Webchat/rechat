@@ -4,6 +4,7 @@ import App from './app'
 
 import 'react-mdl/extra/material.css'
 import 'react-mdl/extra/material.js'
+import 'flexboxgrid'
 import './index.css'
 
 ReactDOM.render(

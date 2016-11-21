@@ -8,6 +8,7 @@ body {
 .signin-register {
   text-align: center;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
@@ -17,4 +18,18 @@ body {
 .buttons {
   margin: 8px;
 }
+
+/* Override the ugly red colors from mdl */
+label {
+  color: black !important;
+}
+
+input {
+  border-color: black !important;
+}
+
+label ::after {
+  background-color: black !important;
+}
+
 

@@ -15,7 +15,7 @@ class Search extends Component {
     }
   }
 
-   handleChange = key => {
+  handleChange = key => {
     return function(e) {
       const state = {}
       state[key] = e.target.value
@@ -24,14 +24,14 @@ class Search extends Component {
   }
 
   handleSubmit = e => {
-      e.preventDefault()
-      const { email } = this.state
+    e.preventDefault()
+    const { email } = this.state
       //skicka till dispatch sökning
-      console.log(this.props)
-      const { doSearchEmail } = this.props
-      doSearchEmail({email})
-      console.log("söker ....")
-      console.log(this.state)
+    console.log(this.props)
+    const { doSearchEmail } = this.props
+    doSearchEmail({email})
+    console.log('söker ....')
+    console.log(this.state)
   }
 
   render() {
@@ -66,7 +66,6 @@ class Search extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     token: state.auth.token,
   }

@@ -4,12 +4,14 @@ import { Link } from 'react-router'
 import { push } from 'react-router-redux'
 import { Textfield, Button } from 'react-mdl'
 import { loginUser } from '../../../lib/actions/authActions'
+import { resetFlashMessage } from '../../../lib/actions/flashActions'
 
 import SignInForm from './sign-in-form'
 
 class SignInContainer extends Component {
   constructor(props) {
     super(props)
+    console.log(props)
     this.state = {
       email: '',
       password: '',
@@ -47,21 +49,19 @@ class SignInContainer extends Component {
 
   render() {
     return (
-      <div>
-        <SignInForm
-          onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-          email={this.state.email}
-          password={this.state.password}
-          isAuthenticating={this.state.isAuthenticating}
-        />
-      </div>
+      <SignInForm
+        onChange={this.handleChange}
+        onSubmit={this.handleSubmit}
+        email={this.state.email}
+        password={this.state.password}
+        isAuthenticating={this.state.isAuthenticating}
+        flash={this.props.flash}
+      />
     )
   }
 }
 
 const mapStateToProps = state => {
-  console.log(state)
   return {
     nextPathname: state.routing.locationBeforeTransitions.state 
       ? state.routing.locationBeforeTransitions.state.nextPathname 
@@ -69,17 +69,15 @@ const mapStateToProps = state => {
     isAuthenticated: state.auth.isAuthenticated,
     isAuthenticating: state.auth.isAuthenticating,
     failure: state.auth.failure,
+    flash: state.flash,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginUser: (email, password) => {
-      dispatch(loginUser(email, password))
-    },
-    redirectOnLogin: (nextPathname) => {
-      dispatch(push(nextPathname))
-    },
+    loginUser: (email, password) => dispatch(loginUser(email, password)),
+    redirectOnLogin: (nextPathname) => dispatch(push(nextPathname)),
+    resetFlash: () => dispatch(resetFlashMessage()),
   }
 }
 
