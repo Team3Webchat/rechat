@@ -2,22 +2,23 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { Textfield, Button, Spinner, Card } from 'react-mdl'
 
-const RegisterForm = (props) => {
-  const { onChange, onSubmit, email, password, passwordConfirm, isAuthenticating } = props
+const RegisterForm = ({ onChange, onSubmit, email, password, 
+                        passwordConfirm, isAuthenticating, 
+                        firstname, lastname}) => {
 
-  //There is an error right now with the fields, you can't write any text in them
   return (
     <div className="signin-register">
     <Card shadow={0} className="signin-register-card">
       <form onSubmit={onSubmit}>
         <div>
-        <Textfield
-          label="Email"
-          required
-          type="email"
-          value={email}
-          onChange={onChange('email')}
-        />
+          <Textfield label="Email" required type="email"
+            value={email} onChange={onChange('email')} />
+        </div>
+        <div>
+          <Textfield label="First name" required
+            value={firstname} onChange={onChange('firstname')} />
+          <Textfield label="Last name" required
+            value={lastname} onChange={onChange('lastname')} />
         </div>
         <div>
         <Textfield
@@ -35,7 +36,9 @@ const RegisterForm = (props) => {
           required
           onChange={onChange('passwordConfirm')}
           value={passwordConfirm}/>
-      
+        </div>
+        <div>
+          
         </div>
         
         { isAuthenticating 
@@ -60,14 +63,10 @@ const RegisterForm = (props) => {
                     >
                       Back
                     </Button>
-
                 </Link>
               </div>
         }
-                        
-        
       </form>
-      
     </Card>
     </div>
   )
@@ -78,8 +77,8 @@ RegisterForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  firstname: PropTypes.string.isRequired,
+  lastname: PropTypes.string.isRequired,
 }
-
 
 export default RegisterForm
