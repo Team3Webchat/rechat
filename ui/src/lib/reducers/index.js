@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
-import testReducer from './testReducer'
 import auth from './authReducer'
+import search from './searchReducer'
 
 export default combineReducers({
   routing: routerReducer,
-  testReducer,
+  search,
   auth,
 })

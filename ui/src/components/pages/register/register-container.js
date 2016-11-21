@@ -14,6 +14,8 @@ class RegisterContainer extends Component {
       email: '',
       password: '',
       passwordConfirm: '',
+      firstname: '',
+      lastname: '',
       isAuthenticating: false,
       feedbackMessage: '',
     }
@@ -29,14 +31,14 @@ class RegisterContainer extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { email, password, passwordConfirm } = this.state
+    const { email, password, passwordConfirm, firstname, lastname } = this.state
     if (password !== passwordConfirm) {
       return this.setState({
         message: 'The password and the password confirmation does not match',
       })
     }
 
-    this.props.doRegisterUser({email, password})
+    this.props.doRegisterUser({email, password, firstname, lastname})
     console.log('registered')
     //this.props.redirectOnRegister()
   }
@@ -52,6 +54,8 @@ class RegisterContainer extends Component {
           password={this.state.password}
           passwordConfirm={this.state.passwordConfirm}
           isAuthenticating={this.state.isAuthenticating}
+          firstname={this.state.firstname}
+          lastname={this.state.lastname}
         />
       </div>
     )
@@ -68,8 +72,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    doRegisterUser: ({email, password}) => {
-      dispatch(registerUser({email, password}))
+    doRegisterUser: ({email, password, firstname, lastname}) => {
+      dispatch(registerUser({email, password, firstname, lastname}))
     },
     redirectOnRegister: (nextPathname) => {
       dispatch(push('/'))

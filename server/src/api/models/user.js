@@ -19,6 +19,16 @@ export default (sequelize, DataTypes) => sequelize.define('User',
       notEmpty: true,
       allowNull: false,
     },
+    firstname: {
+      type: DataTypes.STRING,
+      notEmpty: true,
+      allowNull: false,
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      notEmpty: true,
+      allowNull: false,
+    },
   },
 )
 

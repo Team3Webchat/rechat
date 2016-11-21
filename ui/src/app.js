@@ -4,8 +4,6 @@ import { Provider } from 'react-redux'
 import store, { history } from './lib/store'
 
 import Main from './components/main/main'
-import TestPage from './components/pages/test-page/test-page'
-import TestPage2 from './components/pages/test-page-2/test-page-2'
 import SignInContainer from './components/pages/sign-in/sign-in-container'
 import RegisterContainer from './components/pages/register/register-container'
 
@@ -54,9 +52,6 @@ class App extends Component {
             <Route path='/sign-in' component={SignInContainer} onEnter={doesNotRequireAuth}/>
             <Route path='/register' component={RegisterContainer} onEnter={doesNotRequireAuth}/>
             <Route path='/' component={Main} onEnter={requireAuth}>
-              <IndexRedirect to="testpage" />
-              <Route path='testpage' component={TestPage} />
-              <Route path='testpage2' component={TestPage2} />
             </Route>
           </Router>
         </Provider>

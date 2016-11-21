@@ -31,7 +31,7 @@ export function registerUserFailure(error) {
   }
 }
 
-export function registerUser({ email, password }) {
+export function registerUser({ email, password, firstname, lastname }) {
   return async function(dispatch) {
     dispatch(registerUserRequest())
     try {
@@ -40,6 +40,8 @@ export function registerUser({ email, password }) {
         body: JSON.stringify({
           email,
           password,
+          firstname,
+          lastname,
         }),
         /*credentials: 'include', */ // Server has wildcard for cors atm
         headers: {
