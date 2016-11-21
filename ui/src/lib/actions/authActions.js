@@ -1,5 +1,4 @@
 import jwtDecode from 'jwt-decode'
-import { push } from 'react-router-redux'
 
 import { baseUrl } from './'
 
@@ -67,7 +66,7 @@ export function loginUser(email, password) {
       console.log(res)
       const json = await res.json()
       console.log(json)
-      const decodedToken = jwtDecode(json.token)
+      jwtDecode(json.token) // on fail, throws error
       dispatch(loginUserSuccess({
         token: json.token, 
         flash: {

@@ -1,5 +1,3 @@
-import { push } from 'react-router-redux'
-import { baseUrl } from './'
 
 // SEARCH actions
 export const SEARCH_USER_REQUEST = 'SEARCH_USER_REQUEST'
@@ -32,9 +30,9 @@ export function searchUserFailure(error) {
 
 export function searchUser({ searchValue }) {
   const results =[ //Testdata
-        {name: 'Rebecca', email: 'hejsan@hej.com'},
-        {name: 'Rebeccaaaaa', email: 'hejsaaaaan@hej.com'}
-      ]
+    {name: 'Rebecca', email: 'hejsan@hej.com'},
+    {name: 'Rebeccaaaaa', email: 'hejsaaaaan@hej.com'},
+  ]
 
   return async function(dispatch) {
     dispatch(searchUserRequest())

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import { push } from 'react-router-redux'
-import { Textfield, Button } from 'react-mdl'
 import { loginUser } from '../../../lib/actions/authActions'
 import { resetFlashMessage } from '../../../lib/actions/flashActions'
 

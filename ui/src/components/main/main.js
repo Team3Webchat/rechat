@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Layout, Button, Header, Navigation, Drawer, Grid, Cell } from 'react-mdl'
+import { Layout, Header, Navigation, Drawer, Grid, Cell } from 'react-mdl'
 import { push } from 'react-router-redux'
 import Search from '../search/search'
 
@@ -27,9 +27,16 @@ const Main = (props) => {
         </Drawer>
         <Grid>
           <Cell>
-          <FlashMessage message={flash.message} type={flash.type} />
+          { flash.message 
+            ? <FlashMessage 
+            message={flash.message} 
+            type={flash.type}
+            inline
+            />
+            : ''
+          }
           <h4>Welcome to rechat {email}</h4>
-
+          <Search />
           </Cell>
         </Grid>
       </Layout>

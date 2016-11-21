@@ -1,8 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
 import { push } from 'react-router-redux'
-import { Textfield, Button, Spinner } from 'react-mdl'
 import RegisterForm from './register-form'
 
 import { registerUser } from '../../../lib/actions/registerActions'

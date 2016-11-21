@@ -1,7 +1,5 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
-import { push } from 'react-router-redux'
 import { Textfield, Button, Spinner } from 'react-mdl'
 
 import { searchUser } from '../../lib/actions/searchActions'
@@ -37,8 +35,6 @@ class Search extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { isDoneSearching } = nextProps
-
     if (this.props.isDoneSearching !== nextProps.isDoneSearching)
       this.setState({
         isDoneSearching: !this.state.isDoneSearching,
