@@ -12,11 +12,11 @@ export function searchUserRequest() {
   }
 }
 
-export function searchUserSuccess({message}) {
+export function searchUserSuccess({results}) {
   return {
     type: SEARCH_USER_SUCCESS, 
     payload: {
-      message,
+      results,
     },
   }
 }
@@ -31,8 +31,16 @@ export function searchUserFailure(error) {
 }
 
 export function searchUser({ email }) {
+  console.log('här')
+  const results =[
+        {name: 'Rebecca', email: 'hejsan@hej.com'},
+        {name: 'Rebeccaaaaa', email: 'hejsaaaaan@hej.com'}
+      ]
+
   return async function(dispatch) {
+
     dispatch(searchUserRequest())
+    dispatch(searchUserSuccess({ results }))
     /*try {
       const res = await fetch(baseUrl + 'users', {
         method: 'POST',
