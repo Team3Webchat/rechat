@@ -55,7 +55,7 @@ export function searchUser({ searchValue }) {
       console.log(res)
       const json = await res.json()
       const { results } = json
-      dispatch(searchrUserSuccess({ results }))
+      dispatch(searchUserSuccess({ results }))
       dispatch(push('/'))
 
     } catch(e) {
