@@ -2,13 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Layout, Button, Header, Navigation, Drawer } from 'react-mdl'
 import { push } from 'react-router-redux'
+import Search from './search'
 
 import { logout } from '../../lib/actions/authActions'
 
 import './style.css'
 
 const Main = (props) => {
-  const { email, doLogout } = props
+  const { email, doLogout} = props
+  console.log(Search)
   return (
     <div>
       <Layout>
@@ -21,6 +23,7 @@ const Main = (props) => {
         >
           Sign out
         </Button>
+        <Search/>
       </Layout>
     </div>
   )
