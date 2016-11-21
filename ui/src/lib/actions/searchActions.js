@@ -12,50 +12,55 @@ export function searchUserRequest() {
   }
 }
 
-export function searchUserSuccess({message}) {
+export function searchUserSuccess({results}) {
   return {
-    type: SEARCH_USER_SUCCESS, 
+    type: SEARCH_USER_SUCCESS,
     payload: {
-      message,
+      results,
     },
   }
 }
 
 export function searchUserFailure(error) {
   return {
-    type: SEARCH_USER_FAILURE, 
+    type: SEARCH_USER_FAILURE,
     payload: {
       error,
     },
   }
 }
 
-export function searchUser({ email }) {
+export function searchUser({ searchValue }) {
+  /*const results =[ //Testdata
+        {name: 'Rebecca', email: 'hejsan@hej.com'},
+        {name: 'Rebeccaaaaa', email: 'hejsaaaaan@hej.com'}
+      ]
+ */
   return async function(dispatch) {
     dispatch(searchUserRequest())
-    /*try {
-      const res = await fetch(baseUrl + 'users', {
+    //dispatch(searchUserSuccess({ results })) //test data
+    try {
+      const res = await fetch(baseUrl + 'search', {
         method: 'POST',
         body: JSON.stringify({
-          email,
-          password,
+          searchValue,
         }),
         //credentials: 'include',  // Server has wildcard for cors atm
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },  
+        },
       })
 
       console.log(res)
       const json = await res.json()
-      const { message, token } = json
-      dispatch(registerUserSuccess({ token, message}))
+      const { results } = json
+      dispatch(searchrUserSuccess({ results }))
       dispatch(push('/'))
 
     } catch(e) {
-      dispatch(registerUserFailure())
+      dispatch(searchUserFailure())
     }
-    */
+
   }
 }

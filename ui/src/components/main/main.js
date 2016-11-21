@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Layout, Button, Header, Navigation, Drawer } from 'react-mdl'
 import { push } from 'react-router-redux'
-import Search from './search'
+import Search from '../search/search'
 
 import { logout } from '../../lib/actions/authActions'
 

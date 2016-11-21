@@ -26,4 +26,9 @@ const store = createStore(
 export const history = syncHistoryWithStore(hashHistory, store)
 export default store
 
+export function getToken() {
+  return store.getState().auth.token
+}
+
+console.log(getToken())
 
