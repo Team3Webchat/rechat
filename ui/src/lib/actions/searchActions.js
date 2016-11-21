@@ -31,15 +31,15 @@ export function searchUserFailure(error) {
 }
 
 export function searchUser({ searchValue }) {
-  /*const results =[ //Testdata
+  const results =[ //Testdata
         {name: 'Rebecca', email: 'hejsan@hej.com'},
         {name: 'Rebeccaaaaa', email: 'hejsaaaaan@hej.com'}
       ]
- */
+
   return async function(dispatch) {
     dispatch(searchUserRequest())
-    //dispatch(searchUserSuccess({ results })) //test data
-    try {
+    dispatch(searchUserSuccess({ results })) //test data
+    /*try {
       const res = await fetch(baseUrl + 'search', {
         method: 'POST',
         body: JSON.stringify({
@@ -60,7 +60,7 @@ export function searchUser({ searchValue }) {
 
     } catch(e) {
       dispatch(searchUserFailure())
-    }
+    }*/
 
   }
 }
