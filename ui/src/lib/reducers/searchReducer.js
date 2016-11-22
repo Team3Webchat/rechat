@@ -33,6 +33,7 @@ function search(state = initialState, action) {
         ...state,
         isSearching: false,
         failure: true,
+        searchResults: action.payload.error,
       }
     default:
       return state
