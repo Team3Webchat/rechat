@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux'
+import { baseUrl } from './'
 
 // SEARCH actions
 export const SEARCH_USER_REQUEST = 'SEARCH_USER_REQUEST'
@@ -28,16 +30,13 @@ export function searchUserFailure(error) {
   }
 }
 
-export function searchUser({ searchValue }) {
-  const results =[ //Testdata
-    {name: 'Rebecca', email: 'hejsan@hej.com'},
-    {name: 'Rebeccaaaaa', email: 'hejsaaaaan@hej.com'},
-  ]
+export function searchUser( searchValue ) {
 
   return async function(dispatch) {
     dispatch(searchUserRequest())
-    dispatch(searchUserSuccess({ results })) //test data
-    /*try {
+    console.log("tjodoo: "+searchValue)
+    //dispatch(searchUserSuccess({ results })) //test data
+    try {
       const res = await fetch(baseUrl + 'search', {
         method: 'POST',
         body: JSON.stringify({
@@ -51,13 +50,22 @@ export function searchUser({ searchValue }) {
       })
 
       const json = await res.json()
+      console.log(json)
       const { results } = json
-      dispatch(searchUserSuccess({ results }))
-      dispatch(push('/'))
+      console.log(results)
+      
+      //dispatch(push('/'))
+
+      //TODO: är detta rätt sätt att hantera om ingen användare hittas?
+      if(results.length > 0){
+          dispatch(searchUserSuccess({ results }))
+      }else{
+        dispatch(searchUserFailure(results.code))
+      }
 
     } catch(e) {
-      dispatch(searchUserFailure())
-    }*/
+      dispatch(searchUserFailure(e))
+    }
 
   }
 }

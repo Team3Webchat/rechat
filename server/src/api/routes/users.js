@@ -38,5 +38,27 @@ usersRouter.route('/users')
       })
   })
 
+usersRouter.route('/users/:id')
+  .get((req, res, next) => {
+    const { id } = req.params
+    User.findOne({ where: { id }, attributes: { exclude: ['password']}})
+      .then(u => res.json(u))
+      .catch(err => res.json(err))
+  })
+  .put((req, res, next) => {
+    return res.json('/users/:id/ PUT is not implemented yet')
+  }) 
+
+usersRouter.route('/users/:id/friends')
+  .get((req, res, next) => {
+    const { id } = req.params
+    User.findOne({ where: { id }})
+      .then(u => u.friends())
+      .then(f => res.json(f))
+      .catch(err => console.log(err))
+  })
+
+
+
 
 export default usersRouter
