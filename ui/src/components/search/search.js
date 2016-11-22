@@ -9,9 +9,11 @@ class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      email: '',
+      searchValue: '',
       isDoneSearching: null,
       isSearching: null,
+      searchResults: null,
+      failure: null,
     }
   }
 
@@ -25,35 +27,39 @@ class Search extends Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    const { email } = this.state
+    const { searchValue } = this.state
     //skicka till dispatch sökning
-    console.log(this.props)
-    const { doSearchEmail } = this.props
-    doSearchEmail({email})
+    const { doSearch } = this.props
+    doSearch(searchValue)
     console.log('söker ....')
     console.log(this.state)
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("chaning")
     if (this.props.isDoneSearching !== nextProps.isDoneSearching)
       this.setState({
         isDoneSearching: !this.state.isDoneSearching,
+        searchResults: !this.state.searchResults,
+        failure: !this.state.failure,
+      })
+      if (this.props.isSearching !== nextProps.isSearching)
+        this.setState({
+        isSearching: !this.state.isSearching,
       })
   }
 
   render() {
-    const { isDoneSearching, isSearching } = this.state
-    console.log(isDoneSearching);
+    const { isDoneSearching, isSearching, searchResults, failure, searchValue } = this.state
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
         <div>
         <Textfield
-          label="Email"
+          label="Name"
           required
-          type="email"
-          value={this.state.email}
-          onChange={this.handleChange('email')}
+          value={searchValue}
+          onChange={this.handleChange('searchValue')}
         />
         </div>
         { isSearching ? <Spinner />
@@ -72,7 +78,14 @@ class Search extends Component {
         </form>
         { isDoneSearching &&
           <div id="searchBox">
-            <h3>heeej</h3>
+          { !failure ? 
+              <h3>hittar ingen användare</h3>
+              :
+              <h3>hittade en: 
+                  
+              </h3>
+            }
+            
           </div>
         }
       </div>
@@ -85,13 +98,15 @@ const mapStateToProps = state => {
     token: state.auth.token,
     isDoneSearching: state.search.isDoneSearching,
     isSearching: state.search.isSearching,
+    searchResults: state.search.searchResults,
+    failure: state.search.failure,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    doSearchEmail: ({email}) => {
-      dispatch(searchUser({email}))
+    doSearch: (searchValue) => {
+      dispatch(searchUser(searchValue))
     },
   }
 }
