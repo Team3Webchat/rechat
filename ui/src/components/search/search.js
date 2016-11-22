@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Textfield, Button, Spinner } from 'react-mdl'
 
 import { searchUser } from '../../lib/actions/searchActions'
+import SearchBox from './searchBox'
 
 class Search extends Component {
     //const { email } = this.state
@@ -36,21 +37,26 @@ class Search extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("chaning")
     if (this.props.isDoneSearching !== nextProps.isDoneSearching)
       this.setState({
         isDoneSearching: !this.state.isDoneSearching,
-        searchResults: !this.state.searchResults,
-        failure: !this.state.failure,
+        failure: nextProps.failure,
+        searchResults: nextProps.searchResults,
       })
       if (this.props.isSearching !== nextProps.isSearching)
         this.setState({
         isSearching: !this.state.isSearching,
       })
+      if (this.props.failure !== nextProps.failure)
+        this.setState({
+          failure: nextProps.failure,
+        searchResults: nextProps.searchResults,
+      })
   }
 
   render() {
     const { isDoneSearching, isSearching, searchResults, failure, searchValue } = this.state
+
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
@@ -77,16 +83,10 @@ class Search extends Component {
         }
         </form>
         { isDoneSearching &&
-          <div id="searchBox">
-          { !failure ? 
-              <h3>hittar ingen användare</h3>
-              :
-              <h3>hittade en: 
-                  
-              </h3>
-            }
-            
-          </div>
+          <SearchBox
+              failure={this.state.failure}
+              searchResults={this.state.searchResults}
+          />
         }
       </div>
     )
