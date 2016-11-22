@@ -31,6 +31,31 @@ Object.keys(models).forEach(model => {
   }
 })
 
+// models.User.findOne({where: { email: 'user@test.com'}})
+//   .then(d => {
+//     models.User.findOne({
+//       where: { email: 'alexdriagin12@gmail.com' },
+//     })
+//     .then(a => {
+//       d.addFriend(a)
+//         .then(() => {
+          
+//         })          
+//     })
+//   })
+
+models.User.findOne({where:{email:'user@test.com'}})
+  .then(u => {
+    return u.friends()
+  })
+  .then(friends => {
+    console.log()
+    console.log()
+    console.log("____________USERS FRIENDS________")
+    console.log(friends)
+  })
+
+
 
 
 export default models
