@@ -1,3 +1,5 @@
+import { push } from 'react-router-redux'
+import { baseUrl } from './'
 
 // SEARCH actions
 export const SEARCH_USER_REQUEST = 'SEARCH_USER_REQUEST'
@@ -28,7 +30,7 @@ export function searchUserFailure(error) {
   }
 }
 
-export function searchUser({ searchValue }) {
+export function searchUser( email ) {
   const results =[ //Testdata
     {name: 'Rebecca', email: 'hejsan@hej.com'},
     {name: 'Rebeccaaaaa', email: 'hejsaaaaan@hej.com'},
@@ -36,12 +38,13 @@ export function searchUser({ searchValue }) {
 
   return async function(dispatch) {
     dispatch(searchUserRequest())
-    dispatch(searchUserSuccess({ results })) //test data
-    /*try {
+    console.log("tjodoo: "+email)
+    //dispatch(searchUserSuccess({ results })) //test data
+    try {
       const res = await fetch(baseUrl + 'search', {
         method: 'POST',
         body: JSON.stringify({
-          searchValue,
+          email,
         }),
         //credentials: 'include',  // Server has wildcard for cors atm
         headers: {
@@ -51,13 +54,15 @@ export function searchUser({ searchValue }) {
       })
 
       const json = await res.json()
+      console.log(json)
       const { results } = json
+      console.log(results)
       dispatch(searchUserSuccess({ results }))
-      dispatch(push('/'))
+      //dispatch(push('/'))
 
     } catch(e) {
       dispatch(searchUserFailure())
-    }*/
+    }
 
   }
 }

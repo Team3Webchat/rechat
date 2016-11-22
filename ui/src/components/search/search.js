@@ -27,9 +27,8 @@ class Search extends Component {
     e.preventDefault()
     const { email } = this.state
     //skicka till dispatch sökning
-    console.log(this.props)
     const { doSearchEmail } = this.props
-    doSearchEmail({email})
+    doSearchEmail(email)
     console.log('söker ....')
     console.log(this.state)
   }
@@ -42,7 +41,7 @@ class Search extends Component {
   }
 
   render() {
-    const { isDoneSearching, isSearching } = this.state
+    const { isDoneSearching, isSearching, email } = this.state
     console.log(isDoneSearching);
     return (
       <div>
@@ -52,7 +51,7 @@ class Search extends Component {
           label="Email"
           required
           type="email"
-          value={this.state.email}
+          value={email}
           onChange={this.handleChange('email')}
         />
         </div>
@@ -90,8 +89,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    doSearchEmail: ({email}) => {
-      dispatch(searchUser({email}))
+    doSearchEmail: (email) => {
+      dispatch(searchUser(email))
     },
   }
 }
