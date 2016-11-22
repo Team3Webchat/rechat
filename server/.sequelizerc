@@ -3,5 +3,6 @@ var path = require("path")
 module.exports = {
   'config': path.resolve('src', 'config', 'db.js'),
   'migrations-path': path.resolve('src', 'api', 'migrations'),
-  'seeders-path': path.resolve('src', 'api', 'seeders')
+  'seeders-path': path.resolve('src', 'api', 'seeders'),
+  'models-path': path.resolve('src', 'api', 'models')
 }
