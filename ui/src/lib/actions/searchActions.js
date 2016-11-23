@@ -40,7 +40,6 @@ export function searchUser( searchValue ) {
 
   return async function(dispatch) {
     dispatch(searchUserRequest())
-    console.log("tjodoo: "+searchValue)
     //dispatch(searchUserSuccess({ results })) //test data
     try {
       const res = await fetch(baseUrl + 'search', {
@@ -56,9 +55,7 @@ export function searchUser( searchValue ) {
       })
 
       const json = await res.json()
-      console.log(json)
       const { results } = json
-      console.log(results)
 
       //dispatch(push('/'))
 

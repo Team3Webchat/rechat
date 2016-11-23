@@ -15,7 +15,7 @@ export function loginUserRequest() {
   }
 }
 
-export function loginUserSuccess({token, flash}) {
+export function loginUserSuccess({token, flash, friends}) {
 
   localStorage.setItem('token', token) // move this elswhere later
   return {
@@ -23,6 +23,7 @@ export function loginUserSuccess({token, flash}) {
     payload: {
       token,
       flash,
+      friends,
     },
   }
 }
@@ -36,7 +37,7 @@ export function loginUserFailure({flash}) {
   }
 }
 
-export function logout({ flash }) {
+export function logout({flash}) {
   localStorage.removeItem('token')
   return {
     type: LOGOUT_USER,
@@ -68,11 +69,12 @@ export function loginUser(email, password) {
       console.log(json)
       jwtDecode(json.token) // on fail, throws error
       dispatch(loginUserSuccess({
-        token: json.token, 
+        token: json.token,
         flash: {
           message: 'Successful login',
           type: 'success',
         },
+        friends: json.friends
       }))
     } catch(e) {
       console.log('Error signing user in')
@@ -83,7 +85,6 @@ export function loginUser(email, password) {
         },
       }))
     }
-    
+
   }
 }
-
