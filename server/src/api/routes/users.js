@@ -55,23 +55,31 @@ usersRouter.route('/:id')
   }) 
 
 usersRouter.route('/:id/friends')
-  // .all(authenticateToken)
+  .all(authenticateToken)
   .get((req, res, next) => {
     const { id } = req.params
     const { pending } = req.query
     User.findOne({ where: { id }})
-      .then(u => u.friends())
-      .then(f => pending 
-              ? f.filter(friend => !friend['Friendship.accepted'] && id === friend['Friendship.FriendId']) 
-              : f.filter(friend => friend['Friendship.accepted']))
-      .then(f => res.json(f))
+      .then(async u => {
+        const [friends, friendRequests, sentRequests] = await Promise.all([
+          u.friends(),
+          u.friendRequests(),
+          u.sentFriendRequests(),
+        ])
+        res.json({
+          friends, friendRequests, sentRequests,
+        })
+      })
       .catch(err => console.log(err))
   })
   .post(async (req, res, next) => {
     const { id } = req.params
     const { authorization } = req.headers
-    const token = authorization.split(' ')[0]
+    const token = authorization.split(' ')[1]
     const decoded = await jwt.verifyAsync(token, 'supersecret')
+
+    if (id === decoded.id)
+      return res.status(400).json({ message: 'Cannot add yourself as friend'})
 
     const [receiver, sender] = await Promise.all([
       User.findOne({ where: { id }}),
@@ -87,7 +95,19 @@ usersRouter.route('/:id/friends')
 usersRouter.route('/:id/friends/:friendId')
   .all(authenticateToken)
   .get(async(req, res, next) => {
-    res.json("HAHAHA")
+    const { id, friendId } = req.params
+    const [friendship, friend] = await Promise.all([
+      Friendship.findOne({ where: { $or: [{ FriendId: id, UserId: friendId }, { FriendId: friendId, UserId: id }]}}),
+      User.findOne({ where: { id: friendId }}),
+    ]) 
+
+    if (friendship.accepted) {
+      res.json({ friend, friendship })
+    } else {
+      res.json({ message: 'No Friend Found'})
+    }
+
+    
   })
   .put(async (req, res, next) => {
     const { id, friendId } = req.params
@@ -114,14 +134,10 @@ usersRouter.route('/:id/friends/:friendId')
       accepted: true,
     })
 
-    
-
-
     res.json({
       message: 'Friendship accepted',
       friendship,
     })
-
   })
 
 

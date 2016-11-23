@@ -23,7 +23,7 @@ class DrawerClass extends Component {
   }
 
   toggleFriends = e =>{
-      this.props.doToggleFriends(this.state.showFriends)
+    this.props.doToggleFriends(this.state.showFriends)
 
 
   }
@@ -40,18 +40,18 @@ class DrawerClass extends Component {
 
     return (
       <Drawer title="Title">
-            <Navigation>
-                <a href="#" onClick={this.toggleFriends}>Friends</a>
-                { showFriends &&
-                    //Skapa ny component som renderar ut användarens vänner
-                    <Friends/>
-                }
+        <Navigation>
+              <a href="#" onClick={this.toggleFriends}>Friends</a>
+              { showFriends &&
+                  //Skapa ny component som renderar ut användarens vänner
+                  <Friends/>
+              }
 
-            </Navigation>
-            <Navigation>
-                <a href="#">Chat</a>
-            </Navigation>
-        </Drawer>
+          </Navigation>
+          <Navigation>
+              <a href="#">Chat</a>
+          </Navigation>
+      </Drawer>
     )
   }
 }

@@ -26,13 +26,13 @@ class Friends extends Component {
       <List>
       {
         friends.length > 0 ?
-            friends.map(function (user) {
-                return (
-                  <ListItem key={user}>
-                    <Icon name="account_box" />{user.firstname}  {user.lastname}
-                  </ListItem>
-                )
-            })
+          friends.map(function (user) {
+            return (
+              <ListItem key={user}>
+                <Icon name="account_box" />{user.firstname}  {user.lastname}
+              </ListItem>
+            )
+          })
         :
         <p>You dont have any friends loser</p>
       }
@@ -43,9 +43,9 @@ class Friends extends Component {
 
 
 const mapStateToProps = state => {
-  console.log(state);
+
   return {
-      friends: state.auth.friends,
+    friends: state.auth.friends,
   }
 }
 

@@ -53,7 +53,7 @@ export default (sequelize, DataTypes) => {
          * Both friends that added you and friends that you added are returned from the database.
          * It saves us a row in the db for each friendship.
          */
-        friends() {
+        friendships() {
           return sequelize.query(
             `SELECT "User"."id", "User"."email", "User"."firstname",
             "User"."lastname", "User"."createdAt", "User"."updatedAt",
@@ -68,8 +68,23 @@ export default (sequelize, DataTypes) => {
             ("User"."id" = "Friendship"."UserId" AND "Friendship"."FriendId" = :id)
             `,
             { replacements: { id: this.id }, type: sequelize.QueryTypes.SELECT })
+            .catch(err => new Error('Database error'))
+        },
+
+        friends() {
+          return this.friendships()
             .then(friends => friends.filter(f => f['Friendship.accepted']))
-            .catch(err => console.log(err))
+        },
+
+
+        friendRequests() {
+          return this.friendships()
+            .then(friends => friends.filter(f => !f['Friendship.accepted'] && f['Friendship.FriendId'] === this.id))
+        },
+
+        sentFriendRequests() {
+          return this.friendships()
+            .then(friends => friends.filter(f => !f['Friendship.accepted'] && f['Friendship.UserId'] === this.id)) 
         },
 
 
