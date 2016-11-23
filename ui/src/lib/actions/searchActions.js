@@ -5,7 +5,7 @@ import { baseUrl } from './'
 export const SEARCH_USER_REQUEST = 'SEARCH_USER_REQUEST'
 export const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
 export const SEARCH_USER_FAILURE = 'SEARCH_USER_FAILURE'
-
+export const END_SEARCH = 'END_SEARCH'
 export function searchUserRequest() {
   return {
     type: SEARCH_USER_REQUEST,
@@ -27,6 +27,12 @@ export function searchUserFailure(error) {
     payload: {
       error,
     },
+  }
+}
+
+export function endSearch2(error) {
+  return {
+    type: END_SEARCH,
   }
 }
 
@@ -53,7 +59,7 @@ export function searchUser( searchValue ) {
       console.log(json)
       const { results } = json
       console.log(results)
-      
+
       //dispatch(push('/'))
 
       //TODO: är detta rätt sätt att hantera om ingen användare hittas?
@@ -67,5 +73,12 @@ export function searchUser( searchValue ) {
       dispatch(searchUserFailure(e))
     }
 
+  }
+}
+
+
+export function endSearch() {
+  return async function(dispatch) {
+    dispatch(endSearch2())
   }
 }
