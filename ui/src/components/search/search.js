@@ -21,19 +21,19 @@ class Search extends Component {
   handleChange = key => {
     return function(e) {
       const state = {}
+      const props = this.props
       state[key] = e.target.value
       this.setState(state)
-    }.bind(this)
-  }
+//Sätt timeout innan skcikar till servern
+      if (this.promise)
+        clearInterval(this.promise)
 
-  handleSubmit = e => {
-    e.preventDefault()
-    const { searchValue } = this.state
-    //skicka till dispatch sökning
-    const { doSearch } = this.props
-    doSearch(searchValue)
-    console.log('söker ....')
-    console.log(this.state)
+      this.promise = setTimeout(function(){
+        console.log(state.searchValue);
+        props.doSearch(state.searchValue)
+      }, 1000);
+    }.bind(this)
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -68,19 +68,7 @@ class Search extends Component {
           onChange={this.handleChange('searchValue')}
         />
         </div>
-        { isSearching ? <Spinner />
-        :  <div>
-              <Button
-                  className="buttons"
-                  primary
-                  raised
-                  ripple
-                  type="submit"
-              >
-                  Search
-              </Button>
-          </div>
-        }
+
         </form>
         { isDoneSearching &&
           <SearchBox
