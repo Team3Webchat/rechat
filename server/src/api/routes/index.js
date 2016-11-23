@@ -14,7 +14,7 @@ router.route('/health')
   })
 
 router.use(authRouter)
-router.use(usersRouter)
+router.use('/users', usersRouter)
 router.use(searchRouter)
 
 

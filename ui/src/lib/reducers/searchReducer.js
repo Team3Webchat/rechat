@@ -2,6 +2,7 @@ import {
   SEARCH_USER_REQUEST,
   SEARCH_USER_SUCCESS,
   SEARCH_USER_FAILURE,
+  END_SEARCH,
 } from '../actions/searchActions'
 
 const initialState = {
@@ -13,7 +14,7 @@ const initialState = {
 }
 
 function search(state = initialState, action) {
-    
+
   switch(action.type) {
     case SEARCH_USER_REQUEST:
       return{
@@ -35,6 +36,15 @@ function search(state = initialState, action) {
         failure: true,
         searchResults: action.payload.error,
       }
+      case END_SEARCH:
+        return{
+          ...state,
+          searchValue: null,
+          searchResults: null,
+          isSearching: null,
+          isDoneSearching: null,
+          failure: false,
+        }
     default:
       return state
   }
