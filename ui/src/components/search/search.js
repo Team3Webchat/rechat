@@ -27,13 +27,13 @@ class Search extends Component {
 //Sätt timeout innan skcikar till servern
       if (this.promise)
         clearInterval(this.promise)
-
-      this.promise = setTimeout(function(){
-        console.log(state.searchValue);
-        props.doSearch(state.searchValue)
-      }, 1000);
+      if(e.target.value != ''){
+        this.promise = setTimeout(function(){
+          console.log(state.searchValue);
+          props.doSearch(state.searchValue)
+        }, 1000)
+      }
     }.bind(this)
-
   }
 
   componentWillReceiveProps(nextProps) {
