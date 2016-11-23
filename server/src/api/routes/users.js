@@ -101,10 +101,6 @@ usersRouter.route('/:id/friends/:friendId')
       Friendship.findOne({ where: { UserId: friendId, FriendId: id }}),
     ])
 
-
-    console.log('receiver: ', id)
-    console.log('sender: ', friendId)
-    console.log('logged in id: ', decoded.id)
     const canAccept = decoded.id === id && decoded.id === friendship.FriendId
     console.log(canAccept)
 
