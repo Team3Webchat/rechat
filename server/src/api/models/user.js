@@ -1,7 +1,7 @@
 import Friendship from './friendship'
 
 export default (sequelize, DataTypes) => {
-  const User = sequelize.define('User', 
+  const User = sequelize.define('User',
     {
       id: {
         type: DataTypes.UUID,
@@ -32,15 +32,15 @@ export default (sequelize, DataTypes) => {
         notEmpty: true,
         allowNull: false,
       },
-      
+
     },
     {
       classMethods: {
         associate(models) {
           // models.User.belongsToMany(models.User, { as: 'Friends', through: models.Friendship})
-          models.User.belongsToMany(models.User, 
-            { 
-              as: 'Friends', 
+          models.User.belongsToMany(models.User,
+            {
+              as: 'Friends',
               through: models.Friendship,
             }
           )
@@ -55,21 +55,24 @@ export default (sequelize, DataTypes) => {
          */
         friends() {
           return sequelize.query(
-            `SELECT "User"."id", "User"."email", "User"."firstname", 
-            "User"."lastname", "User"."createdAt", "User"."updatedAt", 
-            "Friendship"."accepted" AS "Friendship.accepted", 
-            "Friendship"."createdAt" AS "Friendship.createdAt", 
-            "Friendship"."updatedAt" AS "Friendship.updatedAt", 
-            "Friendship"."UserId" AS "Friendship.UserId", "Friendship"."FriendId" AS 
-            "Friendship.FriendId" FROM "Users" AS "User" 
-            INNER JOIN "Friendships" AS 
-            "Friendship" ON ("User"."id" = "Friendship"."FriendId" AND 
+            `SELECT "User"."id", "User"."email", "User"."firstname",
+            "User"."lastname", "User"."createdAt", "User"."updatedAt",
+            "Friendship"."accepted" AS "Friendship.accepted",
+            "Friendship"."createdAt" AS "Friendship.createdAt",
+            "Friendship"."updatedAt" AS "Friendship.updatedAt",
+            "Friendship"."UserId" AS "Friendship.UserId", "Friendship"."FriendId" AS
+            "Friendship.FriendId" FROM "Users" AS "User"
+            INNER JOIN "Friendships" AS
+            "Friendship" ON ("User"."id" = "Friendship"."FriendId" AND
             "Friendship"."UserId" = :id) OR
             ("User"."id" = "Friendship"."UserId" AND "Friendship"."FriendId" = :id)
-            `, 
+            `,
             { replacements: { id: this.id }, type: sequelize.QueryTypes.SELECT })
+            .then(friends => friends.filter(f => f['Friendship.accepted']))
             .catch(err => console.log(err))
         },
+
+
       },
     }
   )

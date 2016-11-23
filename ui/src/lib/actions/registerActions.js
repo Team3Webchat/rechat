@@ -12,19 +12,20 @@ export function registerUserRequest() {
   }
 }
 
-export function registerUserSuccess({token, message}) {
+export function registerUserSuccess({token, message, friends}) {
   return {
-    type: REGISTER_USER_SUCCESS, 
+    type: REGISTER_USER_SUCCESS,
     payload: {
       token,
       message,
+      friends,
     },
   }
 }
 
 export function registerUserFailure(error) {
   return {
-    type: REGISTER_USER_FAILURE, 
+    type: REGISTER_USER_FAILURE,
     payload: {
       error,
     },
@@ -47,12 +48,12 @@ export function registerUser({ email, password, firstname, lastname }) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-        },  
+        },
       })
 
       const json = await res.json()
-      const { message, token } = json
-      dispatch(registerUserSuccess({ token, message}))
+      const { message, token, friends } = json
+      dispatch(registerUserSuccess({ token, message, friends}))
       dispatch(push('/'))
 
     } catch(e) {

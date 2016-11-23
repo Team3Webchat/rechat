@@ -16,6 +16,7 @@ import {
 const initialState = {
   token: null,
   email: null,
+  friends: null,
   isAuthenticated: false,
   isAuthenticating: false,
   failure: false,
@@ -36,11 +37,12 @@ function auth(state = initialState, action) {
         isAuthenticating: false,
         isAuthenticated: true,
         email: decoded.email,
+        friends: action.payload.friends,
         token: action.payload.token,
         message: action.payload.message,
         failure: false,
       }
-    case LOGIN_USER_FAILURE: 
+    case LOGIN_USER_FAILURE:
       return {
         ...state,
         isAuthenticating: false,
@@ -74,6 +76,7 @@ function auth(state = initialState, action) {
         ...state,
         isAuthenticating: false,
         isAuthenticated: true,
+        friends: action.payload.friends,
         email: decoded.email,
         token: action.payload.token,
         message: action.payload.message,

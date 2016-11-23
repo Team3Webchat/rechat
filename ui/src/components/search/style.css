@@ -13,3 +13,10 @@
   min-width: 30px !important;
   width: 30px !important;
 }
+.closeSearch{
+  background: rgba(255, 0, 0, 0.14) !important;
+  float: right;
+  height: 30px !important;
+  min-width: 30px !important;
+  width: 30px !important;
+}

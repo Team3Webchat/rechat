@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Textfield } from 'react-mdl'
+import { Textfield, Icon, FABButton } from 'react-mdl'
 
 import { searchUser, endSearch } from '../../lib/actions/searchActions'
 import SearchBox from './searchBox'
@@ -38,6 +38,11 @@ class Search extends Component {
     }.bind(this)
   }
 
+  handleEndSearch = e => {
+    //get searchField and clear it
+    this.props.endSearch()
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.isDoneSearching !== nextProps.isDoneSearching)
       this.setState({
@@ -61,16 +66,16 @@ class Search extends Component {
 
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-        <div>
-        <Textfield
-          label="Name"
-          required
-          value={searchValue}
-          onChange={this.handleChange('searchValue')}
-        />
-        </div>
-
+        <form>
+          <Textfield
+            label='Name'
+            required
+            value={searchValue}
+            onChange={this.handleChange('searchValue')}
+          />
+          <FABButton colored className='closeSearch' onClick={this.handleEndSearch}>
+            <Icon name="close" />
+          </FABButton>
         </form>
         { isDoneSearching &&
           <SearchBox

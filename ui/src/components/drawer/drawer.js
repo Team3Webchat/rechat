@@ -4,13 +4,13 @@ import { Textfield, Button, Spinner, Drawer, Navigation } from 'react-mdl'
 
 import { toggleFriends } from '../../lib/actions/menuDrawerActions'
 
+import Friends from './friends'
+
 class DrawerClass extends Component {
-    //const { email } = this.state
   constructor(props) {
     super(props)
     this.state = {
       showFriends: null,
-
     }
   }
 
@@ -24,8 +24,8 @@ class DrawerClass extends Component {
 
   toggleFriends = e =>{
       this.props.doToggleFriends(this.state.showFriends)
-  
-    
+
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -43,10 +43,10 @@ class DrawerClass extends Component {
             <Navigation>
                 <a href="#" onClick={this.toggleFriends}>Friends</a>
                 { showFriends &&
-                    <p>Showing friends</p>
                     //Skapa ny component som renderar ut användarens vänner
+                    <Friends/>
                 }
-                
+
             </Navigation>
             <Navigation>
                 <a href="#">Chat</a>

@@ -1,10 +1,10 @@
-import React, { PropTypes } from 'react'
-import { Card, CardText, Button, FABButton,Icon } from 'react-mdl'
+import React from 'react'
+import { Card, CardText, FABButton,Icon } from 'react-mdl'
 
 import './style.css'
 
 const SearchBox = (props) => {
-    const { failure, searchResults } = props
+    const { failure } = props
     return (
 
           <Card id='searchBox' shadow={0}>

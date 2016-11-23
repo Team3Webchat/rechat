@@ -40,18 +40,20 @@ passport.use(new BearerStrategy(bearerAuth))
 
 export function login(req, res, next, message) {
   console.log(req.body)
-  passport.authenticate('local', (err, user, info) => {
+  passport.authenticate('local', async (err, user, info) => {
     console.log(info)
     if (err) {
       console.log(' Err ')
       return next(err)
     }
-      
+
     if (!user) {
       console.log('No User found')
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
     }
-    return res.json({ message, token: jwt.sign({ id: user.id, email: user.email }, jwtSecret) })
+
+    const friends = await user.friends()
+    return res.json({ message, token: jwt.sign({ id: user.id, email: user.email }, jwtSecret), user, friends, })
   })(req, res, next)
 }
 
