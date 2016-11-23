@@ -93,11 +93,11 @@ usersRouter.route('/:id/friends')
 
 
 usersRouter.route('/:id/friends/:friendId')
-  .all(authenticateToken)
+  //.all(authenticateToken)
   .get(async(req, res, next) => {
     const { id, friendId } = req.params
     const [friendship, friend] = await Promise.all([
-      Friendship.findOne({ where: { $or: [{ FriendId: id, UserId: friendId }, { FriendId: friendId, UserId: id }]}}),
+      Friendship.findOne({ where: { $or: [{ friendId: id, userId: friendId }, { friendId: friendId, userId: id }]}}),
       User.findOne({ where: { id: friendId }}),
     ]) 
 
@@ -116,12 +116,23 @@ usersRouter.route('/:id/friends/:friendId')
 
     const decoded = await jwt.verifyAsync(token, 'supersecret')
     
+    // We only look for requests send FROM antother user TO this user. Hence,
+    // the id's need to be flipped in the query since friendId is the id of 
+    // the receiver
     const [user, friendship] = await Promise.all([
       User.findOne({ where: { id }}),
-      Friendship.findOne({ where: { UserId: friendId, FriendId: id }}),
+      Friendship.findOne({ where: { userId: friendId, friendId: id }}), 
     ])
 
-    const canAccept = decoded.id === id && decoded.id === friendship.FriendId
+    if (!friendship) {
+      return res.status(400).json({message: 'Nothing to be found here.. No friendrequest..'})
+    }
+
+    if (friendship.accepted) {
+      return res.json({ message: "You are already friends with this person"})
+    }
+
+    const canAccept = decoded.id === id && decoded.id === friendship.friendId
     console.log(canAccept)
 
     if (!canAccept) {

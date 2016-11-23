@@ -14,15 +14,44 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('Users', [{
-      id: uuid.v4(),
-      email: 'user@test.com',
-      password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      firstname: 'Benny',
-      lastname: 'Svensson'
-    }], {})
+    return queryInterface.bulkInsert('users', [
+      {
+        id: uuid.v4(),
+        email: 'user@test.com',
+        password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        firstname: 'Benny',
+        lastname: 'Svensson'
+      },
+      {
+        id: uuid.v4(),
+        email: 'dan@test.com',
+        password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        firstname: 'Dan',
+        lastname: 'Abramov'
+      },
+      {
+        id: uuid.v4(),
+        email: 'alex@test.com',
+        password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        firstname: 'Alex',
+        lastname: 'Driaguine'
+      },
+      {
+        id: uuid.v4(),
+        email: 'linus@test.com',
+        password: bcrypt.hashSync('password', bcrypt.genSaltSync(10)),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        firstname: 'Linus',
+        lastname: 'Torvalds'
+      }
+    ], {})
   },
 
   down: function (queryInterface, Sequelize) {
@@ -34,6 +63,6 @@ module.exports = {
       return queryInterface.bulkDelete('Person', null, {});
     */
 
-    return queryInterface.bulkDelete('Users', null, {})
+    return queryInterface.bulkDelete('users', null, {})
   }
 };

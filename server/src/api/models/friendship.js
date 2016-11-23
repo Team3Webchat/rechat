@@ -1,5 +1,5 @@
 
-export default (sequelize, DataTypes) => sequelize.define('Friendship',
+export default (sequelize, DataTypes) => sequelize.define('friendship',
   {
     accepted: {
       type: DataTypes.BOOLEAN,
