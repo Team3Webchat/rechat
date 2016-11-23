@@ -44,16 +44,10 @@ Object.keys(models).forEach(model => {
 //     })
 //   })
 
-// models.User.findOne({where:{email:'user@test.com'}})
-//   .then(u => {
-//     return u.friends()
-//   })
-//   .then(friends => {
-//     console.log()
-//     console.log()
-//     console.log("____________USERS FRIENDS________")
-//     console.log(friends)
-//   })
+models.User.findOne({where:{email:'user@test.com'}})
+  .then(u => u.friends())
+  .then(f => console.log(f))
+
 
 // models.Friendship.findAll()
 //   .then(f => {
@@ -61,6 +55,8 @@ Object.keys(models).forEach(model => {
 //       friend.update({ accepted: false })
 //     })
 //   })
+
+
 
 
 

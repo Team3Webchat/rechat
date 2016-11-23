@@ -57,11 +57,11 @@ export default (sequelize, DataTypes) => {
           return sequelize.query(
             `SELECT "User"."id", "User"."email", "User"."firstname",
             "User"."lastname", "User"."createdAt", "User"."updatedAt",
-            "Friendship"."accepted" AS "Friendship.accepted",
-            "Friendship"."createdAt" AS "Friendship.createdAt",
-            "Friendship"."updatedAt" AS "Friendship.updatedAt",
-            "Friendship"."UserId" AS "Friendship.UserId", "Friendship"."FriendId" AS
-            "Friendship.FriendId" FROM "Users" AS "User"
+            "Friendship"."accepted" AS "friendship.accepted",
+            "Friendship"."createdAt" AS "friendship.createdAt",
+            "Friendship"."updatedAt" AS "friendship.updatedAt",
+            "Friendship"."UserId" AS "senderId", "Friendship"."FriendId" AS
+            "senderId" FROM "Users" AS "User"
             INNER JOIN "Friendships" AS
             "Friendship" ON ("User"."id" = "Friendship"."FriendId" AND
             "Friendship"."UserId" = :id) OR
