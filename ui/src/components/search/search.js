@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Textfield, Button, Spinner } from 'react-mdl'
+import { Textfield } from 'react-mdl'
 
-import { searchUser } from '../../lib/actions/searchActions'
+import { searchUser, endSearch } from '../../lib/actions/searchActions'
 import SearchBox from './searchBox'
 
 class Search extends Component {
@@ -32,6 +32,8 @@ class Search extends Component {
           console.log(state.searchValue);
           props.doSearch(state.searchValue)
         }, 1000)
+      }else{
+        props.endSearch()
       }
     }.bind(this)
   }
@@ -95,6 +97,9 @@ const mapDispatchToProps = dispatch => {
   return {
     doSearch: (searchValue) => {
       dispatch(searchUser(searchValue))
+    },
+    endSearch: () => {
+      dispatch(endSearch())
     },
   }
 }

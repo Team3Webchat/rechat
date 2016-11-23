@@ -1,0 +1,15 @@
+
+#searchBox{
+  margin: 'auto';
+}
+
+.searchResult{
+  border-bottom: 1px solid #bfbfbf;
+}
+.addUser{
+  background: rgb(55, 165, 99) !important;
+  float: right;
+  height: 30px !important;
+  min-width: 30px !important;
+  width: 30px !important;
+}
