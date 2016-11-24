@@ -15,8 +15,8 @@ const AppDrawer = ({ friends, doToggleFriends, showFriends, name, doDeleteFriend
             <a href="#" onClick={doToggleFriends}>Friends</a>
             { showFriends &&
                 //Skapa ny component som renderar ut användarens vänner
-                <Friends 
-                  friends={friends} 
+                <Friends
+                  friends={friends}
                   onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
                   deleteFriend={doDeleteFriend}
                 />
@@ -44,6 +44,9 @@ const mapDispatchToProps = dispatch => {
       dispatch(toggleFriends())
     },
     doDeleteFriend: id => dispatch(deleteFriend(id)),
+    startConversation: () => {
+      console.log('start an conversation')
+    }
   }
 }
 export default connect(
