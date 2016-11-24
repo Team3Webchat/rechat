@@ -35,6 +35,12 @@ export default (sequelize, DataTypes) => {
 
     },
     {
+      getterMethods: {
+        fullname() {
+          return `${this.firstname} ${this.lastname}`
+        },
+      },
+
       classMethods: {
         associate(models) {
           // models.User.belongsToMany(models.User, { as: 'Friends', through: models.Friendship})
