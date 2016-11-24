@@ -24,7 +24,7 @@ export function registerUserSuccess({token, flash, friends}) {
 }
 
 export function registerUserFailure({flash}) {
-  console.log(flash)
+
   return {
     type: REGISTER_USER_FAILURE,
     payload: {
@@ -54,7 +54,6 @@ export function registerUser({ email, password, firstname, lastname }) {
       const json = await res.json()
 
       if (res.status === 400) {
-        console.log('Fail register, status 400')
         return dispatch(registerUserFailure({
           flash: {
             message: json.message,
@@ -65,7 +64,7 @@ export function registerUser({ email, password, firstname, lastname }) {
 
       
       const { message, token, friends } = json
-      console.log(json)
+
 
       dispatch(registerUserSuccess({ token, flash: { 
         message: 'Succesful registration',
@@ -74,7 +73,7 @@ export function registerUser({ email, password, firstname, lastname }) {
       dispatch(push('/'))
 
     } catch(e) {
-      console.log(e)
+
       dispatch(registerUserFailure())
     }
   }

@@ -5,7 +5,7 @@ export function getToken() {
 }
 
 export function getUserId() {
-  console.log(store.getState())
+
   return store.getState().auth.id
 }
 

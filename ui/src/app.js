@@ -9,7 +9,7 @@ import RegisterContainer from './components/pages/register/register-container'
 import FriendContainer from './components/pages/friend-request/friend-container'
 
 import { loginUserSuccess } from './lib/actions/authActions'
-import { getFriends } from './lib/actions/friendActions'
+import { getFriends } from './lib/actions/friendsActions'
 
 import './app.css'
 
@@ -45,7 +45,7 @@ function doesNotRequireAuth(nextState, replace) {
 class App extends Component {
   
   render() {
-    console.log(FriendContainer)
+
     return (
       <div className="App">
         <Provider store={store}>

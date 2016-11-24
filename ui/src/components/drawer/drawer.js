@@ -6,10 +6,10 @@ import { toggleFriends } from '../../lib/actions/menuDrawerActions'
 
 import Friends from './friends'
 
-const AppDrawer = ({ friends, doToggleFriends, showFriends }) => {
+const AppDrawer = ({ friends, doToggleFriends, showFriends, name }) => {
 
   return (
-    <Drawer title="Title">
+    <Drawer title={"haha"}>
       <Navigation>
             <a href="#" onClick={doToggleFriends}>Friends</a>
             { showFriends &&

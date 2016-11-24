@@ -7,7 +7,7 @@ import './style.css'
 //import FlashMessage from '../../flash-message/flash-message'
 
 const FriendForm = ({ friendRequests, onAccept, onDeny }) => {
-  console.log(friendRequests)
+
   return (
     <div className="friend-requests">
         

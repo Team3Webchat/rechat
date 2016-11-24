@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Textfield, Icon, FABButton } from 'react-mdl'
 
 import { searchUser, endSearch } from '../../lib/actions/searchActions'
+import { sendFriendRequest } from '../../lib/actions/friendsActions'
 import SearchBox from './searchBox'
 
 class Search extends Component {
@@ -29,7 +30,7 @@ class Search extends Component {
         clearInterval(this.promise)
       if(e.target.value != ''){
         this.promise = setTimeout(function(){
-          console.log(state.searchValue)
+
           props.doSearch(state.searchValue)
         }, 1000)
       }else{
@@ -58,6 +59,7 @@ class Search extends Component {
 
   render() {
     const { isDoneSearching, isSearching, searchResults, failure, searchValue } = this.state
+    console.log(this.props.addFriend)
 
     return (
       <div>
@@ -75,6 +77,7 @@ class Search extends Component {
           <SearchBox
             failure={this.state.failure}
             searchResults={this.state.searchResults}
+            addFriend={this.props.addFriend}
           />
         }
       </div>
@@ -92,12 +95,17 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
+
   return {
     doSearch: (searchValue) => {
       dispatch(searchUser(searchValue))
     },
     endSearch: () => {
       dispatch(endSearch())
+    },
+    addFriend: id => {
+      console.log("ADDING A FUCKING FRIEND") 
+      dispatch(sendFriendRequest(id))
     },
   }
 }
