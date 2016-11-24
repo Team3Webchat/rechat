@@ -6,7 +6,6 @@ import FlashMessage from '../../flash-message/flash-message'
 
 const SignInForm = (props) => {
   const { onChange, onSubmit, email, password, isAuthenticating, flash } = props
-  console.log(flash)
   return (
     <div className="signin-register">
       <Card shadow={0} className="signin-register-card">
