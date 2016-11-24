@@ -37,6 +37,7 @@ function search(state = initialState, action) {
         searchResults: action.payload.error,
       }
     case END_SEARCH:
+      return initialState
     default:
       return state
   }

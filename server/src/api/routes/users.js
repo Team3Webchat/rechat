@@ -88,9 +88,9 @@ usersRouter.route('/:id/friends')
       User.findOne({ where: { id: decoded.id }}),
       Friendship.findOne({ where: { $or: [{ friendId: id, userId: decoded.id }, { friendId: decoded.id, userId: id }]}}),
     ])
-
+    console.log(friendship)
     if (friendship) 
-      return res.json({ message: 'You are already friends with this person or a friendrequest is waiting for confirmation'})
+      return res.status(400).json({ message: 'You are already friends with this person or a friendrequest is waiting for confirmation'})
 
     await sender.addFriend(receiver)
 
@@ -147,7 +147,7 @@ usersRouter.route('/:id/friends/:friendId')
     }
 
     if (friendship.accepted) {
-      return res.json({ message: 'You are already friends with this person'})
+      return res.status(400).json({ message: 'You are already friends with this person'})
     }
 
 
