@@ -61,7 +61,7 @@ export function searchUser( searchValue ) {
 
       //TODO: är detta rätt sätt att hantera om ingen användare hittas?
       if(results.length > 0){
-          dispatch(searchUserSuccess({ results }))
+        dispatch(searchUserSuccess({ results }))
       }else{
         dispatch(searchUserFailure(results.code))
       }
@@ -72,7 +72,6 @@ export function searchUser( searchValue ) {
 
   }
 }
-
 
 export function endSearch() {
   return async function(dispatch) {

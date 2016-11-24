@@ -38,11 +38,6 @@ class Search extends Component {
     }.bind(this)
   }
 
-  handleEndSearch = e => {
-    //get searchField and clear it
-    this.props.endSearch()
-  }
-
   componentWillReceiveProps(nextProps) {
     if (this.props.isDoneSearching !== nextProps.isDoneSearching)
       this.setState({
@@ -66,28 +61,26 @@ class Search extends Component {
 
     return (
       <div>
-        <form>
+        <form id='searchForm'>
           <Textfield
             label='Name'
             required
             value={searchValue}
             onChange={this.handleChange('searchValue')}
+            expandable
+            expandableIcon="search"
           />
-          <FABButton colored className='closeSearch' onClick={this.handleEndSearch}>
-            <Icon name="close" />
-          </FABButton>
         </form>
         { isDoneSearching &&
           <SearchBox
-              failure={this.state.failure}
-              searchResults={this.state.searchResults}
+            failure={this.state.failure}
+            searchResults={this.state.searchResults}
           />
         }
       </div>
     )
   }
 }
-
 const mapStateToProps = state => {
   return {
     token: state.auth.token,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardText, FABButton,Icon } from 'react-mdl'
+import { Card, CardText, FABButton, Icon, List, ListItem } from 'react-mdl'
 
 import './style.css'
 
@@ -22,18 +22,20 @@ const SearchBox = (props) => {
 const SearchResults = (props) => {
     const { searchResults } = props
     return (
-      <div>
+      <List>
           {searchResults.map(function (user) {
               return (
-                <CardText className='searchResult' key={user.id}>
+                <ListItem className='searchResult' key={user.id}>
                   <p>{user.firstname}  {user.lastname}</p>
-                  <FABButton colored className='addUser'>
-                      <Icon name="add" />
-                  </FABButton>
-                </CardText>
+                  <div className='addUser'>
+                    <FABButton colored >
+                        <Icon name='add' />
+                    </FABButton>
+                  </div>
+                </ListItem>
               )
           })}
-      </div>
+      </List>
     )
 }
 
