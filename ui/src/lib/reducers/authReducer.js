@@ -16,7 +16,6 @@ import {
 const initialState = {
   token: null,
   email: null,
-  friends: null,
   isAuthenticated: false,
   isAuthenticating: false,
   failure: false,
@@ -37,7 +36,6 @@ function auth(state = initialState, action) {
         isAuthenticating: false,
         isAuthenticated: true,
         email: decoded.email,
-        friends: action.payload.friends,
         token: action.payload.token,
         message: action.payload.message,
         failure: false,

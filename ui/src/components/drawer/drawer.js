@@ -10,7 +10,7 @@ class DrawerClass extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      showFriends: null,
+      showFriends: false,
     }
   }
 
@@ -24,8 +24,6 @@ class DrawerClass extends Component {
 
   toggleFriends = e =>{
     this.props.doToggleFriends(this.state.showFriends)
-
-
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,6 +35,9 @@ class DrawerClass extends Component {
 
   render() {
     const { showFriends } = this.state
+    const { friends } = this.props
+
+    console.log(friends)
 
     return (
       <Drawer title="Title">
@@ -44,7 +45,10 @@ class DrawerClass extends Component {
               <a href="#" onClick={this.toggleFriends}>Friends</a>
               { showFriends &&
                   //Skapa ny component som renderar ut användarens vänner
-                  <Friends/>
+                  <Friends 
+                    friends={friends} 
+                    onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
+                  />
               }
 
           </Navigation>
@@ -59,6 +63,7 @@ class DrawerClass extends Component {
 const mapStateToProps = state => {
   return {
     showFriends: state.menuDrawer.showFriends,
+    friends: state.friends.friends,
   }
 }
 

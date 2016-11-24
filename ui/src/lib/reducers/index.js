@@ -5,6 +5,7 @@ import auth from './authReducer'
 import search from './searchReducer'
 import flash from './flashReducer'
 import menuDrawer from './menuDrawerReducer'
+import friends from './friendsReducer'
 
 export default combineReducers({
   routing: routerReducer,
@@ -12,4 +13,5 @@ export default combineReducers({
   auth,
   flash,
   menuDrawer,
+  friends,
 })
