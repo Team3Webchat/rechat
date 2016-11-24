@@ -34,6 +34,9 @@ export function sendFriendRequest(friendId) {
         method: 'POST',
         headers: getHeaders(),
       })
+      console.log(res)
+      if (res.status === 400) 
+        throw new Error('You are already friends with this person')
 
       const json = await res.json()
       dispatch(sendFriendRequestSuccess({
@@ -47,7 +50,7 @@ export function sendFriendRequest(friendId) {
     } catch(e) {
       dispatch(sendFriendRequestFailure({
         flash: {
-          message: 'Could not add the friend',
+          message: e.message,
           type: 'fail',
         },
       }))
@@ -109,6 +112,62 @@ export function acceptFriendRequest(friendId) {
   }
 }
 
+
+export const DELETE_FRIEND_SUCCESS = 'DELETE_FRIEND_SUCCESS'
+export const DELETE_FRIEND_FAILURE = 'DELETE_FRIEND_FAILURE'
+
+function deleteFriendSuccess({ flash, friendId }) {
+  console.log(friendId)
+  return {
+    type: DELETE_FRIEND_SUCCESS,
+    payload: {
+      flash,
+      friendId,
+    },
+  }
+
+}
+
+function deleteFriendFailure({ flash }) {
+  return {
+    type: DELETE_FRIEND_FAILURE,
+    payload: {
+      flash,
+    },
+  }
+}
+
+export function deleteFriend(friendId) {
+  return async function(dispatch) {
+    const id = getUserId()
+    try {
+      const res = await fetch(`${baseUrl}users/${id}/friends/${friendId}`, {
+        method: 'DELETE',
+        headers: getHeaders(),
+      })
+
+      if (res.status === 403) throw new Error('Could not delete the friend')
+
+      const json = await res.json()
+      console.log(friendId)
+      dispatch(deleteFriendSuccess({
+        flash: {
+          message: 'Friend deleted!',
+          type: 'success',
+        },
+        friendId,
+      }))
+
+    } catch (e) {
+      dispatch(deleteFriendFailure({
+        flash: {
+          message: e.message,
+          type: 'fail',
+        },
+      }))
+    }
+  }
+}
 
 export const GET_FRIENDS_SUCCESS = 'GET_FRIENDS_SUCCESS'
 export const GET_FRIENDS_FAILURE = 'GET_FRIENDS_FAILURE'

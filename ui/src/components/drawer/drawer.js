@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import { Textfield, Button, Spinner, Drawer, Navigation } from 'react-mdl'
 
 import { toggleFriends } from '../../lib/actions/menuDrawerActions'
+import { deleteFriend } from '../../lib/actions/friendsActions'
 
 import Friends from './friends'
 
-const AppDrawer = ({ friends, doToggleFriends, showFriends, name }) => {
+const AppDrawer = ({ friends, doToggleFriends, showFriends, name, doDeleteFriend }) => {
 
   return (
     <Drawer title={"haha"}>
@@ -17,6 +18,7 @@ const AppDrawer = ({ friends, doToggleFriends, showFriends, name }) => {
                 <Friends 
                   friends={friends} 
                   onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
+                  deleteFriend={doDeleteFriend}
                 />
             }
 
@@ -41,6 +43,7 @@ const mapDispatchToProps = dispatch => {
     doToggleFriends: () => {
       dispatch(toggleFriends())
     },
+    doDeleteFriend: id => dispatch(deleteFriend(id)),
   }
 }
 export default connect(

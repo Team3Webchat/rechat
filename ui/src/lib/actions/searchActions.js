@@ -30,17 +30,17 @@ export function searchUserFailure(error) {
   }
 }
 
-export function endSearch2(error) {
+export function endSearch() {
   return {
     type: END_SEARCH,
   }
 }
 
+
 export function searchUser( searchValue ) {
 
   return async function(dispatch) {
     dispatch(searchUserRequest())
-    //dispatch(searchUserSuccess({ results })) //test data
     try {
       const res = await fetch(baseUrl + 'search', {
         method: 'POST',
@@ -73,8 +73,4 @@ export function searchUser( searchValue ) {
   }
 }
 
-export function endSearch() {
-  return async function(dispatch) {
-    dispatch(endSearch2())
-  }
-}
+

@@ -5,7 +5,7 @@ const { User } = models
 export async function search(req, res, next, message) {
   try{
     const { searchValue } = req.body
-    const searchValues = searchValue.split(' ')
+    const searchValues = searchValue.split(' ').filter(s => s.length > 0)
     const query = [].concat.apply([], searchValues.map(s => {
       return [
         { firstname: { $iLike: '%' + s + '%' } },
