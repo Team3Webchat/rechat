@@ -4,7 +4,7 @@ import { Textfield, Button, Spinner, Drawer, Navigation, List, ListItem, Icon } 
 
 const Friends = ({ friends, onFriendClick }) => {
   console.log(friends)
-  if (friends) {
+  if (friends && friends.length > 0) {
     return (
       <List>
         {friends.map(f => 

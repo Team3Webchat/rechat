@@ -57,7 +57,7 @@ const RegisterForm = ({ onChange, onSubmit, email, password,
                     ripple type='submit'
                     >
                       Back
-                    </Button>
+                  </Button>
                 </Link>
               </div>
         }
