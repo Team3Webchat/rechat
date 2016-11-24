@@ -8,12 +8,14 @@ import SignInContainer from './components/pages/sign-in/sign-in-container'
 import RegisterContainer from './components/pages/register/register-container'
 
 import { loginUserSuccess } from './lib/actions/authActions'
+import { getFriends } from './lib/actions/friendActions'
 
 import './app.css'
 
 const token = localStorage.getItem('token')
 if (token) {
   store.dispatch(loginUserSuccess({token, message: 'Welcome back'}))
+  store.dispatch(getFriends())
   // here we also need to dispatch an action that gets all the friends..
   // or persist the redux store somewhere 
 }
