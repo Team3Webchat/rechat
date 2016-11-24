@@ -9,6 +9,7 @@ import {
 const initialState = {
   friends: [],
   friendRequests: [],
+  sentFriendRequests: [],
 }
 
 export default function friends(state = initialState, action) {
@@ -16,10 +17,15 @@ export default function friends(state = initialState, action) {
     case LOGIN_USER_SUCCESS:
       return {
         friends: action.payload.friends,
+        friendRequests: action.payload.friendRequests,
+        sentFriendRequests: action.payload.sentFriendRequests,
       }
     case GET_FRIENDS_SUCCESS:
+      console.log(action.payload)
       return {
         friends: action.payload.friends,
+        friendRequests: action.payload.friendRequests,
+        sentFriendRequests: action.payload.sentFriendRequests,
       }
     default:
       return state
