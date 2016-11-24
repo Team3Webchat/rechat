@@ -19,6 +19,7 @@ const initialState = {
   isAuthenticated: false,
   isAuthenticating: false,
   failure: false,
+  id: null,
 }
 
 function auth(state = initialState, action) {
@@ -29,8 +30,9 @@ function auth(state = initialState, action) {
         isAuthenticating: true,
       }
     case LOGIN_USER_SUCCESS:
+      console.log("LOGIN_USER_SUCCESS")
       const decoded = jwtDecode(action.payload.token)
-
+      console.log(decoded)
       return {
         ...state,
         isAuthenticating: false,
@@ -39,6 +41,7 @@ function auth(state = initialState, action) {
         token: action.payload.token,
         message: action.payload.message,
         failure: false,
+        id: decoded.id,
       }
     case LOGIN_USER_FAILURE:
       return {
@@ -47,13 +50,7 @@ function auth(state = initialState, action) {
         failure: true,
       }
     case LOGOUT_USER:
-      return {
-        ...state,
-        isAuthenticated: false,
-        token: null,
-        email: null,
-        failure: false,
-      }
+      return initialState
     case REGISTER_USER_REQUEST: {
       return {
         ...state,

@@ -75,7 +75,7 @@ export function loginUser(email, password) {
           message: 'Successful login',
           type: 'success',
         },
-        friends: json.friends
+        friends: json.friends,
       }))
     } catch(e) {
       console.log('Error signing user in')
