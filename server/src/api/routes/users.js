@@ -120,6 +120,8 @@ usersRouter.route('/:id/friends/:friendId')
     const token = authorization.split(' ')[1]
 
     const decoded = await jwt.verifyAsync(token, 'supersecret')
+
+    
     
     // We only look for requests send FROM antother user TO this user. Hence,
     // the id's need to be flipped in the query since friendId is the id of 
@@ -129,22 +131,26 @@ usersRouter.route('/:id/friends/:friendId')
       Friendship.findOne({ where: { userId: friendId, friendId: id }}), 
     ])
 
-    if (!friendship) {
-      return res.status(400).json({message: 'Nothing to be found here.. No friendrequest..'})
-    }
-
-    if (friendship.accepted) {
-      return res.json({ message: "You are already friends with this person"})
-    }
-
     const canAccept = decoded.id === id && decoded.id === friendship.friendId
-    console.log(canAccept)
-
     if (!canAccept) {
       return res.status(403).json({
         message: 'Unauthorized',
       })
     }
+    
+
+    if (!friendship) {
+      return res.status(400).json({message: 'Nothing to be found here.. No friendrequest..'})
+    }
+
+    if (friendship.accepted) {
+      return res.json({ message: 'You are already friends with this person'})
+    }
+
+    
+    console.log(canAccept)
+
+    
 
     await friendship.update({
       accepted: true,
@@ -153,6 +159,31 @@ usersRouter.route('/:id/friends/:friendId')
     res.json({
       message: 'Friendship accepted',
       friendship,
+    })
+  })
+  .delete(async (req, res, next) => {
+    const { id, friendId } = req.params
+    const { authorization } = req.headers
+    const token = authorization.split(' ')[1]
+    const decoded = await jwt.verifyAsync(token, 'supersecret')
+
+    const [user, friendship] = await Promise.all([
+      User.findOne({ where: { id}}),
+      Friendship.findOne({ where: { $or: [{ friendId: id, userId: friendId }, { friendId: friendId, userId: id }]}}),
+    ])
+
+    const canDelete = decoded.id === id && (decoded.id === friendship.friendId || decoded.id === friendship.userId)
+
+    if (!canDelete) {
+      return res.status(403).json({
+        message: 'Unauthorized to do this action',
+      })
+    }
+
+    await friendship.destroy()
+
+    res.json({
+      message: 'Friendship deleted',
     })
   })
 
