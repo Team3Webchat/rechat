@@ -23,11 +23,13 @@ export function sendFriendRequest(friendId) {
 export const GET_FRIENDS_SUCCESS = 'GET_FRIENDS_SUCCESS'
 export const GET_FRIENDS_FAILURE = 'GET_FRIENDS_FAILURE'
 
-function getFriendSuccess({ friends }) {
+function getFriendSuccess({ friends, friendRequests, sentFriendRequests }) {
   return {
     type: GET_FRIENDS_SUCCESS,
     payload: {
       friends,
+      friendRequests,
+      sentFriendRequests,
     },
   }
 }
@@ -54,6 +56,8 @@ export function getFriends(id = getUserId()) {
       console.log(json)
       dispatch(getFriendSuccess({
         friends: json.friends,
+        friendRequests: json.friendRequests,
+        sentFriendRequests: json.sentRequests,
       }))
 
     } catch (e) {

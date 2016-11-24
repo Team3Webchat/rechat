@@ -52,8 +52,19 @@ export function login(req, res, next, message) {
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
     }
 
-    const friends = await user.friends()
-    return res.json({ message, token: jwt.sign({ id: user.id, email: user.email }, jwtSecret), user, friends, })
+    const [friends, friendRequests, sentFriendRequests] = await Promise.all([
+      user.friends(),
+      user.friendRequests(),
+      user.sentFriendRequests(),
+    ])
+    return res.json({ 
+      message, 
+      token: jwt.sign({ id: user.id, email: user.email }, jwtSecret), 
+      user, 
+      friends,
+      friendRequests, 
+      sentFriendRequests, 
+    })
   })(req, res, next)
 }
 
