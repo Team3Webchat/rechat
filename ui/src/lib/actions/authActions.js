@@ -15,7 +15,7 @@ export function loginUserRequest() {
   }
 }
 
-export function loginUserSuccess({token, flash, friends}) {
+export function loginUserSuccess({token, flash, friends, friendRequests, sentFriendRequests}) {
   // TODO: check if user wants to be remembered, in that case, set the token
   // to local storage
   localStorage.setItem('token', token) // move this elswhere later
@@ -25,6 +25,8 @@ export function loginUserSuccess({token, flash, friends}) {
       token,
       flash: { ...flash, persistOnRouteTransition: true },
       friends,
+      friendRequests,
+      sentFriendRequests,
     },
   }
 }
@@ -76,6 +78,8 @@ export function loginUser(email, password) {
           type: 'success',
         },
         friends: json.friends,
+        friendRequests: json.friendRequests,
+        sentFriendRequests: json.sentRequests,
       }))
     } catch(e) {
       console.log('Error signing user in')
