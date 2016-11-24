@@ -26,7 +26,12 @@ usersRouter.route('/')
         // return res.status(200).json({ message: 'Successful registration'})
       })
       .catch(err => {
-        console.log(err)
+
+        console.log(err.name)
+        console.log(err.errors[0].path)
+        if (err.name === 'SequelizeUniqueConstraintError' && err.errors[0].path === 'email') {
+          return res.status(400).json({ message: 'The email is already registered'})
+        }
         return res.status(400).json(err)
       })
 

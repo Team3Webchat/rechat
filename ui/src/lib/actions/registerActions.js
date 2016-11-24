@@ -12,22 +12,23 @@ export function registerUserRequest() {
   }
 }
 
-export function registerUserSuccess({token, message, friends}) {
+export function registerUserSuccess({token, flash, friends}) {
   return {
     type: REGISTER_USER_SUCCESS,
     payload: {
       token,
-      message,
+      flash: { ...flash, persistOnRouteTransition: true },
       friends,
     },
   }
 }
 
-export function registerUserFailure(error) {
+export function registerUserFailure({flash}) {
+  console.log(flash)
   return {
     type: REGISTER_USER_FAILURE,
     payload: {
-      error,
+      flash: { ...flash, persistOnRouteTransition: false },
     },
   }
 }
@@ -50,13 +51,30 @@ export function registerUser({ email, password, firstname, lastname }) {
           'Content-Type': 'application/json',
         },
       })
-
       const json = await res.json()
+
+      if (res.status === 400) {
+        console.log('Fail register, status 400')
+        return dispatch(registerUserFailure({
+          flash: {
+            message: json.message,
+            type: 'fail',
+          }
+        }))
+      }
+
+      
       const { message, token, friends } = json
-      dispatch(registerUserSuccess({ token, message, friends}))
+      console.log(json)
+
+      dispatch(registerUserSuccess({ token, flash: { 
+        message: 'Succesful registration',
+        type: 'success',
+      }, friends}))
       dispatch(push('/'))
 
     } catch(e) {
+      console.log(e)
       dispatch(registerUserFailure())
     }
   }

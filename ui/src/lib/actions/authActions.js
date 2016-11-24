@@ -16,7 +16,8 @@ export function loginUserRequest() {
 }
 
 export function loginUserSuccess({token, flash, friends}) {
-
+  // TODO: check if user wants to be remembered, in that case, set the token
+  // to local storage
   localStorage.setItem('token', token) // move this elswhere later
   return {
     type: LOGIN_USER_SUCCESS,

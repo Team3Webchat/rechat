@@ -54,6 +54,7 @@ class RegisterContainer extends Component {
           isAuthenticating={this.state.isAuthenticating}
           firstname={this.state.firstname}
           lastname={this.state.lastname}
+          flash={this.props.flash}
         />
       </div>
     )
@@ -64,7 +65,7 @@ const mapStateToProps = state => {
 
   return {
     isAuthenticating: state.auth.isAuthenticating,
-    message: state.auth.statusText,
+    flash: state.flash,
   }
 }
 

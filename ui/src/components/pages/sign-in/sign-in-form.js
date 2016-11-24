@@ -22,19 +22,19 @@ const SignInForm = (props) => {
               <FlashMessage message={flash.message} type={flash.type}/> 
               : ''
           }
-            { isAuthenticating ? <Spinner /> 
-                : <div>
-                    <Button primary raised ripple type="submit" className="buttons"
-                      disabled={email.length === 0 || password.length === 0} >
-                      Sign in
+          { isAuthenticating ? <Spinner /> 
+              : <div>
+                  <Button primary raised ripple type="submit" className="buttons"
+                    disabled={email.length === 0 || password.length === 0} >
+                    Sign in
+                  </Button>
+                  <Link to="/register">
+                    <Button primary raised ripple type='submit' className="buttons" >
+                      Register
                     </Button>
-                    <Link to="/register">
-                      <Button primary raised ripple type='submit' className="buttons" >
-                        Register
-                      </Button>
-                    </Link>
-                  </div>
-               }
+                  </Link>
+                </div>
+          }
         </form>
       </Card>
     </div>

@@ -2,9 +2,11 @@ import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
 import { Textfield, Button, Spinner, Card } from 'react-mdl'
 
+import FlashMessage from '../../flash-message/flash-message'
+
 const RegisterForm = ({ onChange, onSubmit, email, password, 
                         passwordConfirm, isAuthenticating, 
-                        firstname, lastname}) => {
+                        firstname, lastname, flash}) => {
 
   return (
     <div className="signin-register">
@@ -32,12 +34,20 @@ const RegisterForm = ({ onChange, onSubmit, email, password,
         <div>
           
         </div>
+        { flash.message ? 
+              <FlashMessage message={flash.message} type={flash.type}/> 
+              : ''
+          }
+        {
+          password !== passwordConfirm && passwordConfirm.length >= password.length &&
+          <FlashMessage message='Passwords are not the same' type='fail' />
+        }
         
         { isAuthenticating 
             ? <Spinner /> 
             : <div>
                 <Button className="buttons" primary raised ripple
-                  disabled={email.length === 0 || password.length === 0 || email.length === 0}
+                  disabled={email.length === 0 || password.length === 0 || password !== passwordConfirm}
                   type="submit"
                 >
                   Register
