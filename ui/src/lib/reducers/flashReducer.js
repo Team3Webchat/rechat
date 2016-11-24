@@ -3,17 +3,27 @@ import { RESET_FLASH_MESSAGE } from '../actions/flashActions'
 const initialState = {
   message: null,
   type: null,
+  persist: false,
 }
+/**
+ * TODO: could use a refactor probably but it works
 
+ */
 export default function flash(state = initialState, action) {
   const { type } = action
+
   if (type === RESET_FLASH_MESSAGE) {
-    console.log('RESET_FLASH_MESSAGE')
     return initialState // reset the flash
   } else if (action.payload && action.payload.flash) {
     const { flash } = action.payload 
-    console.log('WE HAVE A FLASH HOUSTON',flash)
-    return { message: flash.message, type: flash.type }
+    return { message: flash.message, type: flash.type, persist: flash.persistOnRouteTransition  } 
+  } else if (type === '@@router/LOCATION_CHANGE' && action.payload.action === 'POP' && !state.persist) {
+
+    return initialState
+  } else if (type === '@@router/LOCATION_CHANGE' && action.payload.action === 'POP' && state.persist) {
+
+    return { ...state, persist: false }
   } 
+  
   return state 
 }

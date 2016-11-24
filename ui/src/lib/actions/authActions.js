@@ -22,7 +22,7 @@ export function loginUserSuccess({token, flash, friends}) {
     type: LOGIN_USER_SUCCESS,
     payload: {
       token,
-      flash,
+      flash: { ...flash, persistOnRouteTransition: true },
       friends,
     },
   }
@@ -32,7 +32,7 @@ export function loginUserFailure({flash}) {
   return {
     type: LOGIN_USER_FAILURE,
     payload: {
-      flash,
+      flash: { ...flash, persistOnRouteTransition: false },
     },
   }
 }
@@ -42,7 +42,7 @@ export function logout({flash}) {
   return {
     type: LOGOUT_USER,
     payload: {
-      flash,
+      flash: { ...flash, persistOnRouteTransition: true },
     },
   }
 }

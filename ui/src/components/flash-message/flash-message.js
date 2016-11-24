@@ -5,7 +5,6 @@ import { resetFlashMessage} from '../../lib/actions/flashActions'
 import './style.css'
 
 const FlashMessage = ({ message, type, inline, close }) => {
-  console.log(inline)
   const className = `flash-message flash-${type}`
   return (
     <div className={className}>
