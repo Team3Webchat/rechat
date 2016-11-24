@@ -73,7 +73,6 @@ export function searchUser( searchValue ) {
   }
 }
 
-
 export function endSearch() {
   return async function(dispatch) {
     dispatch(endSearch2())

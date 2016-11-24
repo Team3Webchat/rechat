@@ -1,21 +1,36 @@
-
+#searchForm{
+  max-width: 1200px;
+}
+#searchForm .material-icons{
+  color: white !important;
+}
+#searchForm input{
+  max-width: 100px;
+}
 #searchBox{
   margin: 'auto';
+  min-height: 0px !important;
+  position: absolute !important;
+  max-width: 200px;
 }
-
-.searchResult{
+#searchBox ul{
+  padding: 0 !important;
+  margin: 0 !important;
   border-bottom: 1px solid #bfbfbf;
 }
-.addUser{
-  background: rgb(55, 165, 99) !important;
-  float: right;
-  height: 30px !important;
-  min-width: 30px !important;
-  width: 30px !important;
+
+#searchBox ul p{
+  width: 76%;
+  float: left;
+  margin: 4px 0 !important;
 }
-.closeSearch{
-  background: rgba(255, 0, 0, 0.14) !important;
+.addUser{
+  width: 17%;
   float: right;
+  padding-right: 10px;
+}
+.addUser button{
+  background: rgb(55, 165, 99) !important;
   height: 30px !important;
   min-width: 30px !important;
   width: 30px !important;
