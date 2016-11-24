@@ -15,11 +15,9 @@ Promise.promisifyAll(bcrypt)
 const jwtSecret = 'supersecret' // TODO: super secret secret
 
 async function localAuth(username, password, cb) {
-  console.log("LOCAL AUTH")
   const user = await User.findOne({ where: { email: username }})
-  console.log(user)
   if (!user) {
-    console.log(' No User ')
+
     return cb(null, false)
   }
   const isCorrectPassword = await bcrypt.compareAsync(password, user.password)
@@ -39,16 +37,16 @@ passport.use(new LocalStrategy({
 passport.use(new BearerStrategy(bearerAuth))
 
 export function login(req, res, next, message) {
-  console.log(req.body)
+
   passport.authenticate('local', async (err, user, info) => {
-    console.log(info)
+
     if (err) {
-      console.log(' Err ')
+
       return next(err)
     }
 
     if (!user) {
-      console.log('No User found')
+
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
     }
 

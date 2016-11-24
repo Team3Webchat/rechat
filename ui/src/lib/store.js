@@ -5,7 +5,7 @@ import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import createLogger from 'redux-logger'
 
 import rootReducer from './reducers'
-import { getFriends } from './actions/friendActions'
+
 const logger = createLogger()
 const routing = routerMiddleware(hashHistory)
 
