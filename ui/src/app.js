@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Router, Route } from 'react-router'
+import { Router, Route, IndexRoute } from 'react-router'
 import { Provider } from 'react-redux'
 import store, { history } from './lib/store'
 
@@ -56,6 +56,7 @@ class App extends Component {
             <Route path='/sign-in' component={SignInContainer} onEnter={doesNotRequireAuth}/>
             <Route path='/register' component={RegisterContainer} onEnter={doesNotRequireAuth}/>
             <Route path='/' component={Main} onEnter={requireAuth}>
+              <IndexRoute component={FriendContainer} />
               <Route path='/friend-request' component={FriendContainer} />
             </Route>
           </Router>

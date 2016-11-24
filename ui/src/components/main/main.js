@@ -13,7 +13,8 @@ import { expandDrawer } from '../../lib/actions/menuDrawerActions'
 import './style.css'
 
 const Main = (props) => {
-  const { email, doLogout, flash } = props
+  const { email, doLogout, flash, friendRequests } = props
+  console.log(friendRequests)
   return (
     <div>
 
@@ -21,17 +22,20 @@ const Main = (props) => {
         <Header title="Title">
            <Navigation>
            <Link to="/friend-request">
-            <Badge text="1" overlap>
+           { friendRequests && friendRequests.length > 0 ?
+             <Badge text={friendRequests.length} overlap>
                 <Icon name="account_box" />
-            </Badge>
+             </Badge>
+              : <Icon name="account_box" />
+            }
           </Link>
-              <Search />
-              <a href="#" onClick={doLogout}>Sign out</a>
-           </Navigation>
+            <Search />
+            <a href="#" onClick={doLogout}>Sign out</a>
+          </Navigation>
         </Header>
         <DrawerClass/>
         <Grid>
-          <Cell col={6}>
+
           { flash.message &&
             <FlashMessage
             message={flash.message}
@@ -39,10 +43,8 @@ const Main = (props) => {
             inline
             />
           }
-          <h4>Welcome to rechat {email}</h4>
           {props.children}
 
-          </Cell>
         </Grid>
       </Layout>
     </div>
@@ -54,6 +56,7 @@ const mapStateToProps = state => {
     isLoggedIn: state.auth.isAuthenticated,
     email: state.auth.email,
     flash: state.flash,
+    friendRequests: state.friends.friendRequests,
   }
 }
 

@@ -5,35 +5,39 @@ import { connect } from 'react-redux'
 import FriendForm from './friend-form'
 
 class FriendContainer extends Component {
-    //const { email } = this.state
-  handleChange = key => {
-    return function(e) {
-      const state = {}
-      state[key] = e.target.value
-      this.setState(state)
-    }.bind(this)
+  accept = id => {
+    console.log("Accepted!!!", id)
   }
 
+  deny = id => {
+    console.log("DENIED", id)
+  }
+  
 
   render() {
     const { isDoneSearching } = this.props
-
+    console.log(this.props)
+    console.log(this.props.friendRequests)
     return (
       <div>
-      <p>Hello</p>
-      { isDoneSearching &&
-          <FriendForm/>
-      }
+      <h3>Friend requests</h3>
+        <FriendForm 
+          friendRequests={this.props.friendRequests}
+          onAccept={this.accept} onDeny={this.deny}
+        />
       </div>
     )
   }
 }
 
 const mapStateToProps = state => {
+  console.log(state.friends)
   return {
     token: state.auth.token,
     failure: state.search.failure,
     friends: state.friends.friends,
+    friendRequests: state.friends.friendRequests,
+    sentFriendRequests: state.friends.sentFriendRequests,
   }
 }
 
