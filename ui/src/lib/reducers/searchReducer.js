@@ -36,15 +36,15 @@ function search(state = initialState, action) {
         failure: true,
         searchResults: action.payload.error,
       }
-      case END_SEARCH:
-        return{
-          ...state,
-          searchValue: null,
-          searchResults: null,
-          isSearching: null,
-          isDoneSearching: null,
-          failure: false,
-        }
+    case END_SEARCH:
+      return{
+        ...state,
+        searchValue: null,
+        searchResults: null,
+        isSearching: null,
+        isDoneSearching: null,
+        failure: false,
+      }
     default:
       return state
   }
