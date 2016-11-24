@@ -29,7 +29,7 @@ class Search extends Component {
         clearInterval(this.promise)
       if(e.target.value != ''){
         this.promise = setTimeout(function(){
-          console.log(state.searchValue);
+          console.log(state.searchValue)
           props.doSearch(state.searchValue)
         }, 1000)
       }else{
@@ -50,13 +50,13 @@ class Search extends Component {
         failure: nextProps.failure,
         searchResults: nextProps.searchResults,
       })
-      if (this.props.isSearching !== nextProps.isSearching)
-        this.setState({
+    if (this.props.isSearching !== nextProps.isSearching)
+      this.setState({
         isSearching: !this.state.isSearching,
       })
-      if (this.props.failure !== nextProps.failure)
-        this.setState({
-          failure: nextProps.failure,
+    if (this.props.failure !== nextProps.failure)
+      this.setState({
+        failure: nextProps.failure,
         searchResults: nextProps.searchResults,
       })
   }

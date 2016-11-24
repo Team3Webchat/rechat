@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Layout, Header, Navigation, Drawer, Grid, Cell, Badge, Icon } from 'react-mdl'
 import { push } from 'react-router-redux'
+import { Link } from 'react-router'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
 
@@ -12,16 +13,18 @@ import { expandDrawer } from '../../lib/actions/menuDrawerActions'
 import './style.css'
 
 const Main = (props) => {
-  const { email, doLogout, flash, showFriends } = props
+  const { email, doLogout, flash } = props
   return (
     <div>
 
      <Layout fixedHeader fixedDrawer>
         <Header title="Title">
            <Navigation>
-           <Badge text="1" overlap>
-              <Icon name="account_box" />
-          </Badge>
+           <Link to="/friend-request">
+            <Badge text="1" overlap>
+                <Icon name="account_box" />
+            </Badge>
+          </Link>
               <Search />
               <a href="#" onClick={doLogout}>Sign out</a>
            </Navigation>
@@ -37,6 +40,7 @@ const Main = (props) => {
             />
           }
           <h4>Welcome to rechat {email}</h4>
+          {props.children}
 
           </Cell>
         </Grid>
