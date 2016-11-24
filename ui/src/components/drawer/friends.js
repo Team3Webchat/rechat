@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Textfield, Button, Spinner, Drawer, Navigation, List, ListItem, Icon } from 'react-mdl'
 
 const Friends = ({ friends, onFriendClick }) => {
+  console.log(friends)
   if (friends) {
     return (
       <List>

@@ -14,6 +14,8 @@ import './app.css'
 const token = localStorage.getItem('token')
 if (token) {
   store.dispatch(loginUserSuccess({token, message: 'Welcome back'}))
+  // here we also need to dispatch an action that gets all the friends..
+  // or persist the redux store somewhere 
 }
 
 function requireAuth(nextState, replace) {

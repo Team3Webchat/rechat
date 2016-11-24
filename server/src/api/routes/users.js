@@ -19,7 +19,7 @@ usersRouter.route('/')
       email,
       firstname,
       lastname,
-      password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+      password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), // TODO: change to async version!!
     })
       .then(result => {
         return login(req, res, next, 'Sucessful registration!')

@@ -1,26 +1,20 @@
-import {
-  SHOW_FRIENDS,
-  DONT_SHOW_FRIENDS,
-} from '../actions/menuDrawerActions'
+import { TOGGLE_FRIENDS } from '../actions/menuDrawerActions'
+import { LOGOUT_USER } from '../actions/authActions'
 
 const initialState = {
-  showFriends: null,
+  showFriends: false,
 }
 function menuDrawer(state = initialState, action) {
 
   switch(action.type){
-
-    case SHOW_FRIENDS:
-      return{
-        ...state,
-        showFriends: true,
+    case TOGGLE_FRIENDS:
+      return {
+        showFriends: !state.showFriends,
       }
-    case DONT_SHOW_FRIENDS:
-      return{
-        ...state,
-        showFriends: false,
-      }
-    default: return state
+    case LOGOUT_USER:
+      return initialState
+    default: 
+      return state
   }
 
 }
