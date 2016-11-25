@@ -1,4 +1,3 @@
-import { push } from 'react-router-redux'
 import { baseUrl } from './'
 
 // SEARCH actions
@@ -6,40 +5,32 @@ export const SEARCH_USER_REQUEST = 'SEARCH_USER_REQUEST'
 export const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
 export const SEARCH_USER_FAILURE = 'SEARCH_USER_FAILURE'
 export const END_SEARCH = 'END_SEARCH'
-export function searchUserRequest() {
-  return {
-    type: SEARCH_USER_REQUEST,
-  }
-}
 
-export function searchUserSuccess({results}) {
-  return {
-    type: SEARCH_USER_SUCCESS,
-    payload: {
-      results,
-    },
-  }
-}
+export const searchUserRequest = () => ({
+  type: SEARCH_USER_REQUEST,
+})
 
-export function searchUserFailure(error) {
-  return {
-    type: SEARCH_USER_FAILURE,
-    payload: {
-      error,
-    },
-  }
-}
+export const searchUserSuccess = ({ results }) => ({
+  type: SEARCH_USER_SUCCESS,
+  payload: {
+    results,
+  },
+})
 
-export function endSearch() {
-  return {
-    type: END_SEARCH,
-  }
-}
+export const searchUserFailure = (error) => ({
+  type: SEARCH_USER_FAILURE,
+  payload: {
+    error,
+  },
+})
+
+export const endSearch = () => ({
+  type: END_SEARCH,
+})
 
 
-export function searchUser( searchValue ) {
-
-  return async function(dispatch) {
+export const searchUser = (searchValue) => 
+  async function(dispatch) {
     dispatch(searchUserRequest())
     try {
       const res = await fetch(baseUrl + 'search', {
@@ -57,20 +48,16 @@ export function searchUser( searchValue ) {
       const json = await res.json()
       const { results } = json
 
-      //dispatch(push('/'))
-
       //TODO: är detta rätt sätt att hantera om ingen användare hittas?
-      if(results.length > 0){
+      if (results.length > 0){
         dispatch(searchUserSuccess({ results }))
-      }else{
+      } else{
         dispatch(searchUserFailure(results.code))
       }
-
     } catch(e) {
       dispatch(searchUserFailure(e))
     }
-
   }
-}
+
 
 

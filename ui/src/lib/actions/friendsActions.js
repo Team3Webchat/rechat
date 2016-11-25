@@ -5,29 +5,23 @@ import { getUserId } from '../selectors'
 export const SEND_FRIEND_REQUEST_SUCCESS = 'SEND_FRIEND_REQUEST_SUCCESS'
 export const SEND_FRIEND_REQUEST_FAILURE = 'SEND_FRIEND_REQUEST_FAILURE'
 
-function sendFriendRequestSuccess({ flash, sentFriendRequests }) {
-  return {
-    type: SEND_FRIEND_REQUEST_SUCCESS,
-    payload: {
-      flash,
-      sentFriendRequests,
-    },
-  }
-}
+const sendFriendRequestSuccess = ({ flash, sentFriendRequests }) => ({
+  type: SEND_FRIEND_REQUEST_SUCCESS,
+  payload: {
+    flash,
+    sentFriendRequests,
+  },
+})
 
-function sendFriendRequestFailure({ flash }) {
-  return {
-    type: SEND_FRIEND_REQUEST_FAILURE,
-    payload: {
-      flash,
-    },
-  }
-}
+const sendFriendRequestFailure = ({ flash }) => ({
+  type: SEND_FRIEND_REQUEST_FAILURE,
+  payload: {
+    flash,
+  },
+})
 
-export function sendFriendRequest(friendId) {
-  console.log('sendFriendRequest')
-  return async function(dispatch) {
-    console.log('Hehehe')
+export const sendFriendRequest = (friendId) => 
+  async function(dispatch) {
     const userId = getUserId()
     try {
       const res = await fetch(`${baseUrl}users/${friendId}/friends`, {
@@ -56,34 +50,29 @@ export function sendFriendRequest(friendId) {
       }))
     }
   }
-}
+
 
 
 export const ACCEPT_FRIEND_REQUEST_SUCCESS = 'ACCEPT_FRIEND_REQUEST_SUCCESS'
 export const ACCEPT_FRIEND_REQUEST_FAILURE = 'ACCEPT_FRIEND_REQUEST_FAILURE'
 
-function acceptFriendRequestSuccess({ flash, friendId }) {
-  return {
-    type: ACCEPT_FRIEND_REQUEST_SUCCESS,
-    payload: {
-      flash,
-      friendId,
-    },
-  }
+const acceptFriendRequestSuccess = ({ flash, friendId }) => ({
+  type: ACCEPT_FRIEND_REQUEST_SUCCESS,
+  payload: {
+    flash,
+    friendId,
+  },
+})
 
-}
+const acceptFriendRequestFailure = ({ flash }) => ({
+  type: ACCEPT_FRIEND_REQUEST_FAILURE,
+  payload: {
+    flash,
+  },
+})
 
-function acceptFriendRequestFailure({ flash }) {
-  return {
-    type: ACCEPT_FRIEND_REQUEST_FAILURE,
-    payload: {
-      flash,
-    },
-  }
-}
-
-export function acceptFriendRequest(friendId) {
-  return async function(dispatch) {
+export const acceptFriendRequest = (friendId) => 
+  async function(dispatch) {
     const userId = getUserId()
     try {
       const res = await fetch(`${baseUrl}users/${userId}/friends/${friendId}`, {
@@ -110,35 +99,29 @@ export function acceptFriendRequest(friendId) {
       }))
     }
   }
-}
+
 
 
 export const DELETE_FRIEND_SUCCESS = 'DELETE_FRIEND_SUCCESS'
 export const DELETE_FRIEND_FAILURE = 'DELETE_FRIEND_FAILURE'
 
-function deleteFriendSuccess({ flash, friendId }) {
-  console.log(friendId)
-  return {
-    type: DELETE_FRIEND_SUCCESS,
-    payload: {
-      flash,
-      friendId,
-    },
-  }
+const deleteFriendSuccess = ({ flash, friendId }) => ({
+  type: DELETE_FRIEND_SUCCESS,
+  payload: {
+    flash,
+    friendId,
+  },
+})
 
-}
+const deleteFriendFailure = ({ flash }) => ({
+  type: DELETE_FRIEND_FAILURE,
+  payload: {
+    flash,
+  },
+})
 
-function deleteFriendFailure({ flash }) {
-  return {
-    type: DELETE_FRIEND_FAILURE,
-    payload: {
-      flash,
-    },
-  }
-}
-
-export function deleteFriend(friendId) {
-  return async function(dispatch) {
+export const deleteFriend = (friendId) => 
+  async function(dispatch) {
     const id = getUserId()
     try {
       const res = await fetch(`${baseUrl}users/${id}/friends/${friendId}`, {
@@ -149,7 +132,6 @@ export function deleteFriend(friendId) {
       if (res.status === 403) throw new Error('Could not delete the friend')
 
       const json = await res.json()
-      console.log(friendId)
       dispatch(deleteFriendSuccess({
         flash: {
           message: 'Friend deleted!',
@@ -167,34 +149,29 @@ export function deleteFriend(friendId) {
       }))
     }
   }
-}
+
 
 export const GET_FRIENDS_SUCCESS = 'GET_FRIENDS_SUCCESS'
 export const GET_FRIENDS_FAILURE = 'GET_FRIENDS_FAILURE'
 
-function getFriendSuccess({ friends, friendRequests, sentFriendRequests }) {
-  return {
-    type: GET_FRIENDS_SUCCESS,
-    payload: {
-      friends,
-      friendRequests,
-      sentFriendRequests,
-    },
-  }
-}
+const getFriendSuccess = ({ friends, friendRequests, sentFriendRequests }) => ({
+  type: GET_FRIENDS_SUCCESS,
+  payload: {
+    friends,
+    friendRequests,
+    sentFriendRequests,
+  },
+})
 
-function getFriendsFailure({ flash }) {
-  return {
-    type: GET_FRIENDS_FAILURE,
-    payload: {
-      flash,
-    },
-  }
-}
+const getFriendsFailure = ({ flash }) => ({
+  type: GET_FRIENDS_FAILURE,
+  payload: {
+    flash,
+  },
+})
 
-export function getFriends(id = getUserId()) {
-
-  return async function(dispatch) {
+export const getFriends = (id = getUserId()) => 
+  async function(dispatch) {
     try {
       const res = await fetch(`${baseUrl}users/${id}/friends`, {
         method: 'GET',
@@ -218,6 +195,3 @@ export function getFriends(id = getUserId()) {
       }))
     }
   }
-}
-
-

@@ -6,35 +6,28 @@ export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST'
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS'
 export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE'
 
-export function registerUserRequest() {
-  return {
-    type: REGISTER_USER_REQUEST,
-  }
-}
+export const registerUserRequest = () => ({
+  type: REGISTER_USER_REQUEST,
+})
 
-export function registerUserSuccess({token, flash, friends}) {
-  return {
-    type: REGISTER_USER_SUCCESS,
-    payload: {
-      token,
-      flash: { ...flash, persistOnRouteTransition: true },
-      friends,
-    },
-  }
-}
+export const registerUserSuccess = ({ token, flash, friends }) => ({
+  type: REGISTER_USER_SUCCESS,
+  payload: {
+    token,
+    flash: { ...flash, persistOnRouteTransition: true },
+    friends,
+  },
+})
 
-export function registerUserFailure({flash}) {
+export const registerUserFailure = ({ flash }) => ({
+  type: REGISTER_USER_FAILURE,
+  payload: {
+    flash: { ...flash, persistOnRouteTransition: false },
+  },
+})
 
-  return {
-    type: REGISTER_USER_FAILURE,
-    payload: {
-      flash: { ...flash, persistOnRouteTransition: false },
-    },
-  }
-}
-
-export function registerUser({ email, password, firstname, lastname }) {
-  return async function(dispatch) {
+export const registerUser = ({ email, password, firstname, lastname }) => 
+  async function(dispatch) {
     dispatch(registerUserRequest())
     try {
       const res = await fetch(baseUrl + 'users', {
@@ -58,23 +51,19 @@ export function registerUser({ email, password, firstname, lastname }) {
           flash: {
             message: json.message,
             type: 'fail',
-          }
+          },
         }))
       }
 
-      
-      const { message, token, friends } = json
-
+      const { token, friends } = json
 
       dispatch(registerUserSuccess({ token, flash: { 
         message: 'Succesful registration',
         type: 'success',
       }, friends}))
       dispatch(push('/'))
-
     } catch(e) {
 
       dispatch(registerUserFailure())
     }
   }
-}
