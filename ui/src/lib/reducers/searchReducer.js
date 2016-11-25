@@ -4,6 +4,7 @@ import {
   SEARCH_USER_FAILURE,
   END_SEARCH,
 } from '../actions/searchActions'
+import { LOGOUT_USER } from '../actions/authActions'
 
 const initialState = {
   searchValue: null,
@@ -37,6 +38,7 @@ function search(state = initialState, action) {
         searchResults: action.payload.error,
       }
     case END_SEARCH:
+    case LOGOUT_USER:
       return initialState
     default:
       return state

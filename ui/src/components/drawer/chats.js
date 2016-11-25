@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Textfield, Button, Spinner, Drawer, Navigation, List, ListItem, Icon } from 'react-mdl'
+import React from 'react'
+import { List, ListItem } from 'react-mdl'
 
 const Chats = ({ chats, onChatClick }) => {
   console.log(chats)
@@ -9,7 +8,7 @@ const Chats = ({ chats, onChatClick }) => {
       <List>
         {
           <ListItem> 
-            <span>{"Show chat here"}</span>
+            <span>Show chat here</span>
           </ListItem> 
         }
       </List>

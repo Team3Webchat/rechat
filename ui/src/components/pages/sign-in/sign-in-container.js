@@ -59,25 +59,21 @@ class SignInContainer extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    nextPathname: state.routing.locationBeforeTransitions.state 
-      ? state.routing.locationBeforeTransitions.state.nextPathname 
-      : '/', // TODO: must be a better way to handle this
-    isAuthenticated: state.auth.isAuthenticated,
-    isAuthenticating: state.auth.isAuthenticating,
-    failure: state.auth.failure,
-    flash: state.flash,
-  }
-}
+const mapStateToProps = state => ({
+  nextPathname: state.routing.locationBeforeTransitions.state 
+    ? state.routing.locationBeforeTransitions.state.nextPathname 
+    : '/', // TODO: must be a better way to handle this
+  isAuthenticated: state.auth.isAuthenticated,
+  isAuthenticating: state.auth.isAuthenticating,
+  failure: state.auth.failure,
+  flash: state.flash,
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    loginUser: (email, password) => dispatch(loginUser(email, password)),
-    redirectOnLogin: (nextPathname) => dispatch(push(nextPathname)),
-    resetFlash: () => dispatch(resetFlashMessage()),
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  loginUser: (email, password) => dispatch(loginUser(email, password)),
+  redirectOnLogin: (nextPathname) => dispatch(push(nextPathname)),
+  resetFlash: () => dispatch(resetFlashMessage()),
+})
 
 export default connect(
   mapStateToProps,

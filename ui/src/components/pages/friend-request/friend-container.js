@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 
 //import { searchFriendRequests } from '../../lib/actions/friendsActions'
-import { acceptFriendRequest } from '../../../lib/actions/friendsActions'
+import { acceptFriendRequest, deleteFriend } from '../../../lib/actions/friendsActions'
 import FriendForm from './friend-form'
 
 class FriendContainer extends Component {
@@ -12,13 +12,10 @@ class FriendContainer extends Component {
   }
 
   deny = id => {
-
+    this.props.deny(id)
   }
-  
 
   render() {
-    const { isDoneSearching } = this.props
-
     return (
       <div className="friend-requests">
       <h3>Friend requests</h3>
@@ -31,23 +28,18 @@ class FriendContainer extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  failure: state.search.failure,
+  friends: state.friends.friends,
+  friendRequests: state.friends.friendRequests,
+  sentFriendRequests: state.sentFriendRequests,
+})
 
-  return {
-    token: state.auth.token,
-    failure: state.search.failure,
-    friends: state.friends.friends,
-    friendRequests: state.friends.friendRequests,
-    sentFriendRequests: state.sentFriendRequests,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    accept: (friendId) => dispatch(acceptFriendRequest(friendId)),
-  }
-}
-
+const mapDispatchToProps = dispatch => ({
+  accept: (friendId) => dispatch(acceptFriendRequest(friendId)),
+  deny: (friendId) => dispatch(deleteFriend(friendId)),
+})
 
 export default connect(
   mapStateToProps,

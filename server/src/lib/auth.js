@@ -37,18 +37,12 @@ passport.use(new LocalStrategy({
 passport.use(new BearerStrategy(bearerAuth))
 
 export function login(req, res, next, message) {
-
   passport.authenticate('local', async (err, user, info) => {
-
-    if (err) {
-
+    if (err) 
       return next(err)
-    }
 
-    if (!user) {
-
+    if (!user) 
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
-    }
 
     const [friends, friendRequests, sentFriendRequests] = await Promise.all([
       user.friends(),

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Layout, Header, Navigation, Drawer, Grid, Cell, Badge, Icon } from 'react-mdl'
+import { Layout, Header, Navigation, Grid, Badge, Icon } from 'react-mdl'
 import { push } from 'react-router-redux'
 import { Link } from 'react-router'
 import Search from '../search/search'
@@ -8,12 +8,11 @@ import DrawerClass from '../drawer/drawer'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
-import { expandDrawer } from '../../lib/actions/menuDrawerActions'
 
 import './style.css'
 
 const Main = (props) => {
-  const { email, doLogout, flash, friendRequests } = props
+  const { doLogout, flash, friendRequests } = props
 
   return (
     <div>
@@ -51,30 +50,26 @@ const Main = (props) => {
   )
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isAuthenticated,
+  email: state.auth.email,
+  flash: state.flash,
+  friendRequests: state.friends.friendRequests,
+  name: state.auth.name,
+})
 
-  return {
-    isLoggedIn: state.auth.isAuthenticated,
-    email: state.auth.email,
-    flash: state.flash,
-    friendRequests: state.friends.friendRequests,
-    name: state.auth.name,
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  doLogout: (message) => {
+    dispatch(logout({
+      flash: {
+        message: 'We hope to see you again!',
+        type: 'success',
+      },
+    }))
+    dispatch(push('/sign-in'))
+  },
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    doLogout: (message) => {
-      dispatch(logout({
-        flash: {
-          message: 'We hope to see you again!',
-          type: 'success',
-        },
-      }))
-      dispatch(push('/sign-in'))
-    },
-  }
-}
 export default connect(
   mapStateToProps,
   mapDispatchToProps

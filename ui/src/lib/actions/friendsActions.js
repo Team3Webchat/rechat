@@ -22,7 +22,6 @@ const sendFriendRequestFailure = ({ flash }) => ({
 
 export const sendFriendRequest = (friendId) => 
   async function(dispatch) {
-    const userId = getUserId()
     try {
       const res = await fetch(`${baseUrl}users/${friendId}/friends`, {
         method: 'POST',

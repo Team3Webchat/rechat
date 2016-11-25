@@ -78,31 +78,19 @@ class Search extends Component {
     )
   }
 }
-const mapStateToProps = state => {
-  return {
-    token: state.auth.token,
-    isDoneSearching: state.search.isDoneSearching,
-    isSearching: state.search.isSearching,
-    searchResults: state.search.searchResults,
-    failure: state.search.failure,
-  }
-}
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  isDoneSearching: state.search.isDoneSearching,
+  isSearching: state.search.isSearching,
+  searchResults: state.search.searchResults,
+  failure: state.search.failure,
+})
 
-const mapDispatchToProps = dispatch => {
-
-  return {
-    doSearch: (searchValue) => {
-      dispatch(searchUser(searchValue))
-    },
-    endSearch: () => {
-      dispatch(endSearch())
-    },
-    addFriend: id => {
-      console.log("ADDING A FUCKING FRIEND") 
-      dispatch(sendFriendRequest(id))
-    },
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  doSearch: (searchValue) => dispatch(searchUser(searchValue)),
+  endSearch: () => dispatch(endSearch()),
+  addFriend: id => dispatch(sendFriendRequest(id)),
+})
 
 export default connect(
   mapStateToProps,

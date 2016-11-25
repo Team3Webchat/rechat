@@ -61,24 +61,17 @@ class RegisterContainer extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = state => ({
+  isAuthenticating: state.auth.isAuthenticating,
+  flash: state.flash,
+})
 
-  return {
-    isAuthenticating: state.auth.isAuthenticating,
-    flash: state.flash,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    doRegisterUser: ({email, password, firstname, lastname}) => {
-      dispatch(registerUser({email, password, firstname, lastname}))
-    },
-    redirectOnRegister: (nextPathname) => {
-      dispatch(push('/'))
-    },
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  doRegisterUser: ({email, password, firstname, lastname}) => {
+    dispatch(registerUser({email, password, firstname, lastname}))
+  },
+  redirectOnRegister: (nextPathname) => dispatch(push('/'))
+})
 
 export default connect(
   mapStateToProps,
