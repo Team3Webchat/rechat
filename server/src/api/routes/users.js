@@ -14,35 +14,17 @@ const usersRouter = Router()
 
 
 usersRouter.route('/')
-  .post(async (req, res, next) => {
-    try {
-      const { email, password, firstname, lastname } = req.body
-      const hashedPassword = await bcrypt.hashAsync(password, await bcrypt.genSaltAsync(10))
-      const user = await User.create({ email, firstname, lastname, password: hashedPassword}) 
-      login(req, res, next, 'Successful registration')
-    } catch(e) {
-      if (e.name === 'SequelizeUniqueConstraintError' && e.errors[0].path === 'email')
-        return res.status(400).json({ message: 'The email is already registered' })
-      return res.status(400).json({ message: 'Something went wrong when registering your account' })
-    }
-    
-    // User.create({
-    //   email,
-    //   firstname,
-    //   lastname,
-    //   password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), // TODO: change to async version!!
-    // })
-    //   .then(result => {
-    //     return login(req, res, next, 'Sucessful registration!')
-    //     // return res.status(200).json({ message: 'Successful registration'})
-    //   })
-    //   .catch(err => {
-    //     if (err.name === 'SequelizeUniqueConstraintError' && err.errors[0].path === 'email') {
-    //       return res.status(400).json({ message: 'The email is already registered'})
-    //     }
-    //     return res.status(400).json(err)
-    //   })
-
+  .post((req, res, next) => {
+    const { email, password, firstname, lastname } = req.body
+    bcrypt.genSaltAsync(10)
+      .then(salt => bcrypt.hashAsync(password, salt, null))
+      .then(pw => User.create({ email, firstname, lastname, password: pw }))
+      .then(user => login(req, res, next, 'Successful registration'))
+      .catch(e => {
+        if (e.name === 'SequelizeUniqueConstraintError' && e.errors[0].path === 'email')
+          return res.status(400).json({ message: 'The email is already registered' })
+        return res.status(400).json({ message: 'Something went wrong when registering your account' })
+      })
   })
   .all(authenticateToken)
   .get(async (req, res) => {
@@ -52,18 +34,10 @@ usersRouter.route('/')
     } catch(e) {
       return res.status(400).json({ message: 'Something went wrong when fetching the users, please try again' })
     }
-    
-    // User.findAndCountAll({ attributes: { exclude: ['password']}})
-    //   .then(result => {
-    //     return res.json(result)
-    //   })
-    //   .catch(err => {
-    //     return res.json(err)
-    //   })
   })
 
 usersRouter.route('/:id')
-  // .all(authenticateToken)
+  .all(authenticateToken)
   .get(async (req, res, next) => {
     try {
       const { id } = req.params
@@ -72,10 +46,6 @@ usersRouter.route('/:id')
     } catch(e) {
       res.status(400).json(e)
     }
-    
-    // User.findOne({ where: { id }, attributes: { exclude: ['password']}})
-    //   .then(u => res.json(u))
-    //   .catch(err => res.json(err))
   })
   .put((req, res, next) => {
     return res.json('/users/:id/ PUT is not implemented yet')
@@ -93,20 +63,6 @@ usersRouter.route('/:id/friends')
       user.sentFriendRequests(),
     ]) 
     res.status(200).json({ friends, friendRequests, sentRequests })
-
-
-    // User.findOne({ where: { id }})
-    //   .then(async u => {
-    //     const [friends, friendRequests, sentRequests] = await Promise.all([
-    //       u.friends(),
-    //       u.friendRequests(),
-    //       u.sentFriendRequests(),
-    //     ])
-    //     res.json({
-    //       friends, friendRequests, sentRequests,
-    //     })
-    //   })
-    //   .catch(err => console.log(err))
   })
   .post(async (req, res, next) => {
     const { id } = req.params
