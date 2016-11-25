@@ -21,18 +21,28 @@ usersRouter.route('/')
       .then(pw => User.create({ email, firstname, lastname, password: pw }))
       .then(user => login(req, res, next, 'Successful registration'))
       .catch(e => {
-        if (e.name === 'SequelizeUniqueConstraintError' && e.errors[0].path === 'email')
-          return res.status(400).json({ message: 'The email is already registered' })
-        return res.status(400).json({ message: 'Something went wrong when registering your account' })
+        if (e.name === 'SequelizeUniqueConstraintError' && 
+            e.errors[0].path === 'email') {
+          return res.status(400)
+            .json({ message: 'The email is already registered' })
+
+        }
+          
+        return res.status(400)
+          .json({ message: 'Something went wrong when registering your account' })
       })
   })
   .all(authenticateToken)
   .get(async (req, res) => {
     try {
       const users = await User.findAndCountAll({ attributes: { exclude: ['password'] } })
-      return res.status(200).json(users)
+      return res
+        .status(200)
+        .json(users)
     } catch(e) {
-      return res.status(400).json({ message: 'Something went wrong when fetching the users, please try again' })
+      return res
+        .status(400)
+        .json({ message: 'Something went wrong when fetching the users, please try again' })
     }
   })
 
@@ -42,13 +52,18 @@ usersRouter.route('/:id')
     try {
       const { id } = req.params
       const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] }})
-      res.status(200).json(user)
+      return res
+        .status(200)
+        .json(user)
     } catch(e) {
-      res.status(400).json(e)
+      return res
+        .status(400)
+        .json(e)
     }
   })
   .put((req, res, next) => {
-    return res.json('/users/:id/ PUT is not implemented yet')
+    return res
+      .json('/users/:id/ PUT is not implemented yet')
   }) 
 
 usersRouter.route('/:id/friends')
@@ -62,25 +77,31 @@ usersRouter.route('/:id/friends')
       user.friendRequests(),
       user.sentFriendRequests(),
     ]) 
-    res.status(200).json({ friends, friendRequests, sentRequests })
+    return res
+      .status(200)
+      .json({ friends, friendRequests, sentRequests })
   })
   .post(async (req, res, next) => {
+    const { user } = req
     const { id } = req.params
     const { authorization } = req.headers
-    const token = authorization.split(' ')[1]
-    const decoded = await jwt.verifyAsync(token, 'supersecret')
 
-    if (id === decoded.id)
-      return res.status(400).json({ message: 'Cannot add yourself as friend'})
+
+    if (id === user.id)
+      return res
+        .status(400)
+        .json({ message: 'Cannot add yourself as friend'})
 
     const [receiver, sender, friendship] = await Promise.all([
       User.findOne({ where: { id }}),
-      User.findOne({ where: { id: decoded.id }}),
-      Friendship.findOne({ where: { $or: [{ friendId: id, userId: decoded.id }, { friendId: decoded.id, userId: id }]}}),
+      User.findOne({ where: { id: user.id }}),
+      Friendship.findOne({ where: { $or: [{ friendId: id, userId: user.id }, { friendId: user.id, userId: id }]}}),
     ])
-    console.log(friendship)
+
     if (friendship) 
-      return res.status(400).json({ message: 'You are already friends with this person or a friendrequest is waiting for confirmation'})
+      return res
+        .status(400)
+        .json({ message: 'You are already friends with this person or a friendrequest is waiting for confirmation'})
 
     await sender.addFriend(receiver)
 
@@ -91,7 +112,7 @@ usersRouter.route('/:id/friends')
 
 
 usersRouter.route('/:id/friends/:friendId')
-  //.all(authenticateToken)
+  .all(authenticateToken)
   .get(async(req, res, next) => {
     const { id, friendId } = req.params
     const [friendship, friend] = await Promise.all([
@@ -99,7 +120,7 @@ usersRouter.route('/:id/friends/:friendId')
       User.findOne({ where: { id: friendId }}),
     ]) 
 
-    if (friendship.accepted) {
+    if (friendship && friendship.accepted) {
       res.json({ friend, friendship })
     } else {
       res.json({ message: 'No Friend Found'})
@@ -108,41 +129,27 @@ usersRouter.route('/:id/friends/:friendId')
   .put(async (req, res, next) => {
     try {
       const { id, friendId } = req.params
-      const { authorization } = req.headers
-      const token = authorization.split(' ')[1]
-      const decoded = await jwt.verifyAsync(token, 'supersecret')
+      const { user } = req
+
+      console.log(user)
+      console.log(friendId)
 
       // We only look for requests send FROM antother user TO this user. Hence,
       // the id's need to be flipped in the query since friendId is the id of 
       // the receiver
-      const [user, friendship] = await Promise.all([
-        User.findOne({ where: { id }}),
-        Friendship.findOne({ where: { userId: friendId, friendId: id }}), 
-      ])
+      const friendship = await Friendship.findOne({ where: { userId: friendId, friendId: user.id }})
 
-      const canAccept = decoded.id === id && decoded.id === friendship.friendId
-      if (!canAccept) {
-        return res.status(403).json({
-          message: 'Unauthorized',
-        })
-      }
-      
-      if (!friendship) {
+      if (!user.id === id && user.id === friendship.friendId) {
+        return res.status(403).json({ message: 'Unauthorized' })
+      } else if (!friendship) {
         return res.status(400).json({message: 'Nothing to be found here.. No friendrequest..'})
-      }
-
-      if (friendship.accepted) {
+      } else if (friendship.accepted) {
         return res.status(400).json({ message: 'You are already friends with this person'})
       }
 
-      await friendship.update({
-        accepted: true,
-      })
+      await friendship.update({ accepted: true })
 
-      res.json({
-        message: 'Friendship accepted',
-        friendship,
-      })
+      return res.json({ message: 'Friendship accepted', friendship })
     } catch(e) {
       res.status(400).json(e) // TODO: better error message
     }
@@ -151,21 +158,22 @@ usersRouter.route('/:id/friends/:friendId')
   .delete(async (req, res, next) => {
     try {
       const { id, friendId } = req.params
-      const { authorization } = req.headers
-      const token = authorization.split(' ')[1]
-      const decoded = await jwt.verifyAsync(token, 'supersecret')
+      const { user } = req
 
-      const [user, friendship] = await Promise.all([
-        User.findOne({ where: { id}}),
-        Friendship.findOne({ where: { $or: [{ friendId: id, userId: friendId }, { friendId: friendId, userId: id }]}}),
-      ])
+      const friendship = await Friendship.findOne({ 
+        where: { 
+          $or: [
+            { friendId: id, userId: friendId }, 
+            { friendId: friendId, userId: id },
+          ],
+        },
+      })
 
-      const canDelete = decoded.id === id && (decoded.id === friendship.friendId || decoded.id === friendship.userId)
-
-      if (!canDelete) {
-        return res.status(403).json({
-          message: 'Unauthorized to do this action',
-        })
+      if (!(user.id === id && 
+           (user.id === friendship.friendId || 
+            user.id === friendship.userId))) {
+        return res.status(403)
+          .json({message: 'Unauthorized to do this action'})
       }
 
       await friendship.destroy()

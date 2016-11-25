@@ -70,7 +70,7 @@ const mapDispatchToProps = dispatch => ({
   doRegisterUser: ({email, password, firstname, lastname}) => {
     dispatch(registerUser({email, password, firstname, lastname}))
   },
-  redirectOnRegister: (nextPathname) => dispatch(push('/'))
+  redirectOnRegister: (nextPathname) => dispatch(push('/')),
 })
 
 export default connect(

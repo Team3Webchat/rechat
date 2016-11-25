@@ -8,25 +8,22 @@ import bcrypt from 'bcrypt-nodejs'
 import models from '../api/models'
 
 const { User } = models
+const jwtSecret = process.env.JWT_SECRET || 'supersecret'
 
 Promise.promisifyAll(jwt)
 Promise.promisifyAll(bcrypt)
 
-const jwtSecret = 'supersecret' // TODO: super secret secret
-
 async function localAuth(username, password, cb) {
-  const user = await User.findOne({ where: { email: username }})
-  if (!user) {
-
+  const user = await getUserFromEmail(username)
+  if (!user) 
     return cb(null, false)
-  }
-  const isCorrectPassword = await bcrypt.compareAsync(password, user.password)
-  return cb(null, isCorrectPassword ? user : false)
+
+  return cb(null, await verifyPassword(password, user.password) ? user : false)
 }
 
 async function bearerAuth(token, cb) {
-  const decoded = await jwt.verifyAsync(token, jwtSecret)
-  const user = await User.findById(decoded.id)
+  // const decoded = await jwt.verifyAsync(token, jwtSecret)
+  const user = await getUserFromToken(token)
   return cb(null, user ? user : false)
 }
 
@@ -70,6 +67,23 @@ export function authenticateToken(req, res, next) {
     req.user = user
     return next()
   })(req, res, next)
+}
+
+export function getParsedToken(token) {
+  return jwt.verifyAsync(token, jwtSecret)
+}
+
+export function getUserFromToken(token) {
+  return jwt.verifyAsync(token, jwtSecret)
+    .then(t => User.findById(t.id))
+}
+
+export function getUserFromEmail(email) {
+  return User.findOne({ where: { email }})
+}
+
+export function verifyPassword(requestPw, userPw) {
+  return bcrypt.compareAsync(requestPw, userPw)
 }
 
 
