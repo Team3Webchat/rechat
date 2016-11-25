@@ -4,7 +4,12 @@
   "private": true,
   "homepage": "https://team3webchat.github.io/rechat",
   "devDependencies": {
-    "react-scripts": "0.7.0"
+    "chai": "^3.5.0",
+    "enzyme": "^2.6.0",
+    "react-addons-test-utils": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-scripts": "0.7.0",
+    "redux-mock-store": "^1.2.1"
   },
   "dependencies": {
     "flexboxgrid": "^6.3.1",
