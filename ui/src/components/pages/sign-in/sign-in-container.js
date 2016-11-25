@@ -9,7 +9,7 @@ import SignInForm from './sign-in-form'
 class SignInContainer extends Component {
   constructor(props) {
     super(props)
-    console.log(props)
+ 
     this.state = {
       email: '',
       password: '',

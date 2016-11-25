@@ -14,12 +14,12 @@ import './style.css'
 
 const Main = (props) => {
   const { email, doLogout, flash, friendRequests } = props
-  console.log(friendRequests)
+
   return (
     <div>
 
      <Layout fixedHeader fixedDrawer>
-        <Header title="Title">
+        <Header title="rechat">
            <Navigation>
            <Link to="/friend-request">
            { friendRequests && friendRequests.length > 0 ?
@@ -33,8 +33,8 @@ const Main = (props) => {
             <a href="#" onClick={doLogout}>Sign out</a>
           </Navigation>
         </Header>
-        <DrawerClass/>
-        <Grid>
+        <DrawerClass name={props.name}/>
+        <Grid className="main">
 
           { flash.message &&
             <FlashMessage
@@ -52,11 +52,13 @@ const Main = (props) => {
 }
 
 const mapStateToProps = state => {
+
   return {
     isLoggedIn: state.auth.isAuthenticated,
     email: state.auth.email,
     flash: state.flash,
     friendRequests: state.friends.friendRequests,
+    name: state.auth.name,
   }
 }
 

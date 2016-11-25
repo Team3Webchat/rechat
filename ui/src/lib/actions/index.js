@@ -29,7 +29,7 @@ export function fetchTestData() {
 
       dispatch(receiveTestData(data))
     } catch (e) {
-      console.log('fail')
+
     }
     
 

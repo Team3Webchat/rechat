@@ -9,7 +9,7 @@ import RegisterContainer from './components/pages/register/register-container'
 import FriendContainer from './components/pages/friend-request/friend-container'
 
 import { loginUserSuccess } from './lib/actions/authActions'
-import { getFriends } from './lib/actions/friendActions'
+import { getFriends } from './lib/actions/friendsActions'
 
 import './app.css'
 
@@ -17,8 +17,6 @@ const token = localStorage.getItem('token')
 if (token) {
   store.dispatch(loginUserSuccess({token, message: 'Welcome back'}))
   store.dispatch(getFriends())
-  // here we also need to dispatch an action that gets all the friends..
-  // or persist the redux store somewhere 
 }
 
 function requireAuth(nextState, replace) {
@@ -47,7 +45,7 @@ function doesNotRequireAuth(nextState, replace) {
 class App extends Component {
   
   render() {
-    console.log(FriendContainer)
+
     return (
       <div className="App">
         <Provider store={store}>

@@ -1,25 +1,26 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+
 //import { searchFriendRequests } from '../../lib/actions/friendsActions'
+import { acceptFriendRequest } from '../../../lib/actions/friendsActions'
 import FriendForm from './friend-form'
 
 class FriendContainer extends Component {
   accept = id => {
-    console.log("Accepted!!!", id)
+    this.props.accept(id)
   }
 
   deny = id => {
-    console.log("DENIED", id)
+
   }
   
 
   render() {
     const { isDoneSearching } = this.props
-    console.log(this.props)
-    console.log(this.props.friendRequests)
+
     return (
-      <div>
+      <div className="friend-requests">
       <h3>Friend requests</h3>
         <FriendForm 
           friendRequests={this.props.friendRequests}
@@ -31,18 +32,24 @@ class FriendContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.friends)
+
   return {
     token: state.auth.token,
     failure: state.search.failure,
     friends: state.friends.friends,
     friendRequests: state.friends.friendRequests,
-    sentFriendRequests: state.friends.sentFriendRequests,
+    sentFriendRequests: state.sentFriendRequests,
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    accept: (friendId) => dispatch(acceptFriendRequest(friendId)),
   }
 }
 
 
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(FriendContainer)

@@ -20,6 +20,7 @@ const initialState = {
   isAuthenticating: false,
   failure: false,
   id: null,
+  name: null,
 }
 
 function auth(state = initialState, action) {
@@ -32,7 +33,7 @@ function auth(state = initialState, action) {
     case LOGIN_USER_SUCCESS:
       console.log("LOGIN_USER_SUCCESS")
       const decoded = jwtDecode(action.payload.token)
-      console.log(decoded)
+      console.log(action.payload)
       return {
         ...state,
         isAuthenticating: false,
@@ -42,6 +43,7 @@ function auth(state = initialState, action) {
         message: action.payload.message,
         failure: false,
         id: decoded.id,
+        name: action.payload.name,
       }
     case LOGIN_USER_FAILURE:
       return {

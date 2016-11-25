@@ -4,23 +4,26 @@ import { Textfield, Button, Spinner, Drawer, Navigation } from 'react-mdl'
 
 import { toggleFriends } from '../../lib/actions/menuDrawerActions'
 import { toggleChats } from '../../lib/actions/menuDrawerActions'
+import { deleteFriend } from '../../lib/actions/friendsActions'
 
 import Friends from './friends'
 import Chats from './chats'
 
-const AppDrawer = ({ friends, doToggleFriends, showFriends, chats, doToggleChats, showChats }) => {
+const AppDrawer = ({ friends, doToggleFriends, showFriends, chats, doToggleChats, showChats, name, doDeleteFriend }) => {
 
   return (
-    <Drawer title="Title">
+    <Drawer title={"haha"}>
       <Navigation>
+
         <a href="#" onClick={doToggleFriends}>Friends</a>
-          { showFriends &&
+        { showFriends &&
             //Skapa ny component som renderar ut användarens vänner
-            <Friends 
-              friends={friends} 
-                onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
+            <Friends
+              friends={friends}
+              onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
+              deleteFriend={doDeleteFriend}
             />
-          }
+        }
 
         </Navigation>
         <Navigation>
@@ -54,6 +57,11 @@ const mapDispatchToProps = dispatch => {
     },
     doToggleChats: () => {
       dispatch(toggleChats())
+    },
+
+    doDeleteFriend: id => dispatch(deleteFriend(id)),
+    startConversation: () => {
+      console.log('start an conversation')
     },
   }
 }

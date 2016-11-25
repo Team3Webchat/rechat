@@ -1,80 +1,29 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Textfield, Button, Spinner, Drawer, Navigation, List, ListItem, Icon } from 'react-mdl'
+import { Textfield, Button, Spinner, Drawer, Navigation, List, ListItem, Icon, Chip, ChipContact } from 'react-mdl'
 
-const Friends = ({ friends, onFriendClick }) => {
-  console.log(friends)
-  if (friends && friends.length > 0) {
+const Friends = ({ friends, onFriendClick, deleteFriend, startConversation }) => {
     return (
       <List>
-        {friends.map(f => 
-          <ListItem key={f.id}>
-            <span><Icon name="account_box"/>{f.firstname} {f.lastname}</span>
-          </ListItem> 
-        )}
+      {friends.length > 0 ?
+      friends.map(f =>
+        <ListItem key={f.id}>
+          <Chip
+          onClose={e => deleteFriend(f.id)}
+          onClick={e => startConversation()}>
+              <ChipContact
+              style={{ background: 'url("https://placekitten.com/150/150") 0 0 / cover' }}/>
+              {f.firstname} {f.lastname}
+          </Chip>
+        </ListItem>
+      )
+      :
+      <ListItem>
+        You have no friends loser
+      </ListItem>
+      }
       </List>
     )
-  } else {
-    return <p>No friends</p>
-  }
-  
 }
 
 export default Friends
-
-// class Friends extends Component {
-
-//   constructor(props) {
-//     super(props)
-
-//   }
-
-//   // componentWillReceiveProps(nextProps) {
-//   //   if (this.props.friends !== nextProps.friends)
-//   //     this.setState({
-//   //       showFriends: nextProps.friends,
-//   //     })
-//   // }
-
-
-//   render(){
-//     const { friends } = this.props
-//     console.log(friends)
-//     return(
-//       <List>
-//       {
-//         friends.length > 0 ?
-//           friends.map(function (user) {
-//             return (
-//               <ListItem key={user}>
-//                 <Icon name="account_box" />{user.firstname}  {user.lastname}
-//               </ListItem>
-//             )
-//           })
-//         :
-//         <p>You dont have any friends loser</p>
-//       }
-//       </List>
-//     )
-//   }
-// }
-
-
-// const mapStateToProps = state => {
-
-//   return {
-//     friends: state.friends.friends,
-//   }
-// }
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-
-//   }
-// }
-// export default connect(
-//   mapStateToProps,
-//   mapDispatchToProps
-// )(Friends)
-
-

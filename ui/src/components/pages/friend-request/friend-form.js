@@ -7,13 +7,13 @@ import './style.css'
 //import FlashMessage from '../../flash-message/flash-message'
 
 const FriendForm = ({ friendRequests, onAccept, onDeny }) => {
-  console.log(friendRequests)
+
   return (
     <div className="friend-requests">
         
       <List style={{width: '300px'}}>
       {friendRequests && friendRequests.map(f => 
-        <ListItem>
+        <ListItem key={f.id}>
           <ListItemContent className='displayName' avatar="account_circle">{f.firstname} {f.lastname}</ListItemContent>
           <ListItemAction>
             <IconToggle className='acceptButton' onClick={() => onAccept(f.id)} name="plus_one" ripple id="bold" />

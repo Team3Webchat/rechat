@@ -20,7 +20,7 @@ export function showFriends() {
 
 export function dontShowFriends(){
   return{
-    type: DONT_SHOW_FRIENDS
+    type: DONT_SHOW_FRIENDS,
   }
 }
 
@@ -37,14 +37,6 @@ export function dontShowChats(){
 }
 
 export function toggleFriends() {
-  // console.log("showing friends!")
-  // return async function(dispatch) {
-  //   if(!show){
-  //     dispatch(showFriends())
-  //   }else{
-  //     dispatch(dontShowFriends())
-  //   }
-  // }
   return {
     type: TOGGLE_FRIENDS,
   }

@@ -26,9 +26,6 @@ usersRouter.route('/')
         // return res.status(200).json({ message: 'Successful registration'})
       })
       .catch(err => {
-
-        console.log(err.name)
-        console.log(err.errors[0].path)
         if (err.name === 'SequelizeUniqueConstraintError' && err.errors[0].path === 'email') {
           return res.status(400).json({ message: 'The email is already registered'})
         }
@@ -86,14 +83,20 @@ usersRouter.route('/:id/friends')
     if (id === decoded.id)
       return res.status(400).json({ message: 'Cannot add yourself as friend'})
 
-    const [receiver, sender] = await Promise.all([
+    const [receiver, sender, friendship] = await Promise.all([
       User.findOne({ where: { id }}),
       User.findOne({ where: { id: decoded.id }}),
+      Friendship.findOne({ where: { $or: [{ friendId: id, userId: decoded.id }, { friendId: decoded.id, userId: id }]}}),
     ])
+    console.log(friendship)
+    if (friendship) 
+      return res.status(400).json({ message: 'You are already friends with this person or a friendrequest is waiting for confirmation'})
 
     await sender.addFriend(receiver)
 
-    res.json('Friend added')
+    const sentFriendRequests = await sender.sentFriendRequests()
+
+    res.json({ message: 'Friend added!', sentFriendRequests})
   })
 
 
@@ -144,11 +147,9 @@ usersRouter.route('/:id/friends/:friendId')
     }
 
     if (friendship.accepted) {
-      return res.json({ message: 'You are already friends with this person'})
+      return res.status(400).json({ message: 'You are already friends with this person'})
     }
 
-    
-    console.log(canAccept)
 
     
 
