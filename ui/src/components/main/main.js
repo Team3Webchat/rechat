@@ -21,7 +21,10 @@ const Main = (props) => {
      <Layout fixedHeader fixedDrawer>
         <Header title="rechat">
            <Navigation>
-           <Link to="/friend-request">
+
+           <Search />
+
+           <Link to="/friend-request" className="toRequests">
            { friendRequests && friendRequests.length > 0 ?
              <Badge text={friendRequests.length} overlap>
                 <Icon name="account_box" />
@@ -29,8 +32,9 @@ const Main = (props) => {
               : <Icon name="account_box" />
             }
             </Link>
-            <Search />
-            <a href="#" onClick={doLogout}>Sign out</a>
+
+            <a href="#" className='signOut' onClick={doLogout}>Sign out</a>
+            
           </Navigation>
         </Header>
         <DrawerClass name={props.name}/>

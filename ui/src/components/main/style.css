@@ -10,9 +10,23 @@
 .mdl-layout__header-row{
   background: #F28D52 !important;
 }
-.mdl-layout__drawer{
-  background: #8FA7BF !important;
-}
+
 .mdl-layout__header-row .mdl-navigation__link{
   color: #5C272D !important;
+}
+/*FRIEND REQUESTS*/
+.toRequests{
+  transition: color 0.3s ease;
+}
+.toRequests:hover{
+  color: #ffffff !important;
+}
+
+/*SIGNOUT*/
+.mdl-layout__header-row .signOut{
+  transition: color 0.3s ease;
+  font-weight: bold;
+}
+.signOut:hover{
+  color: #ffffff !important;
 }

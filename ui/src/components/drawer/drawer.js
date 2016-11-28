@@ -18,15 +18,13 @@ const AppDrawer = ({ friends, doToggleFriends, showFriends, chats,
 
     <Navigation id='profileLink'>
       <header>
-        <img alt="profilepicture" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRfx6RQ1DY3tj5rGhIvwXOpBBokmF6juPbvQ4InvslpFF355vdY" class="demo-avatar hoverZoomLink"/>
-        <a href="#" onClick={doToggleProfile}>
-        Benny Svensson</a>
+        <img alt="profile" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRfx6RQ1DY3tj5rGhIvwXOpBBokmF6juPbvQ4InvslpFF355vdY"/>
+        <a href="#" onClick={doToggleProfile}>Benny Svensson</a>
       </header>
     </Navigation>
 
     <Navigation>
-      <a href="#" onClick={doToggleFriends} class="mdl-list__item-primary-content">
-      Friends</a>
+      <a href="#" onClick={doToggleFriends}>Friends</a>
       { showFriends &&
           //Skapa ny component som renderar ut användarens vänner
           <Friends
@@ -39,8 +37,7 @@ const AppDrawer = ({ friends, doToggleFriends, showFriends, chats,
       </Navigation>
 
       <Navigation>
-        <a href="#" onClick={doToggleChats} class="mdl-list__item-primary-content">
-        Chats</a>
+        <a href="#" onClick={doToggleChats}>Chats</a>
           { showChats &&
             //Skapa ny component som renderar ut användarens chat
             <Chats

@@ -2,10 +2,13 @@
   max-width: 1200px;
 }
 #searchForm .material-icons{
-  color: white !important;
+  color: #5C272D !important;
 }
 #searchForm input{
   max-width: 100px;
+}
+#searchForm .mdl-textfield{
+  padding: 20px;
 }
 #searchBox{
   margin: 'auto';

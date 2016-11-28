@@ -27,13 +27,17 @@
 
 
 /*DRAWER*/
-.mdl-navigation{
+.mdl-layout__drawer{
+  background: #8FA7BF !important;
+}
+.mdl-layout__drawer .mdl-navigation{
   padding-top: 0 !important;
 }
-.mdl-navigation__link{
+.mdl-layout__drawer .mdl-navigation__link{
+  transition: background-color 0.3s ease;
   color: #29090d !important;
   padding: 20px 40px !important;
 }
-.mdl-navigation__link:hover{
+.mdl-layout__drawer .mdl-navigation__link:hover{
   background-color: #7e93a9 !important;
 }
