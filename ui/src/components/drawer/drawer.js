@@ -9,14 +9,24 @@ import { deleteFriend } from '../../lib/actions/friendsActions'
 import Friends from './friends'
 import Chats from './chats'
 
+import './style.css'
+
 const AppDrawer = ({ friends, doToggleFriends, showFriends, chats,
                      doToggleChats, doToggleProfile, showChats, name, doDeleteFriend,
                      startConversation }) =>
-  <Drawer title="haha">
+  <Drawer>
+
+    <Navigation id='profileLink'>
+      <header>
+        <img alt="profilepicture" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRfx6RQ1DY3tj5rGhIvwXOpBBokmF6juPbvQ4InvslpFF355vdY" class="demo-avatar hoverZoomLink"/>
+        <a href="#" onClick={doToggleProfile}>
+        Benny Svensson</a>
+      </header>
+    </Navigation>
 
     <Navigation>
-
-      <a href="#" onClick={doToggleFriends}>Friends</a>
+      <a href="#" onClick={doToggleFriends} class="mdl-list__item-primary-content">
+      Friends</a>
       { showFriends &&
           //Skapa ny component som renderar ut användarens vänner
           <Friends
@@ -26,10 +36,11 @@ const AppDrawer = ({ friends, doToggleFriends, showFriends, chats,
             deleteFriend={doDeleteFriend}
           />
       }
-
       </Navigation>
+
       <Navigation>
-        <a href="#" onClick={doToggleChats}>Chats</a>
+        <a href="#" onClick={doToggleChats} class="mdl-list__item-primary-content">
+        Chats</a>
           { showChats &&
             //Skapa ny component som renderar ut användarens chat
             <Chats
@@ -37,10 +48,6 @@ const AppDrawer = ({ friends, doToggleFriends, showFriends, chats,
               onChatClick={() => console.log('SELECTED CHAT, SHOULD INITIATE A CHAT HERE PROBABLY')}
               />
           }
-      </Navigation>
-
-      <Navigation>
-        <a href="#" onClick={doToggleProfile}>{name}</a>
       </Navigation>
 
   </Drawer>

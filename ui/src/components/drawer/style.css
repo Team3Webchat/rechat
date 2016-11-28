@@ -1,0 +1,39 @@
+/*PROFILE*/
+#profileLink{
+  background: rgba(0,0,0,0.5);
+  padding-bottom: 17px;
+}
+
+#profileLink header:hover{
+  background: none !important;
+}
+#profileLink img{
+  width: 30%;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+#profileLink a{
+  transition: color 0.3s ease;
+  float: left;
+  padding-top: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 120%;
+  color: white;
+}
+#profileLink a:hover{
+  color: #f39c6a;
+}
+
+
+/*DRAWER*/
+.mdl-navigation{
+  padding-top: 0 !important;
+}
+.mdl-navigation__link{
+  color: #29090d !important;
+  padding: 20px 40px !important;
+}
+.mdl-navigation__link:hover{
+  background-color: #7e93a9 !important;
+}

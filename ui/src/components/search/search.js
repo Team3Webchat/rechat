@@ -26,7 +26,7 @@ class Search extends Component {
       if (e.target.value != ''){
         this.promise = setTimeout(function(){
           props.doSearch(state.searchValue)
-        }, 1000)
+        }, 500)
       } else{
         props.endSearch()
       }
