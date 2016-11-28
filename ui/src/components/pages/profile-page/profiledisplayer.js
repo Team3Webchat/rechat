@@ -4,8 +4,7 @@ import {  Card, Grid, Cell, CardActions, Button, Icon } from 'react-mdl'
 
 const ProfileDisplayer = (props) => {
   const { email, name } = props.user
-  const { doToggleProfile } = props
-  console.log(doToggleProfile);
+  const { doToggleProfile, isEditing } = props
   //There is an error right now with the fields, you can't write any text in them
   return (
     <Card shadow={0} style={{ margin: 'auto', width: '150%'}}>
@@ -20,7 +19,9 @@ const ProfileDisplayer = (props) => {
         <Cell col={12}>Email: {email}</Cell>
       </Grid>
       <CardActions border>
-          <Button colored>Edit</Button>
+          <Button colored>Edit
+            onClick={isEditing}
+          </Button>
       </CardActions>
     </Card>
   )
