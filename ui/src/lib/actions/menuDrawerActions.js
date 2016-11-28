@@ -7,6 +7,7 @@ export const DRAWER_USER_FAILURE = 'DRAWER_USER_FAILURE'
 export const TOGGLE_FRIENDS = 'TOGGLE_FRIENDS'
 export const TOGGLE_CHATS = 'TOGGLE_CHATS'
 export const TOGGLE_PROFILE = 'TOGGLE_PROFILE'
+export const EDIT_PROFILE = 'EDIT_PROFILE'
 
 export const showFriends = () => ({
   type: SHOW_FRIENDS,
@@ -34,4 +35,8 @@ export const toggleChats = () => ({
 
 export const toggleProfile = () => ({
   type: TOGGLE_PROFILE,
+})
+
+export const editProfile = () => ({
+  type: EDIT_PROFILE,
 })
