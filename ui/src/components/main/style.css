@@ -7,3 +7,12 @@
   display: flex;
   flex: 1;
 }
+.mdl-layout__header-row{
+  background: #F28D52 !important;
+}
+.mdl-layout__drawer{
+  background: #8FA7BF !important;
+}
+.mdl-layout__header-row .mdl-navigation__link{
+  color: #5C272D !important;
+}
