@@ -1,10 +1,11 @@
-import { TOGGLE_FRIENDS } from '../actions/menuDrawerActions'
-import { TOGGLE_CHATS } from '../actions/menuDrawerActions'
+import { TOGGLE_FRIENDS, TOGGLE_CHATS, TOGGLE_PROFILE } from '../actions/menuDrawerActions'
+//import { TOGGLE_CHATS } from '../actions/menuDrawerActions'
 import { LOGOUT_USER } from '../actions/authActions'
 
 const initialState = {
   showFriends: false,
   showChats: false,
+  showProfile: false,
 }
 function menuDrawer(state = initialState, action) {
 
@@ -21,8 +22,13 @@ function menuDrawer(state = initialState, action) {
 
     case LOGOUT_USER:
       return initialState
-      default: 
+      default:
       return state
+
+    case TOGGLE_PROFILE:
+      return {
+        showProfile: !state.showProfile,
+      }
   }
 
 }

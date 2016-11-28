@@ -26,7 +26,7 @@ export const registerUserFailure = ({ flash }) => ({
   },
 })
 
-export const registerUser = ({ email, password, firstname, lastname }) => 
+export const registerUser = ({ email, password, firstname, lastname }) =>
   async function(dispatch) {
     dispatch(registerUserRequest())
     try {
@@ -57,10 +57,10 @@ export const registerUser = ({ email, password, firstname, lastname }) =>
 
       const { token, friends } = json
 
-      dispatch(registerUserSuccess({ token, flash: { 
+      dispatch(registerUserSuccess({ token, flash: {
         message: 'Succesful registration',
         type: 'success',
-      }, friends}))
+      }, friends, name: json.user.fullname,}))
       dispatch(push('/'))
     } catch(e) {
 

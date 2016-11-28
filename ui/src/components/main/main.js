@@ -5,6 +5,7 @@ import { push } from 'react-router-redux'
 import { Link } from 'react-router'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
+import ProfileContainer from '../pages/profile-page/profile-container'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
@@ -12,7 +13,7 @@ import { logout } from '../../lib/actions/authActions'
 import './style.css'
 
 const Main = (props) => {
-  const { doLogout, flash, friendRequests } = props
+  const { doLogout, flash, friendRequests, toggleProfile } = props
 
   return (
     <div>
@@ -27,7 +28,7 @@ const Main = (props) => {
              </Badge>
               : <Icon name="account_box" />
             }
-          </Link>
+            </Link>
             <Search />
             <a href="#" onClick={doLogout}>Sign out</a>
           </Navigation>
@@ -44,6 +45,11 @@ const Main = (props) => {
           }
           {props.children}
 
+          {toggleProfile &&
+            <ProfileContainer/>
+
+          }
+
         </Grid>
       </Layout>
     </div>
@@ -55,7 +61,7 @@ const mapStateToProps = state => ({
   email: state.auth.email,
   flash: state.flash,
   friendRequests: state.friends.friendRequests,
-  name: state.auth.name,
+  toggleProfile: state.menuDrawer.showProfile,
 })
 
 const mapDispatchToProps = dispatch => ({
