@@ -33,24 +33,6 @@ class Search extends Component {
     }.bind(this)
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.isDoneSearching !== nextProps.isDoneSearching)
-  //     this.setState({
-  //       isDoneSearching: !this.state.isDoneSearching,
-  //       failure: nextProps.failure,
-  //       searchResults: nextProps.searchResults,
-  //     })
-  //   if (this.props.isSearching !== nextProps.isSearching)
-  //     this.setState({
-  //       isSearching: !this.state.isSearching,
-  //     })
-  //   if (this.props.failure !== nextProps.failure)
-  //     this.setState({
-  //       failure: nextProps.failure,
-  //       searchResults: nextProps.searchResults,
-  //     })
-  // }
-
   render() {
     const { searchValue } = this.state
     const { isDoneSearching, searchResults } = this.props

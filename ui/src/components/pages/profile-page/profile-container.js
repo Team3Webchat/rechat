@@ -1,6 +1,9 @@
 import React, { PropTypes, Component } from 'react'
+import { connect } from 'react-redux'
 import { Textfield, Button, Spinner } from 'react-mdl'
-import ProvileDisplayer from './profiledisplayer'
+import ProfileDisplayer from './profiledisplayer'
+
+import { toggleProfile } from '../../../lib/actions/menuDrawerActions'
 
 
 const user = {
@@ -18,14 +21,28 @@ class ProfileContainer extends Component {
   }
 
   render() {
+    const { user, doToggleProfile } = this.props
     return (
       <div>
-        <ProvileDisplayer user={this.state.user}/>
+        <ProfileDisplayer user={user} doToggleProfile={doToggleProfile}/>
       </div>
     )
   }
 }
 
 
+const mapStateToProps = state => ({
+  user: {
+    email: state.auth.email,
+    name: state.auth.name,
+  },
+})
 
-export default ProfileContainer
+const mapDispatchToProps = dispatch => ({
+  doToggleProfile: () => dispatch(toggleProfile()),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileContainer)
