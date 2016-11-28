@@ -6,7 +6,12 @@ import store, { history } from './lib/store'
 import Main from './components/main/main'
 import SignInContainer from './components/pages/sign-in/sign-in-container'
 import RegisterContainer from './components/pages/register/register-container'
+
+
 import FriendContainer from './components/pages/friend-request/friend-container'
+
+import ProfileContainer from './components/pages/profile-page/profile-container'
+
 
 import { loginUserSuccess } from './lib/actions/authActions'
 import { getFriends } from './lib/actions/friendsActions'
@@ -43,14 +48,14 @@ function doesNotRequireAuth(nextState, replace) {
 }
 
 class App extends Component {
-  
+
   render() {
 
     return (
       <div className="App">
         <Provider store={store}>
           <Router history={history}>
-
+            <Route path='/me' component={ProfileContainer} onEnter={requireAuth}/>
             <Route path='/sign-in' component={SignInContainer} onEnter={doesNotRequireAuth}/>
             <Route path='/register' component={RegisterContainer} onEnter={doesNotRequireAuth}/>
             <Route path='/' component={Main} onEnter={requireAuth}>
