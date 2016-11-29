@@ -23,7 +23,7 @@ class Search extends Component {
 
       if (this.promise)
         clearInterval(this.promise)
-      if (e.target.value != ''){
+      if (e.target.value !== ''){
         this.promise = setTimeout(function(){
           props.doSearch(state.searchValue)
         }, 500)
@@ -33,13 +33,24 @@ class Search extends Component {
     }.bind(this)
   }
 
+  handleSubmit = e => {
+    e.preventDefault()
+  }
+  
+  componentWillReceiveProps(nextProps) {
+    console.log('Händer saker')
+    //Kanske kolla om textfiled r focus
+    if (this.props.isDoneSearching !== nextProps.isDoneSearching)
+      this.props.toggleShowSearch()
+  }
+
   render() {
     const { searchValue } = this.state
-    const { isDoneSearching, searchResults, addFriend } = this.props
+    const { searchResults, addFriend, showSearch, failure } = this.props
 
     return (
       <div className="navIcon">
-        <form id='searchForm'>
+        <form id='searchForm' onSubmit={this.handleSubmit}>
           <Textfield
             label='Name'
             required
@@ -49,8 +60,9 @@ class Search extends Component {
             expandableIcon="search"
           />
         </form>
-        { isDoneSearching &&
+        { showSearch &&
           <SearchBox
+            failure={failure}
             searchResults={searchResults}
             addFriend={addFriend}
           />

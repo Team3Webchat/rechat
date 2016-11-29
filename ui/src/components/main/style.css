@@ -14,14 +14,13 @@
 .mdl-layout__header-row .navIcon{
   float: right !important;
   color: #5C272D !important;
+  font-size: 24px !important;
+  transition: color 0.3s ease;
 }
 
 
 /*FRIEND REQUESTS*/
-.toRequests{
-  transition: color 0.3s ease;
-}
-.toRequests:hover{
+.mdl-layout__header-row .navIcon:hover{
   color: #ffffff !important;
 }
 

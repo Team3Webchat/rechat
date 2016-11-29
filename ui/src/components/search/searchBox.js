@@ -5,11 +5,15 @@ import './style.css'
 
 const SearchBox = (props) => {
   const { failure } = props
+  console.log('stuff');
+  console.log(props);
   return (
 
     <Card id='searchBox' shadow={0}>
     { failure ?
-        <h3>hittar ingen användare</h3>
+        <List>
+        <ListItem className='searchResult'>Hittar ingen användare</ListItem>
+        </List>
         :
         <SearchResults
         searchResults={props.searchResults}
@@ -21,7 +25,6 @@ const SearchBox = (props) => {
 }
 
 const SearchResults = (props) => {
-
   const { searchResults, addFriend } = props
   return (
     <List>
@@ -32,7 +35,7 @@ const SearchResults = (props) => {
             </FABButton>
             <p>{user.firstname}  {user.lastname}</p>
             <div className='addUser'>
-              <Icon name='person_add' onClick={() => props.addFriend(user.id)}/>
+              <Icon name='person_add' onClick={() => addFriend(user.id)}/>
             </div>
           </ListItem>
         )
