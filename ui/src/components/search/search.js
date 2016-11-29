@@ -35,11 +35,10 @@ class Search extends Component {
 
   render() {
     const { searchValue } = this.state
-    const { isDoneSearching, searchResults } = this.props
-    console.log(this.props.addFriend)
+    const { isDoneSearching, searchResults, addFriend } = this.props
 
     return (
-      <div>
+      <div className="navIcon">
         <form id='searchForm'>
           <Textfield
             label='Name'
@@ -52,8 +51,8 @@ class Search extends Component {
         </form>
         { isDoneSearching &&
           <SearchBox
-            searchResults={this.props.searchResults}
-            addFriend={this.props.addFriend}
+            searchResults={searchResults}
+            addFriend={addFriend}
           />
         }
       </div>

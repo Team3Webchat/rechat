@@ -6,10 +6,10 @@ import { Link } from 'react-router'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
 import ProfileContainer from '../pages/profile-page/profile-container'
+import DeleteFriendConfirm from '../drawer/delete-friend-confirm'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
-import DeleteFriendConfirm from '../drawer/delete-friend-confirm'
 
 import './style.css'
 

@@ -28,11 +28,11 @@ const SearchResults = (props) => {
       {searchResults.map(function (user) {
         return (
           <ListItem className='searchResult' key={user.id}>
+            <FABButton className="avatarPic" style={{ background: 'url("https://placekitten.com/150/150") 0 0 / cover' }}>
+            </FABButton>
             <p>{user.firstname}  {user.lastname}</p>
             <div className='addUser'>
-              <FABButton colored onClick={() => props.addFriend(user.id)} >
-                  <Icon name='add' />
-              </FABButton>
+              <Icon name='person_add' onClick={() => props.addFriend(user.id)}/>
             </div>
           </ListItem>
         )
