@@ -3,18 +3,19 @@
 }
 #searchForm .material-icons{
   color: #5C272D !important;
+  width: 100%;
 }
 #searchForm input{
-  max-width: 100px;
+  max-width: 100% !important;
 }
 #searchForm .mdl-textfield{
   padding: 20px;
 }
+
 #searchBox{
   margin: 'auto';
   min-height: 0px !important;
   position: absolute !important;
-  max-width: 200px;
 }
 #searchBox ul{
   padding: 0 !important;
@@ -32,9 +33,12 @@
   float: right;
   padding-right: 10px;
 }
-.addUser button{
-  background: rgb(55, 165, 99) !important;
-  height: 30px !important;
-  min-width: 30px !important;
-  width: 30px !important;
+.addUser i{
+  font-size: 33px !important;
+}
+.avatarPic{
+  height: 40px !important;
+  min-width: 40px !important;
+  width: 40px !important;
+  margin-right: 10px !important;
 }

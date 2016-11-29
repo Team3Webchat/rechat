@@ -1,63 +1,62 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Layout, Header, Navigation, Grid, Badge, Icon } from 'react-mdl'
 import { push } from 'react-router-redux'
-import { Link } from 'react-router'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
 import ProfileContainer from '../pages/profile-page/profile-container'
+import FriendRequestContainer from '../pages/friend-request/friend-container'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
 
 import './style.css'
 
-const Main = (props) => {
-  const { doLogout, flash, friendRequests, toggleProfile } = props
+class Main extends Component {
 
-  return (
-    <div>
 
-     <Layout fixedHeader fixedDrawer>
-        <Header title="rechat">
-           <Navigation>
+  render(){
+    const { doLogout, flash, toggleProfile } = this.props
 
-           <Search />
+    return (
+      <div>
 
-           <Link to="/friend-request" className="toRequests">
-           { friendRequests && friendRequests.length > 0 ?
-             <Badge text={friendRequests.length} overlap>
-                <Icon name="account_box" />
-             </Badge>
-              : <Icon name="account_box" />
+       <Layout fixedHeader fixedDrawer>
+          <Header title="ReChat">
+             <Navigation>
+
+               <Search />
+
+               <FriendRequestContainer />
+               
+               <a href="#" className='signOut navIcon' onClick={doLogout}>Sign out</a>
+
+            </Navigation>
+          </Header>
+
+          <DrawerClass name={this.props.name}/>
+
+          <Grid className="main">
+
+            { flash.message &&
+              <FlashMessage
+              message={flash.message}
+              type={flash.type}
+              inline
+              />
             }
-            </Link>
+            {this.props.children}
 
-            <a href="#" className='signOut' onClick={doLogout}>Sign out</a>
-            
-          </Navigation>
-        </Header>
-        <DrawerClass name={props.name}/>
-        <Grid className="main">
+            {toggleProfile &&
+              <ProfileContainer/>
 
-          { flash.message &&
-            <FlashMessage
-            message={flash.message}
-            type={flash.type}
-            inline
-            />
-          }
-          {props.children}
+            }
 
-          {toggleProfile &&
-            <ProfileContainer/>
-
-          }
-
-        </Grid>
-      </Layout>
-    </div>
-  )
+          </Grid>
+        </Layout>
+      </div>
+    )
+  }
 }
 
 const mapStateToProps = state => ({
