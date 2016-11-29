@@ -14,7 +14,7 @@ const ProfileDisplayer = (props) => {
         </Button>
       <Grid style={{width: '80%'}}>
         <Cell col={10}><h2> {name} </h2></Cell>
-        <Cell col={10}><Gravatar email={email} /></Cell>
+        <Cell col={10}><Gravatar email={email} size={150} /></Cell>
       </Grid>
       <Grid>
         <Cell col={12}>Email: {email}</Cell>
