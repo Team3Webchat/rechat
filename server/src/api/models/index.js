@@ -33,5 +33,11 @@ Object.keys(models).forEach(model => {
   }
 })
 
+
+models.User.findOne({ where: { email: 'user@test.com'}})
+  .then(u => u.getChats())
+  .then(c => c[0].getUsers())
+  .then(u => console.log(u))
+
 export default models
 export { sequelize, Sequelize }

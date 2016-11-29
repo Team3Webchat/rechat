@@ -1,26 +1,23 @@
-export default (sequelize, DataTypes) => {
-  const Chat = sequelize.define('chat',
+export default function(sequelize, DataTypes) {
+  const Chat = sequelize.define('chat', 
     {
-      // members: {
-      //   //Array
-      //   notEmpty: true,
-      //   allowNull: false,
-      // }
-    },
+      id: {
+        type: DataTypes.UUID,
+        primaryKey: true,
+        defaultValue: DataTypes.UUIDV1,
+        unique: true,
+        allowNull: false,
+      },
+    }, 
     {
-      // classMethods: {
-      //   associate(models) {
-      //     // associations can be defined here
-      //     models.Chat.belongsToMany(models.Chat,
-      //       {
-      //         as: 'messages',
-      //         through: models.Message,
-      //       }
-      //     )
-      //   },
-      // },
+      classMethods: {
+        associate(models) {
+          models.Chat.belongsToMany(models.User, {
+            through: 'chatUsers',
+          })
+        },
+      },
     }
   )
-
   return Chat
 }
