@@ -50,6 +50,9 @@ export default (sequelize, DataTypes) => {
               through: models.Friendship,
             }
           )
+          models.User.belongsToMany(models.Chat, {
+            through: 'chatUsers',
+          })
         },
       },
       instanceMethods: {
