@@ -3,6 +3,7 @@ import {  Card, Grid, Cell, CardActions, Button, Icon } from 'react-mdl'
 
 
 const ProfileDisplayer = (props) => {
+  console.log(props.user)
   const { email, name } = props.user
   const { doToggleProfile, doToggleEdit } = props
   //There is an error right now with the fields, you can't write any text in them
@@ -19,7 +20,7 @@ const ProfileDisplayer = (props) => {
         <Cell col={12}>Email: {email}</Cell>
       </Grid>
       <CardActions border>
-          <Button onClick={doToggleEdit} colored>Edit
+          <Button className='buttons' onClick={doToggleEdit} colored>Change Password
 
           </Button>
       </CardActions>
