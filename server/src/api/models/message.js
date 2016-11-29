@@ -6,17 +6,19 @@ export default (sequelize, DataTypes) => {
       }
     },
     {
-      classMethods: {
-        associate(models) {
-          // associations can be defined here
-          models.Message.hasOne(models.Message,
-            {
-              as: 'sentFrom',
-              through: models.User,
-            }
-          )
-        },
-      },
+      // classMethods: {
+      //   associate(models) {
+      //     // associations can be defined here
+      //     models.Message.hasOne(models.Message,
+      //       {
+      //         as: 'sentFrom',
+      //         through: models.User,
+      //       }
+      //     )
+      //   },
+      // },
     }
   )
+
+  return Message
 }
