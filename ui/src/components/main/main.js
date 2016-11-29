@@ -9,14 +9,18 @@ import ProfileContainer from '../pages/profile-page/profile-container'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
+import DeleteFriendConfirm from '../drawer/delete-friend-confirm'
 
 import './style.css'
 
 const Main = (props) => {
-  const { doLogout, flash, friendRequests, toggleProfile } = props
+  const { doLogout, flash, friendRequests, toggleProfile, toggleDeleteFriend } = props
 
   return (
     <div>
+
+    {toggleDeleteFriend && <DeleteFriendConfirm/>
+      }
 
      <Layout fixedHeader fixedDrawer>
         <Header title="rechat">
@@ -66,6 +70,7 @@ const mapStateToProps = state => ({
   flash: state.flash,
   friendRequests: state.friends.friendRequests,
   toggleProfile: state.menuDrawer.showProfile,
+  toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
 })
 
 const mapDispatchToProps = dispatch => ({

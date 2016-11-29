@@ -2,9 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Drawer, Navigation } from 'react-mdl'
 
-import { toggleFriends, toggleChats, toggleProfile } from '../../lib/actions/menuDrawerActions'
-//import { toggleChats } from '../../lib/actions/menuDrawerActions'
-import { deleteFriend } from '../../lib/actions/friendsActions'
+import { toggleFriends, toggleChats, toggleProfile, toggleDeleteFriend } from '../../lib/actions/menuDrawerActions'
 
 import Friends from './friends'
 import Chats from './chats'
@@ -12,7 +10,7 @@ import Chats from './chats'
 import './style.css'
 
 const AppDrawer = ({ friends, doToggleFriends, showFriends, chats,
-                     doToggleChats, doToggleProfile, showChats, name, doDeleteFriend,
+                     doToggleChats, doToggleProfile, showChats, name, doToggleDeleteFriend,
                      startConversation }) =>
   <Drawer>
 
@@ -31,7 +29,7 @@ const AppDrawer = ({ friends, doToggleFriends, showFriends, chats,
             friends={friends}
             onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
             startConversation={startConversation}
-            deleteFriend={doDeleteFriend}
+            doToggleDeleteFriend={doToggleDeleteFriend}
           />
       }
       </Navigation>
@@ -49,20 +47,20 @@ const AppDrawer = ({ friends, doToggleFriends, showFriends, chats,
 
   </Drawer>
 
-
 const mapStateToProps = state => ({
   showFriends: state.menuDrawer.showFriends,
   showChats: state.menuDrawer.showChats,
   friends: state.friends.friends,
   chats: state.chats.chats,
   name: state.auth.name,
+  toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
 })
 
 const mapDispatchToProps = dispatch => ({
   doToggleFriends: () => dispatch(toggleFriends()),
   doToggleChats: () => dispatch(toggleChats()),
   doToggleProfile: () => dispatch(toggleProfile()),
-  doDeleteFriend: id => dispatch(deleteFriend(id)),
+  doToggleDeleteFriend: id => dispatch(toggleDeleteFriend(id)),
   startConversation: () => console.log('DISPATCH START CONVERSATION ACTION'),
 })
 
