@@ -21,13 +21,13 @@ usersRouter.route('/')
       .then(pw => User.create({ email, firstname, lastname, password: pw }))
       .then(user => login(req, res, next, 'Successful registration'))
       .catch(e => {
-        if (e.name === 'SequelizeUniqueConstraintError' && 
+        if (e.name === 'SequelizeUniqueConstraintError' &&
             e.errors[0].path === 'email') {
           return res.status(400)
             .json({ message: 'The email is already registered' })
 
         }
-          
+
         return res.status(400)
           .json({ message: 'Something went wrong when registering your account' })
       })
@@ -61,10 +61,19 @@ usersRouter.route('/:id')
         .json(e)
     }
   })
-  .put((req, res, next) => {
-    return res
-      .json('/users/:id/ PUT is not implemented yet')
-  }) 
+  .put(async (req, res, next) => {
+    console.log(req.user.dataValues)
+    const user = await User.findOne({ where: { id: req.user.dataValues.id }})
+    bcrypt.genSaltAsync(10)
+       .then(salt => bcrypt.hashAsync(req.body.password, salt, null))
+       .then(pw => user.update({ password: pw }))
+       .then(()=> User.findOne({ where: { id: req.user.dataValues.id }}))
+       .then(usr => (console.log(usr)))
+       .then(()=>  res.json('Your password is updated'))
+       .catch(err => res.json(err))
+      //  .catch(err => res.json('something went wrong'))
+
+  })
 
 usersRouter.route('/:id/friends')
   .all(authenticateToken)
@@ -76,7 +85,7 @@ usersRouter.route('/:id/friends')
       user.friends(),
       user.friendRequests(),
       user.sentFriendRequests(),
-    ]) 
+    ])
     return res
       .status(200)
       .json({ friends, friendRequests, sentRequests })
@@ -98,7 +107,7 @@ usersRouter.route('/:id/friends')
       Friendship.findOne({ where: { $or: [{ friendId: id, userId: user.id }, { friendId: user.id, userId: id }]}}),
     ])
 
-    if (friendship) 
+    if (friendship)
       return res
         .status(400)
         .json({ message: 'You are already friends with this person or a friendrequest is waiting for confirmation'})
@@ -118,7 +127,7 @@ usersRouter.route('/:id/friends/:friendId')
     const [friendship, friend] = await Promise.all([
       Friendship.findOne({ where: { $or: [{ friendId: id, userId: friendId }, { friendId: friendId, userId: id }]}}),
       User.findOne({ where: { id: friendId }}),
-    ]) 
+    ])
 
     if (friendship && friendship.accepted) {
       res.json({ friend, friendship })
@@ -135,7 +144,7 @@ usersRouter.route('/:id/friends/:friendId')
       console.log(friendId)
 
       // We only look for requests send FROM antother user TO this user. Hence,
-      // the id's need to be flipped in the query since friendId is the id of 
+      // the id's need to be flipped in the query since friendId is the id of
       // the receiver
       const friendship = await Friendship.findOne({ where: { userId: friendId, friendId: user.id }})
 
@@ -153,24 +162,24 @@ usersRouter.route('/:id/friends/:friendId')
     } catch(e) {
       res.status(400).json(e) // TODO: better error message
     }
-    
+
   })
   .delete(async (req, res, next) => {
     try {
       const { id, friendId } = req.params
       const { user } = req
 
-      const friendship = await Friendship.findOne({ 
-        where: { 
+      const friendship = await Friendship.findOne({
+        where: {
           $or: [
-            { friendId: id, userId: friendId }, 
+            { friendId: id, userId: friendId },
             { friendId: friendId, userId: id },
           ],
         },
       })
 
-      if (!(user.id === id && 
-           (user.id === friendship.friendId || 
+      if (!(user.id === id &&
+           (user.id === friendship.friendId ||
             user.id === friendship.userId))) {
         return res.status(403)
           .json({message: 'Unauthorized to do this action'})
@@ -184,7 +193,7 @@ usersRouter.route('/:id/friends/:friendId')
     } catch(e) {
       res.status(400).json(e)
     }
-    
+
   })
 
 export default usersRouter

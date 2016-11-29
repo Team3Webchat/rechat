@@ -11,9 +11,12 @@
   background: #F28D52 !important;
 }
 
-.mdl-layout__header-row .mdl-navigation__link{
+.mdl-layout__header-row .navIcon{
+  float: right !important;
   color: #5C272D !important;
 }
+
+
 /*FRIEND REQUESTS*/
 .toRequests{
   transition: color 0.3s ease;

@@ -2,6 +2,10 @@
 
 # Make sure we are in the project root
 cd `dirname $0`
+
+git pull origin master
+sudo npm install 
+
 cd ..
 cd ui
 

@@ -1,12 +1,30 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { Badge, Icon, Link } from 'react-mdl'
 
-//import { searchFriendRequests } from '../../lib/actions/friendsActions'
 import { acceptFriendRequest, deleteFriend } from '../../../lib/actions/friendsActions'
-import FriendForm from './friend-form'
+import FriendRequestBox from './friendRequestBox'
 
-class FriendContainer extends Component {
+class FriendRequestContainer extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      showRequests: false,
+    }
+  }
+
+  toggleShowRequests = e => {
+    console.log('byter show')
+    e.preventDefault()
+    const state = {
+      showRequests: !this.state.showRequests,
+    }
+    this.setState(state)
+  }
+
+
   accept = id => {
     this.props.accept(id)
   }
@@ -16,24 +34,36 @@ class FriendContainer extends Component {
   }
 
   render() {
+    const { showRequests } = this.state
+    const { friendRequests } = this.props
+
     return (
-      <div className="friend-requests">
-      <h3>Friend requests</h3>
-        <FriendForm 
-          friendRequests={this.props.friendRequests}
-          onAccept={this.accept} onDeny={this.deny}
-        />
+      <div className="navIcon">
+        <a className="toRequests" onClick={this.toggleShowRequests}>
+        { friendRequests && friendRequests.length > 0 ?
+          <Badge text={friendRequests.length} overlap>
+             <Icon name="account_box" />
+          </Badge>
+           : <Icon name="account_box" />
+         }
+         </a>
+
+         {showRequests &&
+           <FriendRequestBox
+             friendRequests={friendRequests}
+             onAccept={this.accept} onDeny={this.deny}
+           />
+         }
       </div>
     )
   }
 }
+/*
 
+
+*/
 const mapStateToProps = state => ({
-  token: state.auth.token,
-  failure: state.search.failure,
-  friends: state.friends.friends,
   friendRequests: state.friends.friendRequests,
-  sentFriendRequests: state.sentFriendRequests,
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -44,4 +74,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(FriendContainer)
+)(FriendRequestContainer)
