@@ -18,10 +18,8 @@ FlashMessage.propTypes = {
   type: PropTypes.string.isRequired,
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    close: () => dispatch(resetFlashMessage()),
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  close: () => dispatch(resetFlashMessage()),
+})
 
 export default connect(null, mapDispatchToProps)(FlashMessage)

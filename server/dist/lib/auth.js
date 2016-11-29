@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 // TODO: super secret secret
 
 var localAuth = function () {
@@ -13,32 +15,28 @@ var localAuth = function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            console.log("LOCAL AUTH");
-            _context.next = 3;
+            _context.next = 2;
             return User.findOne({ where: { email: username } });
 
-          case 3:
+          case 2:
             user = _context.sent;
 
-            console.log(user);
-
             if (user) {
-              _context.next = 8;
+              _context.next = 5;
               break;
             }
 
-            console.log(' No User ');
             return _context.abrupt('return', cb(null, false));
 
-          case 8:
-            _context.next = 10;
+          case 5:
+            _context.next = 7;
             return _bcryptNodejs2.default.compareAsync(password, user.password);
 
-          case 10:
+          case 7:
             isCorrectPassword = _context.sent;
             return _context.abrupt('return', cb(null, isCorrectPassword ? user : false));
 
-          case 12:
+          case 9:
           case 'end':
             return _context.stop();
         }
@@ -133,20 +131,62 @@ _passport2.default.use(new _passportLocal2.default({
 _passport2.default.use(new _passportHttpBearer2.default(bearerAuth));
 
 function login(req, res, next, message) {
-  console.log(req.body);
-  _passport2.default.authenticate('local', function (err, user, info) {
-    console.log(info);
-    if (err) {
-      console.log(' Err ');
-      return next(err);
-    }
+  var _this = this;
 
-    if (!user) {
-      console.log('No User found');
-      return res.status(401).json({ status: 'error', code: 'unauthorized' });
-    }
-    return res.json({ message: message, token: _jsonwebtoken2.default.sign({ id: user.id, email: user.email }, jwtSecret) });
-  })(req, res, next);
+  _passport2.default.authenticate('local', function () {
+    var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(err, user, info) {
+      var _ref4, _ref5, friends, friendRequests, sentFriendRequests;
+
+      return regeneratorRuntime.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              if (!err) {
+                _context3.next = 2;
+                break;
+              }
+
+              return _context3.abrupt('return', next(err));
+
+            case 2:
+              if (user) {
+                _context3.next = 4;
+                break;
+              }
+
+              return _context3.abrupt('return', res.status(401).json({ status: 'error', code: 'unauthorized' }));
+
+            case 4:
+              _context3.next = 6;
+              return _bluebird2.default.all([user.friends(), user.friendRequests(), user.sentFriendRequests()]);
+
+            case 6:
+              _ref4 = _context3.sent;
+              _ref5 = _slicedToArray(_ref4, 3);
+              friends = _ref5[0];
+              friendRequests = _ref5[1];
+              sentFriendRequests = _ref5[2];
+              return _context3.abrupt('return', res.json({
+                message: message,
+                token: _jsonwebtoken2.default.sign({ id: user.id, email: user.email }, jwtSecret),
+                user: user,
+                friends: friends,
+                friendRequests: friendRequests,
+                sentFriendRequests: sentFriendRequests
+              }));
+
+            case 12:
+            case 'end':
+              return _context3.stop();
+          }
+        }
+      }, _callee3, _this);
+    }));
+
+    return function (_x6, _x7, _x8) {
+      return _ref3.apply(this, arguments);
+    };
+  }())(req, res, next);
 }
 
 function authenticateToken(req, res, next) {

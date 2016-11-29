@@ -33,30 +33,11 @@ Object.keys(models).forEach(model => {
   }
 })
 
-// Promise.all([
-//   models.User.findOne({where:{email:'user@test.com'}}),
-//   models.User.findOne({where:{email:'dan@test.com'}}),
-//   models.User.findOne({where:{email:'linus@test.com'}}),
-//   models.User.findOne({where:{email:'alex@test.com'}})
-// ]).then(r => {
-//   const [user, dan, linus, alex] = r
-//   user.friendRequests().then(console.log)
 
-// })
-
-
-// user.addFriend(dan)
-// alex.addFriend(user)
-// linus.addFriend(user)
-
-
-
-
-
-
-
-
-
+models.User.findOne({ where: { email: 'user@test.com'}})
+  .then(u => u.getChats())
+  .then(c => c[0].getUsers())
+  .then(u => console.log(u))
 
 export default models
 export { sequelize, Sequelize }

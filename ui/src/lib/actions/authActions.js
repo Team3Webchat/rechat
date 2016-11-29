@@ -9,15 +9,14 @@ export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS'
 export const LOGIN_USER_FAILURE = 'LOGIN_USER_FAILURE'
 export const LOGOUT_USER = 'LOGOUT_USER'
 
-export function loginUserRequest() {
-  return {
-    type: LOGIN_USER_REQUEST,
-  }
-}
+export const loginUserRequest = () => ({
+  type: LOGIN_USER_REQUEST,
+})
 
-export function loginUserSuccess({token, flash, friends}) {
+export function loginUserSuccess({token, flash, friends, friendRequests, sentFriendRequests, name}) {
   // TODO: check if user wants to be remembered, in that case, set the token
   // to local storage
+
   localStorage.setItem('token', token) // move this elswhere later
   return {
     type: LOGIN_USER_SUCCESS,
@@ -25,18 +24,19 @@ export function loginUserSuccess({token, flash, friends}) {
       token,
       flash: { ...flash, persistOnRouteTransition: true },
       friends,
+      friendRequests,
+      sentFriendRequests,
+      name,
     },
   }
 }
 
-export function loginUserFailure({flash}) {
-  return {
-    type: LOGIN_USER_FAILURE,
-    payload: {
-      flash: { ...flash, persistOnRouteTransition: false },
-    },
-  }
-}
+export const loginUserFailure = ({flash}) => ({
+  type: LOGIN_USER_FAILURE,
+  payload: {
+    flash: { ...flash, persistOnRouteTransition: false },
+  },
+})
 
 export function logout({flash}) {
   localStorage.removeItem('token')
@@ -48,11 +48,10 @@ export function logout({flash}) {
   }
 }
 
-export function loginUser(email, password) {
-  return async function(dispatch) {
+export const loginUser = (email, password) =>
+  async function(dispatch) {
     dispatch(loginUserRequest())
     try {
-      console.log('fetch')
       const res = await fetch(baseUrl + 'login', {
         method: 'POST',
         body: JSON.stringify({
@@ -65,20 +64,21 @@ export function loginUser(email, password) {
           'Content-Type': 'application/json',
         },
       })
-      console.log(res)
+
       const json = await res.json()
-      console.log(json)
       jwtDecode(json.token) // on fail, throws error
       dispatch(loginUserSuccess({
+        name: json.user.fullname,
         token: json.token,
         flash: {
           message: 'Successful login',
           type: 'success',
         },
-        friends: json.friends
+        friends: json.friends,
+        friendRequests: json.friendRequests,
+        sentFriendRequests: json.sentFriendRequests,
       }))
     } catch(e) {
-      console.log('Error signing user in')
       dispatch(loginUserFailure({
         flash: {
           message: 'Wrong credentials, try again',
@@ -86,6 +86,4 @@ export function loginUser(email, password) {
         },
       }))
     }
-
   }
-}

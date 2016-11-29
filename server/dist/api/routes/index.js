@@ -14,6 +14,10 @@ var _users = require('./users');
 
 var _users2 = _interopRequireDefault(_users);
 
+var _search = require('./search');
+
+var _search2 = _interopRequireDefault(_search);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var router = (0, _express.Router)();
@@ -25,6 +29,7 @@ router.route('/health').get(function (req, res) {
 });
 
 router.use(_auth2.default);
-router.use(_users2.default);
+router.use('/users', _users2.default);
+router.use(_search2.default);
 
 exports.default = router;

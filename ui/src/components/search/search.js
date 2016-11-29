@@ -3,18 +3,14 @@ import { connect } from 'react-redux'
 import { Textfield, Icon, FABButton } from 'react-mdl'
 
 import { searchUser, endSearch } from '../../lib/actions/searchActions'
+import { sendFriendRequest } from '../../lib/actions/friendsActions'
 import SearchBox from './searchBox'
 
 class Search extends Component {
-    //const { email } = this.state
   constructor(props) {
     super(props)
     this.state = {
       searchValue: '',
-      isDoneSearching: null,
-      isSearching: null,
-      searchResults: null,
-      failure: null,
     }
   }
 
@@ -24,90 +20,58 @@ class Search extends Component {
       const props = this.props
       state[key] = e.target.value
       this.setState(state)
-//Sätt timeout innan skcikar till servern
+
       if (this.promise)
         clearInterval(this.promise)
-      if(e.target.value != ''){
+      if (e.target.value != ''){
         this.promise = setTimeout(function(){
-          console.log(state.searchValue);
           props.doSearch(state.searchValue)
-        }, 1000)
-      }else{
+        }, 500)
+      } else{
         props.endSearch()
       }
     }.bind(this)
   }
 
-  handleEndSearch = e => {
-    //get searchField and clear it
-    this.props.endSearch()
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.isDoneSearching !== nextProps.isDoneSearching)
-      this.setState({
-        isDoneSearching: !this.state.isDoneSearching,
-        failure: nextProps.failure,
-        searchResults: nextProps.searchResults,
-      })
-      if (this.props.isSearching !== nextProps.isSearching)
-        this.setState({
-        isSearching: !this.state.isSearching,
-      })
-      if (this.props.failure !== nextProps.failure)
-        this.setState({
-          failure: nextProps.failure,
-        searchResults: nextProps.searchResults,
-      })
-  }
-
   render() {
-    const { isDoneSearching, isSearching, searchResults, failure, searchValue } = this.state
+    const { searchValue } = this.state
+    const { isDoneSearching, searchResults, addFriend } = this.props
 
     return (
-      <div>
-        <form>
+      <div className="navIcon">
+        <form id='searchForm'>
           <Textfield
             label='Name'
             required
             value={searchValue}
             onChange={this.handleChange('searchValue')}
+            expandable
+            expandableIcon="search"
           />
-          <FABButton colored className='closeSearch' onClick={this.handleEndSearch}>
-            <Icon name="close" />
-          </FABButton>
         </form>
         { isDoneSearching &&
           <SearchBox
-              failure={this.state.failure}
-              searchResults={this.state.searchResults}
+            searchResults={searchResults}
+            addFriend={addFriend}
           />
         }
       </div>
     )
   }
 }
+const mapStateToProps = state => ({
+  token: state.auth.token,
+  isDoneSearching: state.search.isDoneSearching,
+  isSearching: state.search.isSearching,
+  searchResults: state.search.searchResults,
+  failure: state.search.failure,
+})
 
-const mapStateToProps = state => {
-  return {
-    token: state.auth.token,
-    isDoneSearching: state.search.isDoneSearching,
-    isSearching: state.search.isSearching,
-    searchResults: state.search.searchResults,
-    failure: state.search.failure,
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    doSearch: (searchValue) => {
-      dispatch(searchUser(searchValue))
-    },
-    endSearch: () => {
-      dispatch(endSearch())
-    },
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  doSearch: (searchValue) => dispatch(searchUser(searchValue)),
+  endSearch: () => dispatch(endSearch()),
+  addFriend: id => dispatch(sendFriendRequest(id)),
+})
 
 export default connect(
   mapStateToProps,

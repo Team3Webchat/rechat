@@ -1,0 +1,17 @@
+.toRequests{
+  color: inherit !important;
+}
+#friendRequestBox{
+  margin: 'auto';
+  min-height: 0px !important;
+  position: absolute !important;
+  min-width: 27%;
+  right: 0%;
+  top: 66px;
+}
+#friendRequestBox .emptyRequests{
+
+}
+#friendRequestBox .emptyRequests i{
+  padding-right: 20px;
+}

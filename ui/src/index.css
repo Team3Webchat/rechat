@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: #607D8B;
+  background: #fbfbfb;
 }
 
 .signin-register {
@@ -31,5 +31,3 @@ input {
 label ::after {
   background-color: black !important;
 }
-
-

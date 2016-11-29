@@ -21,6 +21,10 @@ var _db = require('../../config/db');
 
 var _db2 = _interopRequireDefault(_db);
 
+var _pascalCase = require('pascal-case');
+
+var _pascalCase2 = _interopRequireDefault(_pascalCase);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var env = process.env.NODE_ENV || 'development';
@@ -34,7 +38,8 @@ var _db$env = _db2.default[env],
 
 var sequelize = new _sequelize2.default(database, username, password, {
   host: host,
-  dialect: dialect
+  dialect: dialect,
+  logging: false
 });
 
 var models = {};
@@ -43,7 +48,7 @@ _fs2.default.readdirSync(__dirname).filter(function (file) {
   return file.indexOf('.') !== 0 && file !== 'index.js';
 }).forEach(function (file) {
   var model = sequelize.import(_path2.default.join(__dirname, file));
-  models[model.name] = model;
+  models[(0, _pascalCase2.default)(model.name)] = model;
 });
 
 Object.keys(models).forEach(function (model) {

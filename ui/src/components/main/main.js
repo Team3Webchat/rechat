@@ -1,34 +1,49 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Layout, Header, Navigation, Drawer, Grid, Cell, Badge, Icon } from 'react-mdl'
+import { Layout, Header, Navigation, Grid, Badge, Icon } from 'react-mdl'
 import { push } from 'react-router-redux'
+import { Link } from 'react-router'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
+import ProfileContainer from '../pages/profile-page/profile-container'
+import DeleteFriendConfirm from '../drawer/delete-friend-confirm'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
-import { expandDrawer } from '../../lib/actions/menuDrawerActions'
 
 import './style.css'
 
 const Main = (props) => {
-  const { email, doLogout, flash, showFriends } = props
+  const { doLogout, flash, friendRequests, toggleProfile, toggleDeleteFriend } = props
+
   return (
     <div>
 
+    {toggleDeleteFriend && <DeleteFriendConfirm/>
+      }
+
      <Layout fixedHeader fixedDrawer>
-        <Header title="Title">
+        <Header title="rechat">
            <Navigation>
-           <Badge text="1" overlap>
-              <Icon name="account_box" />
-          </Badge>
-              <Search />
-              <a href="#" onClick={doLogout}>Sign out</a>
-           </Navigation>
+
+           <Search />
+
+           <Link to="/friend-request" className="toRequests">
+           { friendRequests && friendRequests.length > 0 ?
+             <Badge text={friendRequests.length} overlap>
+                <Icon name="account_box" />
+             </Badge>
+              : <Icon name="account_box" />
+            }
+            </Link>
+
+            <a href="#" className='signOut' onClick={doLogout}>Sign out</a>
+            
+          </Navigation>
         </Header>
-        <DrawerClass/>
-        <Grid>
-          <Cell col={6}>
+        <DrawerClass name={props.name}/>
+        <Grid className="main">
+
           { flash.message &&
             <FlashMessage
             message={flash.message}
@@ -36,36 +51,40 @@ const Main = (props) => {
             inline
             />
           }
-          <h4>Welcome to rechat {email}</h4>
+          {props.children}
 
-          </Cell>
+          {toggleProfile &&
+            <ProfileContainer/>
+
+          }
+
         </Grid>
       </Layout>
     </div>
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    isLoggedIn: state.auth.isAuthenticated,
-    email: state.auth.email,
-    flash: state.flash,
-  }
-}
+const mapStateToProps = state => ({
+  isLoggedIn: state.auth.isAuthenticated,
+  email: state.auth.email,
+  flash: state.flash,
+  friendRequests: state.friends.friendRequests,
+  toggleProfile: state.menuDrawer.showProfile,
+  toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
+})
 
-const mapDispatchToProps = dispatch => {
-  return {
-    doLogout: (message) => {
-      dispatch(logout({
-        flash: {
-          message: 'We hope to see you again!',
-          type: 'success',
-        },
-      }))
-      dispatch(push('/sign-in'))
-    },
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  doLogout: (message) => {
+    dispatch(logout({
+      flash: {
+        message: 'We hope to see you again!',
+        type: 'success',
+      },
+    }))
+    dispatch(push('/sign-in'))
+  },
+})
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

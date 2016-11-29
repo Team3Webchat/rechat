@@ -35,6 +35,12 @@ export default (sequelize, DataTypes) => {
 
     },
     {
+      getterMethods: {
+        fullname() {
+          return `${this.firstname} ${this.lastname}`
+        },
+      },
+
       classMethods: {
         associate(models) {
           // models.User.belongsToMany(models.User, { as: 'Friends', through: models.Friendship})
@@ -44,6 +50,9 @@ export default (sequelize, DataTypes) => {
               through: models.Friendship,
             }
           )
+          models.User.belongsToMany(models.Chat, {
+            through: 'chatUsers',
+          })
         },
       },
       instanceMethods: {

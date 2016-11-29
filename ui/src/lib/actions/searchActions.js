@@ -1,4 +1,3 @@
-import { push } from 'react-router-redux'
 import { baseUrl } from './'
 
 // SEARCH actions
@@ -6,41 +5,33 @@ export const SEARCH_USER_REQUEST = 'SEARCH_USER_REQUEST'
 export const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
 export const SEARCH_USER_FAILURE = 'SEARCH_USER_FAILURE'
 export const END_SEARCH = 'END_SEARCH'
-export function searchUserRequest() {
-  return {
-    type: SEARCH_USER_REQUEST,
-  }
-}
 
-export function searchUserSuccess({results}) {
-  return {
-    type: SEARCH_USER_SUCCESS,
-    payload: {
-      results,
-    },
-  }
-}
+export const searchUserRequest = () => ({
+  type: SEARCH_USER_REQUEST,
+})
 
-export function searchUserFailure(error) {
-  return {
-    type: SEARCH_USER_FAILURE,
-    payload: {
-      error,
-    },
-  }
-}
+export const searchUserSuccess = ({ results }) => ({
+  type: SEARCH_USER_SUCCESS,
+  payload: {
+    results,
+  },
+})
 
-export function endSearch2(error) {
-  return {
-    type: END_SEARCH,
-  }
-}
+export const searchUserFailure = (error) => ({
+  type: SEARCH_USER_FAILURE,
+  payload: {
+    error,
+  },
+})
 
-export function searchUser( searchValue ) {
+export const endSearch = () => ({
+  type: END_SEARCH,
+})
 
-  return async function(dispatch) {
+
+export const searchUser = (searchValue) => 
+  async function(dispatch) {
     dispatch(searchUserRequest())
-    //dispatch(searchUserSuccess({ results })) //test data
     try {
       const res = await fetch(baseUrl + 'search', {
         method: 'POST',
@@ -57,25 +48,16 @@ export function searchUser( searchValue ) {
       const json = await res.json()
       const { results } = json
 
-      //dispatch(push('/'))
-
       //TODO: är detta rätt sätt att hantera om ingen användare hittas?
-      if(results.length > 0){
-          dispatch(searchUserSuccess({ results }))
-      }else{
+      if (results.length > 0){
+        dispatch(searchUserSuccess({ results }))
+      } else{
         dispatch(searchUserFailure(results.code))
       }
-
     } catch(e) {
       dispatch(searchUserFailure(e))
     }
-
   }
-}
 
 
-export function endSearch() {
-  return async function(dispatch) {
-    dispatch(endSearch2())
-  }
-}
+
