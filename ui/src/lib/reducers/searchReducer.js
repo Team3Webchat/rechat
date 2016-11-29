@@ -9,8 +9,8 @@ import { LOGOUT_USER } from '../actions/authActions'
 const initialState = {
   searchValue: null,
   searchResults: null,
-  isSearching: null,
-  isDoneSearching: null,
+  isSearching: false,
+  isDoneSearching: false,
   failure: false,
 }
 

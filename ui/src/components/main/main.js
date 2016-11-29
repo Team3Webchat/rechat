@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Header, Navigation, Grid } from 'react-mdl'
+import { Layout, Header, Navigation, Grid, Icon } from 'react-mdl'
 import { push } from 'react-router-redux'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
@@ -9,6 +9,7 @@ import FriendRequestContainer from '../pages/friend-request/friend-container'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
+import { endSearch } from '../../lib/actions/searchActions'
 
 import './style.css'
 
@@ -23,31 +24,51 @@ class Main extends Component {
   }
 
   toggleShowRequests = e => {
-    console.log('byter show')
     e.preventDefault()
+    this.props.endSearch()
     const state = {
       showRequests: !this.state.showRequests,
       showSearch: false,
     }
     this.setState(state)
   }
+  toggleShowSearch = () => {
+    const state = {
+      showRequests: false,
+      showSearch: !this.state.showSearch,
+    }
+    this.setState(state)
+  }
+  onClickOutside = (e) => {
+    console.log('onClickOutside')
+    console.log(e.target.tagName)
+    if(e.target.tagName !== 'I'){
+      this.props.endSearch()
+      const state = {
+        showRequests: false,
+        showSearch: false,
+      }
+      this.setState(state)
+    }
+
+  }
 
   render(){
     const { doLogout, flash, toggleProfile } = this.props
-    const { showRequests } = this.state
+    const { showRequests, showSearch } = this.state
 
     return (
       <div>
 
-       <Layout fixedHeader fixedDrawer>
+       <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>
           <Header title="ReChat">
              <Navigation>
 
-               <Search/>
+               <Search toggleShowSearch={this.toggleShowSearch} showSearch={showSearch}/>
 
                <FriendRequestContainer toggleShowRequests={this.toggleShowRequests} showRequests={showRequests}/>
 
-               <a href="#" className='signOut navIcon' onClick={doLogout}>Sign out</a>
+               <Icon name="exit_to_app" className='navIcon' onClick={doLogout}/>
 
             </Navigation>
           </Header>
@@ -93,6 +114,7 @@ const mapDispatchToProps = dispatch => ({
     }))
     dispatch(push('/sign-in'))
   },
+  endSearch: () => dispatch(endSearch()),
 })
 
 export default connect(
