@@ -1,5 +1,6 @@
 import { push } from 'react-router-redux'
 import { baseUrl } from './'
+import { getHeaders } from '../api'
 
 // Register actions
 export const CHANGE_PASSWORD_REQUEST = 'CHANGE_PASSWORD_REQUEST'
@@ -25,42 +26,37 @@ export const changePasswordFailure = ({ flash }) => ({
   },
 })
 
-export const changePassword = ({ password, newPassword, newPasswordConfirm }) =>
+export const changePassword = ({ password, newPassword, id }) =>
   async function(dispatch) {
 
-    console.log("test test", password, newPassword, newPasswordConfirm)
-    // dispatch(changePasswordRequest())
-    // try {
-    //   const res = await fetch(baseUrl + 'users', {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //       email,
-    //       password,
-    //     }),
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json',
-    //     },
-    //   })
-    //   const json = await res.json()
+    console.log("test test",password, newPassword)
+    dispatch(changePasswordRequest())
+    try {
+      const res = await fetch(baseUrl + 'users/' + id, {
+        method: 'PUT',
+        body: JSON.stringify({
+          'password': newPassword,
+        }),
+        headers: getHeaders(),
+      })
+      const json = await res.json()
 
-    //   if (res.status === 400) {
-    //     return dispatch(changePasswordFailure({
-    //       flash: {
-    //         message: json.message,
-    //         type: 'fail',
-    //       },
-    //     }))
-    //   }
+      if (res.status === 400) {
+        return dispatch(changePasswordFailure({
+          flash: {
+            message: json.message,
+            type: 'fail',
+          },
+        }))
+      }
+      const { token } = json
 
-    //   const { token } = json
-
-    //   dispatch(changePasswordSuccess({ token, flash: {
-    //     message: 'Succesful Change of Password',
-    //     type: 'success',
-    //   }}))
-    //   dispatch(push('/'))
-    // } catch(e) {
-    //   dispatch(changePasswordFailure())
-    // }
+      dispatch(changePasswordSuccess({ token, flash: {
+        message: 'Succesful Change of Password',
+        type: 'success',
+      }}))
+      dispatch(push('/'))
+    } catch(e) {
+      dispatch(changePasswordFailure())
+    }
   }

@@ -50,7 +50,7 @@ const ChangePassword = (props) => {
           newPassword !== newPasswordConfirm && 
           newPasswordConfirm.length >= newPassword.length &&
           newPassword.length !== 0 &&
-          <FlashMessage message='Passwords are not the same' type='fail' />
+          <FlashMessage message="Passwords don't match" type='fail' />
         }
         {
           newPassword.length < 6 &&
@@ -58,9 +58,10 @@ const ChangePassword = (props) => {
         }
         {
           newPasswordConfirm.length >= 1 &&
+          newPasswordConfirm.length < newPassword.length &&
           newPassword !== newPasswordConfirm &&
           
-          <FlashMessage message="Passwords don't match " type='fail' />
+          <FlashMessage message="Passwords don't match" type='fail' />
         }
         </div>
         <spinner />

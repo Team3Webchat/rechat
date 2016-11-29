@@ -2,16 +2,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Drawer, Navigation } from 'react-mdl'
 
-import { toggleFriends, toggleChats, toggleProfile } from '../../lib/actions/menuDrawerActions'
-//import { toggleChats } from '../../lib/actions/menuDrawerActions'
-import { deleteFriend } from '../../lib/actions/friendsActions'
+import { toggleFriends, toggleChats, toggleProfile, toggleDeleteFriend } from '../../lib/actions/menuDrawerActions'
 
 import Friends from './friends'
 import Chats from './chats'
 
 import './style.css'
-
-
 
 class AppDrawer extends React.Component {
 
@@ -21,7 +17,7 @@ class AppDrawer extends React.Component {
 
   render () {
     const { friends, doToggleFriends, showFriends, chats,
-                     doToggleChats, doToggleProfile, showChats, name, doDeleteFriend,
+                     doToggleChats, doToggleProfile, showChats, name, doToggleDeleteFriend,
                      startConversation } = this.props
     return (
       <Drawer>
@@ -40,7 +36,7 @@ class AppDrawer extends React.Component {
                 friends={friends}
                 onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
                 startConversation={startConversation}
-                deleteFriend={doDeleteFriend}
+                doToggleDeleteFriend={doToggleDeleteFriend}
               />
           }
           </Navigation>
@@ -58,8 +54,6 @@ class AppDrawer extends React.Component {
       </Drawer>
     )
   }
-    
-
 }
 
 const mapStateToProps = state => ({
@@ -68,13 +62,14 @@ const mapStateToProps = state => ({
   friends: state.friends.friends,
   chats: state.chats.chats,
   name: state.auth.name,
+  toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
 })
 
 const mapDispatchToProps = dispatch => ({
   doToggleFriends: () => dispatch(toggleFriends()),
   doToggleChats: () => dispatch(toggleChats()),
   doToggleProfile: () => dispatch(toggleProfile()),
-  doDeleteFriend: id => dispatch(deleteFriend(id)),
+  doToggleDeleteFriend: id => dispatch(toggleDeleteFriend(id)),
   startConversation: () => console.log('DISPATCH START CONVERSATION ACTION'),
 })
 

@@ -6,6 +6,7 @@ import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
 import ProfileContainer from '../pages/profile-page/profile-container'
 import FriendRequestContainer from '../pages/friend-request/friend-container'
+import DeleteFriendConfirm from '../drawer/delete-friend-confirm'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
@@ -54,13 +55,19 @@ class Main extends Component {
   }
 
   render(){
-    const { doLogout, flash, toggleProfile } = this.props
-    const { showRequests, showSearch } = this.state
+
+    const { doLogout, flash, toggleProfile, toggleDeleteFriend } = this.props
+    const { showRequests } = this.state
 
     return (
       <div>
 
        <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>
+
+      {toggleDeleteFriend &&
+        <DeleteFriendConfirm/>
+      }
+
           <Header title="ReChat">
              <Navigation>
 
@@ -102,6 +109,7 @@ const mapStateToProps = state => ({
   flash: state.flash,
   friendRequests: state.friends.friendRequests,
   toggleProfile: state.menuDrawer.showProfile,
+  toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
 })
 
 const mapDispatchToProps = dispatch => ({
