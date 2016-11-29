@@ -11,44 +11,56 @@ import Chats from './chats'
 
 import './style.css'
 
-const AppDrawer = ({ friends, doToggleFriends, showFriends, chats,
+
+
+class AppDrawer extends React.Component {
+
+  componentDidMount() {
+    console.log('Component did mount')
+  }
+
+  render () {
+    const { friends, doToggleFriends, showFriends, chats,
                      doToggleChats, doToggleProfile, showChats, name, doDeleteFriend,
-                     startConversation }) =>
-  <Drawer>
+                     startConversation } = this.props
+    return (
+      <Drawer>
+        <Navigation id='profileLink'>
+          <header>
+            <img alt="profile" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRfx6RQ1DY3tj5rGhIvwXOpBBokmF6juPbvQ4InvslpFF355vdY"/>
+            <a href="#" onClick={doToggleProfile}>Benny Svensson</a>
+          </header>
+        </Navigation>
 
-    <Navigation id='profileLink'>
-      <header>
-        <img alt="profile" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRfx6RQ1DY3tj5rGhIvwXOpBBokmF6juPbvQ4InvslpFF355vdY"/>
-        <a href="#" onClick={doToggleProfile}>Benny Svensson</a>
-      </header>
-    </Navigation>
-
-    <Navigation>
-      <a href="#" onClick={doToggleFriends}>Friends</a>
-      { showFriends &&
-          //Skapa ny component som renderar ut användarens vänner
-          <Friends
-            friends={friends}
-            onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
-            startConversation={startConversation}
-            deleteFriend={doDeleteFriend}
-          />
-      }
-      </Navigation>
-
-      <Navigation>
-        <a href="#" onClick={doToggleChats}>Chats</a>
-          { showChats &&
-            //Skapa ny component som renderar ut användarens chat
-            <Chats
-              chats={chats}
-              onChatClick={() => console.log('SELECTED CHAT, SHOULD INITIATE A CHAT HERE PROBABLY')}
+        <Navigation>
+          <a href="#" onClick={doToggleFriends}>Friends</a>
+          { showFriends &&
+              //Skapa ny component som renderar ut användarens vänner
+              <Friends
+                friends={friends}
+                onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
+                startConversation={startConversation}
+                deleteFriend={doDeleteFriend}
               />
           }
-      </Navigation>
+          </Navigation>
 
-  </Drawer>
+          <Navigation>
+            <a href="#" onClick={doToggleChats}>Chats</a>
+              { showChats &&
+                //Skapa ny component som renderar ut användarens chat
+                <Chats
+                  chats={chats}
+                  onChatClick={() => console.log('SELECTED CHAT, SHOULD INITIATE A CHAT HERE PROBABLY')}
+                  />
+              }
+          </Navigation>
+      </Drawer>
+    )
+  }
+    
 
+}
 
 const mapStateToProps = state => ({
   showFriends: state.menuDrawer.showFriends,

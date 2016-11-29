@@ -36,36 +36,36 @@ class ProfileContainer extends Component {
   }
 
   handleSubmit = e => {
-    alert("test test")
+    console.log("HANDLE SUBMUT")
     e.preventDefault()
-    const { password, newPasswordConfirm } = this.state
-    if (password !== newPasswordConfirm) {
+    const { password, newPassword, newPasswordConfirm } = this.state
+    if (newPassword !== newPasswordConfirm) {
       return this.setState({
         message: 'The password and the password confirmation does not match',
       })
     }
-
-    this.props.doChangesToProfile({password, newPasswordConfirm})
+    console.log(this.state)
+    console.log(password, newPassword, newPasswordConfirm)
+    this.props.doChangeOfPassword({password, newPassword, newPasswordConfirm})
 
   }
 
   render() {
-    console.log(this.state.password)
     const { user, doToggleProfile, doToggleEdit, isEditing } = this.props
     
     return (
       <div>
       { isEditing ?
         <ChangePassword 
-          user={user} 
-          doChangesToProfile={this.props.doChangesToProfile}
-          isAuthenticating={this.state.isAuthenticating}
+          user={user}  
           doToggleProfile={doToggleProfile} 
+
           newPasswordConfirm={this.state.newPasswordConfirm}
           newPassword={this.state.newPassword}
           password={this.state.password}
+
           onSubmit={this.handleSubmit}  
-          flash={this.props.flash}
+          flash={this.props.flash}  
           onChange={this.handleChange}/>
         :
         <ProfileDisplayer user={user} doToggleEdit={doToggleEdit} doToggleProfile={doToggleProfile}/>
@@ -79,10 +79,6 @@ class ProfileContainer extends Component {
 const mapStateToProps = state => ({
   user: {
     email: state.auth.email,
-    name: state.auth.name,
-    firstname: state.firstname,
-    lastname: state.lastname,
-    password: state.password,
   },
   isAuthenticating: state.auth.isAuthenticating,
   flash: state.flash,
@@ -92,9 +88,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   doToggleProfile: () => dispatch(toggleProfile()),
   doToggleEdit: () => dispatch(editProfile()),
-  doChangesToProfile: ({password, newPasswordConfirm}) => {
-    console.log("hejhejehehjejhehehehehehhehehehe")
-    dispatch(changePassword({password, newPasswordConfirm}))
+  doChangeOfPassword: ({password, newPassword, newPasswordConfirm}) => {
+    console.log(password, newPassword, newPasswordConfirm)
+    dispatch(changePassword({password, newPassword, newPasswordConfirm}))
   },
 })
 
