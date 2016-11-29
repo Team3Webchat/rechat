@@ -38,15 +38,11 @@ class ProfileContainer extends Component {
   handleSubmit = e => {
     console.log("HANDLE SUBMUT")
     e.preventDefault()
-    const { password, newPassword, newPasswordConfirm } = this.state
-    if (newPassword !== newPasswordConfirm) {
-      return this.setState({
-        message: 'The password and the password confirmation does not match',
-      })
-    }
+    const { password, newPassword } = this.state
+    const { id } = this.props.user
     console.log(this.state)
-    console.log(password, newPassword, newPasswordConfirm)
-    this.props.doChangeOfPassword({password, newPassword, newPasswordConfirm})
+    console.log(password, newPassword)
+    this.props.doChangeOfPassword({password, newPassword, id})
 
   }
 
@@ -79,6 +75,7 @@ class ProfileContainer extends Component {
 const mapStateToProps = state => ({
   user: {
     email: state.auth.email,
+    id: state.auth.id,
   },
   isAuthenticating: state.auth.isAuthenticating,
   flash: state.flash,
@@ -88,9 +85,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   doToggleProfile: () => dispatch(toggleProfile()),
   doToggleEdit: () => dispatch(editProfile()),
-  doChangeOfPassword: ({password, newPassword, newPasswordConfirm}) => {
-    console.log(password, newPassword, newPasswordConfirm)
-    dispatch(changePassword({password, newPassword, newPasswordConfirm}))
+  doChangeOfPassword: ({password, newPassword, id}) => {
+    console.log(password, newPassword)
+    dispatch(changePassword({password, newPassword, id}))
   },
 })
 
