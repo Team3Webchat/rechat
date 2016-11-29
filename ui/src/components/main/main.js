@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Header, Navigation, Grid, Badge, Icon } from 'react-mdl'
+import { Layout, Header, Navigation, Grid } from 'react-mdl'
 import { push } from 'react-router-redux'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
 import ProfileContainer from '../pages/profile-page/profile-container'
 import FriendRequestContainer from '../pages/friend-request/friend-container'
+import DeleteFriendConfirm from '../drawer/delete-friend-confirm'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
@@ -14,21 +15,42 @@ import './style.css'
 
 class Main extends Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      showRequests: false,
+      showSearch: false,
+    }
+  }
+
+  toggleShowRequests = e => {
+    console.log('byter show')
+    e.preventDefault()
+    const state = {
+      showRequests: !this.state.showRequests,
+      showSearch: false,
+    }
+    this.setState(state)
+  }
 
   render(){
-    const { doLogout, flash, toggleProfile } = this.props
+    const { doLogout, flash, toggleProfile, toggleDeleteFriend } = this.props
+    const { showRequests } = this.state
 
     return (
       <div>
+
+      {toggleDeleteFriend && <DeleteFriendConfirm/>
+      }
 
        <Layout fixedHeader fixedDrawer>
           <Header title="ReChat">
              <Navigation>
 
-               <Search />
+               <Search/>
 
-               <FriendRequestContainer />
-               
+               <FriendRequestContainer toggleShowRequests={this.toggleShowRequests} showRequests={showRequests}/>
+
                <a href="#" className='signOut navIcon' onClick={doLogout}>Sign out</a>
 
             </Navigation>
@@ -45,8 +67,6 @@ class Main extends Component {
               inline
               />
             }
-            {this.props.children}
-
             {toggleProfile &&
               <ProfileContainer/>
 
@@ -65,6 +85,7 @@ const mapStateToProps = state => ({
   flash: state.flash,
   friendRequests: state.friends.friendRequests,
   toggleProfile: state.menuDrawer.showProfile,
+  toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
 })
 
 const mapDispatchToProps = dispatch => ({

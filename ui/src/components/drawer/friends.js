@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Textfield, Button, Spinner, Drawer, Navigation, List, ListItem, Icon, Chip, ChipContact } from 'react-mdl'
+import DeleteFriendConfirm from './delete-friend-confirm'
 
-const Friends = ({ friends, onFriendClick, deleteFriend, startConversation }) => {
+const Friends = ({ friends, onFriendClick, doToggleDeleteFriend, startConversation }) => {
   return (
     <List>
     {friends.length > 0 ?
     friends.map(f =>
       <ListItem key={f.id}>
         <Chip
-        onClose={e => deleteFriend(f.id)}
+        onClose={e => doToggleDeleteFriend(f.id)}
         onClick={e => startConversation()}>
             <ChipContact
             style={{ background: 'url("https://placekitten.com/150/150") 0 0 / cover' }}/>
