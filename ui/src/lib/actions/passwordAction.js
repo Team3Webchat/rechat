@@ -25,10 +25,10 @@ export const changePasswordFailure = ({ flash }) => ({
   },
 })
 
-export const changePassword = ({ password, newPasswordConfirm }) =>
+export const changePassword = ({ password, newPassword, newPasswordConfirm }) =>
   async function(dispatch) {
 
-    console.log("test test")
+    console.log("test test", password, newPassword, newPasswordConfirm)
     // dispatch(changePasswordRequest())
     // try {
     //   const res = await fetch(baseUrl + 'users', {
