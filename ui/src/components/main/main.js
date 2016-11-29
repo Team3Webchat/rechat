@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Header, Navigation, Grid, Badge, Icon } from 'react-mdl'
+import { Layout, Header, Navigation, Grid } from 'react-mdl'
 import { push } from 'react-router-redux'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
@@ -14,9 +14,27 @@ import './style.css'
 
 class Main extends Component {
 
+  constructor(props){
+    super(props)
+    this.state = {
+      showRequests: false,
+      showSearch: false,
+    }
+  }
+
+  toggleShowRequests = e => {
+    console.log('byter show')
+    e.preventDefault()
+    const state = {
+      showRequests: !this.state.showRequests,
+      showSearch: false,
+    }
+    this.setState(state)
+  }
 
   render(){
     const { doLogout, flash, toggleProfile } = this.props
+    const { showRequests } = this.state
 
     return (
       <div>
@@ -25,10 +43,10 @@ class Main extends Component {
           <Header title="ReChat">
              <Navigation>
 
-               <Search />
+               <Search/>
 
-               <FriendRequestContainer />
-               
+               <FriendRequestContainer toggleShowRequests={this.toggleShowRequests} showRequests={showRequests}/>
+
                <a href="#" className='signOut navIcon' onClick={doLogout}>Sign out</a>
 
             </Navigation>
@@ -45,8 +63,6 @@ class Main extends Component {
               inline
               />
             }
-            {this.props.children}
-
             {toggleProfile &&
               <ProfileContainer/>
 

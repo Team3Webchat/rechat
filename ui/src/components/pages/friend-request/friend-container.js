@@ -7,23 +7,6 @@ import { acceptFriendRequest, deleteFriend } from '../../../lib/actions/friendsA
 import FriendRequestBox from './friendRequestBox'
 
 class FriendRequestContainer extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      showRequests: false,
-    }
-  }
-
-  toggleShowRequests = e => {
-    console.log('byter show')
-    e.preventDefault()
-    const state = {
-      showRequests: !this.state.showRequests,
-    }
-    this.setState(state)
-  }
-
 
   accept = id => {
     this.props.accept(id)
@@ -34,12 +17,11 @@ class FriendRequestContainer extends Component {
   }
 
   render() {
-    const { showRequests } = this.state
-    const { friendRequests } = this.props
+    const { friendRequests, toggleShowRequests, showRequests } = this.props
 
     return (
       <div className="navIcon">
-        <a className="toRequests" onClick={this.toggleShowRequests}>
+        <a className="toRequests" onClick={toggleShowRequests}>
         { friendRequests && friendRequests.length > 0 ?
           <Badge text={friendRequests.length} overlap>
              <Icon name="account_box" />
