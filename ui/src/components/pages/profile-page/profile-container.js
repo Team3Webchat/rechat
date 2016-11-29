@@ -12,6 +12,7 @@ class ProfileContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      id: '',
       password: '',
       newPasswordConfirm: '',
       newPassword: '',
