@@ -7,6 +7,8 @@ import helmet from 'helmet'
 import httpStatus from 'http-status'
 import winston from 'winston'
 import expressWinston from 'express-winston'
+import SocketIO from 'socket.io'
+import { createSocket, startSocket } from '../lib/chat'
 
 import routes from './routes'
 import passport from '../lib/auth'
@@ -16,6 +18,10 @@ import { sequelize, user } from './models'
 async function createServer() {
 
   const app = express()
+  const server = http.createServer(app)
+  const io = createSocket(app, server)
+  startSocket(io)
+  
 
   // Apply 3rd party middleware
   app.use(cors())
@@ -23,8 +29,6 @@ async function createServer() {
   app.use(logger('dev'))
   app.use(helmet())
   app.use(passport.initialize())
-
-
 
   // logger
   app.use(expressWinston.logger({
@@ -55,7 +59,9 @@ async function createServer() {
     return next(err)
   })
 
-  return http.createServer(app)
+  
+
+  return server
 }
 
 

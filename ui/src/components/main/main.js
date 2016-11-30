@@ -7,10 +7,13 @@ import DrawerClass from '../drawer/drawer'
 import ProfileContainer from '../pages/profile-page/profile-container'
 import FriendRequestContainer from '../pages/friend-request/friend-container'
 import DeleteFriendConfirm from '../drawer/delete-friend-confirm'
+import io from 'socket.io-client'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
 import { endSearch } from '../../lib/actions/searchActions'
+
+import { API_URL } from '../../lib/config.js'
 
 import './style.css'
 
@@ -23,6 +26,19 @@ class Main extends Component {
       showSearch: false,
       searchValue: '',
     }
+  }
+
+  componentDidMount() {
+    // Just test code for sockets ignore..
+    console.log('COMPONENT_DID_MOUNT')
+    const socket = io(API_URL)
+    socket.on('connect', () => console.log('SOCKET_CONNECTED'))
+    socket.on('connect_failed', socket.close)
+    socket.on('disconnect', socket.close)
+    socket.on('dong', () => {
+      console.log('DONG')
+    })
+    socket.emit('ding')
   }
 
   toggleShowRequests = e => {
