@@ -20,7 +20,7 @@ export default function(sequelize, DataTypes) {
         })
 
         models.Message.belongsTo(models.User, {
-          as: 'author',
+          as: 'user',
         })
       },
     },
