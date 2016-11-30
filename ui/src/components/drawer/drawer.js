@@ -1,11 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Drawer, Navigation } from 'react-mdl'
+import { Drawer, Navigation, Dialog, Button, DialogTitle, DialogContent, DialogActions } from 'react-mdl'
 
 import { toggleFriends, toggleChats, toggleProfile, toggleDeleteFriend } from '../../lib/actions/menuDrawerActions'
 
 import Friends from './friends'
 import Chats from './chats'
+import DeleteFriendConfirm from './delete-friend-confirm'
 
 import './style.css'
 
@@ -13,6 +14,25 @@ class AppDrawer extends React.Component {
 
   componentDidMount() {
     console.log('Component did mount')
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.handleOpenDialog = this.handleOpenDialog.bind(this);
+    this.handleCloseDialog = this.handleCloseDialog.bind(this);
+  }
+
+  handleOpenDialog() {
+    this.setState({
+      openDialog: true
+    });
+  }
+
+  handleCloseDialog() {
+    this.setState({
+      openDialog: false
+    });
   }
 
   render () {
@@ -36,7 +56,7 @@ class AppDrawer extends React.Component {
                 friends={friends}
                 onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
                 startConversation={startConversation}
-                doToggleDeleteFriend={doToggleDeleteFriend}
+                doToggleDeleteFriend={this.handleOpenDialog}
               />
           }
           </Navigation>
@@ -51,6 +71,22 @@ class AppDrawer extends React.Component {
                   />
               }
           </Navigation>
+
+          <div>
+
+            <Dialog open={this.state.openDialog}>
+              <DialogTitle>Remove friend</DialogTitle>
+                <DialogContent>
+                  <p>Remove "friend" from your contacts?</p>
+                </DialogContent>
+              <DialogActions>
+                <Button type='button'>Confirm</Button>
+                <Button type='button' onClick={this.handleCloseDialog}>Cancel</Button>
+              </DialogActions>
+            </Dialog>  
+            
+          </div>
+
       </Drawer>
     )
   }
@@ -62,14 +98,12 @@ const mapStateToProps = state => ({
   friends: state.friends.friends,
   chats: state.chats.chats,
   name: state.auth.name,
-  toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
 })
 
 const mapDispatchToProps = dispatch => ({
   doToggleFriends: () => dispatch(toggleFriends()),
   doToggleChats: () => dispatch(toggleChats()),
   doToggleProfile: () => dispatch(toggleProfile()),
-  doToggleDeleteFriend: id => dispatch(toggleDeleteFriend(id)),
   startConversation: () => console.log('DISPATCH START CONVERSATION ACTION'),
 })
 

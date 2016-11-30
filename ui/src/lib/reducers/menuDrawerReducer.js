@@ -1,4 +1,3 @@
-//import { TOGGLE_FRIENDS, TOGGLE_CHATS, TOGGLE_PROFILE, EDIT_PROFILE } from '../actions/menuDrawerActions'
 import { TOGGLE_FRIENDS, TOGGLE_CHATS, TOGGLE_PROFILE, EDIT_PROFILE, TOGGLE_DELETE_FRIEND } from '../actions/menuDrawerActions'
 import { LOGOUT_USER } from '../actions/authActions'
 

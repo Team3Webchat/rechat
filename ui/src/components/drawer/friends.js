@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Textfield, Button, Spinner, Drawer, Navigation, List, ListItem, Icon, Chip, ChipContact } from 'react-mdl'
+import { List, ListItem, Chip, ChipContact } from 'react-mdl'
 import DeleteFriendConfirm from './delete-friend-confirm'
 
 const Friends = ({ friends, onFriendClick, doToggleDeleteFriend, startConversation }) => {
@@ -24,6 +24,7 @@ const Friends = ({ friends, onFriendClick, doToggleDeleteFriend, startConversati
     </ListItem>
     }
     </List>
+    
   )
 }
 

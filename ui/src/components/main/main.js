@@ -56,7 +56,7 @@ class Main extends Component {
 
   render(){
 
-    const { doLogout, flash, toggleProfile, toggleDeleteFriend } = this.props
+    const { doLogout, flash, toggleProfile, toggleDeleteFriend, showSearch } = this.props
     const { showRequests } = this.state
 
     return (
