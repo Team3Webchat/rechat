@@ -21,6 +21,7 @@ class Main extends Component {
     this.state = {
       showRequests: false,
       showSearch: false,
+      searchValue: '',
     }
   }
 
@@ -28,32 +29,37 @@ class Main extends Component {
     const state = {
       showRequests: !this.state.showRequests,
       showSearch: false,
+      searchValue: '',
     }
     this.setState(state)
   }
-  toggleShowSearch = () => {
+  toggleShowSearch = searchValue => {
     const state = {
       showRequests: false,
       showSearch: !this.state.showSearch,
+      searchValue: searchValue,
     }
     this.setState(state)
   }
   onClickOutside = (e) => {
-    //Får bara klicka på nav-iconerna
-    if(e.target.className !== 'material-icons navIcon'){
-      const state = {
+    console.log(e.target.parentElement.classList);
+    if(!e.target.parentElement.classList.contains( 'addUser' ) &&
+      !e.target.parentElement.classList.contains( 'searchResult' ) &&
+      !e.target.parentElement.classList.contains( 'toRequests' )){
+      this.props.endSearch()
+      this.setState({
         showRequests: false,
         showSearch: false,
-      }
-      this.setState(state)
+        searchValue: '',
+      })
     }
-
   }
 
   render(){
 
     const { doLogout, flash, toggleProfile, toggleDeleteFriend } = this.props
-    const { showRequests, showSearch } = this.state
+    const { showRequests, showSearch, searchValue } = this.state
+    console.log(this.state);
 
     return (
       <div>
@@ -64,10 +70,10 @@ class Main extends Component {
         <DeleteFriendConfirm/>
       }
 
-          <Header title="ReChat">
+          <Header title="ReChat" >
              <Navigation>
 
-               <Search toggleShowSearch={this.toggleShowSearch} showSearch={showSearch}/>
+               <Search toggleShowSearch={this.toggleShowSearch} showSearch={showSearch} searchValue={searchValue}/>
 
                <FriendRequestContainer toggleShowRequests={this.toggleShowRequests} showRequests={showRequests}/>
 
