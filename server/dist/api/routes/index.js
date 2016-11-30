@@ -23,13 +23,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var router = (0, _express.Router)();
 
 router.route('/health').get(function (req, res) {
-  return res.json({
-    status: 'OK'
-  });
+  return res.status(200).json({ status: 'OK' });
 });
 
 router.use(_auth2.default);
 router.use('/users', _users2.default);
-router.use(_search2.default);
+router.use('/search', _search2.default);
 
 exports.default = router;

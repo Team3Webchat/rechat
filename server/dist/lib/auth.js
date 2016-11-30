@@ -6,17 +6,15 @@ Object.defineProperty(exports, "__esModule", {
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-// TODO: super secret secret
-
 var localAuth = function () {
   var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(username, password, cb) {
-    var user, isCorrectPassword;
+    var user;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return User.findOne({ where: { email: username } });
+            return getUserFromEmail(username);
 
           case 2:
             user = _context.sent;
@@ -30,13 +28,26 @@ var localAuth = function () {
 
           case 5:
             _context.next = 7;
-            return _bcryptNodejs2.default.compareAsync(password, user.password);
+            return verifyPassword(password, user.password);
 
           case 7:
-            isCorrectPassword = _context.sent;
-            return _context.abrupt('return', cb(null, isCorrectPassword ? user : false));
+            if (!_context.sent) {
+              _context.next = 11;
+              break;
+            }
 
-          case 9:
+            _context.t0 = user;
+            _context.next = 12;
+            break;
+
+          case 11:
+            _context.t0 = false;
+
+          case 12:
+            _context.t1 = _context.t0;
+            return _context.abrupt('return', cb(null, _context.t1));
+
+          case 14:
           case 'end':
             return _context.stop();
         }
@@ -51,24 +62,19 @@ var localAuth = function () {
 
 var bearerAuth = function () {
   var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(token, cb) {
-    var decoded, user;
+    var user;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return _jsonwebtoken2.default.verifyAsync(token, jwtSecret);
+            return getUserFromToken(token);
 
           case 2:
-            decoded = _context2.sent;
-            _context2.next = 5;
-            return User.findById(decoded.id);
-
-          case 5:
             user = _context2.sent;
             return _context2.abrupt('return', cb(null, user ? user : false));
 
-          case 7:
+          case 4:
           case 'end':
             return _context2.stop();
         }
@@ -83,6 +89,10 @@ var bearerAuth = function () {
 
 exports.login = login;
 exports.authenticateToken = authenticateToken;
+exports.getParsedToken = getParsedToken;
+exports.getUserFromToken = getUserFromToken;
+exports.getUserFromEmail = getUserFromEmail;
+exports.verifyPassword = verifyPassword;
 
 var _jsonwebtoken = require('jsonwebtoken');
 
@@ -118,11 +128,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var User = _models2.default.User;
 
+var jwtSecret = process.env.JWT_SECRET || 'supersecret';
 
 _bluebird2.default.promisifyAll(_jsonwebtoken2.default);
 _bluebird2.default.promisifyAll(_bcryptNodejs2.default);
-
-var jwtSecret = 'supersecret';
 
 _passport2.default.use(new _passportLocal2.default({
   usernameField: 'email',
@@ -168,7 +177,7 @@ function login(req, res, next, message) {
               sentFriendRequests = _ref5[2];
               return _context3.abrupt('return', res.json({
                 message: message,
-                token: _jsonwebtoken2.default.sign({ id: user.id, email: user.email }, jwtSecret),
+                token: _jsonwebtoken2.default.sign({ email: user.email, fullname: user.fullname, id: user.id }, jwtSecret),
                 user: user,
                 friends: friends,
                 friendRequests: friendRequests,
@@ -197,6 +206,24 @@ function authenticateToken(req, res, next) {
     req.user = user;
     return next();
   })(req, res, next);
+}
+
+function getParsedToken(token) {
+  return _jsonwebtoken2.default.verifyAsync(token, jwtSecret);
+}
+
+function getUserFromToken(token) {
+  return _jsonwebtoken2.default.verifyAsync(token, jwtSecret).then(function (t) {
+    return User.findById(t.id);
+  });
+}
+
+function getUserFromEmail(email) {
+  return User.findOne({ where: { email: email } });
+}
+
+function verifyPassword(requestPw, userPw) {
+  return _bcryptNodejs2.default.compareAsync(requestPw, userPw);
 }
 
 exports.default = _passport2.default;

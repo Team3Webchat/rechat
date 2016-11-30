@@ -33,7 +33,7 @@ var search = exports.search = function () {
 
 
             if (users.length == 0) {
-              _message = JSON.stringify({ results: { status: 'error', code: 'User not found' } });
+              _message = JSON.stringify({ results: { status: 'error', code: ['User not found'] } });
 
               res.send(_message);
             } else {

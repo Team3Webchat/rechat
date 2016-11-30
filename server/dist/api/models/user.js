@@ -56,6 +56,12 @@ exports.default = function (sequelize, DataTypes) {
           as: 'friends',
           through: models.Friendship
         });
+        models.User.belongsToMany(models.Chat, {
+          through: models.ChatParticipant,
+          as: 'chats'
+        });
+
+        models.User.hasMany(models.Message);
       }
     },
     instanceMethods: {

@@ -10,7 +10,7 @@ var _search = require('../../lib/search');
 
 var searchRouter = (0, _express.Router)();
 
-searchRouter.route('/search').post(function (req, res, next) {
+searchRouter.route('/').post(function (req, res, next) {
   return (0, _search.search)(req, res, next, 'Successful Search');
 });
 

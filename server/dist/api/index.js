@@ -7,15 +7,18 @@ exports.startServer = undefined;
 
 var createServer = function () {
   var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee() {
-    var app;
+    var app, server, io;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
             app = (0, _express2.default)();
+            server = _http2.default.createServer(app);
+            io = (0, _chat.createSocket)(app, server);
+
+            (0, _chat.startSocket)(io);
 
             // Apply 3rd party middleware
-
             app.use((0, _cors2.default)());
             app.use(_bodyParser2.default.json());
             app.use((0, _morgan2.default)('dev'));
@@ -52,9 +55,9 @@ var createServer = function () {
               return next(err);
             });
 
-            return _context.abrupt('return', _http2.default.createServer(app));
+            return _context.abrupt('return', server);
 
-          case 11:
+          case 14:
           case 'end':
             return _context.stop();
         }
@@ -134,6 +137,12 @@ var _winston2 = _interopRequireDefault(_winston);
 var _expressWinston = require('express-winston');
 
 var _expressWinston2 = _interopRequireDefault(_expressWinston);
+
+var _socket = require('socket.io');
+
+var _socket2 = _interopRequireDefault(_socket);
+
+var _chat = require('../lib/chat');
 
 var _routes = require('./routes');
 
