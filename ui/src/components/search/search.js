@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Textfield, Icon, FABButton } from 'react-mdl'
+import { Textfield } from 'react-mdl'
 
 import { searchUser, endSearch } from '../../lib/actions/searchActions'
 import { sendFriendRequest } from '../../lib/actions/friendsActions'
@@ -23,11 +23,12 @@ class Search extends Component {
 
       if (this.promise)
         clearInterval(this.promise)
+
       if (e.target.value !== ''){
         this.promise = setTimeout(function(){
           props.doSearch(state.searchValue)
         }, 500)
-      } else{
+      }else{
         props.endSearch()
       }
     }.bind(this)
@@ -36,20 +37,25 @@ class Search extends Component {
   handleSubmit = e => {
     e.preventDefault()
   }
-  
+  handleBlur = () => {
+    //Clear texfiled också
+    this.props.endSearch()
+    this.props.toggleShowSearch()
+  }
   componentWillReceiveProps(nextProps) {
-    console.log('Händer saker')
-    //Kanske kolla om textfiled r focus
-    if (this.props.isDoneSearching !== nextProps.isDoneSearching)
+    //Om isDone är true, men bara första gången
+    if (this.props.isDoneSearching !== nextProps.isDoneSearching && nextProps.isDoneSearching === true){
       this.props.toggleShowSearch()
+    }
   }
 
   render() {
     const { searchValue } = this.state
     const { searchResults, addFriend, showSearch, failure } = this.props
+    console.log('show: '+showSearch);
 
     return (
-      <div className="navIcon">
+      <div >
         <form id='searchForm' onSubmit={this.handleSubmit}>
           <Textfield
             label='Name'
@@ -58,6 +64,7 @@ class Search extends Component {
             onChange={this.handleChange('searchValue')}
             expandable
             expandableIcon="search"
+            onBlur={this.handleBlur}
           />
         </form>
         { showSearch &&
