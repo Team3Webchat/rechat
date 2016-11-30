@@ -38,21 +38,20 @@ class Search extends Component {
     e.preventDefault()
   }
   handleBlur = () => {
-    //Clear texfiled också
-    this.props.endSearch()
+    this.props.endSearch(this)
     this.props.toggleShowSearch()
+    this.setState({searchValue: ''})
   }
   componentWillReceiveProps(nextProps) {
     //Om isDone är true, men bara första gången
-    if (this.props.isDoneSearching !== nextProps.isDoneSearching && nextProps.isDoneSearching === true){
+    if (this.props.isDoneSearching !== nextProps.isDoneSearching && nextProps.isDoneSearching === true)
       this.props.toggleShowSearch()
-    }
+
   }
 
   render() {
     const { searchValue } = this.state
     const { searchResults, addFriend, showSearch, failure } = this.props
-    console.log('show: '+showSearch);
 
     return (
       <div >
