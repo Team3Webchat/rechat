@@ -25,7 +25,6 @@ class Main extends Component {
   }
 
   toggleShowRequests = e => {
-    this.props.endSearch()
     const state = {
       showRequests: !this.state.showRequests,
       showSearch: false,
