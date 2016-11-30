@@ -51,8 +51,11 @@ export default (sequelize, DataTypes) => {
             }
           )
           models.User.belongsToMany(models.Chat, {
-            through: 'chatUsers',
+            through: models.ChatParticipant,
+            as: 'chats',
           })
+
+          models.User.hasMany(models.Message)
         },
       },
       instanceMethods: {

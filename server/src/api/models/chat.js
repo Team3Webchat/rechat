@@ -13,9 +13,13 @@ export default function(sequelize, DataTypes) {
       classMethods: {
         associate(models) {
           models.Chat.belongsToMany(models.User, {
-            through: 'chatUsers',
+            through: models.ChatParticipant, 
+            as: 'users',
           })
         },
+      },
+      instanceMethods: {
+
       },
     }
   )

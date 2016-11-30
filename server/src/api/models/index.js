@@ -7,6 +7,7 @@ import pascalCase from 'pascal-case'
 const env = process.env.NODE_ENV || 'development'
 const { database, username, password, host, dialect } = db[env]
 
+
 const sequelize = new Sequelize(
   database, 
   username, 
@@ -34,10 +35,11 @@ Object.keys(models).forEach(model => {
 })
 
 
-models.User.findOne({ where: { email: 'user@test.com'}})
-  .then(u => u.getChats())
-  .then(c => c[0].getUsers())
-  .then(u => console.log(u))
+// models.User.findOne({ where: { email: 'user@test.com'}})
+//   .then(u => u.getChats())
+//   .then(c => c[0])
+//   .then(c => c.chatParticipants())
+//   .then(c => console.log(c))
 
 export default models
 export { sequelize, Sequelize }

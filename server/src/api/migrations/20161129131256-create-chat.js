@@ -17,7 +17,7 @@ module.exports = {
       }
     })
     .then(() => {
-      return queryInterface.createTable('chatUsers', {
+      return queryInterface.createTable('chatParticipants', {
         id: {
           type: Sequelize.UUID,
           allowNull: false,
