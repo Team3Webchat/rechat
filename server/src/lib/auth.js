@@ -15,7 +15,7 @@ Promise.promisifyAll(bcrypt)
 
 async function localAuth(username, password, cb) {
   const user = await getUserFromEmail(username)
-  if (!user) 
+  if (!user)
     return cb(null, false)
 
   return cb(null, await verifyPassword(password, user.password) ? user : false)
@@ -35,10 +35,10 @@ passport.use(new BearerStrategy(bearerAuth))
 
 export function login(req, res, next, message) {
   passport.authenticate('local', async (err, user, info) => {
-    if (err) 
+    if (err)
       return next(err)
 
-    if (!user) 
+    if (!user)
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
 
     const [friends, friendRequests, sentFriendRequests] = await Promise.all([
@@ -46,13 +46,13 @@ export function login(req, res, next, message) {
       user.friendRequests(),
       user.sentFriendRequests(),
     ])
-    return res.json({ 
-      message, 
-      token: jwt.sign({ id: user.id, email: user.email }, jwtSecret), 
-      user, 
+    return res.json({
+      message,
+      token: jwt.sign({email: user.email, fullname: user.fullname, id: user.id}, jwtSecret), 
+      user,
       friends,
-      friendRequests, 
-      sentFriendRequests, 
+      friendRequests,
+      sentFriendRequests,
     })
   })(req, res, next)
 }

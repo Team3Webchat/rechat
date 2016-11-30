@@ -98,6 +98,7 @@ const mapStateToProps = state => ({
   showChats: state.menuDrawer.showChats,
   friends: state.friends.friends,
   chats: state.chats.chats,
+  name: state.auth.name,
 })
 
 const mapDispatchToProps = dispatch => ({

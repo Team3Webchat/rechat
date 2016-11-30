@@ -5,11 +5,12 @@ import { loginUser } from '../../../lib/actions/authActions'
 import { resetFlashMessage } from '../../../lib/actions/flashActions'
 
 import SignInForm from './sign-in-form'
+import './style.css'
 
 class SignInContainer extends Component {
   constructor(props) {
     super(props)
- 
+
     this.state = {
       email: '',
       password: '',
@@ -60,8 +61,8 @@ class SignInContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  nextPathname: state.routing.locationBeforeTransitions.state 
-    ? state.routing.locationBeforeTransitions.state.nextPathname 
+  nextPathname: state.routing.locationBeforeTransitions.state
+    ? state.routing.locationBeforeTransitions.state.nextPathname
     : '/', // TODO: must be a better way to handle this
   isAuthenticated: state.auth.isAuthenticated,
   isAuthenticating: state.auth.isAuthenticating,

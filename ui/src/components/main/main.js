@@ -42,7 +42,6 @@ class Main extends Component {
     this.setState(state)
   }
   onClickOutside = (e) => {
-    console.log(e.target.parentElement.classList);
     if(!e.target.parentElement.classList.contains( 'addUser' ) &&
       !e.target.parentElement.classList.contains( 'searchResult' ) &&
       !e.target.parentElement.classList.contains( 'toRequests' )){
@@ -59,7 +58,6 @@ class Main extends Component {
 
     const { doLogout, flash, toggleProfile, toggleDeleteFriend } = this.props
     const { showRequests, showSearch, searchValue } = this.state
-    console.log(this.state);
 
     return (
       <div>
@@ -85,7 +83,7 @@ class Main extends Component {
           <DrawerClass name={this.props.name}/>
 
           <Grid className="main">
-
+          
             { flash.message &&
               <FlashMessage
               message={flash.message}
