@@ -23,7 +23,7 @@ class FriendRequestContainer extends Component {
       <div>
         <a className="toRequests" onClick={toggleShowRequests}>
         { friendRequests && friendRequests.length > 0 ?
-          <Badge text={friendRequests.length} overlap>
+          <Badge text={friendRequests.length} overlap >
              <Icon name="account_box" className="navIcon"/>
           </Badge>
            : <Icon name="account_box" className="navIcon"/>
