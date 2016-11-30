@@ -13,7 +13,7 @@ export const loginUserRequest = () => ({
   type: LOGIN_USER_REQUEST,
 })
 
-export function loginUserSuccess({token, flash, friends, friendRequests, sentFriendRequests, name}) {
+export function loginUserSuccess({token, flash, friends, friendRequests, sentFriendRequests }) {
   // TODO: check if user wants to be remembered, in that case, set the token
   // to local storage
 
@@ -26,7 +26,6 @@ export function loginUserSuccess({token, flash, friends, friendRequests, sentFri
       friends,
       friendRequests,
       sentFriendRequests,
-      name,
     },
   }
 }
@@ -68,7 +67,6 @@ export const loginUser = (email, password) =>
       const json = await res.json()
       jwtDecode(json.token) // on fail, throws error
       dispatch(loginUserSuccess({
-        name: json.user.fullname,
         token: json.token,
         flash: {
           message: 'Successful login',

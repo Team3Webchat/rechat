@@ -1,0 +1,32 @@
+.profileCard{
+  margin:auto;
+  width: 150%;
+}
+
+/*ACTIONS*/
+.profileCard .mdl-card__actions{
+  width: 100%;
+  float: right;
+  border-bottom: 1px solid #d0cdcd;
+}
+.profileCard .mdl-card__actions .buttons {
+  margin: 0;
+  float: right;
+}
+.profileCard .mdl-card__actions .buttons:hover{
+  background: none !important;
+}
+.profileCard .mdl-card__actions .buttons i{
+  transition: color 0.3s ease;
+}
+.profileCard .mdl-card__actions .buttons i:hover{
+  color: #f28d52 !important;
+}
+
+.profileCard .changePasswordTitle{
+  font-size: 155%;
+  border-bottom: 1px solid #a7a7a7;
+}
+.profileCard .changePasswordEmail{
+  font-size: 100%;
+}
