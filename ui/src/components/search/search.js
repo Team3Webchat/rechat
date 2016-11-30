@@ -10,7 +10,7 @@ class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      searchValue: '',
+      searchValue: this.props.searchValue,
     }
   }
 
@@ -37,15 +37,16 @@ class Search extends Component {
   handleSubmit = e => {
     e.preventDefault()
   }
-  handleBlur = () => {
-    this.props.endSearch(this)
-    this.props.toggleShowSearch()
-    this.setState({searchValue: ''})
-  }
+
   componentWillReceiveProps(nextProps) {
     //Om isDone är true, men bara första gången
     if (this.props.isDoneSearching !== nextProps.isDoneSearching && nextProps.isDoneSearching === true)
-      this.props.toggleShowSearch()
+      this.props.toggleShowSearch(this.state.searchValue)
+    if(this.props.searchValue !== nextProps.searchValue){
+      this.setState({
+        searchValue: nextProps.searchValue,
+      })
+    }
 
   }
 
@@ -54,7 +55,7 @@ class Search extends Component {
     const { searchResults, addFriend, showSearch, failure } = this.props
 
     return (
-      <div >
+      <div>
         <form id='searchForm' onSubmit={this.handleSubmit}>
           <Textfield
             label='Name'
