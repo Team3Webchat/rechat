@@ -20,13 +20,13 @@ class FriendRequestContainer extends Component {
     const { friendRequests, toggleShowRequests, showRequests } = this.props
 
     return (
-      <div className="navIcon">
+      <div>
         <a className="toRequests" onClick={toggleShowRequests}>
         { friendRequests && friendRequests.length > 0 ?
           <Badge text={friendRequests.length} overlap>
-             <Icon name="account_box" />
+             <Icon name="account_box" className="navIcon"/>
           </Badge>
-           : <Icon name="account_box" />
+           : <Icon name="account_box" className="navIcon"/>
          }
          </a>
 

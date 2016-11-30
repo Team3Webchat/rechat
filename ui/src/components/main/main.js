@@ -25,7 +25,6 @@ class Main extends Component {
   }
 
   toggleShowRequests = e => {
-    e.preventDefault()
     this.props.endSearch()
     const state = {
       showRequests: !this.state.showRequests,
@@ -41,10 +40,8 @@ class Main extends Component {
     this.setState(state)
   }
   onClickOutside = (e) => {
-    console.log('onClickOutside')
-    console.log(e.target.tagName)
-    if(e.target.tagName !== 'I'){
-      this.props.endSearch()
+    //Får bara klicka på nav-iconerna
+    if(e.target.className !== 'material-icons navIcon'){
       const state = {
         showRequests: false,
         showSearch: false,
@@ -56,8 +53,8 @@ class Main extends Component {
 
   render(){
 
-    const { doLogout, flash, toggleProfile, toggleDeleteFriend, showSearch } = this.props
-    const { showRequests } = this.state
+    const { doLogout, flash, toggleProfile, toggleDeleteFriend } = this.props
+    const { showRequests, showSearch } = this.state
 
     return (
       <div>
@@ -93,7 +90,6 @@ class Main extends Component {
             }
             {toggleProfile &&
               <ProfileContainer/>
-
             }
 
           </Grid>

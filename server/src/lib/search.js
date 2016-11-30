@@ -24,7 +24,7 @@ export async function search(req, res, next, message) {
 
 
     if(users.length == 0){
-      const message = JSON.stringify({results: {status: 'error', code: 'User not found'}})
+      const message = JSON.stringify({results: {status: 'error', code: ['User not found']}})
       res.send(message)
     }else{
       res.send(JSON.stringify({results: users}))
