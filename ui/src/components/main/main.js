@@ -119,12 +119,11 @@ class Main extends Component {
           <DrawerClass name={this.props.name}/>
 
           <Grid className="main">
-          
+
             { flash.message &&
               <FlashMessage
               message={flash.message}
               type={flash.type}
-              inline
               />
             }
             {toggleProfile &&

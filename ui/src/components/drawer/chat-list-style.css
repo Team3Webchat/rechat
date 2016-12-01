@@ -1,0 +1,13 @@
+.chatList{
+  padding: 0 !important;
+}
+.chatList li{
+  padding-left: 50px;
+}
+.chatList li:hover{
+  padding-left: 55px;
+  background-color: #718497;
+}
+.chatList li p{
+  margin-bottom: 0 !important;
+}
