@@ -27,7 +27,7 @@ class ChatContainer extends Component {
 
   componentDidMount() {
     console.log("CHat contianer mounted")
-    const socket = io(API_URL)
+    const socket = io('apirechat.herokuapp.com')
     
     socket.on('connect', () => {
       socket.emit('authenticate', {token: this.props.token })

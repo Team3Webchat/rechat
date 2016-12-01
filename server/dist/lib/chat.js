@@ -43,7 +43,10 @@ var io = void 0;
 
 var createSocket = exports.createSocket = function createSocket(app, server) {
   io = new _socket2.default(server);
-  io.set('origins', _config.CLIENT_URL);
+  // io.set('origins', CLIENT_URL)
+  // HACK FOR NOW FIX LATER
+  io.set('origins', '*:*');
+  io.set('match origin protocol', true);
   return io;
 };
 

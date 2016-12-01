@@ -11,7 +11,10 @@ let io
 
 export const createSocket = (app, server) => {
   io = new SocketIO(server)
-  io.set('origins', CLIENT_URL)
+  // io.set('origins', CLIENT_URL)
+  // HACK FOR NOW FIX LATER
+  io.set('origins', '*:*')
+  io.set('match origin protocol', true)
   return io
 } 
 
