@@ -35,6 +35,7 @@ function connection(socket) {
   socket.emit('dong', 'hehe')
   socket.on('ding', () => console.log('DONG'))
   socket.on('new_message', async data => {
+    console.log("new_message")
     console.log(data)
     const message = await models.Message.create({
       id: uuid.v4(),
@@ -42,6 +43,8 @@ function connection(socket) {
       userId: data.userId,
       chatId: data.chatId,
     })
+
+    console.log('USERS CHAT ID: ', data.chatId)
     const author = await message.getUser()
     io.to(data.chatId).emit('new_message', {
       content: data.content,
@@ -64,6 +67,7 @@ function connection(socket) {
         })))
 
         const chat = chatsInfo.find(c => {
+          console.log(c.users[1])
           return (c.users[0].dataValues.id === user.dataValues.id && c.users[1].dataValues.id === userToChatWith.dataValues.id) ||
                  (c.users[1].dataValues.id === user.dataValues.id && c.users[0].dataValues.id === userToChatWith.dataValues.id)
         })

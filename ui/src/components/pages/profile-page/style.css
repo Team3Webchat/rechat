@@ -1,25 +1,26 @@
 .profileCard{
-  margin:auto;
-  width: 150%;
+  margin: auto;
+  max-width: 500px;
+  width: 100% !important;
+  padding: 0px !important;
 }
 
 /*ACTIONS*/
-.profileCard .mdl-card__actions{
-  width: 100%;
-  float: right;
+.profileCard .mdl-dialog__actions{
   border-bottom: 1px solid #d0cdcd;
 }
-.profileCard .mdl-card__actions .buttons {
+.profileCard .mdl-dialog__actions .buttons {
   margin: 0;
   float: right;
+  min-width: 0px !important;
 }
-.profileCard .mdl-card__actions .buttons:hover{
+.profileCard .mdl-dialog__actions .buttons:hover{
   background: none !important;
 }
-.profileCard .mdl-card__actions .buttons i{
+.profileCard .mdl-dialog__actions .buttons i{
   transition: color 0.3s ease;
 }
-.profileCard .mdl-card__actions .buttons i:hover{
+.profileCard .mdl-dialog__actions .buttons i:hover{
   color: #f28d52 !important;
 }
 

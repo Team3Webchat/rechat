@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import { Textfield, Button, Spinner } from 'react-mdl'
+import { Textfield, Button, Spinner, Dialog } from 'react-mdl'
 import ProfileDisplayer from './profiledisplayer'
 import ChangePassword from './changePassword'
 import { toggleProfile, editProfile } from '../../../lib/actions/menuDrawerActions'
@@ -18,6 +18,8 @@ class ProfileContainer extends Component {
       newPassword: '',
       isAuthenticating: false,
     }
+
+    console.log('PROFILE PAGE')
   }
 
   handleChange = key => {
@@ -49,26 +51,26 @@ class ProfileContainer extends Component {
 
   render() {
     const { user, doToggleProfile, doToggleEdit, isEditing } = this.props
-    
+
     return (
-      <div>
+      <Dialog open={true} className='profileCard'>
       { isEditing ?
-        <ChangePassword 
-          user={user}  
-          doToggleProfile={doToggleProfile} 
+        <ChangePassword
+          user={user}
+          doToggleProfile={doToggleProfile}
 
           newPasswordConfirm={this.state.newPasswordConfirm}
           newPassword={this.state.newPassword}
           password={this.state.password}
 
-          onSubmit={this.handleSubmit}  
-          flash={this.props.flash}  
+          onSubmit={this.handleSubmit}
+          flash={this.props.flash}
           onChange={this.handleChange}/>
         :
         <ProfileDisplayer user={user} doToggleEdit={doToggleEdit} doToggleProfile={doToggleProfile}/>
       }
 
-      </div>
+      </Dialog>
     )
   }
 }

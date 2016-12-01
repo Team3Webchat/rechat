@@ -16,8 +16,8 @@ const FriendRequestBox = ({ friendRequests, onAccept, onDeny }) => {
           <ListItem key={f.id}>
             <ListItemContent className='displayName' avatar="account_circle">{f.firstname} {f.lastname}</ListItemContent>
             <ListItemAction>
-              <Icon onClick={() => onAccept(f.id)} name="add_circle_outline" ripple id="bold" />
-              <Icon onClick={() => onDeny(f.id)} name="block" ripple id="bold" />
+              <Icon onClick={() => onAccept(f.id)} name="add_circle_outline" className="accept"/>
+              <Icon onClick={() => onDeny(f.id)} name="block" className="deny"/>
             </ListItemAction>
           </ListItem>
           )

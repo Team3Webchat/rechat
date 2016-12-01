@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import {  Card, Grid, Cell, CardActions, Button, Icon, Textfield } from 'react-mdl'
+import {  DialogActions, Grid, Cell, CardActions, Button, Icon, Textfield } from 'react-mdl'
 
 import FlashMessage from '../../flash-message/flash-message'
 
@@ -10,12 +10,12 @@ const ChangePassword = (props) => {
   const { onChange, password, doToggleProfile, newPasswordConfirm, newPassword, onSubmit, flash } = props
 
   return (
-    <Card className='profileCard'  shadow={0}>
-    <CardActions border>
+    <div>
+    <DialogActions >
         <Button className='buttons' onClick={doToggleProfile}>
           <Icon name="close" />
         </Button>
-    </CardActions>
+    </DialogActions>
       <Grid className='changePasswordTitle'>
         <Cell col={12}>Change password</Cell>
       </Grid>
@@ -47,7 +47,7 @@ const ChangePassword = (props) => {
         /></div>
         <div>
           { flash.message ?
-              <FlashMessage message={flash.message} type={flash.type}/>
+              <FlashMessage message={flash.message} type={flash.type} inline={true}/>
               : ''
           }
         {
@@ -58,18 +58,18 @@ const ChangePassword = (props) => {
         }
         {
           newPassword.length < 6 &&
-          <FlashMessage message='New password must be 6 or more characters' type='fail' />
+          <FlashMessage message='New password must be 6 or more characters' type='fail' inline={true}/>
         }
         {
           newPasswordConfirm.length >= 1 &&
           newPasswordConfirm.length < newPassword.length &&
           newPassword !== newPasswordConfirm &&
 
-          <FlashMessage message="Passwords don't match" type='fail' />
+          <FlashMessage message="Passwords don't match" type='fail' inline={true} />
         }
         </div>
         <spinner />
-        <CardActions border>
+        <DialogActions>
             <Button className='buttons' primary raised ripple type="submit"
             colored
             disabled={ newPassword.length === 0 ||
@@ -77,13 +77,17 @@ const ChangePassword = (props) => {
             password.length === 0 ||
             newPassword.length < 6 }
             >Save</Button>
-        </CardActions>
+        </DialogActions>
         </form>
       </Grid>
 
-    </Card>
+    </div>
   )
 }
+/*
+<Card className='profileCard'  shadow={0}>
+</Card>
+*/
 ChangePassword.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,

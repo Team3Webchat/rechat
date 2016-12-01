@@ -3,9 +3,9 @@ import {  Card, Grid, Cell, CardActions, Button, Icon, Textfield } from 'react-m
 
 import './style.css'
 
-const ChatDisplayer = (props) => {
+const ChatDisplayer = ({ onChange, onSubmit }) => {
   //console.log(props.user)
-  const { doToggleChatFriend } = props
+
   
   return (
     <Card className='card'
@@ -28,15 +28,17 @@ const ChatDisplayer = (props) => {
         <Cell col={12} className='writeField'>
           <div className='padding'>
             <div className='textBox'>
+            <form onSubmit={onSubmit}>
               <Textfield className='textInput'
-                onChange={() => {}}
+                onChange={onChange}
                 label="Write your message..."
                 rows={4}
               />
               <CardActions className='send'>
-                <Button raised colored>Send
+                <Button raised colored type="submit">Send
                 </Button>
                </CardActions>
+              </form>
             </div>
           </div>
         </Cell>
