@@ -18,11 +18,11 @@ const SignInForm = (props) => {
             <Textfield type="password" label="Password" required floatingLabel
               onChange={onChange('password')} value={password} />
           </div>
-          { flash.message ? 
-              <FlashMessage message={flash.message} type={flash.type}/> 
+          { flash.message ?
+              <FlashMessage message={flash.message} type={flash.type} inline={true}/> 
               : ''
           }
-          { isAuthenticating ? <Spinner /> 
+          { isAuthenticating ? <Spinner />
               : <div>
                   <Button primary raised ripple type="submit" className="buttons"
                     disabled={email.length === 0 || password.length === 0} >

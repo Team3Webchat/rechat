@@ -30,6 +30,9 @@
 .mdl-layout__drawer{
   background: #8FA7BF !important;
 }
+.mdl-layout__drawer-button{
+  background: #F28D52 !important;
+}
 .mdl-layout__drawer .mdl-navigation{
   padding-top: 0 !important;
 }
