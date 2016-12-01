@@ -7,10 +7,10 @@ import uuid from 'uuid'
 import { CLIENT_URL } from '../config'
 
 const { User, Message, ChatParticipant, ChatHistory, Chat } = models
-
+let io 
 
 export const createSocket = (app, server) => {
-  const io = new SocketIO(server)
+  io = new SocketIO(server)
   io.set('origins', CLIENT_URL)
   return io
 } 
@@ -34,7 +34,89 @@ function startGroupChat(chatId) {
 function connection(socket) {
   socket.emit('dong', 'hehe')
   socket.on('ding', () => console.log('DONG'))
-  socket.on('private_conversation', data => {
+  socket.on('new_message', async data => {
+    console.log(data)
+    const message = await models.Message.create({
+      id: uuid.v4(),
+      content: data.content,
+      userId: data.userId,
+      chatId: data.chatId,
+    })
+    const author = await message.getUser()
+    io.to(data.chatId).emit('new_message', {
+      content: data.content,
+      author: author.fullname(),
+    })
+  })
+  socket.on('private_conversation', async data => {
+    const { id } = data
+    const [user, userToChatWith] = await Promise.all([
+      models.User.findOne({ where: { id: socket.decoded_token.id }}),
+      models.User.findOne({ where: { id }}),
+    ])
+
+    user.getChats()
+      .then(async chats => {
+
+        const chatsInfo = await Promise.all(chats.map(async c => ({
+          chatId: c.dataValues.id,
+          users: await c.getUsers(),
+        })))
+
+        const chat = chatsInfo.find(c => {
+          return (c.users[0].dataValues.id === user.dataValues.id && c.users[1].dataValues.id === userToChatWith.dataValues.id) ||
+                 (c.users[1].dataValues.id === user.dataValues.id && c.users[0].dataValues.id === userToChatWith.dataValues.id)
+        })
+
+        return chat ? chat.chatId : null
+      })
+      .then(async chatId => {
+        if (chatId) {
+
+          return models.Chat.findOne({ where: { id: chatId }})
+
+        } else {
+
+          const chat = await models.Chat.create({ id: uuid.v4() })
+          await Promise.all([
+            chat.addUser(user),
+            chat.addUser(userToChatWith),
+          ])
+          return chat
+        }
+      })
+      .then(async chat => {
+        const messages = await chat.getMessages()
+        messages.forEach(m => console.log(m.dataValues.content))
+        socket.join(chat.dataValues.id)
+        socket.emit('private_conversation_start', {
+          chatId: chat.dataValues.id,
+        })
+      })
+
+    // const chats = await user.getChats()
+
+    // const chatWithTheUser = chats.find(async chat => {
+    //   const chatUsers = await chat.getUsers()
+
+    //   return await chatUsers[0].dataValues.id === user.dataValues.id && chatUsers[1].dataValues.id === userToChatWith.dataValues.id
+    //     || chatUsers[1].dataValues.id === user.dataValues.id && chatUsers[0].dataValues.id === userToChatWith.dataValues.id
+    // })
+
+
+    // if (chatWithTheUser !== undefined) {
+    //   socket.join(chatWithTheUser.dataValues.id)
+    //   console.log('Joined an existing room')
+    // } else {
+    //   const chat = await models.Chat.create({ id: uuid.v4()})
+    //   const you = await models.User.findOne({ where: { id: socket.decoded_token.id }})
+    //   await Promise.all([
+    //     chat.addUser(user),
+    //     chat.addUser(you)
+    //   ])
+    //   socket.join(chat.dataValues.id)
+    //   console.log('No room existed, created it and joined')
+    // }
 
   })
 }
@@ -68,11 +150,6 @@ const __IF_YOU_REMOVE_THIS_YOU_GET_NO_DOLLARS = async () => {
 
   const messages = await dansChatWithBenny.getMessages()
 
-  messages.forEach(async m => console.log({
-    text: m.content,
-    author: await m.author()
-
-  }))
 
   
 }
@@ -121,7 +198,7 @@ const _SECRET_METHOD_DO_NOT_USE_OR_DELETE_OR_YOU_WILL_NOT_GET_ANY_DOLLARS = asyn
 }
 
 
-__IF_YOU_REMOVE_THIS_YOU_GET_NO_DOLLARS()
+// __IF_YOU_REMOVE_THIS_YOU_GET_NO_DOLLARS()
 // __SECRET_METHOD_DO_NOT_USE_OR_DELETE_OR_YOU_WILL_NOT_GET_ANY_DOLLARS()
 // _SECRET_METHOD_DO_NOT_USE_OR_DELETE_OR_YOU_WILL_NOT_GET_ANY_DOLLARS()
 
