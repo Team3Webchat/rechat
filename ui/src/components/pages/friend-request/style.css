@@ -9,6 +9,19 @@
   right: 0%;
   top: 66px;
 }
+#friendRequestBox li{
+  padding: 0px 10px !important;
+}
+#friendRequestBox .mdl-list__item-secondary-content i{
+  font-weight: bold !important;
+  font-size: xx-large !important;
+}
+#friendRequestBox .accept{
+  color: #33b733;
+}
+#friendRequestBox .deny{
+  color: #e24d1d;
+}
 #friendRequestBox .emptyRequests{
 
 }

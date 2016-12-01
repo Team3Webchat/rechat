@@ -69,12 +69,11 @@ class Main extends Component {
 
     return (
       <div>
+         <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>
 
-       <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>
-
-      {toggleDeleteFriend &&
-        <DeleteFriendConfirm/>
-      }
+          {toggleDeleteFriend &&
+            <DeleteFriendConfirm/>
+          }
 
           <Header title="ReChat" >
              <Navigation>
@@ -97,7 +96,9 @@ class Main extends Component {
               type={flash.type}
               />
             }
+
             {this.props.children}
+
 
           </Grid>
         </Layout>

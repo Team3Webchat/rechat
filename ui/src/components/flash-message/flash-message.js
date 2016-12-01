@@ -6,13 +6,9 @@ import { resetFlashMessage} from '../../lib/actions/flashActions'
 
 import './style.css'
 class FlashMessage extends Component {
-//const FlashMessage = ({ message, type, inline, close }) => {
 
   constructor(props) {
     super(props)
-    //this.handleShowSnackbar = this.handleShowSnackbar.bind(this);
-    //this.handleTimeoutSnackbar = this.handleTimeoutSnackbar.bind(this);
-    //this.handleClickActionSnackbar = this.handleClickActionSnackbar.bind(this);
     this.state = {
       isSnackbarActive: true,
     }
@@ -22,7 +18,6 @@ class FlashMessage extends Component {
     if(this.state.isSnackbarActive){
       setTimeout(() => {
         this.setState({ isSnackbarActive: false })
-        console.log('cloing snackbar')
       }, 3000)
     }
   }
@@ -32,12 +27,10 @@ class FlashMessage extends Component {
     const { isSnackbarActive } = this.state
     const className = `flash-message flash-${type} active-${isSnackbarActive}`
 
-    console.log('i flash')
-    console.log(isSnackbarActive)
     return (
       <div>
         {inline ?
-          <Grid>
+          <Grid className={className}>
             <Cell col={12} >
               { message }
             </Cell>
