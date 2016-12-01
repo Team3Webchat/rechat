@@ -31,15 +31,34 @@ class Main extends Component {
 
   componentDidMount() {
     // Just test code for sockets ignore..
-    console.log('COMPONENT_DID_MOUNT')
     const socket = io(API_URL)
-    socket.on('connect', () => console.log('SOCKET_CONNECTED'))
-    socket.on('connect_failed', socket.close)
-    socket.on('disconnect', socket.close)
-    socket.on('dong', () => {
-      console.log('DONG')
+    
+    socket.on('connect', () => {
+      socket.emit('authenticate', {token: this.props.token })
+      .on('authenticated', () => {
+        let chatId = ''
+        socket.emit('private_conversation', {
+          id: '5eea5bda-54f4-4f59-9ab4-13ddc6796d05',
+        })
+
+        socket.on('private_conversation_start', data => {
+          console.log(data)
+          chatId = data.chatId
+
+          socket.emit('new_message', {
+            content: 'Tjenare mannen',
+            userId: this.props.id,
+            chatId,
+          })
+
+        })
+
+        socket.on('new_message', data => console.log(data))
+      })
+      .on('unauthorized', msg => {
+        console.error(msg)
+      })
     })
-    socket.emit('ding')
   }
 
   toggleShowRequests = e => {
@@ -127,6 +146,7 @@ class Main extends Component {
 
 const mapStateToProps = state => ({
   isLoggedIn: state.auth.isAuthenticated,
+  id: state.auth.id,
   email: state.auth.email,
   flash: state.flash,
   friendRequests: state.friends.friendRequests,
@@ -134,6 +154,7 @@ const mapStateToProps = state => ({
   toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
   toggleChatFriend: state.menuDrawer.showChatFriend,
   composeNewMessage: state.menuDrawer.showNewMessage,
+  token: state.auth.token,
 })
 
 const mapDispatchToProps = dispatch => ({
