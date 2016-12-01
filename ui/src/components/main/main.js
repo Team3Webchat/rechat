@@ -13,7 +13,7 @@ import io from 'socket.io-client'
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
 import { endSearch } from '../../lib/actions/searchActions'
-
+  
 import { API_URL } from '../../lib/config.js'
 
 import './style.css'
@@ -31,34 +31,6 @@ class Main extends Component {
 
   componentDidMount() {
     // Just test code for sockets ignore..
-    const socket = io(API_URL)
-    
-    socket.on('connect', () => {
-      socket.emit('authenticate', {token: this.props.token })
-      .on('authenticated', () => {
-        let chatId = ''
-        socket.emit('private_conversation', {
-          id: '5eea5bda-54f4-4f59-9ab4-13ddc6796d05',
-        })
-
-        socket.on('private_conversation_start', data => {
-          console.log(data)
-          chatId = data.chatId
-
-          socket.emit('new_message', {
-            content: 'Tjenare mannen',
-            userId: this.props.id,
-            chatId,
-          })
-
-        })
-
-        socket.on('new_message', data => console.log(data))
-      })
-      .on('unauthorized', msg => {
-        console.error(msg)
-      })
-    })
   }
 
   toggleShowRequests = e => {
@@ -117,7 +89,6 @@ class Main extends Component {
           </Header>
 
           <DrawerClass name={this.props.name}/>
-
           <Grid className="main">
 
             { flash.message &&
@@ -126,17 +97,7 @@ class Main extends Component {
               type={flash.type}
               />
             }
-            {toggleProfile &&
-              <ProfileContainer/>
-            }
-
-            {toggleChatFriend &&
-              <ChatContainer/>
-            }
-
-            {composeNewMessage &&
-              <ChatContainer/>
-            }
+            {this.props.children}
 
           </Grid>
         </Layout>

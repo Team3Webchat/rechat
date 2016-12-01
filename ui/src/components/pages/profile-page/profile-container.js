@@ -18,6 +18,8 @@ class ProfileContainer extends Component {
       newPassword: '',
       isAuthenticating: false,
     }
+
+    console.log('PROFILE PAGE')
   }
 
   handleChange = key => {

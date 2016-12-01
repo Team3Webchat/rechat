@@ -78,23 +78,20 @@ class AppDrawer extends React.Component {
         </Navigation>
 
         <Navigation>
-          <a href="#" onClick={this.toggleFriends}>Friends</a>
+          <div onClick={this.toggleFriends} style={{cursor: 'pointer'}}>Friends</div>
           { showFriends &&
               //Skapa ny component som renderar ut användarens vänner
               <Friends
                 friends={friends}
-                onFriendClick={() => console.log('SELECTED FRIEND, SHOULD INITIATE A CHAT HERE PROBABLY')}
                 startConversation={startConversation}
                 deleteFriendConfirm={this.handleDeleteFriendConfirm}
               />
           }
-            <a href="#" onClick={this.toggleChats}>Chats</a>
+            <div onClick={this.toggleChats} style={{cursor: 'pointer'}}>Chats</div>
               { showChats &&
                 //Skapa ny component som renderar ut användarens chat
                 <Chats
-                  chats={chats}
-                  onChatClick={() => console.log('SELECTED CHAT, SHOULD INITIATE A CHAT HERE PROBABLY')}
-                  />
+                  chats={chats} />
               }
           </Navigation>
 
