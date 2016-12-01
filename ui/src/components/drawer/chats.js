@@ -1,22 +1,24 @@
 import React from 'react'
 import { List, ListItem } from 'react-mdl'
 
+import './chat-list-style.css'
+
 const Chats = ({ chats, onChatClick }) => {
-  console.log(chats)
-  if (chats) {
-    return (
-      <List>
-        {
-          <ListItem> 
-            <span>Show chat here</span>
-          </ListItem> 
-        }
-      </List>
-    )
-  } else {
-    return <p>No chats</p>
-  }
-  
+  return (
+    <List className="chatList">
+    {chats ?
+      <ListItem>
+        <span>Loop chats</span>
+      </ListItem>
+      :
+      <ListItem>
+        <p>No active chats</p>
+      </ListItem>
+    }
+    </List>
+  )
+
+
 }
 
 export default Chats

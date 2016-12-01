@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import {  Card, Grid, Cell, CardActions, Button, Icon, Snackbar } from 'react-mdl'
+import {  Grid, Cell, Button, Icon } from 'react-mdl'
 
 import { resetFlashMessage} from '../../lib/actions/flashActions'
 
