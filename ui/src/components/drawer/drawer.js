@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Drawer, Navigation, Icon, FABButton } from 'react-mdl'
 
-import { toggleFriends, toggleChats, toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
+import {  toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
 import { deleteFriend } from '../../lib/actions/friendsActions'
 
 import Friends from './friends'
@@ -16,11 +16,14 @@ class AppDrawer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      showChats: false,
+      showFriends: false,
       openDialog: false,
       deleteFriend: null,
     }
   }
 
+//DELETE FREIND CONFIRM
   handleDeleteFriendConfirm = friend =>  {
     this.setState({
       openDialog: true,
@@ -33,16 +36,35 @@ class AppDrawer extends React.Component {
       deleteFriend: null,
     })
   }
-
   handleDeleteFriend = (id) =>  {
     this.props.doDeleteFriend(id)
     this.handleCloseConfirm()
   }
 
+//SHOW CHATS LIST
+  toggleChats = () =>  {
+    this.setState({
+      showChats: !this.state.showChats,
+      showFriends: false,
+    })
+  }
+
+  toggleFriends = () =>  {
+    this.setState({
+      showChats: false,
+      showFriends: !this.state.showFriends,
+    })
+  }
+
+
+
   render () {
-    const { friends, doToggleFriends, showFriends, chats,
-                     doToggleChats, doToggleProfile, showChats, name,
+    const { friends,  chats,
+                    doToggleProfile, name,
                      startConversation, doComposeNewMessage, doToggleChatFriend } = this.props
+    const { showChats, showFriends } = this.state
+    console.log('drawer:')
+    console.log(this.state)
     return (
       <Drawer>
         <Navigation id='profileLink'>
@@ -56,7 +78,7 @@ class AppDrawer extends React.Component {
         </Navigation>
 
         <Navigation>
-          <a href="#" onClick={doToggleFriends}>Friends</a>
+          <a href="#" onClick={this.toggleFriends}>Friends</a>
           { showFriends &&
               //Skapa ny component som renderar ut användarens vänner
               <Friends
@@ -66,7 +88,7 @@ class AppDrawer extends React.Component {
                 deleteFriendConfirm={this.handleDeleteFriendConfirm}
               />
           }
-            <a href="#" onClick={doToggleChats}>Chats</a>
+            <a href="#" onClick={this.toggleChats}>Chats</a>
               { showChats &&
                 //Skapa ny component som renderar ut användarens chat
                 <Chats
@@ -102,8 +124,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  doToggleFriends: () => dispatch(toggleFriends()),
-  doToggleChats: () => dispatch(toggleChats()),
   doToggleProfile: () => dispatch(toggleProfile()),
   doDeleteFriend: (id) => dispatch(deleteFriend(id)),
   startConversation: () => console.log('DISPATCH START CONVERSATION ACTION'),
