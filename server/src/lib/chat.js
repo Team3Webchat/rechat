@@ -1,5 +1,6 @@
 import http from 'http'
 import SocketIO from 'socket.io'
+import socketioJwt from 'socketio-jwt'
 import models from '../api/models'
 import uuid from 'uuid'
 
@@ -15,7 +16,10 @@ export const createSocket = (app, server) => {
 } 
 
 export const startSocket = io => {
-  io.on('connection', connection)
+  io.sockets.on('connection', socketioJwt.authorize({
+    secret: 'supersecret',
+    timeout: 15000,
+  })).on('authenticated', connection)
   
 }
 
@@ -30,6 +34,9 @@ function startGroupChat(chatId) {
 function connection(socket) {
   socket.emit('dong', 'hehe')
   socket.on('ding', () => console.log('DONG'))
+  socket.on('private_conversation', data => {
+
+  })
 }
 
 
@@ -50,7 +57,6 @@ const __IF_YOU_REMOVE_THIS_YOU_GET_NO_DOLLARS = async () => {
     if (benny !== undefined)
       return c
   })
-
 
 
   // const message = await models.Message.create({
