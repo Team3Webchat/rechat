@@ -28,3 +28,6 @@
 #friendRequestBox .emptyRequests i{
   padding-right: 20px;
 }
+.searchPic{
+  border-radius: 50%;
+}
