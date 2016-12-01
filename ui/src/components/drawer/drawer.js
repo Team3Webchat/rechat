@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Drawer, Navigation } from 'react-mdl'
+import { Drawer, Navigation, Icon, FABButton } from 'react-mdl'
 
-import { toggleFriends, toggleChats, toggleProfile } from '../../lib/actions/menuDrawerActions'
+import { toggleFriends, toggleChats, toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
 import { deleteFriend } from '../../lib/actions/friendsActions'
 
 import Friends from './friends'
@@ -42,13 +42,16 @@ class AppDrawer extends React.Component {
   render () {
     const { friends, doToggleFriends, showFriends, chats,
                      doToggleChats, doToggleProfile, showChats, name,
-                     startConversation } = this.props
+                     startConversation, doComposeNewMessage, doToggleChatFriend } = this.props
     return (
       <Drawer>
         <Navigation id='profileLink'>
           <header>
             <img alt="profile" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRfx6RQ1DY3tj5rGhIvwXOpBBokmF6juPbvQ4InvslpFF355vdY"/>
             <a href="#" onClick={doToggleProfile}>{name}</a>
+            <FABButton colored onClick={doComposeNewMessage}>
+              <Icon name="create" />
+            </FABButton>
           </header>
         </Navigation>
 
@@ -107,6 +110,8 @@ const mapDispatchToProps = dispatch => ({
   doToggleProfile: () => dispatch(toggleProfile()),
   doDeleteFriend: (id) => dispatch(deleteFriend(id)),
   startConversation: () => console.log('DISPATCH START CONVERSATION ACTION'),
+  doComposeNewMessage: () => dispatch(composeNewMessage()),
+  doToggleChatFriend: () => dispatch(toggleChatFriend()),
 })
 
 export default connect(

@@ -7,6 +7,7 @@ import DrawerClass from '../drawer/drawer'
 import ProfileContainer from '../pages/profile-page/profile-container'
 import FriendRequestContainer from '../pages/friend-request/friend-container'
 import DeleteFriendConfirm from '../drawer/delete-friend-confirm'
+import ChatContainer from '../pages/chat-page/chat-container'
 import io from 'socket.io-client'
 
 import FlashMessage from '../flash-message/flash-message'
@@ -72,7 +73,7 @@ class Main extends Component {
 
   render(){
 
-    const { doLogout, flash, toggleProfile, toggleDeleteFriend } = this.props
+    const { doLogout, flash, toggleProfile, toggleDeleteFriend, toggleChatFriend, composeNewMessage} = this.props
     const { showRequests, showSearch, searchValue } = this.state
 
     return (
@@ -111,6 +112,14 @@ class Main extends Component {
               <ProfileContainer/>
             }
 
+            {toggleChatFriend &&
+              <ChatContainer/>
+            }
+
+            {composeNewMessage &&
+              <ChatContainer/>
+            }
+
           </Grid>
         </Layout>
       </div>
@@ -125,6 +134,8 @@ const mapStateToProps = state => ({
   friendRequests: state.friends.friendRequests,
   toggleProfile: state.menuDrawer.showProfile,
   toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
+  toggleChatFriend: state.menuDrawer.showChatFriend,
+  composeNewMessage: state.menuDrawer.showNewMessage,
 })
 
 const mapDispatchToProps = dispatch => ({
