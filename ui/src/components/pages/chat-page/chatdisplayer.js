@@ -6,7 +6,9 @@ import ComposeNewMessage from './compose-new-message'
 
 import './style.css'
 
-const ChatDisplayer = ({ onChange, onSubmit }) => {
+const ChatDisplayer = ({ onChange, onSubmit, messages, id, message }) => {
+  console.log(message)
+  console.log(id)
   return (
     <Card className='card'
       shadow={0}>
@@ -29,6 +31,11 @@ const ChatDisplayer = ({ onChange, onSubmit }) => {
             <ComposeNewMessage type='me' message='Fine thanks!!!'/>
             <ComposeNewMessage type='friend' message='skjerfbkawjeb wsekrhf wlosje wskjefrnklj nelkn lne ljfewnl clskdh lnelkn '/>
             <ComposeNewMessage type='friend' message='Sorry, my cat ran over my keyboard... haha lol'/>
+            {messages.map((m, i) => 
+              id === m.userId ? 
+              <ComposeNewMessage type='me' message={m.content} key={i} /> :
+              <ComposeNewMessage type='friend' message={m.content} key={i}/>  
+            )}
           </div>
         </Cell>
       </Grid>
@@ -40,6 +47,7 @@ const ChatDisplayer = ({ onChange, onSubmit }) => {
               <Textfield className='textInput'
                 onChange={onChange}
                 label="Write your message..."
+                value={message}
                 rows={4}
               />
               <CardActions className='send'>

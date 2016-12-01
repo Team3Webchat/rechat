@@ -49,6 +49,8 @@ function connection(socket) {
     io.to(data.chatId).emit('new_message', {
       content: data.content,
       author: author.fullname(),
+      userId: data.userId,
+      chatId: data.chatId,
     })
   })
   socket.on('private_conversation', async data => {

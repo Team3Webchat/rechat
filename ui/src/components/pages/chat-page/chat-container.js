@@ -52,49 +52,30 @@ class ChatContainer extends Component {
     })
 
     
-    // socket.on('new_message', data => this.setState({
-    //   messages: [...this.state.messages, data]
-    // }))
+
 
     this.setState({
       socket,
     })
   }
 
-  componentWillReceiveProps(nextProps) {
-    // console.log('componentWillReceiveProps')
-    // const { id }  = nextProps.params.id
-    // this.state.socket.emit('private_conversation', {
-    //   id,
-    // })
-
-    // this.state.socket.on('private_conversation_start', data => {
-    //   console.log(data)
-
-    //   this.setState({
-    //     chatId: data.chatId,
-    //   })
-
-    // })
-
-    // this.state.socket.on('new_message', data => this.setState({
-    //   messages: [...this.state.messages, data]
-    // }))
-  }
 
   sendMessage = (e) => {
-    console.log("SEND MESSAGE")
+
     e.preventDefault()
     e.stopPropagation()
-    console.log(this.state.message)
-    console.log(this.props.params.id)
-    console.log(this.state)
+
+    const { message } = this.state
+    this.setState({
+      message: '',
+    })
+
     this.state.socket.emit('new_message', {
-      content: this.state.message,
+      content: message,
       userId: this.props.id,
       chatId: this.state.chatId,
-      randomShit: 'Fuck OFF BITCH ASS FUCKING FUCK FUCK'
     })
+    
   }
 
   render() {
@@ -102,8 +83,14 @@ class ChatContainer extends Component {
     
     return (
       <div>
-      {this.state.messages.map(m => <p>{m.content}</p>)}
-      <ChatDisplayer onChange={this.handleChange} onSubmit={this.sendMessage}/>
+      
+      <ChatDisplayer 
+        onChange={this.handleChange} 
+        onSubmit={this.sendMessage} 
+        messages={this.state.messages}
+        id={this.props.id}
+        message={this.state.message}
+      />
       </div>
     )
   }
