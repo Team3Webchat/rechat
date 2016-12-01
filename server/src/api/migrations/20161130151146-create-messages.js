@@ -21,29 +21,16 @@ module.exports = {
         allowNull: false,
       },
       userId: {
-          type: Sequelize.UUID,
-          allowNull: false,
-          references: { model: 'users', key: 'id'}
-        }
-    })
-    .then(() => queryInterface.createTable('chatHistory', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      messageId: {
         type: Sequelize.UUID,
         allowNull: false,
-        references: { model: 'messages', key: 'id' }
-      },
-      chatParticipantId: {
+        references: { model: 'users', key: 'id'}
+      }, 
+      chatId: {
         type: Sequelize.UUID,
         allowNull: false,
-        references: { model: 'chatParticipants', key: 'id' }
+        references: { model: 'chats', key: 'id'}
       }
-    }))
+    })
   },
 
   down: function (queryInterface, Sequelize) {
@@ -55,6 +42,6 @@ module.exports = {
       return queryInterface.dropTable('users');
     */
 
-    return queryInterface.dropTable('chatHistory').then(queryInterface.dropTable('messages'))
+    return queryInterface.dropTable('messages')
   }
 };
