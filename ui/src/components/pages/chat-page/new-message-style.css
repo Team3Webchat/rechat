@@ -1,0 +1,41 @@
+.messageField{
+  max-height: 500px;
+  overflow: auto;
+}
+.newMessage{
+  display: inline-block;
+  width: 100%;
+  padding: 5px 0;
+}
+.messageField .message{
+  display: inline-table;
+  max-width: 70%;
+  min-height: 0px;
+  padding: 15px;
+}
+.messageField .me{
+  float: right;
+  background: #c8dbef;
+}
+.messageField .friend{
+}
+.arrow-left {
+  position: relative;
+  left: 3px;
+  bottom: 4px;
+  float: left;
+  border-radius: 50px;
+  width: 8px;
+  height: 8px;
+  background: rgb(205, 205, 205);
+}
+.arrow-right {
+  position: relative;
+  right: 3px;
+  bottom: 4px;
+  float: right;
+  border-radius: 50px;
+  width: 8px;
+  height: 8px;
+  background: rgb(205, 205, 205);
+}

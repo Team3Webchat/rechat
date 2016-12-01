@@ -1,6 +1,7 @@
 .main {
   display: flex;
   flex-direction: column !important;
+  min-width: 0px;
 }
 
 .content {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Header, Navigation, Grid, Icon } from 'react-mdl'
+import { Layout, Header, Navigation, Grid, Icon, Cell } from 'react-mdl'
 import { push } from 'react-router-redux'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
@@ -13,7 +13,7 @@ import io from 'socket.io-client'
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
 import { endSearch } from '../../lib/actions/searchActions'
-  
+
 import { API_URL } from '../../lib/config.js'
 
 import './style.css'
@@ -88,19 +88,16 @@ class Main extends Component {
           </Header>
 
           <DrawerClass name={this.props.name}/>
-          <Grid className="main">
+          <main className="mdl-layout__content main">
+          { flash.message &&
+            <FlashMessage
+            message={flash.message}
+            type={flash.type}
+            />
+          }
+          {this.props.children}
+          </main>
 
-            { flash.message &&
-              <FlashMessage
-              message={flash.message}
-              type={flash.type}
-              />
-            }
-
-            {this.props.children}
-
-
-          </Grid>
         </Layout>
       </div>
     )

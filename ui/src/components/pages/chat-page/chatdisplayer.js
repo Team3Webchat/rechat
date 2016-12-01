@@ -1,26 +1,34 @@
 import React, { PropTypes, Component } from 'react'
 import {  Card, Grid, Cell, CardActions, Button, Icon, Textfield } from 'react-mdl'
+import { Link } from 'react-router'
+import Gravatar from 'react-gravatar'
+import ComposeNewMessage from './compose-new-message'
 
 import './style.css'
 
 const ChatDisplayer = ({ onChange, onSubmit }) => {
-  //console.log(props.user)
-
-  
   return (
     <Card className='card'
       shadow={0}>
       <Grid className='grid'>
+
         <Cell col={12} className='toField'>
           <div className='padding'>
-            "To-field" or "profile-img, firstname, lastname"
+            <Gravatar size={40} email="rebecca@awesome.com" />
+            <p>Rebecca Fransson</p>
+            <Link to={`/`}>
+              <Icon name="close"/>
+            </Link>
           </div>
         </Cell>
       </Grid>
       <Grid className='grid'>
         <Cell col={12} className='messageField'>
           <div className='padding'>
-            messages
+            <ComposeNewMessage type='friend' message='Hi! how are u?'/>
+            <ComposeNewMessage type='me' message='Fine thanks!!!'/>
+            <ComposeNewMessage type='friend' message='skjerfbkawjeb wsekrhf wlosje wskjefrnklj nelkn lne ljfewnl clskdh lnelkn '/>
+            <ComposeNewMessage type='friend' message='Sorry, my cat ran over my keyboard... haha lol'/>
           </div>
         </Cell>
       </Grid>
@@ -43,7 +51,7 @@ const ChatDisplayer = ({ onChange, onSubmit }) => {
           </div>
         </Cell>
       </Grid>
-      
+
     </Card>
   )
 }
