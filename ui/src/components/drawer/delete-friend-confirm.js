@@ -6,18 +6,16 @@ const DeleteFriendConfirm = (props) => {
   const { firstname, lastname, id } = props.friend
   const {  handleCloseDialog, openDialog, handleDeleteFriend } = props
   return (
-    <div>
-      <Dialog open={openDialog}>
-        <DialogTitle>Remove friend</DialogTitle>
-          <DialogContent>
-            <p>Remove {firstname} {lastname} from your contacts?</p>
-          </DialogContent>
-        <DialogActions>
-          <Button type='button' onClick={() => {handleDeleteFriend(id)}}>Confirm</Button>
-          <Button type='button' onClick={handleCloseDialog}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    <Dialog open={openDialog}>
+      <DialogTitle>Remove friend</DialogTitle>
+        <DialogContent>
+          <p>Remove {firstname} {lastname} from your contacts?</p>
+        </DialogContent>
+      <DialogActions>
+        <Button type='button' onClick={() => {handleDeleteFriend(id)}}>Confirm</Button>
+        <Button type='button' onClick={handleCloseDialog}>Cancel</Button>
+      </DialogActions>
+    </Dialog>
   )
 }
 
