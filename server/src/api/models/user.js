@@ -35,11 +35,11 @@ export default (sequelize, DataTypes) => {
 
     },
     {
-      getterMethods: {
-        fullname() {
-          return `${this.firstname} ${this.lastname}`
-        },
-      },
+      // getterMethods: {
+      //   fullname() {
+      //     return `${this.firstname} ${this.lastname}`
+      //   },
+      // },
 
       classMethods: {
         associate(models) {
@@ -59,12 +59,16 @@ export default (sequelize, DataTypes) => {
         },
       },
       instanceMethods: {
+        fullname() {
+          return `${this.firstname} ${this.lastname}`
+        },
         /**
          * Specialized query for getting a users friends. Using the generated getFriends() from
          * Sequelize returns only the users ADDED friends, not the one that added them. This ensures
          * Both friends that added you and friends that you added are returned from the database.
          * It saves us a row in the db for each friendship.
          */
+        
         friendships() {
           return sequelize.query(
             `SELECT "user"."id", "user"."email", "user"."firstname",

@@ -3,7 +3,7 @@ import path from 'path'
 import Sequelize from 'sequelize'
 import db from '../../config/db'
 import pascalCase from 'pascal-case'
-import uuid from 'uuid'
+
 
 const env = process.env.NODE_ENV || 'development'
 const { database, username, password, host, dialect } = db[env]
@@ -34,6 +34,10 @@ Object.keys(models).forEach(model => {
     models[model].associate(models)
   }
 })
+
+
+
+
 
 
 

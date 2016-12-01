@@ -1,6 +1,3 @@
-import models from '../models'
-console.log(models)
-
 export default function(sequelize, DataTypes) {
   const Chat = sequelize.define('chat', 
     {
@@ -16,23 +13,11 @@ export default function(sequelize, DataTypes) {
       classMethods: {
         associate(models) {
           models.Chat.belongsToMany(models.User, {
-            through: models.ChatParticipant, 
+            through: 'chatParticipant', 
             as: 'users',
           })
 
-
-        },
-      },
-      instanceMethods: {
-        async getMessages() {
-          console.log(this.chatParticipant)
-          const messages = await this.chatParticipant.getChatHistory()
-          return messages
-        },
-
-        async clearHistory() {
-          const messages =  await this.chatParticipant.getChatHistory()
-          messages.destroy()
+          models.Chat.hasMany(models.Message)
         },
       },
     }
