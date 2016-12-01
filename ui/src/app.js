@@ -1,15 +1,11 @@
 import React, { Component } from 'react'
-import { Router, Route, IndexRoute } from 'react-router'
+import { Router, Route } from 'react-router'
 import { Provider } from 'react-redux'
 import store, { history } from './lib/store'
 
 import Main from './components/main/main'
 import SignInContainer from './components/pages/sign-in/sign-in-container'
 import RegisterContainer from './components/pages/register/register-container'
-
-
-import FriendContainer from './components/pages/friend-request/friend-container'
-
 
 
 import { loginUserSuccess } from './lib/actions/authActions'
