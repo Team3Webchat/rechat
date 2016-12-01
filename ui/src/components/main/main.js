@@ -78,12 +78,11 @@ class Main extends Component {
 
     return (
       <div>
+         <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>
 
-       <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>
-
-      {toggleDeleteFriend &&
-        <DeleteFriendConfirm/>
-      }
+          {toggleDeleteFriend &&
+            <DeleteFriendConfirm/>
+          }
 
           <Header title="ReChat" >
              <Navigation>
@@ -115,9 +114,9 @@ class Main extends Component {
               <ChatContainer/>
             }
 
-            {composeNewMessage &&
+            {/*composeNewMessage &&
               <ChatContainer/>
-            }
+            */}
 
           </Grid>
         </Layout>
