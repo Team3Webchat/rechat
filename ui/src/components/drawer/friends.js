@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import { List, ListItem, Chip, ChipContact } from 'react-mdl'
 import DeleteFriendConfirm from './delete-friend-confirm'
+import Gravatar from 'react-gravatar'
 
 const Friends = ({ friends, onFriendClick, deleteFriendConfirm, startConversation }) => {
   return (
@@ -13,8 +14,7 @@ const Friends = ({ friends, onFriendClick, deleteFriendConfirm, startConversatio
         <Link to={`/chat/${f.id}`}>
           <Chip
           onClose={e => deleteFriendConfirm(f)}>
-            <ChipContact
-            style={{ background: 'url("https://placekitten.com/150/150") 0 0 / cover' }}/>
+            <ChipContact className="mdl-color--teal mdl-color-text--white"><Gravatar size={32} email={f.email} /></ChipContact>
             {f.firstname} {f.lastname}
           </Chip>
           </Link>

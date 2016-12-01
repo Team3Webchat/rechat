@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Drawer, Navigation, Icon, FABButton } from 'react-mdl'
-
+import {Link} from 'react-router'
 import {  toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
 import { deleteFriend } from '../../lib/actions/friendsActions'
 
 import Friends from './friends'
 import Chats from './chats'
 import DeleteFriendConfirm from './delete-friend-confirm'
-
+import Gravatar from 'react-gravatar'
 import './style.css'
 
 class AppDrawer extends React.Component {
@@ -59,9 +59,7 @@ class AppDrawer extends React.Component {
 
 
   render () {
-    const { friends,  chats,
-                    doToggleProfile, name,
-                     startConversation, doComposeNewMessage, doToggleChatFriend } = this.props
+    const { friends,  chats, doToggleProfile, name, startConversation, doComposeNewMessage, doToggleChatFriend, email } = this.props
     const { showChats, showFriends } = this.state
     console.log('drawer:')
     console.log(this.state)
@@ -69,8 +67,8 @@ class AppDrawer extends React.Component {
       <Drawer>
         <Navigation id='profileLink'>
           <header>
-            <img alt="profile" src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRfx6RQ1DY3tj5rGhIvwXOpBBokmF6juPbvQ4InvslpFF355vdY"/>
-            <a href="#" onClick={doToggleProfile}>{name}</a>
+            <Gravatar size={40} email={email} />
+            <Link to={`/me`}>{name}</Link>
             <FABButton colored onClick={doComposeNewMessage}>
               <Icon name="create" />
             </FABButton>
@@ -118,6 +116,7 @@ const mapStateToProps = state => ({
   friends: state.friends.friends,
   chats: state.chats.chats,
   name: state.auth.name,
+  email: state.auth.email,
 })
 
 const mapDispatchToProps = dispatch => ({
