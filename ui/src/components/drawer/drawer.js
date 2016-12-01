@@ -66,9 +66,6 @@ class AppDrawer extends React.Component {
                 deleteFriendConfirm={this.handleDeleteFriendConfirm}
               />
           }
-          </Navigation>
-
-          <Navigation>
             <a href="#" onClick={doToggleChats}>Chats</a>
               { showChats &&
                 //Skapa ny component som renderar ut användarens chat
