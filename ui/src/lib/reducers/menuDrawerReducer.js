@@ -5,7 +5,6 @@ const initialState = {
   showFriends: false,
   showChats: false,
   showProfile: false,
-  toggleDeleteFriend: false,
   isEditing: false,
   showChatFriend: false,
   isNewMessage: false,
@@ -13,11 +12,6 @@ const initialState = {
 function menuDrawer(state = initialState, action) {
 
   switch(action.type){
-
-    case TOGGLE_DELETE_FRIEND:
-      return{
-        toggleDeleteFriend: !state.toggleDeleteFriend,
-      }
 
     case LOGOUT_USER:
       return initialState

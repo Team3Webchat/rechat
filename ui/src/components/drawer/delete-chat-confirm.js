@@ -4,17 +4,17 @@ import './style-confirm.css'
 
 const DeleteChatConfirm = (props) => {
   //const { id } = props.chat
-  const {  handleCloseDialog, openDialog, handleDeleteChat } = props
+  const {  handleCloseChatDialog, openChatDialog, handleDeleteChat } = props
   return (
     <div>
-      <Dialog open={openDialog}>
+      <Dialog open={openChatDialog}>
         <DialogTitle>Delete conversation</DialogTitle>
           <DialogContent>
             <p>Delete this conversation?</p>
           </DialogContent>
         <DialogActions>
           <Button type='button' onClick={() => {handleDeleteChat}}>Delete</Button>
-          <Button type='button' onClick={handleCloseDialog}>Cancel</Button>
+          <Button type='button' onClick={handleCloseChatDialog}>Cancel</Button>
         </DialogActions>
       </Dialog>
     </div>

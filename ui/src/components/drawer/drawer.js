@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Drawer, Navigation, Icon, FABButton } from 'react-mdl'
 import {Link} from 'react-router'
-import {  toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
+import { toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
 import { deleteFriend } from '../../lib/actions/friendsActions'
 import { deleteChat } from '../../lib/actions/friendsActions'
 
@@ -20,8 +20,9 @@ class AppDrawer extends React.Component {
     this.state = {
       showChats: false,
       showFriends: false,
-      openDialog: false,
+      openFriendDialog: false,
       deleteFriend: null,
+      openChatDialog: false,
       deleteChat: null,
     }
   }
@@ -29,34 +30,41 @@ class AppDrawer extends React.Component {
   //DELETE FREIND CONFIRM
   handleDeleteFriendConfirm = friend =>  {
     this.setState({
-      openDialog: true,
+      openFriendDialog: true,
       deleteFriend: friend,
     })
+  }
+
+  handleCloseFriendConfirm = () =>  {
+    this.setState({
+      openFriendDialog: false,
+      deleteFriend: null,
+    })
+  }
+
+   handleDeleteFriend = (id) =>  {
+    this.props.doDeleteFriend(id)
+    this.handleCloseFriendConfirm()
   }
 
   //DELETE CHAT CONFIRM
   handleDeleteChatConfirm = chat =>  {
     this.setState({
-      openDialog: true,
+      openChatDialog: true,
       deleteChat: chat,
     })
   }
 
-  handleCloseConfirm = () =>  {
+  handleCloseChatConfirm = () =>  {
     this.setState({
-      openDialog: false,
-      deleteFriend: null,
+      openChatDialog: false,
+      deleteChat: null,
     })
-  }
-
-  handleDeleteFriend = (id) =>  {
-    this.props.doDeleteFriend(id)
-    this.handleCloseConfirm()
   }
 
   handleDeleteChat = (id) =>  {
     this.props.doDeleteChat(id)
-    this.handleCloseConfirm()
+    this.handleCloseChatConfirm()
   }
 
   //SHOW CHATS LIST
@@ -73,8 +81,6 @@ class AppDrawer extends React.Component {
       showFriends: !this.state.showFriends,
     })
   }
-
-
 
   render () {
     const { friends,  chats, doToggleProfile, name, startConversation, doComposeNewMessage, doToggleChatFriend, email } = this.props
@@ -115,19 +121,19 @@ class AppDrawer extends React.Component {
 
           <div>
 
-            { this.state.openDialog &&
+            { this.state.openFriendDialog &&
               <DeleteFriendConfirm
               friend={this.state.deleteFriend}
-              openDialog={this.state.openDialog}
-              handleCloseDialog={this.handleCloseConfirm}
+              openFriendDialog={this.state.openFriendDialog}
+              handleCloseFriendDialog={this.handleCloseFriendConfirm}
               handleDeleteFriend={this.handleDeleteFriend}/>
             }
 
-            { this.state.openDialog &&
+            { this.state.openChatDialog &&
               <DeleteChatConfirm
               chat={this.state.deleteChat}
-              openDialog={this.state.openDialog}
-              handleCloseDialog={this.handleCloseConfirm}
+              openChatDialog={this.state.openChatDialog}
+              handleCloseDialog={this.handleCloseChatConfirm}
               handleDeleteChat={this.handleDeleteChat}/>
             }
 

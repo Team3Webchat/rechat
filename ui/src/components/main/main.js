@@ -6,7 +6,6 @@ import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
 import ProfileContainer from '../pages/profile-page/profile-container'
 import FriendRequestContainer from '../pages/friend-request/friend-container'
-import DeleteFriendConfirm from '../drawer/delete-friend-confirm'
 import ChatContainer from '../pages/chat-page/chat-container'
 import io from 'socket.io-client'
 
@@ -71,10 +70,6 @@ class Main extends Component {
       <div>
          <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>
 
-          {toggleDeleteFriend &&
-            <DeleteFriendConfirm/>
-          }
-
           <Header title="ReChat" >
              <Navigation>
 
@@ -111,7 +106,6 @@ const mapStateToProps = state => ({
   flash: state.flash,
   friendRequests: state.friends.friendRequests,
   toggleProfile: state.menuDrawer.showProfile,
-  toggleDeleteFriend: state.menuDrawer.toggleDeleteFriend,
   toggleChatFriend: state.menuDrawer.showChatFriend,
   composeNewMessage: state.menuDrawer.showNewMessage,
   token: state.auth.token,
