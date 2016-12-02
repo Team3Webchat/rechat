@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import { Textfield, Button, Spinner, Dialog } from 'react-mdl'
+import { Textfield, Card, Spinner, Dialog } from 'react-mdl'
 import ProfileDisplayer from './profiledisplayer'
 import ChangePassword from './changePassword'
 import { toggleProfile, editProfile } from '../../../lib/actions/menuDrawerActions'
@@ -53,7 +53,7 @@ class ProfileContainer extends Component {
     const { user, doToggleProfile, doToggleEdit, isEditing } = this.props
 
     return (
-      <Dialog open={true} className='profileCard'>
+      <Card className='profileCard' shadow={0}>
       { isEditing ?
         <ChangePassword
           user={user}
@@ -69,16 +69,20 @@ class ProfileContainer extends Component {
         :
         <ProfileDisplayer user={user} doToggleEdit={doToggleEdit} doToggleProfile={doToggleProfile}/>
       }
-
-      </Dialog>
+      </Card>
     )
   }
 }
+/*
+
+<Dialog open={true} className='profileCard'>
+*/
 
 const mapStateToProps = state => ({
   user: {
     email: state.auth.email,
     id: state.auth.id,
+    name: state.auth.name,
   },
   isAuthenticating: state.auth.isAuthenticating,
   flash: state.flash,

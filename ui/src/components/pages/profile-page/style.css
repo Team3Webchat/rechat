@@ -5,24 +5,62 @@
   padding: 0px !important;
 }
 
+.profileCard .mdl-card__actions:first-child{
+  padding: 0;
+}
 /*ACTIONS*/
-.profileCard .mdl-dialog__actions{
+.profileCard .mdl-card__actions{
   border-bottom: 1px solid #d0cdcd;
+  min-height: 54px;
 }
-.profileCard .mdl-dialog__actions .buttons {
+.profileCard .mdl-card__actions img{
+  float: left;
+  position: absolute;
+  border-radius: 100px;
+  border: 1px solid #d0cdcd;
+  box-shadow: 1px 1px 5px 1px #d0cdcd;
+}
+.profileCard .mdl-card__actions h3{
+  margin-top: 0px;
+  margin-bottom: 0px;
+  position: relative;
+  top: 10px;
+  right: 20px;
+}
+.profileCard .mdl-card__actions .buttons {
   margin: 0;
-  float: right;
   min-width: 0px !important;
+  padding: 10px !important;
 }
-.profileCard .mdl-dialog__actions .buttons:hover{
+.profileCard .mdl-card__actions .buttons:hover{
   background: none !important;
 }
-.profileCard .mdl-dialog__actions .buttons i{
+.profileCard .mdl-card__actions .buttons i{
   transition: color 0.3s ease;
+  font-size: 30px !important;
+  color: #5c272d;
 }
-.profileCard .mdl-dialog__actions .buttons i:hover{
+.profileCard .mdl-card__actions .buttons i:hover{
   color: #f28d52 !important;
 }
+
+/*INFORMATION*/
+.profileCard .info{
+  padding-top: 25px;
+}
+.profileCard .info .key{
+  border-right: 1px solid #d0cdcd;
+}
+.profileCard .info .key p{
+  float: right;
+  padding-right: 10px;
+  margin-bottom: 0px;
+}
+.profileCard .info .value p{
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
 
 .profileCard .changePasswordTitle{
   font-size: 155%;
