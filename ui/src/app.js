@@ -10,6 +10,7 @@ import RegisterContainer from './components/pages/register/register-container'
 
 import FriendContainer from './components/pages/friend-request/friend-container'
 import ProfileContainer from './components/pages/profile-page/profile-container'
+import ChangePassword from './components/pages/profile-page/profile-container'
 import ChatContainer from './components/pages/chat-page/chat-container'
 
 
@@ -59,6 +60,7 @@ class App extends Component {
             <Route path='/register' component={RegisterContainer} onEnter={doesNotRequireAuth}/>
             <Route path='/' component={Main} onEnter={requireAuth}>
               <Route path='/me' component={ProfileContainer} />
+              <Route path='/me/edit' component={ChangePassword} />
               <Route path='/chat/:id' component={ChatContainer} />
             </Route>
           </Router>
