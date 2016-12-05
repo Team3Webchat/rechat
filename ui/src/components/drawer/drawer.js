@@ -42,7 +42,7 @@ class AppDrawer extends React.Component {
     })
   }
 
-   handleDeleteFriend = (id) =>  {
+  handleDeleteFriend = (id) =>  {
     this.props.doDeleteFriend(id)
     this.handleCloseFriendConfirm()
   }
@@ -83,8 +83,9 @@ class AppDrawer extends React.Component {
   }
 
   render () {
-    const { friends,  chats, doToggleProfile, name, startConversation, doComposeNewMessage, doToggleChatFriend, email } = this.props
-    const { showChats, showFriends } = this.state
+    const { friends,  chats, doToggleProfile, name, startConversation, doToggleChatFriend, email } = this.props
+    const { showChats, showFriends, openFriendDialog, openChatDialog } = this.state
+    const classNameFriends = `friends-${showFriends}`
     console.log('drawer:')
     console.log(this.state)
     return (
@@ -93,14 +94,11 @@ class AppDrawer extends React.Component {
           <header>
             <Gravatar size={40} email={email} />
             <Link to={`/me`}>{name}</Link>
-            <FABButton colored onClick={doComposeNewMessage}>
-              <Icon name="create" />
-            </FABButton>
           </header>
         </Navigation>
 
-        <Navigation>
-          <div onClick={this.toggleFriends} style={{cursor: 'pointer'}}>Friends</div>
+        <Navigation id='drawerboxes'>
+          <div onClick={this.toggleFriends} style={{cursor: 'pointer'}} className={classNameFriends}>Friends</div>
           { showFriends &&
               //Skapa ny component som renderar ut användarens vänner
               <Friends
@@ -113,7 +111,7 @@ class AppDrawer extends React.Component {
               { showChats &&
                 //Skapa ny component som renderar ut användarens chat
                 <Chats
-                  chats={chats} 
+                  chats={chats}
                   deleteChatConfirm={this.handleDeleteChatConfirm}
                 />
               }
@@ -121,7 +119,7 @@ class AppDrawer extends React.Component {
 
           <div>
 
-            { this.state.openFriendDialog &&
+            { openFriendDialog &&
               <DeleteFriendConfirm
               friend={this.state.deleteFriend}
               openFriendDialog={this.state.openFriendDialog}
@@ -129,7 +127,7 @@ class AppDrawer extends React.Component {
               handleDeleteFriend={this.handleDeleteFriend}/>
             }
 
-            { this.state.openChatDialog &&
+            { openChatDialog &&
               <DeleteChatConfirm
               chat={this.state.deleteChat}
               openChatDialog={this.state.openChatDialog}
