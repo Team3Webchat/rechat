@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import { Textfield, Card, Spinner, Dialog } from 'react-mdl'
+import { Card } from 'react-mdl'
 import ProfileDisplayer from './profiledisplayer'
 import ChangePassword from './changePassword'
 import { toggleProfile, editProfile } from '../../../lib/actions/menuDrawerActions'
@@ -50,7 +50,7 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    const { user, doToggleProfile, doToggleEdit, isEditing } = this.props
+    const { user, doToggleProfile, isEditing } = this.props
 
     return (
       <Card className='profileCard' shadow={0}>
@@ -67,7 +67,7 @@ class ProfileContainer extends Component {
           flash={this.props.flash}
           onChange={this.handleChange}/>
         :
-        <ProfileDisplayer user={user} doToggleEdit={doToggleEdit} doToggleProfile={doToggleProfile}/>
+        <ProfileDisplayer user={user} doToggleProfile={doToggleProfile}/>
       }
       </Card>
     )
@@ -91,7 +91,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   doToggleProfile: () => dispatch(toggleProfile()),
-  doToggleEdit: () => dispatch(editProfile()),
   doChangeOfPassword: ({password, newPassword, id}) => {
     console.log(password, newPassword)
     dispatch(changePassword({password, newPassword, id}))

@@ -8,7 +8,7 @@ import SignInContainer from './components/pages/sign-in/sign-in-container'
 import RegisterContainer from './components/pages/register/register-container'
 
 
-import FriendContainer from './components/pages/friend-request/friend-container'
+import FriendProfile from './components/pages/friend-profile-page/friend-profile-page'
 import ProfileContainer from './components/pages/profile-page/profile-container'
 import ChangePassword from './components/pages/profile-page/profile-container'
 import ChatContainer from './components/pages/chat-page/chat-container'
@@ -62,6 +62,7 @@ class App extends Component {
               <Route path='/me' component={ProfileContainer} />
               <Route path='/me/edit' component={ChangePassword} />
               <Route path='/chat/:id' component={ChatContainer} />
+              <Route path='/profile/:id' component={FriendProfile} />
             </Route>
           </Router>
         </Provider>

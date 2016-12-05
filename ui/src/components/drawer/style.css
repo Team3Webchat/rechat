@@ -53,18 +53,19 @@
 }
 
 /*FRIENDS*/
-.friends-true{
+.friends-true, .chats-true{
   background-color: #6e8399 !important;
   border-bottom: 1px solid #c3c3c3 ;
 }
-.mdl-navigation .friends{
+.mdl-navigation .friends, .chats{
   margin: 0;
+  padding: 0;
   background-color: #72879e !important;
 }
-.mdl-navigation .friends li{
+.mdl-navigation .friends li, .chats li{
   transition: background-color 0.3s ease;
 }
-.mdl-navigation .friends li:hover{
+.mdl-navigation .friends li:hover, .chats li:hover{
   background-color: #7e93a9 !important;
 }
 .mdl-navigation .friends li a{

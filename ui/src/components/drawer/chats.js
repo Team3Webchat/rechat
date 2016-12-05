@@ -5,7 +5,7 @@ import './chat-list-style.css'
 
 const Chats = ({ chats, onChatClick }) => {
   return (
-    <List className="chatList">
+    <List className="chats">
     {chats ?
       <ListItem>
         <span>Loop chats</span>
