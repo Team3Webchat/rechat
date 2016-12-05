@@ -5,6 +5,7 @@ import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import createLogger from 'redux-logger'
 
 import rootReducer from './reducers'
+import socketMiddleware from './middleware/socketMiddleware'
 
 const logger = createLogger()
 const routing = routerMiddleware(hashHistory)
@@ -16,7 +17,8 @@ const store = createStore(
     applyMiddleware(
       thunk,
       logger,
-      routing
+      routing,
+      socketMiddleware,
   ))
 )
 

@@ -86,8 +86,7 @@ class AppDrawer extends React.Component {
     const { showChats, showFriends, openFriendDialog, openChatDialog } = this.state
     const classNameFriends = `friends-${showFriends}`
     const classNameChats = `chats-${showChats}`
-    console.log('drawer:')
-    console.log(this.state)
+
     return (
       <Drawer>
         <Navigation id='profileLink'>
@@ -155,7 +154,6 @@ const mapDispatchToProps = dispatch => ({
   doToggleProfile: () => dispatch(toggleProfile()),
   doDeleteFriend: (id) => dispatch(deleteFriend(id)),
   doDeleteChat: (id) => dispatch(deleteChat(id)),
-  startConversation: () => console.log('DISPATCH START CONVERSATION ACTION'),
   doComposeNewMessage: () => dispatch(composeNewMessage()),
   doToggleChatFriend: () => dispatch(toggleChatFriend()),
 })

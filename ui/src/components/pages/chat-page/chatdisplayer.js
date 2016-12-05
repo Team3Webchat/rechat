@@ -7,8 +7,7 @@ import ComposeNewMessage from './compose-new-message'
 import './style.css'
 
 const ChatDisplayer = ({ onChange, onSubmit, messages, id, message }) => {
-  console.log(message)
-  console.log(id)
+
   return (
     <Card className='card'
       shadow={0}>

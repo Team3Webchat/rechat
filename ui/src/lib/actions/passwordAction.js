@@ -29,7 +29,7 @@ export const changePasswordFailure = ({ flash }) => ({
 export const changePassword = ({ password, newPassword, id }) =>
   async function(dispatch) {
 
-    console.log("test test",password, newPassword)
+
     dispatch(changePasswordRequest())
     try {
       const res = await fetch(baseUrl + 'users/' + id, {

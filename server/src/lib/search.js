@@ -28,10 +28,10 @@ export async function search(req, res, next, message) {
       res.send(message)
     }else{
       res.send(JSON.stringify({results: users}))
-      console.log(users)
+
     }
   }catch(e){
-    console.log(e)
+
     const message = JSON.stringify({results: {status: 'error', code: e}})
     res.send(message)
   }

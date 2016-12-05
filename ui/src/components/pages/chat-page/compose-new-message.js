@@ -3,7 +3,7 @@ import {  Card, Grid, Cell, CardActions, Button, Icon, Textfield } from 'react-m
 import './new-message-style.css'
 
 const ComposeNewMessage = (props) => {
-  console.log(props.user)
+
   //const { email } = props.user
   const { type, message } = props
   const className = `message ${type}`
