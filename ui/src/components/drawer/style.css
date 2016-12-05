@@ -37,9 +37,52 @@
 }
 .mdl-layout__drawer .mdl-navigation__link{
   transition: background-color 0.3s ease;
-  color: #29090d !important;
+  color: #dbdde0 !important;
   padding: 20px 40px !important;
 }
 .mdl-layout__drawer .mdl-navigation__link:hover{
   background-color: #7e93a9 !important;
+}
+.mdl-layout__drawer #drawerboxes .mdl-navigation__link{
+  transition: background-color 0.3s ease;
+  font-size: 17px;
+  color: #dbdde0 !important;
+  padding: 20px 40px !important;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+/*FRIENDS*/
+.friends-true{
+  background-color: #6e8399 !important;
+  border-bottom: 1px solid #c3c3c3 ;
+}
+.mdl-navigation .friends{
+  margin: 0;
+  background-color: #72879e !important;
+}
+.mdl-navigation .friends li{
+  transition: background-color 0.3s ease;
+}
+.mdl-navigation .friends li:hover{
+  background-color: #7e93a9 !important;
+}
+.mdl-navigation .friends li a{
+  text-decoration: none;
+  color: #dbdde0;
+  width: 100%;
+}
+.mdl-navigation .friends li img{
+  float: left;
+  border-radius: 50px;
+}
+.mdl-navigation .friends li p{
+  padding-top: 5px;
+  margin-bottom: 0;
+  padding-left: 10px;
+  float: left;
+}
+.mdl-navigation .friends li i{
+  padding-top: 5px;
+  float: right;
 }
