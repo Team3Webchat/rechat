@@ -4,7 +4,7 @@ import { Card, CardActions, Grid, Cell, Icon, Button} from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
-import { deleteFriend } from '../../../lib/actions/friendsActions'
+import { deleteFriend } from '../../../../lib/actions/friendsActions'
 
 
 class ProfileContainer extends Component {

@@ -9,7 +9,9 @@
 }
 .messageField .message{
   display: inline-table;
-  max-width: 70%;
+  width: 50% !important;
+  min-width: 20% !important;
+  max-width: 70% !important;
   min-height: 0px;
   padding: 15px;
 }
@@ -22,7 +24,6 @@
 .arrow-left {
   position: relative;
   left: 3px;
-  bottom: 4px;
   float: left;
   border-radius: 50px;
   width: 8px;
@@ -32,7 +33,6 @@
 .arrow-right {
   position: relative;
   right: 3px;
-  bottom: 4px;
   float: right;
   border-radius: 50px;
   width: 8px;

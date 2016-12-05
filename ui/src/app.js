@@ -8,7 +8,7 @@ import SignInContainer from './components/pages/sign-in/sign-in-container'
 import RegisterContainer from './components/pages/register/register-container'
 
 
-import FriendProfile from './components/pages/friend-profile/friend-profile-page'
+import FriendProfile from './components/pages/profile-page/friend-profile-page/friend-profile-page'
 import ProfileContainer from './components/pages/profile-page/profile-container'
 import ChangePassword from './components/pages/profile-page/profile-container'
 import ChatContainer from './components/pages/chat-page/chat-container'
