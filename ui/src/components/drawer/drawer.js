@@ -1,10 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Drawer, Navigation, Icon, FABButton } from 'react-mdl'
+import { Drawer, Navigation } from 'react-mdl'
 import {Link} from 'react-router'
 import { toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
-import { deleteFriend } from '../../lib/actions/friendsActions'
-import { deleteChat } from '../../lib/actions/friendsActions'
+import { deleteFriend, deleteChat } from '../../lib/actions/friendsActions'
 
 import Friends from './friends'
 import Chats from './chats'
@@ -86,6 +85,7 @@ class AppDrawer extends React.Component {
     const { friends,  chats, doToggleProfile, name, startConversation, doToggleChatFriend, email } = this.props
     const { showChats, showFriends, openFriendDialog, openChatDialog } = this.state
     const classNameFriends = `friends-${showFriends}`
+    const classNameChats = `chats-${showChats}`
     console.log('drawer:')
     console.log(this.state)
     return (
@@ -107,7 +107,7 @@ class AppDrawer extends React.Component {
                 deleteFriendConfirm={this.handleDeleteFriendConfirm}
               />
           }
-            <div onClick={this.toggleChats} style={{cursor: 'pointer'}}>Chats</div>
+            <div onClick={this.toggleChats} style={{cursor: 'pointer'}} className={classNameChats}>Chats</div>
               { showChats &&
                 //Skapa ny component som renderar ut användarens chat
                 <Chats

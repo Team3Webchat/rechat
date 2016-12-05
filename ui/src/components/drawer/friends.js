@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import { Link } from 'react-router'
-import { List, ListItem, Chip, ChipContact, Icon } from 'react-mdl'
-import DeleteFriendConfirm from './delete-friend-confirm'
+import { List, ListItem, Icon } from 'react-mdl'
 import Gravatar from 'react-gravatar'
 
-const Friends = ({ friends, onFriendClick, deleteFriendConfirm, startConversation }) => {
+const Friends = ({ friends, onFriendClick, startConversation }) => {
   return (
     <List className='friends'>
     {friends.length > 0 ?
@@ -29,11 +27,5 @@ const Friends = ({ friends, onFriendClick, deleteFriendConfirm, startConversatio
 
   )
 }
-/*
-<Chip onClose={e => deleteFriendConfirm(f)}>
-  <ChipContact className="mdl-color--teal mdl-color-text--white"><Gravatar size={32} email={f.email} /></ChipContact>
-  {f.firstname} {f.lastname}
-</Chip>
-*/
 
 export default Friends
