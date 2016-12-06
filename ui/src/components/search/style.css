@@ -1,9 +1,22 @@
+#searchForm label{
+  opacity: 1 !important;
+}
+#searchForm i:hover{
+  color:pink;
+}
+#searchForm .mdl-button:hover {
+    background-color: transparent !important;
+}
 #searchForm{
   max-width: 1200px;
 }
 #searchForm .material-icons{
+  transition: 0.3s ease;
   color: #5C272D !important;
   width: 100%;
+}
+#searchForm .material-icons:hover{
+  color: #fff !important;
 }
 #searchForm input{
   max-width: 100% !important;
