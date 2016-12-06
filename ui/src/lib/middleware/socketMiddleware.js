@@ -37,7 +37,6 @@ const socketMiddleware = (function() {
     switch (action.type) {
       case LOGIN_USER_SUCCESS:
 
-
         socket = io('http://localhost:8000')
 
         socket.on('connect', () => onConnect(socket, store, action.payload.token))
@@ -55,19 +54,24 @@ const socketMiddleware = (function() {
             createdAt: data.createdAt, 
           }))
         })
+        if (action.payload.friends) {
+          // On login with credentials, GET_FRIENDS_SUCCESS is never fired since the friends
+          // are sent with the success login body, so this is a workaround to connect to all
+          // private chats. Would probably need a redesign of the flow here but it works for now
 
+          console.log(action.payload)
+          await Promise.all(action.payload.friends.map(friend => 
+            socket.emit('private_conversation', {id: friend.id}))
+          )
+        }
         next(action)
         break
       case 'GET_FRIENDS_SUCCESS':
         const { friends } = action.payload
-        
-        console.log('STARTED LOADING CHATS')
-        // await friends.forEach(async friend => {
-        //   await socket.emit('private_conversation', {
-        //     id: friend.id,
-        //   })
-        // })
-        await Promise.all(friends.map(friend => socket.emit('private_conversation', {id: friend.id})))
+
+        await Promise.all(friends.map(friend => 
+          socket.emit('private_conversation', {id: friend.id}))
+        )
         console.log('DONE LOADING CHATS')
         next(action)
         break

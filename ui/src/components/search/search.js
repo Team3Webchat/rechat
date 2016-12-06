@@ -56,7 +56,7 @@ class Search extends Component {
 
     return (
       <div>
-        <form id='searchForm' onSubmit={this.handleSubmit}>
+        <form id='searchForm' onSubmit={this.handleSubmit} autoComplete="off">
           <Textfield
             label='Name'
             required
