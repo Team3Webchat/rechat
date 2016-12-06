@@ -149,6 +149,58 @@ export const deleteFriend = (friendId) =>
     }
   }
 
+  //This is the code to post an report of a friend to the server/DB
+export const REPORT_FRIEND_SUCCESS = 'REPORT_FRIEND_SUCCESS'
+export const REPORT_FRIEND_FAILURE = 'REPORT_FRIEND_FAILURE'
+
+const reportFriendSuccess = ({ flash, friendId }) => ({
+  type: REPORT_FRIEND_SUCCESS,
+  payload: {
+    flash,
+    friendId,
+  },
+})
+
+const reportFriendFailure = ({ flash }) => ({
+  type: REPORT_FRIEND_FAILURE,
+  payload: {
+    flash,
+  },
+})
+
+export const reportFriend = (friendId) => 
+async function(dispatch) {
+
+  console.log(friendId)
+  const id = getUserId()
+  try {
+    console.log(friendId)
+    const res = await fetch(`${baseUrl}users/${id}/friends/${friendId}`, {
+      method: 'POST',
+      headers: getHeaders(),
+    })
+
+    if (res.status === 403) throw new Error('Could not report the friend')
+
+    const json = await res.json()
+    dispatch(reportFriendSuccess({
+      flash: {
+        message: 'Friend reported!',
+        type: 'success',
+      },
+      friendId,
+    }))
+
+  } catch (e) {
+    dispatch(reportFriendFailure({
+      flash: {
+        message: e.message,
+        type: 'fail',
+      },
+    }))
+  }
+}
+
 
 export const GET_FRIENDS_SUCCESS = 'GET_FRIENDS_SUCCESS'
 export const GET_FRIENDS_FAILURE = 'GET_FRIENDS_FAILURE'

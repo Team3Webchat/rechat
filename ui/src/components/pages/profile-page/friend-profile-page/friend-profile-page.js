@@ -4,7 +4,7 @@ import { Card, CardActions, Grid, Cell, Icon, Button} from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
-import { deleteFriend } from '../../../../lib/actions/friendsActions'
+import { deleteFriend, reportFriend } from '../../../../lib/actions/friendsActions'
 
 
 class ProfileContainer extends Component {
@@ -38,7 +38,7 @@ class ProfileContainer extends Component {
             <Cell col={3}><Gravatar email='rebecca@awesome.com' size={130} /></Cell>
             <Cell col={7}><h3>Rebecca Fransson</h3></Cell>
             <Cell col={2}>
-              <Link className='buttons'>
+              <Link onClick={this.props.doReportFriend} className='buttons'>
                 <Icon name="report"/>
               </Link>
               <Link className='buttons' to={`/`}>
@@ -66,6 +66,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   doDeleteFriend: (id) => dispatch(deleteFriend(id)),
+  doReportFriend: (id) => dispatch(reportFriend(id)),
 })
 
 export default connect(
