@@ -37,11 +37,12 @@ const ChatDisplayer = ({ onChange, onSubmit, messages, id, message, friendsName,
         <Cell col={12} className='writeField'>
           <div>
             <div className='textBox'>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} autoComplete="off">
               <Textfield className='textInput'
                 onChange={onChange}
                 label="Write your message..."
                 value={message}
+                
               />
               <CardActions className='send'>
                 <Button raised colored type="submit">Send
