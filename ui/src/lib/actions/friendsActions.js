@@ -27,7 +27,7 @@ export const sendFriendRequest = (friendId) =>
         method: 'POST',
         headers: getHeaders(),
       })
-      console.log(res)
+
       if (res.status === 400) 
         throw new Error('You are already friends with this person')
 

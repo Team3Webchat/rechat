@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://team3webchat.github.io/rechat",
   "devDependencies": {
+    "babel-polyfill": "^6.16.0",
     "chai": "^3.5.0",
     "enzyme": "^2.6.0",
     "react-addons-test-utils": "^15.4.1",
@@ -24,6 +25,7 @@
     "react-router-redux": "^4.0.7",
     "redux": "^3.6.0",
     "redux-logger": "^2.7.4",
+    "redux-persist": "^4.0.0-beta1",
     "redux-thunk": "^2.1.0",
     "socket.io-client": "^1.7.1"
   },

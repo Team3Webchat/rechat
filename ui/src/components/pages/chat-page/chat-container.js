@@ -6,104 +6,79 @@ import ChatDisplayer from './chatdisplayer'
 import ComposeNewMessage from './compose-new-message'
 import { API_URL } from '../../../lib/config'
 
+import { sendPrivateMessage, selectActiveChat } from '../../../lib/actions/chatActions'
+import { getActiveChat } from '../../../lib/reducers/chatsReducer'
+import { getFriendById } from '../../../lib/reducers/friendsReducer'
+
 class ChatContainer extends Component {
 
   constructor() {
     super()
     this.state = {
-      friendId: null,
-      socket: null,
-      chatId: null,
-      messageInputVale: null,
-      messages: [],
+      message: '',
     }
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({
       message: e.target.value,
     })
   }
 
-  componentDidMount() {
-    console.log("CHat contianer mounted")
-    const socket = io('apirechat.herokuapp.com')
-    
-    socket.on('connect', () => {
-      socket.emit('authenticate', {token: this.props.token })
-      .on('authenticated', () => {
-        console.log('authenticated')
-        socket.emit('private_conversation', {
-          id: this.props.params.id,
-        })
-        socket.on('private_conversation_start', data => {
-
-          this.setState({
-            chatId: data.chatId,
-          })
-        })
-        socket.on('new_message', data => this.setState({
-          messages: [...this.state.messages, data],
-        }))
-      })
-      .on('unauthorized', msg => {
-        console.error(msg)
-      })
-    })
-
-    
-
-
-    this.setState({
-      socket,
-    })
+  componentWillReceiveProps(nextProps) {
+    const { friendId, beginChat } = nextProps
+    beginChat(friendId)    
   }
 
-
   sendMessage = (e) => {
-
     e.preventDefault()
     e.stopPropagation()
-
+  
     const { message } = this.state
+    const { sendMessage, id, activeChat } = this.props
     this.setState({
       message: '',
     })
 
-    this.state.socket.emit('new_message', {
-      content: message,
-      userId: this.props.id,
-      chatId: this.state.chatId,
-    })
-    
+    sendMessage(message, activeChat.chatId, id)
   }
 
   render() {
-    const {doToggleChatFriend, isNewMessage } = this.props
+    const messages = this.props.activeChat ? this.props.activeChat.messages : []
+    if (!this.props.isLoading) {
+      return (
+        <div>
+        
+        <ChatDisplayer 
+          onChange={this.handleChange} 
+          onSubmit={this.sendMessage} 
+          messages={messages}
+          id={this.props.id}
+          message={this.state.message}
+          friendsName={`${this.props.friend.firstname} ${this.props.friend.lastname}`}
+        />
+        </div>
+      )
+    } else {
+      return <p>Loading...</p>
+    }
     
-    return (
-      <div>
-      
-      <ChatDisplayer 
-        onChange={this.handleChange} 
-        onSubmit={this.sendMessage} 
-        messages={this.state.messages}
-        id={this.props.id}
-        message={this.state.message}
-      />
-      </div>
-    )
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   isNewMessage: state.menuDrawer.isEditing,
   token: state.auth.token,
   id: state.auth.id,
+  activeChat: getActiveChat(state),
+  friendId: ownProps.params.id,
+  friend : state.friends.friends.find(f => f.id === ownProps.params.id),
+  isLoading: state.chats.isLoadingChats,
 })
 
 const mapDispatchToProps = dispatch => ({
-  
+  beginChat: id => dispatch(selectActiveChat({friendId: id})),
+  sendMessage: (content, chatId, userId) => dispatch(sendPrivateMessage({content, chatId, userId})),
 })
 
 export default connect(

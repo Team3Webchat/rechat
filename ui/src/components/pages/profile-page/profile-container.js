@@ -19,7 +19,7 @@ class ProfileContainer extends Component {
       isAuthenticating: false,
     }
 
-    console.log('PROFILE PAGE')
+
   }
 
   handleChange = key => {
@@ -39,12 +39,11 @@ class ProfileContainer extends Component {
   }
 
   handleSubmit = e => {
-    console.log("HANDLE SUBMUT")
+
     e.preventDefault()
     const { password, newPassword } = this.state
     const { id } = this.props.user
-    console.log(this.state)
-    console.log(password, newPassword)
+
     this.props.doChangeOfPassword({password, newPassword, id})
 
   }
@@ -92,7 +91,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   doToggleProfile: () => dispatch(toggleProfile()),
   doChangeOfPassword: ({password, newPassword, id}) => {
-    console.log(password, newPassword)
+
     dispatch(changePassword({password, newPassword, id}))
   },
 })

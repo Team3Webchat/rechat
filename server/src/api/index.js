@@ -7,13 +7,10 @@ import helmet from 'helmet'
 import httpStatus from 'http-status'
 import winston from 'winston'
 import expressWinston from 'express-winston'
-import SocketIO from 'socket.io'
-import { createSocket, startSocket } from '../lib/chat'
 
+import { createSocket, startSocket } from '../lib/socket'
 import routes from './routes'
 import passport from '../lib/auth'
-import { sequelize, user } from './models' 
-
 
 async function createServer() {
 

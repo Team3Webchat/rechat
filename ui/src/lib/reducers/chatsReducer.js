@@ -1,16 +1,51 @@
 import { LOGIN_USER_SUCCESS } from '../actions/authActions'
+import * as actions from '../actions/chatActions'
 
+import store from '../store'
 const initialState = {
+  currentChatId: '',
   chats: [],
+  isLoadingChats: true,
 }
 
 export default function chats(state = initialState, action) {
   switch(action.type) {
-    case LOGIN_USER_SUCCESS:
+    case actions.CONNECT_CHAT:
       return {
-        chats: action.payload.chats,
+        ...state,
+        chats: [...state.chats, action.payload],
+        isLoadingChats: false,
       }
+    case actions.SELECT_ACTIVE_CHAT: 
+      const current = state.chats.find(c => action.payload.friendId === c.friendId)
+      return {
+        ...state,
+        currentChatId: state.chats.find(c => c.friendId === action.payload.friendId)['chatId'],
+      }
+    case actions.RECEIVE_PRIVATE_MESSAGE:  
+      console.log(action.payload)
+      return {
+        ...state,
+        chats: state.chats.map(chat => {
+          if (chat.chatId !== action.payload.chatId)
+            return chat
+          return {
+            ...chat,
+            messages: [...chat.messages, action.payload],
+          }
+        }),
+      }
+    
     default:
       return state
   }
 }
+
+export const getActiveChat = state => {
+
+  const { currentChatId, chats } = state.chats
+  
+  return chats.find(c => c.chatId === currentChatId)
+}
+
+

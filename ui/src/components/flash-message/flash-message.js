@@ -30,13 +30,11 @@ class FlashMessage extends Component {
     return (
       <div>
         {inline ?
-          <Grid className={className}>
-            <Cell col={12} >
-              { message }
-            </Cell>
-          </Grid>
+          <div className={className}>
+            { message }
+          </div>
         :
-        <div className={className}>
+        <div className={className} style={{boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)'}}>
           { this.handleTimeoutSnackbar() }
           <p>{ message }</p>
           <Button onClick={close}>

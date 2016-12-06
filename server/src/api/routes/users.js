@@ -140,8 +140,7 @@ usersRouter.route('/:id/friends/:friendId')
       const { id, friendId } = req.params
       const { user } = req
 
-      console.log(user)
-      console.log(friendId)
+
 
       // We only look for requests send FROM antother user TO this user. Hence,
       // the id's need to be flipped in the query since friendId is the id of

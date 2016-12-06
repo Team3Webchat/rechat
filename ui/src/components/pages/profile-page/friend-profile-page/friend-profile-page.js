@@ -29,7 +29,7 @@ class ProfileContainer extends Component {
   render() {
     const { user } = this.props
     const { id } = this.props.params
-    console.log('FRIENDPROFILE')
+
 
     return (
       <Card className='profileCard' shadow={0}>
