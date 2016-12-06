@@ -23,7 +23,6 @@ export default function friends(state = initialState, action) {
         sentFriendRequests: action.payload.sentFriendRequests,
       }
     case GET_FRIENDS_SUCCESS:
-
       return {
         friends: action.payload.friends,
         friendRequests: action.payload.friendRequests,
@@ -55,4 +54,11 @@ export default function friends(state = initialState, action) {
     default:
       return state
   }
+}
+
+
+export const getFriendById = state => {
+  const { currentChatId, chats } = state.chats
+  const chat = chats.find(c => c.chatId === currentChatId)
+  return state.friends.friends.find(f => f.id === f.friendId)
 }

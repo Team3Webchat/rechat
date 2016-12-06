@@ -1,9 +1,11 @@
 import { LOGIN_USER_SUCCESS } from '../actions/authActions'
 import * as actions from '../actions/chatActions'
+
 import store from '../store'
 const initialState = {
   currentChatId: '',
   chats: [],
+  isLoadingChats: true,
 }
 
 export default function chats(state = initialState, action) {
@@ -12,12 +14,10 @@ export default function chats(state = initialState, action) {
       return {
         ...state,
         chats: [...state.chats, action.payload],
+        isLoadingChats: false,
       }
     case actions.SELECT_ACTIVE_CHAT: 
-      console.log('Actionpayload', action.payload.friendId)
-      console.table(state.chats)
       const current = state.chats.find(c => action.payload.friendId === c.friendId)
-      console.log(current)
       return {
         ...state,
         currentChatId: state.chats.find(c => c.friendId === action.payload.friendId)['chatId'],
@@ -35,7 +35,6 @@ export default function chats(state = initialState, action) {
           }
         }),
       }
-      
     
     default:
       return state

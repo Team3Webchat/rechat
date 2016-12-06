@@ -6,7 +6,7 @@ import ComposeNewMessage from './compose-new-message'
 
 import './style.css'
 
-const ChatDisplayer = ({ onChange, onSubmit, messages, id, message }) => {
+const ChatDisplayer = ({ onChange, onSubmit, messages, id, message, friendsName }) => {
 
   return (
     <Card className='card'
@@ -16,7 +16,7 @@ const ChatDisplayer = ({ onChange, onSubmit, messages, id, message }) => {
         <Cell col={12} className='toField'>
           <div className='padding'>
             <Gravatar size={40} email="rebecca@awesome.com" />
-            <p>Rebecca Fransson</p>
+            <p>{friendsName}</p>
             <Link to={`/`}>
               <Icon name="close"/>
             </Link>
@@ -26,10 +26,6 @@ const ChatDisplayer = ({ onChange, onSubmit, messages, id, message }) => {
       <Grid className='grid'>
         <Cell col={12} className='messageField'>
           <div className='padding'>
-            <ComposeNewMessage type='friend' message='Hi! how are u?'/>
-            <ComposeNewMessage type='me' message='Fine thanks!!!'/>
-            <ComposeNewMessage type='friend' message='skjerfbkawjeb wsekrhf wlosje wskjefrnklj nelkn lne ljfewnl clskdh lnelkn '/>
-            <ComposeNewMessage type='friend' message='Sorry, my cat ran over my keyboard... haha lol'/>
             {messages.map((m, i) => 
               id === m.userId ? 
               <ComposeNewMessage type='me' message={m.content} key={i} /> :
@@ -47,7 +43,6 @@ const ChatDisplayer = ({ onChange, onSubmit, messages, id, message }) => {
                 onChange={onChange}
                 label="Write your message..."
                 value={message}
-                rows={4}
               />
               <CardActions className='send'>
                 <Button raised colored type="submit">Send

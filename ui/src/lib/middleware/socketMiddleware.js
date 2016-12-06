@@ -33,7 +33,7 @@ const socketMiddleware = (function() {
   }
 
 
-  return store => next => action => {
+  return store => next => async action => {
     switch (action.type) {
       case LOGIN_USER_SUCCESS:
 
@@ -61,13 +61,14 @@ const socketMiddleware = (function() {
       case 'GET_FRIENDS_SUCCESS':
         const { friends } = action.payload
         
-
-        friends.forEach(friend => {
-
-          socket.emit('private_conversation', {
-            id: friend.id,
-          })
-        })
+        console.log('STARTED LOADING CHATS')
+        // await friends.forEach(async friend => {
+        //   await socket.emit('private_conversation', {
+        //     id: friend.id,
+        //   })
+        // })
+        await Promise.all(friends.map(friend => socket.emit('private_conversation', {id: friend.id})))
+        console.log('DONE LOADING CHATS')
         next(action)
         break
       case LOGOUT_USER:

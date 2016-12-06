@@ -8,83 +8,61 @@ import { API_URL } from '../../../lib/config'
 
 import { sendPrivateMessage, selectActiveChat } from '../../../lib/actions/chatActions'
 import { getActiveChat } from '../../../lib/reducers/chatsReducer'
+import { getFriendById } from '../../../lib/reducers/friendsReducer'
 
 class ChatContainer extends Component {
 
   constructor() {
     super()
     this.state = {
-      friendId: null,
-      socket: null,
-      chatId: null,
-      messageInputVale: null,
-      messages: [],
-      haxx: 'haxx',
+      message: '',
     }
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     this.setState({
       message: e.target.value,
     })
   }
 
-  componentDidMount() {
-    const { friendId, beginChat } = this.props
-    beginChat(friendId)
-  }
-
-
   componentWillReceiveProps(nextProps) {
-    console.log('componentWillReceiveProps', nextProps)
     const { friendId, beginChat } = nextProps
-    beginChat(friendId)
-    
+    beginChat(friendId)    
   }
-
 
   sendMessage = (e) => {
-
     e.preventDefault()
     e.stopPropagation()
-
+  
     const { message } = this.state
     const { sendMessage, id, activeChat } = this.props
     this.setState({
       message: '',
     })
 
-    // this.state.socket.emit('new_message', {
-    //   content: message,
-    //   userId: this.props.id,
-    //   chatId: this.state.chatId,
-    // })
-
-    
-    console.log(message)
-    console.log(activeChat.chatId)
     sendMessage(message, activeChat.chatId, id)
-    
   }
 
   render() {
-    const {doToggleChatFriend, isNewMessage } = this.props
-    console.log(this.props.activeChat)
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
-
+    if (!this.props.isLoading) {
+      return (
+        <div>
+        
+        <ChatDisplayer 
+          onChange={this.handleChange} 
+          onSubmit={this.sendMessage} 
+          messages={messages}
+          id={this.props.id}
+          message={this.state.message}
+          friendsName={`${this.props.friend.firstname} ${this.props.friend.lastname}`}
+        />
+        </div>
+      )
+    } else {
+      return <p>Loading...</p>
+    }
     
-    return (
-      <div>
-      
-      <ChatDisplayer 
-        onChange={this.handleChange} 
-        onSubmit={this.sendMessage} 
-        messages={messages}
-        id={this.props.id}
-        message={this.state.message}
-      />
-      </div>
-    )
   }
 }
 
@@ -94,14 +72,13 @@ const mapStateToProps = (state, ownProps) => ({
   id: state.auth.id,
   activeChat: getActiveChat(state),
   friendId: ownProps.params.id,
+  friend : state.friends.friends.find(f => f.id === ownProps.params.id),
+  isLoading: state.chats.isLoadingChats,
 })
 
 const mapDispatchToProps = dispatch => ({
   beginChat: id => dispatch(selectActiveChat({friendId: id})),
-  sendMessage: (content, chatId, userId) => {
-    console.log(content)
-    dispatch(sendPrivateMessage({content, chatId, userId}))
-  },
+  sendMessage: (content, chatId, userId) => dispatch(sendPrivateMessage({content, chatId, userId})),
 })
 
 export default connect(
