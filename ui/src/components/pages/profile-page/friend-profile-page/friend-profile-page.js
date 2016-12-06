@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Card, CardActions, Grid, Cell, Icon, Button} from 'react-mdl'
 import { Link } from 'react-router'
@@ -17,6 +17,12 @@ class ProfileContainer extends Component {
       this.setState(state)
     }.bind(this)
   }
+  getFriendFromId = () => {
+    const props = this.props
+    return props.friends.filter(function ( user ) {
+      return user.id === props.params.id
+    })[0]
+  }
 
   componentWillReceiveProps(nextProps) {
 
@@ -27,18 +33,18 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    const { user } = this.props
+    const  user  = this.getFriendFromId()
     const { id } = this.props.params
-
+    console.log(user);
 
     return (
       <Card className='profileCard' shadow={0}>
         <CardActions>
           <Grid>
-            <Cell col={3}><Gravatar email='rebecca@awesome.com' size={130} /></Cell>
-            <Cell col={7}><h3>Rebecca Fransson</h3></Cell>
+            <Cell col={3}><Gravatar email={user.email} size={130} /></Cell>
+            <Cell col={7}><h3>{user.firstname} {user.lastname}</h3></Cell>
             <Cell col={2}>
-              <Link onClick={this.props.doReportFriend} className='buttons'>
+              <Link onClick={() => this.props.doReportFriend(id)} className='buttons'>
                 <Icon name="report"/>
               </Link>
               <Link className='buttons' to={`/`}>
@@ -51,10 +57,10 @@ class ProfileContainer extends Component {
         <Grid className='info'>
           <Cell col={3}></Cell>
           <Cell col={1} className='key'><p>Email</p></Cell>
-          <Cell col={3} className='value'><p>rebecca@awesome.com</p></Cell>
+          <Cell col={3} className='value'><p>{user.email}</p></Cell>
         </Grid>
         <CardActions>
-          <Button onClick={() => {this.props.doDeleteFriend(id)}}>Remove friend</Button>
+          <Button onClick={() => this.props.doDeleteFriend(id)}>Remove friend</Button>
         </CardActions>
       </Card>
     )
@@ -62,6 +68,7 @@ class ProfileContainer extends Component {
 }
 
 const mapStateToProps = state => ({
+  friends: state.friends.friends,
 })
 
 const mapDispatchToProps = dispatch => ({
