@@ -1,14 +1,16 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import { } from 'react-mdl'
+import {  } from 'react-mdl'
 import io from 'socket.io-client'
 import ChatDisplayer from './chatdisplayer'
 import ComposeNewMessage from './compose-new-message'
 import { API_URL } from '../../../lib/config'
 
-import { sendPrivateMessage, selectActiveChat } from '../../../lib/actions/chatActions'
+import { sendPrivateMessage, selectActiveChat, deleteChat } from '../../../lib/actions/chatActions'
 import { getActiveChat } from '../../../lib/reducers/chatsReducer'
 import { getFriendById } from '../../../lib/reducers/friendsReducer'
+
+import DeleteChatConfirm from './delete-chat-confirm'
 
 class ChatContainer extends Component {
 
@@ -16,8 +18,31 @@ class ChatContainer extends Component {
     super()
     this.state = {
       message: '',
+      openChatDialog: false,
+      deleteChat: null,
     }
   }
+
+  //DELETE CHAT CONFIRM
+  handleDeleteChatConfirm = chat =>  {
+    this.setState({
+      openChatDialog: true,
+      deleteChat: chat,
+    })
+  }
+
+  handleCloseChatConfirm = () =>  {
+    this.setState({
+      openChatDialog: false,
+      deleteChat: null,
+    })
+  }
+
+  handleDeleteChat = (id) =>  {
+    this.props.doDeleteChat(id)
+    this.handleCloseChatConfirm()
+  }
+  //END - DELETE CHAT CONFIRM
 
   handleChange = e => {
     this.setState({
@@ -45,24 +70,35 @@ class ChatContainer extends Component {
 
   render() {
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
+    const { openChatDialog } = this.state
     if (!this.props.isLoading) {
       return (
         <div>
-        
-        <ChatDisplayer 
-          onChange={this.handleChange} 
-          onSubmit={this.sendMessage} 
-          messages={messages}
-          id={this.props.id}
-          message={this.state.message}
-          friendsName={`${this.props.friend.firstname} ${this.props.friend.lastname}`}
-        />
+          <div>
+            <ChatDisplayer 
+              onChange={this.handleChange} 
+              onSubmit={this.sendMessage} 
+              messages={messages}
+              id={this.props.id}
+              message={this.state.message}
+              friendsName={`${this.props.friend.firstname} ${this.props.friend.lastname}`}
+              deleteChatConfirm={this.handleDeleteChatConfirm}
+            />
+          </div>
+          <div>
+            { openChatDialog &&
+              <DeleteChatConfirm
+              chat={this.state.deleteChat}
+              openChatDialog={this.state.openChatDialog}
+              handleCloseChatDialog={this.handleCloseChatConfirm}
+              handleDeleteChat={this.handleDeleteChat}/>
+            }
+          </div>
         </div>
       )
     } else {
       return <p>Loading...</p>
     }
-    
   }
 }
 
@@ -79,6 +115,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   beginChat: id => dispatch(selectActiveChat({friendId: id})),
   sendMessage: (content, chatId, userId) => dispatch(sendPrivateMessage({content, chatId, userId})),
+  doDeleteChat: (id) => dispatch(deleteChat(id)),
 })
 
 export default connect(

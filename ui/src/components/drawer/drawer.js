@@ -8,7 +8,7 @@ import { deleteFriend, deleteChat } from '../../lib/actions/friendsActions'
 import Friends from './friends'
 import Chats from './chats'
 import DeleteFriendConfirm from './delete-friend-confirm'
-import DeleteChatConfirm from './delete-chat-confirm'
+//import DeleteChatConfirm from './delete-chat-confirm'
 import Gravatar from 'react-gravatar'
 import './style.css'
 

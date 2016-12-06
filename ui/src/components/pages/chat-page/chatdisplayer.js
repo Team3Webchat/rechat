@@ -6,26 +6,25 @@ import ComposeNewMessage from './compose-new-message'
 
 import './style.css'
 
-const ChatDisplayer = ({ onChange, onSubmit, messages, id, message, friendsName }) => {
+const ChatDisplayer = ({ onChange, onSubmit, messages, id, message, friendsName, deleteChatConfirm }) => {
 
   return (
-    <Card className='card'
-      shadow={0}>
+    <Card shadow={0} className='card'>
       <Grid className='grid'>
-
         <Cell col={12} className='toField'>
-          <div className='padding'>
+          <div>
             <Gravatar size={40} email="rebecca@awesome.com" />
             <p>{friendsName}</p>
             <Link to={`/`}>
-              <Icon name="close"/>
+              <Icon name="close" className="iconButton"/>
             </Link>
+            <Icon name="delete" className="iconButton" onClick={deleteChatConfirm}/>
           </div>
         </Cell>
       </Grid>
       <Grid className='grid'>
         <Cell col={12} className='messageField'>
-          <div className='padding'>
+          <div>
             {messages.map((m, i) => 
               id === m.userId ? 
               <ComposeNewMessage type='me' message={m.content} key={i} /> :
@@ -36,7 +35,7 @@ const ChatDisplayer = ({ onChange, onSubmit, messages, id, message, friendsName 
       </Grid>
       <Grid className='grid'>
         <Cell col={12} className='writeField'>
-          <div className='padding'>
+          <div>
             <div className='textBox'>
             <form onSubmit={onSubmit}>
               <Textfield className='textInput'
@@ -53,7 +52,6 @@ const ChatDisplayer = ({ onChange, onSubmit, messages, id, message, friendsName 
           </div>
         </Cell>
       </Grid>
-
     </Card>
   )
 }

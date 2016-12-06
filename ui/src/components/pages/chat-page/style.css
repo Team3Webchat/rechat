@@ -1,18 +1,19 @@
 .card{
-
+  padding:0px !important;
 }
 
 .grid{
   width: 100% !important;
   margin: 0px !important;
+  
 }
 
 .toField{
   width: 100% !important;
   height:65px !important;
   margin-left: -8px !important;
-  padding-left: 8px;
   border-bottom: 1px solid #d0cdcd;
+  padding:4px 16px 16px 16px !important;
 }
 .toField img{
   float: left;
@@ -50,16 +51,12 @@
 }
 
 .textBox{
-  box-shadow: 1px 0px 5px 0px rgba(0,0,0,0.75);
+  margin: 8px 8px 8px 8px !important;
   padding:16px;
   border: 1px solid #e7e7e7;
   border-radius: 2px;
   background: #f9f9f9;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-}
-
-.padding{
-  padding:10px 16px 0 16px !important;
 }
 
 .send {
@@ -69,4 +66,9 @@
 
 label{
   opacity: 0.5 !important;
+}
+
+.iconButton {
+  padding-left: 24px !important;
+  cursor: pointer; cursor: hand !important;
 }
