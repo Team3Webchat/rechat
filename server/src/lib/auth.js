@@ -41,10 +41,11 @@ export function login(req, res, next, message) {
     if (!user)
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
 
-    const [friends, friendRequests, sentFriendRequests] = await Promise.all([
+    const [friends, friendRequests, sentFriendRequests, chats] = await Promise.all([
       user.friends(),
       user.friendRequests(),
       user.sentFriendRequests(),
+      user.getChats(),
     ])
     return res.json({
       message,
@@ -53,6 +54,7 @@ export function login(req, res, next, message) {
       friends,
       friendRequests,
       sentFriendRequests,
+      chats,
     })
   })(req, res, next)
 }

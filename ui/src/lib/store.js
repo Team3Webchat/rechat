@@ -21,9 +21,8 @@ const store = createStore(
       routing,
       socketMiddleware,
   )),
-  autoRehydrate(),
 )
-persistStore(store)
+
 
 
 export const history = syncHistoryWithStore(hashHistory, store)
