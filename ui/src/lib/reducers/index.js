@@ -8,7 +8,7 @@ import menuDrawer from './menuDrawerReducer'
 import friends from './friendsReducer'
 import chats from './chatsReducer'
 
-export default combineReducers({
+const appReducer = combineReducers({
   routing: routerReducer,
   search,
   auth,
@@ -17,3 +17,10 @@ export default combineReducers({
   friends,
   chats,
 })
+
+export default (state, action) => {
+  if (action.type === 'LOGOUT_USER') {
+    state = undefined
+  }
+  return appReducer(state, action)
+}

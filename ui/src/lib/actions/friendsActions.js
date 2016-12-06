@@ -153,7 +153,7 @@ export const deleteFriend = (friendId) =>
 export const GET_FRIENDS_SUCCESS = 'GET_FRIENDS_SUCCESS'
 export const GET_FRIENDS_FAILURE = 'GET_FRIENDS_FAILURE'
 
-const getFriendSuccess = ({ friends, friendRequests, sentFriendRequests }) => ({
+export const getFriendSuccess = ({ friends, friendRequests, sentFriendRequests }) => ({
   type: GET_FRIENDS_SUCCESS,
   payload: {
     friends,
