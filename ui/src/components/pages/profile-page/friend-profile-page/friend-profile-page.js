@@ -17,12 +17,7 @@ class ProfileContainer extends Component {
       this.setState(state)
     }.bind(this)
   }
-  getFriendFromId = () => {
-    const props = this.props
-    return props.friends.filter(function ( user ) {
-      return user.id === props.params.id
-    })[0]
-  }
+
 
   componentWillReceiveProps(nextProps) {
 
@@ -33,16 +28,14 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    const  user  = this.getFriendFromId()
-    const { id } = this.props.params
-    console.log(user);
+    const  { email, firstname, lastname, id}  = this.props.friend
 
     return (
       <Card className='profileCard' shadow={0}>
         <CardActions>
           <Grid>
-            <Cell col={3}><Gravatar email={user.email} size={130} /></Cell>
-            <Cell col={7}><h3>{user.firstname} {user.lastname}</h3></Cell>
+            <Cell col={3}><Gravatar email={email} size={130} /></Cell>
+            <Cell col={7}><h3>{firstname} {lastname}</h3></Cell>
             <Cell col={2}>
               <Link onClick={() => this.props.doReportFriend(id)} className='buttons'>
                 <Icon name="report"/>
@@ -57,7 +50,7 @@ class ProfileContainer extends Component {
         <Grid className='info'>
           <Cell col={3}></Cell>
           <Cell col={1} className='key'><p>Email</p></Cell>
-          <Cell col={3} className='value'><p>{user.email}</p></Cell>
+          <Cell col={3} className='value'><p>{email}</p></Cell>
         </Grid>
         <CardActions>
           <Button onClick={() => this.props.doDeleteFriend(id)}>Remove friend</Button>
@@ -67,8 +60,8 @@ class ProfileContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  friends: state.friends.friends,
+const mapStateToProps = (state, ownProps) => ({
+  friend : state.friends.friends.find(f => f.id === ownProps.params.id)
 })
 
 const mapDispatchToProps = dispatch => ({
