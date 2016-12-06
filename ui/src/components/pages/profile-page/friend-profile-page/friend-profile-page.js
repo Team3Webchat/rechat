@@ -54,7 +54,7 @@ class ProfileContainer extends Component {
           <Cell col={3} className='value'><p>rebecca@awesome.com</p></Cell>
         </Grid>
         <CardActions>
-          <Button onClick={this.props.doDeleteFriend}>Remove friend</Button>
+          <Button onClick={() => {this.props.doDeleteFriend(id)}}>Remove friend</Button>
         </CardActions>
       </Card>
     )
