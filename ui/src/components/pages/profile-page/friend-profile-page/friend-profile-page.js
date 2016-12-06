@@ -44,7 +44,7 @@ class ProfileContainer extends Component {
             <Cell col={3}><Gravatar email={user.email} size={130} /></Cell>
             <Cell col={7}><h3>{user.firstname} {user.lastname}</h3></Cell>
             <Cell col={2}>
-              <Link onClick={this.props.doReportFriend} className='buttons'>
+              <Link onClick={() => this.props.doReportFriend(id)} className='buttons'>
                 <Icon name="report"/>
               </Link>
               <Link className='buttons' to={`/`}>
@@ -60,7 +60,7 @@ class ProfileContainer extends Component {
           <Cell col={3} className='value'><p>{user.email}</p></Cell>
         </Grid>
         <CardActions>
-          <Button onClick={() => {this.props.doDeleteFriend(id)}}>Remove friend</Button>
+          <Button onClick={() => this.props.doDeleteFriend(id)}>Remove friend</Button>
         </CardActions>
       </Card>
     )
