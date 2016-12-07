@@ -7,18 +7,14 @@ import {
   connected,
   disconnect,
   START_PRIVATE_CHAT,
-<<<<<<< HEAD
   DELEATE_CHAT_HISTORY,
 
-
-=======
->>>>>>> 833d5a96b987be6063560c1ad429443a1ee11c09
 } from '../actions/chatActions'
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from '../actions/authActions'
-import { 
-  SEND_FRIEND_REQUEST_SUCCESS, 
-  ACCEPT_FRIEND_REQUEST_SUCCESS, 
-  DELETE_FRIEND_SUCCESS, 
+import {
+  SEND_FRIEND_REQUEST_SUCCESS,
+  ACCEPT_FRIEND_REQUEST_SUCCESS,
+  DELETE_FRIEND_SUCCESS,
 } from '../actions/friendsActions'
 
 const socketMiddleware = (function() {
@@ -39,24 +35,24 @@ const socketMiddleware = (function() {
   }
 
   const onDisconnect = (ws, store) => {
-    
+
     store.dispatch(disconnect())
   }
 
   const onNewMessage = (ws, store, data) => {
-    store.dispatch(receivePrivateMessage({ 
-      chatId: data.chatId, 
-      content: data.content, 
-      userId: data.userId, 
+    store.dispatch(receivePrivateMessage({
+      chatId: data.chatId,
+      content: data.content,
+      userId: data.userId,
       id: data.id,
-      createdAt: data.createdAt, 
+      createdAt: data.createdAt,
     }))
   }
 
   const onPrivateConversationStart = (ws, store, data) => {
-    store.dispatch(connectChat({ 
-      chatId: data.chatId, 
-      messages: data.messages, 
+    store.dispatch(connectChat({
+      chatId: data.chatId,
+      messages: data.messages,
       friendId: data.friendId,
     }))
   }
@@ -73,7 +69,7 @@ const socketMiddleware = (function() {
       case LOGIN_USER_SUCCESS:
 
         socket = io('http://localhost:8000')
-        
+
         socket.on('connect', () => onConnect(socket, store, action.payload.token))
         socket.on('disconnect', () => onDisconnect(socket, store))
         socket.on('private_conversation_start', data => onPrivateConversationStart(socket, store, data))
@@ -81,7 +77,6 @@ const socketMiddleware = (function() {
         socket.on('friend_request', data => onFriendRequest(socket, store, data))
         socket.on('delete_friend', data => onDeleteFriend(socket, store, data))
 
-<<<<<<< HEAD
         socket.on('private_conversation_start', data => {
           store.dispatch(connectChat({ chatId: data.chatId, messages: data.messages, friendId: data.friendId}))
         })
@@ -94,31 +89,25 @@ const socketMiddleware = (function() {
             createdAt: data.createdAt,
           }))
         })
-=======
->>>>>>> 833d5a96b987be6063560c1ad429443a1ee11c09
+
         if (action.payload.friends) {
           // On login with credentials, GET_FRIENDS_SUCCESS is never fired since the friends
           // are sent with the success login body, so this is a workaround to connect to all
           // private chats. Would probably need a redesign of the flow here but it works for now
-<<<<<<< HEAD
 
-          console.log(action.payload)
+
           await Promise.all(action.payload.friends.map(friend =>
-=======
-          await Promise.all(action.payload.friends.map(friend => 
->>>>>>> 833d5a96b987be6063560c1ad429443a1ee11c09
+
             socket.emit('private_conversation', {id: friend.id}))
           )
         }
         return next(action)
       case 'GET_FRIENDS_SUCCESS':
         const { friends } = action.payload
-<<<<<<< HEAD
+
 
         await Promise.all(friends.map(friend =>
-=======
-        await Promise.all(friends.map(friend => 
->>>>>>> 833d5a96b987be6063560c1ad429443a1ee11c09
+
           socket.emit('private_conversation', {id: friend.id}))
         )
 
@@ -135,7 +124,7 @@ const socketMiddleware = (function() {
           userId: action.payload.userId,
           chatId: action.payload.chatId,
         })
-<<<<<<< HEAD
+
         next(action)
         break
       case DELEATE_CHAT_HISTORY:
@@ -143,7 +132,7 @@ const socketMiddleware = (function() {
         socket.emit('deleate_conversation', {chatId: action.payload.chatId})
         next(action)
         break
-=======
+
         return next(action)
       case SEND_FRIEND_REQUEST_SUCCESS:
         socket.emit('friend_request', { id: action.payload.friendId })
@@ -152,7 +141,7 @@ const socketMiddleware = (function() {
       case DELETE_FRIEND_SUCCESS:
         socket.emit('delete_friend', { id: action.payload.friendId })
         return next(action)
->>>>>>> 833d5a96b987be6063560c1ad429443a1ee11c09
+
 
       default:
         return next(action)

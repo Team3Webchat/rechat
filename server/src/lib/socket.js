@@ -36,4 +36,3 @@ function connection(socket, io) {
     onDeleateConversation(data, socket)
   })
 }
-}
