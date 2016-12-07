@@ -49,7 +49,9 @@ class ChatDisplayer extends Component {
               value={message}
             />
             <CardActions className='send'>
-              <Button raised colored type="submit">Send</Button>
+              <Button raised colored type="submit"
+                disabled={message.length === 0}
+                >Send</Button>
             </CardActions>
           </form>
         </div>
