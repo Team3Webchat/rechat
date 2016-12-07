@@ -46,7 +46,7 @@ export const sendPrivateMessage = ({content, userId, chatId }) => ({
 })
 
 export const deleateChatHistory = ({chatId }) => {
-  console.log('hejhejehjehejhejehehehhejeje')
+
   return ({
     type: DELEATE_CHAT_HISTORY,
     payload: {

@@ -80,15 +80,6 @@ const socketMiddleware = (function() {
         socket.on('private_conversation_start', data => {
           store.dispatch(connectChat({ chatId: data.chatId, messages: data.messages, friendId: data.friendId}))
         })
-        socket.on('new_message', data => {
-          store.dispatch(receivePrivateMessage({
-            chatId: data.chatId,
-            content: data.content,
-            userId: data.userId,
-            id: data.id,
-            createdAt: data.createdAt,
-          }))
-        })
 
         if (action.payload.friends) {
           // On login with credentials, GET_FRIENDS_SUCCESS is never fired since the friends

@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button} from 'react-
 
 const DeleteChatConfirm = (props) => {
   //const { id } = props.chat
-  const {  handleCloseChatDialog, openChatDialog, handleDeleteChat } = props
+  const {  handleCloseChatDialog, openChatDialog, clearChatHistory } = props
   return (
     <div>
       <Dialog open={openChatDialog}>
@@ -12,7 +12,10 @@ const DeleteChatConfirm = (props) => {
             <p>Delete this conversation?</p>
           </DialogContent>
         <DialogActions>
-          <Button type='button' onClick={() => {handleDeleteChat}}>Delete</Button>
+          <Button type='button' onClick={() => {
+              clearChatHistory()
+              handleCloseChatDialog()
+            }}>Delete</Button>
           <Button type='button' onClick={handleCloseChatDialog}>Cancel</Button>
         </DialogActions>
       </Dialog>
