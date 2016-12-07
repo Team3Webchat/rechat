@@ -1,0 +1,20 @@
+
+.cardTitle{
+  width: 100% !important;
+  border-bottom: 1px solid #d0cdcd !important;
+  padding:16px 16px 16px 16px !important;
+}
+
+.cardMenu i{
+  transition: color 0.3s ease;
+  color: #5c272d !important;
+  font-weight: normal;
+}
+
+.cardMenu i:hover{
+  color: #f28d52 !important;
+}
+
+.iconButton {
+  margin-left:12px !important;
+}

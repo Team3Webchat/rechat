@@ -6,67 +6,89 @@
   padding: 0px !important;
 }
 
-.profileCard .mdl-card__actions:first-child{
-  padding: 0;
-}
-/*ACTIONS*/
-.profileCard .mdl-card__actions{
-  border-bottom: 1px solid #d0cdcd;
-  min-height: 54px;
-}
-.profileCard .mdl-card__actions img{
-  float: left;
+/* TITLE */
+.profileCard img{
+  top:16px;
+  left:16px;
   position: absolute;
+  width: 130px;
+  height: 130px;
   border-radius: 100px;
   border: 1px solid #d0cdcd;
   box-shadow: 1px 1px 5px 1px #d0cdcd;
 }
-.profileCard .mdl-card__actions h3{
-  margin-top: 0px;
-  margin-bottom: 0px;
+.profileCard .mdl-card__title h3{
   position: relative;
-  top: 10px;
-  right: 20px;
-}
-.profileCard .mdl-card__actions .buttons {
-  margin: 0;
-  min-width: 0px !important;
-  padding: 10px !important;
-}
-.profileCard .mdl-card__actions .buttons:hover{
-  background: none !important;
-}
-.profileCard .mdl-card__actions .buttons i{
-  transition: color 0.3s ease;
-  font-size: 30px !important;
-  color: #5c272d;
-}
-.profileCard .mdl-card__actions .buttons i:hover{
-  color: #f28d52 !important;
+  left:160px;
+  margin-top:16px;
+  margin-bottom:0;
 }
 
-/*INFORMATION*/
+/* INFORMATION */
 .profileCard .info{
+  position:relative;
   padding-top: 25px;
+  left: 160px;
+  min-height: 60px;
 }
-.profileCard .info .key{
-  border-right: 1px solid #d0cdcd;
-}
+
 .profileCard .info .key p{
-  float: right;
+  float:left;
   padding-right: 10px;
   margin-bottom: 0px;
+  border-right: 1px solid #d0cdcd;
 }
 .profileCard .info .value p{
+  float:left;
   font-weight: bold;
+  margin-left:10px;
   margin-bottom: 0px;
 }
 
+/* CHANGE PASSWORD */
+.ChangePasswordForm{
+  margin-left:16px;
+}
 
 .profileCard .changePasswordTitle{
   font-size: 155%;
-  border-bottom: 1px solid #a7a7a7;
+  left:0 !important;
 }
 .profileCard .changePasswordEmail{
   font-size: 100%;
+  padding-bottom: 20px;
+}
+
+@media screen and (max-width: 600px){
+
+/* TITLE */
+.profileCard img{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.profileCard .mdl-card__title {
+  display:block;
+  position:relative;
+}
+
+.profileCard .mdl-card__title h3 {
+  left: unset;
+  text-align: center;
+  margin-top:146px;
+}
+
+/* INFORMATION */
+.profileCard .info{
+  left: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0;
+}  
+
+.profileCard .changePasswordTitle{
+  margin-top:0px !important;
+}
+
 }

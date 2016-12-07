@@ -1,4 +1,4 @@
-import { TOGGLE_PROFILE, TOGGLE_DELETE_FRIEND, TOGGLE_CHAT_FRIEND, COMPOSE_NEW_MESSAGE } from '../actions/menuDrawerActions'
+import { TOGGLE_PROFILE, EDIT_PROFILE, TOGGLE_CHAT_FRIEND, COMPOSE_NEW_MESSAGE } from '../actions/menuDrawerActions'
 import { LOGOUT_USER } from '../actions/authActions'
 
 const initialState = {
@@ -23,6 +23,12 @@ function menuDrawer(state = initialState, action) {
       return {
         showProfile: !state.showProfile,
       }
+
+    case EDIT_PROFILE:
+      return{
+        isEditing: !state.isEditing,
+        showProfile: true,
+      }  
 
     case TOGGLE_CHAT_FRIEND:
       return {

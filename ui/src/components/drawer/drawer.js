@@ -3,12 +3,9 @@ import { connect } from 'react-redux'
 import { Drawer, Navigation } from 'react-mdl'
 import {Link} from 'react-router'
 import { toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
-import { deleteFriend, deleteChat } from '../../lib/actions/friendsActions'
 
 import Friends from './friends'
 import Chats from './chats'
-import DeleteFriendConfirm from './delete-friend-confirm'
-//import DeleteChatConfirm from './delete-chat-confirm'
 import Gravatar from 'react-gravatar'
 import './style.css'
 
@@ -20,50 +17,8 @@ class AppDrawer extends React.Component {
       showChats: false,
       showFriends: false,
       openFriendDialog: false,
-      deleteFriend: null,
       openChatDialog: false,
-      deleteChat: null,
     }
-  }
-
-  //DELETE FREIND CONFIRM
-  handleDeleteFriendConfirm = friend =>  {
-    this.setState({
-      openFriendDialog: true,
-      deleteFriend: friend,
-    })
-  }
-
-  handleCloseFriendConfirm = () =>  {
-    this.setState({
-      openFriendDialog: false,
-      deleteFriend: null,
-    })
-  }
-
-  handleDeleteFriend = (id) =>  {
-    this.props.doDeleteFriend(id)
-    this.handleCloseFriendConfirm()
-  }
-
-  //DELETE CHAT CONFIRM
-  handleDeleteChatConfirm = chat =>  {
-    this.setState({
-      openChatDialog: true,
-      deleteChat: chat,
-    })
-  }
-
-  handleCloseChatConfirm = () =>  {
-    this.setState({
-      openChatDialog: false,
-      deleteChat: null,
-    })
-  }
-
-  handleDeleteChat = (id) =>  {
-    this.props.doDeleteChat(id)
-    this.handleCloseChatConfirm()
   }
 
   //SHOW CHATS LIST
@@ -103,7 +58,6 @@ class AppDrawer extends React.Component {
               <Friends
                 friends={friends}
                 startConversation={startConversation}
-                deleteFriendConfirm={this.handleDeleteFriendConfirm}
               />
           }
             <div onClick={this.toggleChats} style={{cursor: 'pointer'}} className={classNameChats}>Chats</div>
@@ -111,30 +65,9 @@ class AppDrawer extends React.Component {
                 //Skapa ny component som renderar ut användarens chat
                 <Chats
                   chats={chats}
-                  deleteChatConfirm={this.handleDeleteChatConfirm}
                 />
               }
           </Navigation>
-
-          <div>
-
-            { openFriendDialog &&
-              <DeleteFriendConfirm
-              friend={this.state.deleteFriend}
-              openFriendDialog={this.state.openFriendDialog}
-              handleCloseFriendDialog={this.handleCloseFriendConfirm}
-              handleDeleteFriend={this.handleDeleteFriend}/>
-            }
-
-            { openChatDialog &&
-              <DeleteChatConfirm
-              chat={this.state.deleteChat}
-              openChatDialog={this.state.openChatDialog}
-              handleCloseDialog={this.handleCloseChatConfirm}
-              handleDeleteChat={this.handleDeleteChat}/>
-            }
-
-          </div>
 
       </Drawer>
     )
@@ -152,8 +85,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   doToggleProfile: () => dispatch(toggleProfile()),
-  doDeleteFriend: (id) => dispatch(deleteFriend(id)),
-  doDeleteChat: (id) => dispatch(deleteChat(id)),
   doComposeNewMessage: () => dispatch(composeNewMessage()),
   doToggleChatFriend: () => dispatch(toggleChatFriend()),
 })
