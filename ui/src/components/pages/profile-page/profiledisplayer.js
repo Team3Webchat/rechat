@@ -1,36 +1,33 @@
-import React, { PropTypes, Component } from 'react'
-import { Grid, Cell, CardActions, Button, Icon } from 'react-mdl'
+import React from 'react'
+import { CardTitle, CardMenu, CardText, IconButton } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
 import './style.css'
+import './../style-card-common.css'
 
 const ProfileDisplayer = (props) => {
   const { email, name } = props.user
-  const { doToggleProfile, doToggleEdit } = props
+  const { doToggleEdit } = props
 //to={`/me/edit`} <- edit
   return (
     <div>
-      <CardActions>
-        <Grid>
-          <Cell col={3}><Gravatar email={email} size={130} /></Cell>
-          <Cell col={7}><h3>{name}</h3></Cell>
-          <Cell col={2}>
-            <Link className='buttons' >
-              <Icon name="mode_edit"/>
-            </Link>
-            <Link className='buttons' to={`/`}>
-              <Icon name="close" />
-            </Link>
-          </Cell>
-        </Grid>
-      </CardActions>
-
-      <Grid className='info'>
-        <Cell col={3}></Cell>
-        <Cell col={1} className='key'><p>Email</p></Cell>
-        <Cell col={3} className='value'><p>{email}</p></Cell>
-      </Grid>
+      <Gravatar email={email} size={130}/>
+      <CardTitle className="cardTitle">
+        <h3>{name}</h3>
+      </CardTitle>
+      <CardMenu className="cardMenu">
+        <Link>
+          <IconButton name="mode_edit" className="iconButton" onClick={doToggleEdit}/>
+        </Link>
+        <Link to={`/`}>
+          <IconButton name="close" className="iconButton"/>
+        </Link>
+      </CardMenu>
+      <CardText className='info'>
+        <div className='key'><p>E-mail</p></div>
+        <div className='value'><p>{email}</p></div>
+      </CardText>
     </div>
   )
 }

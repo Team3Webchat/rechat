@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react'
-import {  DialogActions, Grid, Cell, CardActions, Button, Icon, Textfield } from 'react-mdl'
+import {  CardActions, Button, Textfield, CardTitle, CardMenu, IconButton, CardText } from 'react-mdl'
 
 import FlashMessage from '../../flash-message/flash-message'
 
 import './style.css'
+import './../style-card-common.css'
 
 const ChangePassword = (props) => {
   const { email } = props.user
@@ -11,19 +12,15 @@ const ChangePassword = (props) => {
 
   return (
     <div>
-    <DialogActions >
-        <Button className='buttons' onClick={doToggleProfile}>
-          <Icon name="close" />
-        </Button>
-    </DialogActions>
-      <Grid className='changePasswordTitle'>
-        <Cell col={12}>Change password</Cell>
-      </Grid>
-      <Grid className='changePasswordEmail'>
-        <Cell col={12}>{email}</Cell>
-      </Grid>
-      <Grid>
-        <form onSubmit={onSubmit}>
+      <CardTitle className="cardTitle">
+        <h3 className="changePasswordTitle">Change password</h3>
+      </CardTitle>
+      <CardMenu className="cardMenu">
+        <IconButton name="close" onClick={doToggleProfile}  className="iconButton"/>
+      </CardMenu>
+      <form onSubmit={onSubmit}>
+      <CardText className='ChangePasswordForm'>
+        <div className='changePasswordEmail'>{email}</div>
         <div><Textfield
             type="password"
             label='New password (6 or more characters)'
@@ -69,18 +66,18 @@ const ChangePassword = (props) => {
         }
         </div>
         <spinner />
-        <DialogActions>
-            <Button className='buttons' primary raised ripple type="submit"
-            colored
-            disabled={ newPassword.length === 0 ||
-            newPassword !== newPasswordConfirm ||
-            password.length === 0 ||
-            newPassword.length < 6 }
-            >Save</Button>
-        </DialogActions>
-        </form>
-      </Grid>
-
+      </CardText>
+      <CardActions border>
+        <Button className='buttons' primary raised ripple type="submit"
+        colored
+        disabled={ newPassword.length === 0 ||
+        newPassword !== newPasswordConfirm ||
+        password.length === 0 ||
+        newPassword.length < 6 }
+        >Save</Button>
+        <Button type='button' onClick={doToggleProfile}>Cancel</Button>
+      </CardActions>
+      </form>
     </div>
   )
 }

@@ -1,5 +1,5 @@
-import React, { PropTypes, Component } from 'react'
-import {  Card, Grid, Cell, CardActions, Button, Icon, Textfield } from 'react-mdl'
+import React from 'react'
+import {  Card } from 'react-mdl'
 import './new-message-style.css'
 
 const ComposeNewMessage = (props) => {

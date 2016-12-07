@@ -1,8 +1,5 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import {  Grid, Cell, Button, Icon } from 'react-mdl'
-
-import { resetFlashMessage} from '../../lib/actions/flashActions'
 
 import './style.css'
 class FlashMessage extends Component {
@@ -18,12 +15,12 @@ class FlashMessage extends Component {
     if(this.state.isSnackbarActive){
       setTimeout(() => {
         this.setState({ isSnackbarActive: false })
-      }, 3000)
+      }, 2000)
     }
   }
 
   render(){
-    const { message, type, inline, close } = this.props
+    const { message, type, inline } = this.props
     const { isSnackbarActive } = this.state
     const className = `flash-message flash-${type} active-${isSnackbarActive}`
 
@@ -37,10 +34,6 @@ class FlashMessage extends Component {
         <div className={className} style={{boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)'}}>
           { this.handleTimeoutSnackbar() }
           <p>{ message }</p>
-          <Button onClick={close}>
-            <Icon name="close"/>
-          </Button>
-
         </div>
         }
       </div>
@@ -53,8 +46,4 @@ FlashMessage.propTypes = {
   type: PropTypes.string.isRequired,
 }
 
-const mapDispatchToProps = dispatch => ({
-  close: () => dispatch(resetFlashMessage()),
-})
-
-export default connect(null, mapDispatchToProps)(FlashMessage)
+export default connect(null, null)(FlashMessage)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardText, FABButton, Icon, List, ListItem } from 'react-mdl'
+import { Card, FABButton, Icon, List, ListItem } from 'react-mdl'
 import Gravatar from 'react-gravatar'
 import './style.css'
 
@@ -24,6 +24,7 @@ const SearchBox = (props) => {
 
 const SearchResults = (props) => {
   const { searchResults, addFriend } = props
+  console.log(searchResults)
   return (
     <List>
       {searchResults.map(function (user) {
@@ -33,9 +34,16 @@ const SearchResults = (props) => {
               <Gravatar size={40} email={user.email} />
             </FABButton>
             <p>{user.firstname}  {user.lastname}</p>
-            <div className='addUser'>
-              <Icon name='person_add' onClick={() => addFriend(user.id)}/>
-            </div>
+            {user.isFriends ?
+              <div className='addUser'>
+                <Icon name='person_outline'/>
+              </div>
+              :
+              <div className='addUser'>
+                <Icon name='person_add' onClick={() => addFriend(user.id)}/>
+              </div>
+            }
+
           </ListItem>
         )
       })}

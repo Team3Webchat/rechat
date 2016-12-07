@@ -20,7 +20,7 @@ const sendFriendRequestFailure = ({ flash }) => ({
   },
 })
 
-export const sendFriendRequest = (friendId) => 
+export const sendFriendRequest = (friendId) =>
   async function(dispatch) {
     try {
       const res = await fetch(`${baseUrl}users/${friendId}/friends`, {
@@ -28,7 +28,7 @@ export const sendFriendRequest = (friendId) =>
         headers: getHeaders(),
       })
 
-      if (res.status === 400) 
+      if (res.status === 400)
         throw new Error('You are already friends with this person')
 
       const json = await res.json()
@@ -70,7 +70,7 @@ const acceptFriendRequestFailure = ({ flash }) => ({
   },
 })
 
-export const acceptFriendRequest = (friendId) => 
+export const acceptFriendRequest = (friendId) =>
   async function(dispatch) {
     const userId = getUserId()
     try {
@@ -78,7 +78,7 @@ export const acceptFriendRequest = (friendId) =>
         method: 'PUT',
         headers: getHeaders(),
       })
-      const json = await res.json()
+      await res.json()
       dispatch(acceptFriendRequestSuccess({
         flash: {
           message: 'You are now friends with a fella',
@@ -119,8 +119,9 @@ const deleteFriendFailure = ({ flash }) => ({
   },
 })
 
-export const deleteFriend = (friendId) => 
+export const deleteFriend = (friendId) =>
   async function(dispatch) {
+    console.log('DELTE FRIEND')
     const id = getUserId()
     try {
       const res = await fetch(`${baseUrl}users/${id}/friends/${friendId}`, {
@@ -130,7 +131,7 @@ export const deleteFriend = (friendId) =>
 
       if (res.status === 403) throw new Error('Could not delete the friend')
 
-      const json = await res.json()
+      await res.json()
       dispatch(deleteFriendSuccess({
         flash: {
           message: 'Friend deleted!',
@@ -168,7 +169,7 @@ const reportFriendFailure = ({ flash }) => ({
   },
 })
 
-export const reportFriend = (friendId) => 
+export const reportFriend = (friendId) =>
 async function(dispatch) {
 
   console.log(friendId)
@@ -182,7 +183,7 @@ async function(dispatch) {
 
     if (res.status === 403) throw new Error('Could not report the friend')
 
-    const json = await res.json()
+    await res.json()
     dispatch(reportFriendSuccess({
       flash: {
         message: 'Friend reported!',
@@ -221,7 +222,7 @@ const getFriendsFailure = ({ flash }) => ({
   },
 })
 
-export const getFriends = (id = getUserId()) => 
+export const getFriends = (id = getUserId()) =>
   async function(dispatch) {
     try {
       const res = await fetch(`${baseUrl}users/${id}/friends`, {

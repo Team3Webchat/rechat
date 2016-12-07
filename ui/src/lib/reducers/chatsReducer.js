@@ -1,7 +1,5 @@
-import { LOGIN_USER_SUCCESS } from '../actions/authActions'
 import * as actions from '../actions/chatActions'
 
-import store from '../store'
 const initialState = {
   currentChatId: '',
   chats: [],
@@ -17,11 +15,16 @@ export default function chats(state = initialState, action) {
         isLoadingChats: false,
       }
     case actions.SELECT_ACTIVE_CHAT:
+<<<<<<< HEAD
       const current = state.chats.find(c => action.payload.friendId === c.friendId)
+=======
+      state.chats.find(c => action.payload.friendId === c.friendId)
+>>>>>>> 833d5a96b987be6063560c1ad429443a1ee11c09
       return {
         ...state,
         currentChatId: state.chats.find(c => c.friendId === action.payload.friendId)['chatId'],
       }
+<<<<<<< HEAD
     case actions.DELEATE_CHAT_HISTORY:      
       return {
         ...state,
@@ -37,6 +40,9 @@ export default function chats(state = initialState, action) {
       }
     case actions.RECEIVE_PRIVATE_MESSAGE:
       console.log(action.payload)
+=======
+    case actions.RECEIVE_PRIVATE_MESSAGE:
+>>>>>>> 833d5a96b987be6063560c1ad429443a1ee11c09
       return {
         ...state,
         chats: state.chats.map(chat => {

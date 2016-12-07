@@ -50,9 +50,12 @@
   padding: 20px 40px !important;
   font-weight: bold;
   letter-spacing: 1px;
+  cursor: pointer;
+  border-bottom: 0.5px solid #c0c6ce;
+  border-top: 0.5px solid #c0c6ce;
 }
 
-/*FRIENDS*/
+/*FRIENDS LIST*/
 .friends-true, .chats-true{
   background-color: #6e8399 !important;
   border-bottom: 1px solid #c3c3c3 ;
@@ -71,7 +74,6 @@
 .mdl-navigation .friends li a{
   text-decoration: none;
   color: #dbdde0;
-  width: 100%;
 }
 .mdl-navigation .friends li img{
   float: left;
@@ -86,4 +88,19 @@
 .mdl-navigation .friends li i{
   padding-top: 5px;
   float: right;
+}
+
+/*CHATS LIST*/
+.chatList{
+  padding: 0 !important;
+}
+.chatList li{
+  padding-left: 50px;
+}
+.chatList li:hover{
+  padding-left: 55px;
+  background-color: #718497;
+}
+.chatList li p{
+  margin-bottom: 0 !important;
 }

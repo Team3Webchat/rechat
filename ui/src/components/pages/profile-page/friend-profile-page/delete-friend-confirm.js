@@ -1,6 +1,5 @@
 import React from 'react'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button} from 'react-mdl'
-import './style-confirm.css'
 
 const DeleteFriendConfirm = (props) => {
   const { firstname, lastname, id } = props.friend

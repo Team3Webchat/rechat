@@ -30,8 +30,12 @@ function connection(socket, io) {
     onPrivateConversation(data, socket)
   })
 
+<<<<<<< HEAD
   socket.on('deleate_conversation', async data => {
 
     onDeleateConversation(data, socket)
   })
 }
+=======
+}
+>>>>>>> 833d5a96b987be6063560c1ad429443a1ee11c09

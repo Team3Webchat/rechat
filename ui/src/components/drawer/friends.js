@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { List, ListItem, Icon } from 'react-mdl'
+import { List, ListItem } from 'react-mdl'
 import Gravatar from 'react-gravatar'
 
 const Friends = ({ friends, onFriendClick, startConversation }) => {
@@ -11,10 +11,9 @@ const Friends = ({ friends, onFriendClick, startConversation }) => {
       <ListItem key={f.id}>
         <Link to={`/profile/${f.id}`}>
           <Gravatar size={32} email={f.email} />
+        </Link>
+        <Link to={`/chat/${f.id}`}>
           <p>{f.firstname} {f.lastname}</p>
-          <Link to={`/chat/${f.id}`}>
-            <Icon name="chat"/>
-          </Link>
         </Link>
       </ListItem>
     )
