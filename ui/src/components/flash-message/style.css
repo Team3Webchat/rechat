@@ -3,45 +3,37 @@
   display: flex;
   justify-content: center;
   min-height: 0px !important;
-  position: relative;
   bottom: 10px;
   padding: 10px 30px;
   border-radius: 3px;
 
   padding-top: 10px;
+
+  position: absolute;
+  top: -200px;
+  width: 100%;
+  height: 40px;
+  z-index: 5;
+  background-color: white;
 }
 .flash-message p{
   font-size: 20px;
   margin: 0;
   margin-top: 15px;
 }
-.flash-message button{
-  border-radius: 28px;
-  height: 28px !important;
-  min-width: 28px !important;
-  padding: 0 !important;
-  margin-left: 20px !important;
-  border-radius:
-}
-.flash-message button:hover{
-  background: #ecf1f5;
-}
-.flash-message i{
-  font-weight: bold !important;
-  font-size: 25px !important;
-  vertical-align: sub !important;
-}
+
+
 .flash-fail {
   font-size: 12px;
   color: red;
 }
-
 .flash-success {
-  background: white;
   color: green;
 }
 
 .active-false {
-  position: relative;
-  bottom: 200px;
+  top: -200px;
+}
+.active-true {
+  top: -10px;
 }
