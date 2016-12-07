@@ -1,7 +1,7 @@
 import SocketIO from 'socket.io'
 import socketioJwt from 'socketio-jwt'
 
-import { onNewMessage, onPrivateConversation, onDeleateConversation } from './chat'
+import { onNewMessage, onPrivateConversation, onDeleteConversation } from './chat'
 
 export const createSocket = (app, server) => {
 
@@ -19,20 +19,28 @@ export const startSocket = io => {
   })).on('authenticated', socket => connection(socket, io))
 }
 
+const connectedUsers = {}
+
 function connection(socket, io) {
+  connectedUsers[socket.decoded_token.id] = socket.id
 
+  socket.emit('user_connected', { userId: socket.decoded_token.id})
   socket.on('new_message', async data => {
-
     onNewMessage(data, io)
   })
   socket.on('private_conversation', async data => {
-
     onPrivateConversation(data, socket)
   })
 
+  socket.on('delete_conversation', async data => {
+    onDeleteConversation(data, socket)
+    
 
-  socket.on('deleate_conversation', async data => {
-
-    onDeleateConversation(data, socket)
   })
+
+  socket.on('disconnect', () => {
+    delete connectedUsers[socket.decoded_token.id]
+    socket.emit('user_disconnected', { userId: socket.decoded_token.id})
+  })
+
 }
