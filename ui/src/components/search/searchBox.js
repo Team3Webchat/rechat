@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, FABButton, Icon, List, ListItem } from 'react-mdl'
+import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 import './style.css'
 
@@ -30,10 +31,12 @@ const SearchResults = (props) => {
       {searchResults.map(function (user) {
         return (
           <ListItem className='searchResult' key={user.id}>
-            <FABButton className="avatarPic">
-              <Gravatar size={40} email={user.email} />
-            </FABButton>
-            <p>{user.firstname}  {user.lastname}</p>
+            <Link to={`/profile/${user.id}`}>
+              <FABButton className="avatarPic">
+                <Gravatar size={40} email={user.email} />
+              </FABButton>
+              <p>{user.firstname}  {user.lastname}</p>
+            </Link>
             {user.isFriends ?
               <div className='addUser'>
                 <Icon name='person_outline'/>
