@@ -38,6 +38,16 @@ class Search extends Component {
     e.preventDefault()
   }
 
+  filterSearchResults = () => {
+    const { searchResults, friends, sentFriendRequests } = this.props
+    const filteredResults = searchResults.map((user) => {
+      user.isFriends = (friends.find(f => f.id === user.id) != null || sentFriendRequests.find(f => f.id === user.id)) ? true : false
+      return user
+    })
+    //user.isFriends = (friends.find(f => f.id === fromUser) != null || friendRequests.find(f => f.id === fromUser)) ? true : false
+    return filteredResults
+  }
+
   componentWillReceiveProps(nextProps) {
     //Om isDone är true, men bara första gången
     if (this.props.isDoneSearching !== nextProps.isDoneSearching && nextProps.isDoneSearching === true)
@@ -52,7 +62,7 @@ class Search extends Component {
 
   render() {
     const { searchValue } = this.state
-    const { searchResults, addFriend, showSearch, failure } = this.props
+    const { addFriend, showSearch, failure } = this.props
 
     return (
       <div>
@@ -70,7 +80,7 @@ class Search extends Component {
         { showSearch &&
           <SearchBox
             failure={failure}
-            searchResults={searchResults}
+            searchResults={this.filterSearchResults()}
             addFriend={addFriend}
           />
         }
@@ -79,11 +89,14 @@ class Search extends Component {
   }
 }
 const mapStateToProps = state => ({
+  userId: state.auth.id,
   token: state.auth.token,
   isDoneSearching: state.search.isDoneSearching,
   isSearching: state.search.isSearching,
   searchResults: state.search.searchResults,
   failure: state.search.failure,
+  friends: state.friends.friends,
+  sentFriendRequests: state.friends.sentFriendRequests,
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -29,7 +29,7 @@ export const endSearch = () => ({
 })
 
 
-export const searchUser = (searchValue) => 
+export const searchUser = (searchValue) =>
   async function(dispatch) {
     dispatch(searchUserRequest())
     try {
@@ -58,6 +58,3 @@ export const searchUser = (searchValue) =>
       dispatch(searchUserFailure(e))
     }
   }
-
-
-

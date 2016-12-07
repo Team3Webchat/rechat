@@ -15,15 +15,26 @@ export async function search(req, res, next, message) {
     const users = await User.findAll({
       where: {
         $or: query,
-      //   $or:[
-      //     { firstname: { $ilike: '%' + req.body.searchValue + '%' } },
-      //     { lastname: { $ilike: '%' + req.body.searchValue + '%'  } },
-      //   ],
       },
     })
+    /*console.log('USERS friendship')
+    const users2 = await Promise.all(users.map(async (user) => {
+      const [friends, friendRequests] = await Promise.all([
+        user.friends(),
+        user.friendRequests(),
+      ])
 
-
-    if(users.length == 0){
+      if(friends.find(f => f.id === fromUser) != null || friendRequests.find(f => f.id === fromUser)){
+        user.isFriends = true
+        //console.log(user.fullname()+'is friends')
+      }else{
+        user.isFriends = false
+        //console.log(user.fullname()+'is NOT friends')
+      }
+    }))
+    console.log(users.filter(u => u.isFriends === true).map((user) => {return user.fullname()}))
+*/
+    if(users.length === 0){
       const message = JSON.stringify({results: {status: 'error', code: ['User not found']}})
       res.send(message)
     }else{
