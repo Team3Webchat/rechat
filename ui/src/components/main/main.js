@@ -1,19 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Header, Navigation, Grid, Icon, Cell } from 'react-mdl'
+import { Layout, Header, Navigation, Icon} from 'react-mdl'
 import { push } from 'react-router-redux'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
-import ProfileContainer from '../pages/profile-page/profile-container'
 import FriendRequestContainer from '../pages/friend-request/friend-container'
-import ChatContainer from '../pages/chat-page/chat-container'
-import io from 'socket.io-client'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
 import { endSearch } from '../../lib/actions/searchActions'
 
-import { API_URL } from '../../lib/config.js'
 
 import './style.css'
 
@@ -63,7 +59,7 @@ class Main extends Component {
 
   render(){
 
-    const { doLogout, flash, toggleProfile, toggleDeleteFriend, toggleChatFriend, composeNewMessage} = this.props
+    const { doLogout, flash } = this.props
     const { showRequests, showSearch, searchValue } = this.state
 
     return (
@@ -90,9 +86,11 @@ class Main extends Component {
             type={flash.type}
             />
           }
-          {this.props.children}
-          </main>
 
+          {this.props.children}
+
+
+          </main>
         </Layout>
       </div>
     )

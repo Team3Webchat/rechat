@@ -37,10 +37,10 @@ class AppDrawer extends React.Component {
   }
 
   render () {
-    const { friends,  chats, doToggleProfile, name, startConversation, doToggleChatFriend, email } = this.props
-    const { showChats, showFriends, openFriendDialog, openChatDialog } = this.state
+    const { friends,  chats, name, startConversation, email } = this.props
+    const { showChats, showFriends } = this.state
     const classNameFriends = `friends-${showFriends}`
-    const classNameChats = `chats-${showChats}`
+    //const classNameChats = `chats-${showChats}`
 
     return (
       <Drawer>
@@ -52,28 +52,29 @@ class AppDrawer extends React.Component {
         </Navigation>
 
         <Navigation id='drawerboxes'>
-          <div onClick={this.toggleFriends} style={{cursor: 'pointer'}} className={classNameFriends}>Friends</div>
-          { showFriends &&
-              //Skapa ny component som renderar ut användarens vänner
-              <Friends
-                friends={friends}
-                startConversation={startConversation}
-              />
-          }
-            <div onClick={this.toggleChats} style={{cursor: 'pointer'}} className={classNameChats}>Chats</div>
-              { showChats &&
-                //Skapa ny component som renderar ut användarens chat
-                <Chats
-                  chats={chats}
+          <div onClick={this.toggleFriends} className={classNameFriends}>Friends</div>
+            { showFriends &&
+                //Skapa ny component som renderar ut användarens vänner
+                <Friends
+                  friends={friends}
+                  startConversation={startConversation}
                 />
-              }
-          </Navigation>
+            }
+        </Navigation>
 
       </Drawer>
     )
   }
 }
-
+/*
+<div onClick={this.toggleChats} className={classNameChats}>Chats</div>
+  { showChats &&
+    //Skapa ny component som renderar ut användarens chat
+    <Chats
+      chats={chats}
+    />
+  }
+*/
 const mapStateToProps = state => ({
   showFriends: state.menuDrawer.showFriends,
   showChats: state.menuDrawer.showChats,

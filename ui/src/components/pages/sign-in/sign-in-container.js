@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { loginUser } from '../../../lib/actions/authActions'
-import { resetFlashMessage } from '../../../lib/actions/flashActions'
 
 import SignInForm from './sign-in-form'
 import './style.css'
@@ -73,7 +72,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loginUser: (email, password) => dispatch(loginUser(email, password)),
   redirectOnLogin: (nextPathname) => dispatch(push(nextPathname)),
-  resetFlash: () => dispatch(resetFlashMessage()),
 })
 
 export default connect(

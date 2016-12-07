@@ -1,4 +1,3 @@
-import { RESET_FLASH_MESSAGE } from '../actions/flashActions'
 
 const initialState = {
   message: null,
@@ -12,18 +11,16 @@ const initialState = {
 export default function flash(state = initialState, action) {
   const { type } = action
 
-  if (type === RESET_FLASH_MESSAGE) {
-    return initialState // reset the flash
-  } else if (action.payload && action.payload.flash) {
-    const { flash } = action.payload 
-    return { message: flash.message, type: flash.type, persist: flash.persistOnRouteTransition  } 
+  if (action.payload && action.payload.flash) {
+    const { flash } = action.payload
+    return { message: flash.message, type: flash.type, persist: flash.persistOnRouteTransition  }
   } else if (type === '@@router/LOCATION_CHANGE' && action.payload.action === 'POP' && !state.persist) {
 
     return initialState
   } else if (type === '@@router/LOCATION_CHANGE' && action.payload.action === 'POP' && state.persist) {
 
     return { ...state, persist: false }
-  } 
-  
-  return state 
+  }
+
+  return state
 }
