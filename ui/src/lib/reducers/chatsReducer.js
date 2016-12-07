@@ -25,7 +25,7 @@ export default function chats(state = initialState, action) {
         currentChatId: state.chats.find(c => c.friendId === action.payload.friendId)['chatId'],
       }
 
-    case actions.DELEATE_CHAT_HISTORY:
+    case actions.DELETE_CHAT_HISTORY:
       return {
         ...state,
         chats: state.chats.map(chat => {

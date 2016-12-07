@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {  } from 'react-mdl'
 import ChatDisplayer from './chatdisplayer'
 
-import { sendPrivateMessage, selectActiveChat, deleateChatHistory } from '../../../lib/actions/chatActions'
+import { sendPrivateMessage, selectActiveChat, deleteChatHistory } from '../../../lib/actions/chatActions'
 import { getActiveChat } from '../../../lib/reducers/chatsReducer'
 
 import DeleteChatConfirm from './delete-chat-confirm'
@@ -15,7 +15,7 @@ class ChatContainer extends Component {
     this.state = {
       message: '',
       openChatDialog: false,
-      deleateChatHistory: null,
+      deleteChatHistory: null,
     }
   }
 
@@ -23,14 +23,14 @@ class ChatContainer extends Component {
   handleDeleteChatConfirm = chat =>  {
     this.setState({
       openChatDialog: true,
-      deleateChatHistory: chat,
+      deleteChatHistory: chat,
     })
   }
 
   handleCloseChatConfirm = () =>  {
     this.setState({
       openChatDialog: false,
-      deleateChatHistory: null,
+      deleteChatHistory: null,
     })
   }
 
@@ -114,8 +114,7 @@ const mapDispatchToProps = dispatch => ({
   beginChat: id => dispatch(selectActiveChat({friendId: id})),
   sendMessage: (content, chatId, userId) => dispatch(sendPrivateMessage({content, chatId, userId})),
   clearChatHistory: chatId => {
-    console.log('FITTKRAMP')
-    dispatch(deleateChatHistory({chatId}))
+    dispatch(deleteChatHistory({chatId}))
   },
 })
 
