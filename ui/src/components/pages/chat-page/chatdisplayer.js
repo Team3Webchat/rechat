@@ -16,21 +16,21 @@ const ChatDisplayer = ({ onChange, onSubmit, messages, id, message, friendsName,
         <p>{friendsName}</p>
       </CardTitle>
       <CardMenu className="cardMenu">
-        <IconButton name="delete"  onClick={deleteChatConfirm} className="iconButton"/>
+        <IconButton name="delete_forever"  onClick={deleteChatConfirm} className="iconButton"/>
         <Link to={`/`}>
             <IconButton name="close" className="iconButton"/>
         </Link>
       </CardMenu>
       <CardText className="cardText">
-        
+
             <div className='messageField'>
-              {messages.map((m, i) => 
-                id === m.userId ? 
+              {messages.map((m, i) =>
+                id === m.userId ?
                 <ComposeNewMessage type='me' message={m.content} key={i} /> :
-                <ComposeNewMessage type='friend' message={m.content} key={i}/>  
+                <ComposeNewMessage type='friend' message={m.content} key={i}/>
               )}
             </div>
-         
+
       </CardText>
       <div className='textBox'>
         <form onSubmit={onSubmit}>
