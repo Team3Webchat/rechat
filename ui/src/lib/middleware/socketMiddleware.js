@@ -113,7 +113,7 @@ const socketMiddleware = (function() {
           userId: action.payload.userId,
           chatId: action.payload.chatId,
         })
-        return next()
+        return next(action)
       case DELETE_CHAT_HISTORY:
         return next(action)
       case SEND_FRIEND_REQUEST_SUCCESS:
