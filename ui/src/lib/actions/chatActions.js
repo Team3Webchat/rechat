@@ -4,6 +4,7 @@ export const CONNECTED = 'CONNECTED'
 export const DISCONNECT = 'DISCONNECT'
 export const CONNECT_CHAT = 'CONNECT_CHAT'
 export const SELECT_ACTIVE_CHAT = 'SELECT_ACTIVE_CHAT'
+export const DELEATE_CHAT_HISTORY = 'DELEATE_CHAT_HISTORY'
 
 export const connectChat = ({ friendId, chatId, messages }) => ({
   type: CONNECT_CHAT,
@@ -20,7 +21,7 @@ export const selectActiveChat = ({ friendId }) => ({
     friendId,
   },
 })
- 
+
 export const connected = () => ({
   type: CONNECTED,
   payload: {
@@ -43,6 +44,17 @@ export const sendPrivateMessage = ({content, userId, chatId }) => ({
     chatId,
   },
 })
+
+export const deleateChatHistory = ({chatId }) => {
+  console.log('hejhejehjehejhejehehehhejeje')
+  return ({
+    type: DELEATE_CHAT_HISTORY,
+    payload: {
+      chatId,
+    },
+  })
+}
+
 
 export const receivePrivateMessage = ({content, userId, chatId, id, createdAt}) => ({
   type: RECEIVE_PRIVATE_MESSAGE,

@@ -4,6 +4,7 @@ import { hashHistory } from 'react-router'
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import createLogger from 'redux-logger'
 import {persistStore, autoRehydrate} from 'redux-persist'
+import {deleateChatHistory} from './actions/chatActions'
 
 import rootReducer from './reducers'
 import socketMiddleware from './middleware/socketMiddleware'
@@ -30,9 +31,3 @@ export default store
 
 // Just simple helper getters for the store, should probably be
 // somewhere else
-
-
-
-
-
-

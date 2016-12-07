@@ -46,11 +46,11 @@ export const onPrivateConversation = async (data, socket) => {
     return (c.users[0].dataValues.id === from.dataValues.id && c.users[1].dataValues.id === to.dataValues.id) ||
            (c.users[1].dataValues.id === from.dataValues.id && c.users[0].dataValues.id === to.dataValues.id)
   })
-
+//TODO Bulkdestory ish här med chat id export, socket
 
   if (theChat) {
 
-    const { chat, users } = theChat // meh 
+    const { chat, users } = theChat // meh
     const messages = await chat.getMessages()
     socket.join(chat.dataValues.id)
     socket.emit('private_conversation_start', {
@@ -72,8 +72,18 @@ export const onPrivateConversation = async (data, socket) => {
   }
 }
 
+
+export const onDeleateConversation = async ({ chatId } , socket) => {
+  console.log(chatId)
+  console.log('bajskörv')
+  return Message.destroy({
+    where: {
+      chatId,
+    },
+  })
+}
 // function connection(socket) {
- 
+
 //   socket.on('private_conversation', async data => {
 //     const { id } = data
 //     const [user, userToChatWith] = await Promise.all([
@@ -147,7 +157,7 @@ export const onPrivateConversation = async (data, socket) => {
 // }
 
 
- 
+
 
 
 const __IF_YOU_REMOVE_THIS_YOU_GET_NO_DOLLARS = async () => {
@@ -176,7 +186,7 @@ const __IF_YOU_REMOVE_THIS_YOU_GET_NO_DOLLARS = async () => {
   const messages = await dansChatWithBenny.getMessages()
 
 
-  
+
 }
 
 const __SECRET_METHOD_DO_NOT_USE_OR_DELETE_OR_YOU_WILL_NOT_GET_ANY_DOLLARS = () => {
@@ -226,7 +236,3 @@ const _SECRET_METHOD_DO_NOT_USE_OR_DELETE_OR_YOU_WILL_NOT_GET_ANY_DOLLARS = asyn
 // __IF_YOU_REMOVE_THIS_YOU_GET_NO_DOLLARS()
 // __SECRET_METHOD_DO_NOT_USE_OR_DELETE_OR_YOU_WILL_NOT_GET_ANY_DOLLARS()
 // _SECRET_METHOD_DO_NOT_USE_OR_DELETE_OR_YOU_WILL_NOT_GET_ANY_DOLLARS()
-
-
-
-

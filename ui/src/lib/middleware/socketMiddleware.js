@@ -1,13 +1,14 @@
 import io from 'socket.io-client'
 
-import { 
+import {
   connectChat,
-  endPrivateMessage, 
-  receivePrivateMessage, 
+  endPrivateMessage,
+  receivePrivateMessage,
   connected,
   disconnect,
   START_PRIVATE_CHAT,
-  
+  DELEATE_CHAT_HISTORY,
+
 
 } from '../actions/chatActions'
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from '../actions/authActions'
@@ -46,12 +47,12 @@ const socketMiddleware = (function() {
           store.dispatch(connectChat({ chatId: data.chatId, messages: data.messages, friendId: data.friendId}))
         })
         socket.on('new_message', data => {
-          store.dispatch(receivePrivateMessage({ 
-            chatId: data.chatId, 
-            content: data.content, 
-            userId: data.userId, 
+          store.dispatch(receivePrivateMessage({
+            chatId: data.chatId,
+            content: data.content,
+            userId: data.userId,
             id: data.id,
-            createdAt: data.createdAt, 
+            createdAt: data.createdAt,
           }))
         })
         if (action.payload.friends) {
@@ -60,7 +61,7 @@ const socketMiddleware = (function() {
           // private chats. Would probably need a redesign of the flow here but it works for now
 
           console.log(action.payload)
-          await Promise.all(action.payload.friends.map(friend => 
+          await Promise.all(action.payload.friends.map(friend =>
             socket.emit('private_conversation', {id: friend.id}))
           )
         }
@@ -69,7 +70,7 @@ const socketMiddleware = (function() {
       case 'GET_FRIENDS_SUCCESS':
         const { friends } = action.payload
 
-        await Promise.all(friends.map(friend => 
+        await Promise.all(friends.map(friend =>
           socket.emit('private_conversation', {id: friend.id}))
         )
         console.log('DONE LOADING CHATS')
@@ -90,10 +91,15 @@ const socketMiddleware = (function() {
         })
         next(action)
         break
+      case DELEATE_CHAT_HISTORY:
+        console.log('MIDDLE WARE SOCKET SHIT')
+        socket.emit('deleate_conversation', {chatId: action.payload.chatId})
+        next(action)
+        break
 
       default:
         return next(action)
-       
+
     }
   }
 })()
