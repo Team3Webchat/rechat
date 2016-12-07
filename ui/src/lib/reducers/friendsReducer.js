@@ -1,9 +1,7 @@
-import { LOGIN_USER_SUCCESS } from '../actions/authActions' 
-import { 
-  GET_FRIENDS_SUCCESS, 
-  GET_FRIENDS_FAILURE, 
+import { LOGIN_USER_SUCCESS } from '../actions/authActions'
+import {
+  GET_FRIENDS_SUCCESS,
   SEND_FRIEND_REQUEST_SUCCESS,
-  SEND_FRIEND_REQUEST_FAILURE,
   ACCEPT_FRIEND_REQUEST_SUCCESS,
   DELETE_FRIEND_SUCCESS,
 } from '../actions/friendsActions'
@@ -42,7 +40,7 @@ export default function friends(state = initialState, action) {
         ...state,
         sentFriendRequests: action.payload.sentFriendRequests,
       }
-    case DELETE_FRIEND_SUCCESS: 
+    case DELETE_FRIEND_SUCCESS:
       const { friendId } = action.payload
       return {
         ...state,

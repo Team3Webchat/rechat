@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardText, FABButton, Icon, List, ListItem } from 'react-mdl'
+import { Card, FABButton, Icon, List, ListItem } from 'react-mdl'
 import Gravatar from 'react-gravatar'
 import './style.css'
 

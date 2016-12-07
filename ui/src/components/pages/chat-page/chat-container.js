@@ -1,14 +1,10 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import {  } from 'react-mdl'
-import io from 'socket.io-client'
 import ChatDisplayer from './chatdisplayer'
-import ComposeNewMessage from './compose-new-message'
-import { API_URL } from '../../../lib/config'
 
 import { sendPrivateMessage, selectActiveChat, deleteChat } from '../../../lib/actions/chatActions'
 import { getActiveChat } from '../../../lib/reducers/chatsReducer'
-import { getFriendById } from '../../../lib/reducers/friendsReducer'
 
 import DeleteChatConfirm from './delete-chat-confirm'
 
@@ -52,13 +48,13 @@ class ChatContainer extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { friendId, beginChat } = nextProps
-    beginChat(friendId)    
+    beginChat(friendId)
   }
 
   sendMessage = (e) => {
     e.preventDefault()
     e.stopPropagation()
-  
+
     const { message } = this.state
     const { sendMessage, id, activeChat } = this.props
     this.setState({
@@ -75,9 +71,9 @@ class ChatContainer extends Component {
       return (
         <div>
           <div>
-            <ChatDisplayer 
-              onChange={this.handleChange} 
-              onSubmit={this.sendMessage} 
+            <ChatDisplayer
+              onChange={this.handleChange}
+              onSubmit={this.sendMessage}
               messages={messages}
               id={this.props.id}
               message={this.state.message}

@@ -1,6 +1,5 @@
 import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
-import {  Grid, Cell, Button, Icon } from 'react-mdl'
 
 import './style.css'
 class FlashMessage extends Component {

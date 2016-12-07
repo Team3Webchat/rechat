@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { List, ListItem, Icon } from 'react-mdl'
+import { List, ListItem } from 'react-mdl'
 import Gravatar from 'react-gravatar'
 
 const Friends = ({ friends, onFriendClick, startConversation }) => {

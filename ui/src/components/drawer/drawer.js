@@ -5,7 +5,6 @@ import {Link} from 'react-router'
 import { toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
 
 import Friends from './friends'
-import Chats from './chats'
 import Gravatar from 'react-gravatar'
 import './style.css'
 
@@ -16,8 +15,6 @@ class AppDrawer extends React.Component {
     this.state = {
       showChats: false,
       showFriends: false,
-      openFriendDialog: false,
-      openChatDialog: false,
     }
   }
 
@@ -37,8 +34,8 @@ class AppDrawer extends React.Component {
   }
 
   render () {
-    const { friends,  chats, name, startConversation, email } = this.props
-    const { showChats, showFriends } = this.state
+    const { friends, name, startConversation, email } = this.props //chats
+    const { showFriends } = this.state //showChats
     const classNameFriends = `friends-${showFriends}`
     //const classNameChats = `chats-${showChats}`
 
@@ -76,10 +73,8 @@ class AppDrawer extends React.Component {
   }
 */
 const mapStateToProps = state => ({
-  showFriends: state.menuDrawer.showFriends,
-  showChats: state.menuDrawer.showChats,
   friends: state.friends.friends,
-  chats: state.chats.chats,
+  //chats: state.chats.chats,
   name: state.auth.name,
   email: state.auth.email,
 })
