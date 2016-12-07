@@ -1,6 +1,5 @@
-import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
-import { Textfield, Button, Spinner, Card, List, ListItem, Icon, ListItemContent, ListItemAction } from 'react-mdl'
+import React from 'react'
+import {  Card, List, ListItem, Icon, ListItemContent, ListItemAction } from 'react-mdl'
 import Gravatar from 'react-gravatar'
 import './style.css'
 

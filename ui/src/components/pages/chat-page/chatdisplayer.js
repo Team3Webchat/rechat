@@ -1,5 +1,5 @@
-import React, { PropTypes, Component } from 'react'
-import {  Card, Grid, Cell, CardActions, Button, Icon, Textfield, IconButton, CardMenu, CardTitle, CardText } from 'react-mdl'
+import React from 'react'
+import {  Card, CardActions, Button, Textfield, IconButton, CardMenu, CardTitle, CardText } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 import ComposeNewMessage from './compose-new-message'

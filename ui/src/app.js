@@ -52,11 +52,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    let loaded = false
     const token = localStorage.getItem('token')
     if (token) {
 
-      
+
       Promise.all([
         store.dispatch(loginUserSuccess({token, message: 'Welcome back'})),
         store.dispatch(getFriends()),
@@ -67,7 +66,7 @@ class App extends Component {
           loaded: true,
         })
       })
-      
+
     } else {
       this.setState({
         loaded: true,
@@ -75,7 +74,7 @@ class App extends Component {
     }
   }
 
-  
+
   render() {
     if (this.state.loaded) {
       return (
@@ -103,7 +102,7 @@ class App extends Component {
         </div>
       )
     }
-    
+
   }
 }
 

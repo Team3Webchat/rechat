@@ -1,7 +1,5 @@
-import { LOGIN_USER_SUCCESS } from '../actions/authActions'
 import * as actions from '../actions/chatActions'
 
-import store from '../store'
 const initialState = {
   currentChatId: '',
   chats: [],
@@ -16,14 +14,13 @@ export default function chats(state = initialState, action) {
         chats: [...state.chats, action.payload],
         isLoadingChats: false,
       }
-    case actions.SELECT_ACTIVE_CHAT: 
-      const current = state.chats.find(c => action.payload.friendId === c.friendId)
+    case actions.SELECT_ACTIVE_CHAT:
+      state.chats.find(c => action.payload.friendId === c.friendId)
       return {
         ...state,
         currentChatId: state.chats.find(c => c.friendId === action.payload.friendId)['chatId'],
       }
-    case actions.RECEIVE_PRIVATE_MESSAGE:  
-      console.log(action.payload)
+    case actions.RECEIVE_PRIVATE_MESSAGE:
       return {
         ...state,
         chats: state.chats.map(chat => {
@@ -35,7 +32,7 @@ export default function chats(state = initialState, action) {
           }
         }),
       }
-    
+
     default:
       return state
   }
@@ -44,8 +41,6 @@ export default function chats(state = initialState, action) {
 export const getActiveChat = state => {
 
   const { currentChatId, chats } = state.chats
-  
+
   return chats.find(c => c.chatId === currentChatId)
 }
-
-

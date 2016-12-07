@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { Badge, Icon, Link } from 'react-mdl'
+import { Badge, Icon } from 'react-mdl'
 
 import { acceptFriendRequest, deleteFriend } from '../../../lib/actions/friendsActions'
 import FriendRequestBox from './friendRequestBox'

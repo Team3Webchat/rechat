@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import {  DialogActions, Grid, Cell, CardActions, Button, Icon, Textfield, CardTitle, CardMenu, IconButton, CardText } from 'react-mdl'
+import {  CardActions, Button, Textfield, CardTitle, CardMenu, IconButton, CardText } from 'react-mdl'
 
 import FlashMessage from '../../flash-message/flash-message'
 
@@ -16,7 +16,7 @@ const ChangePassword = (props) => {
         <h3 className="changePasswordTitle">Change password</h3>
       </CardTitle>
       <CardMenu className="cardMenu">
-        <IconButton name="close" onClick={doToggleProfile}  className="iconButton"/>  
+        <IconButton name="close" onClick={doToggleProfile}  className="iconButton"/>
       </CardMenu>
       <form onSubmit={onSubmit}>
       <CardText className='ChangePasswordForm'>

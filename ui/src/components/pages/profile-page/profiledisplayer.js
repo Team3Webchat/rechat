@@ -1,5 +1,5 @@
-import React, { PropTypes, Component } from 'react'
-import { Grid, Cell, CardActions, Button, Icon, CardTitle, CardMenu, CardText, IconButton } from 'react-mdl'
+import React from 'react'
+import { CardTitle, CardMenu, CardText, IconButton } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
@@ -8,7 +8,7 @@ import './../style-card-common.css'
 
 const ProfileDisplayer = (props) => {
   const { email, name } = props.user
-  const { doToggleProfile, doToggleEdit } = props
+  const { doToggleEdit } = props
 //to={`/me/edit`} <- edit
   return (
     <div>
@@ -23,7 +23,7 @@ const ProfileDisplayer = (props) => {
         <Link to={`/`}>
           <IconButton name="close" className="iconButton"/>
         </Link>
-      </CardMenu>   
+      </CardMenu>
       <CardText className='info'>
         <div className='key'><p>E-mail</p></div>
         <div className='value'><p>{email}</p></div>

@@ -1,6 +1,6 @@
-import React, { PropTypes, Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Card, CardActions, Grid, Cell, Icon, Button, CardTitle, CardMenu, CardText, IconButton} from 'react-mdl'
+import { Card, CardActions, Button, CardTitle, CardMenu, CardText, IconButton} from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
@@ -15,7 +15,6 @@ class ProfileContainer extends Component {
     super(props)
     this.state = {
       openFriendDialog: false,
-      deleteFriend: null,
     }
   }
 
@@ -23,14 +22,12 @@ class ProfileContainer extends Component {
   handleDeleteFriendConfirm = friend =>  {
     this.setState({
       openFriendDialog: true,
-      deleteFriend: friend,
     })
   }
 
   handleCloseFriendConfirm = () =>  {
     this.setState({
       openFriendDialog: false,
-      deleteFriend: null,
     })
   }
 
@@ -40,26 +37,13 @@ class ProfileContainer extends Component {
   }
   //END - DELETE FREIND CONFIRM
 
-  removeFriend = key => {
-    return function(e) {
-      const state = {}
-      state[key] = e.target.value
-      this.setState(state)
-    }.bind(this)
-  }
-
   getWholeDate = () => {
     const today = new Date(this.props.friend['friendship.updatedAt'])
     let dd = today.getDate()
     let mm = today.getMonth()+1 //January is 0!
-
     const yyyy = today.getFullYear()
-    if(dd<10){
-      dd='0'+dd
-    }
-    if(mm<10){
-      mm='0'+mm
-    }
+    if(dd<10) dd='0'+dd
+    if(mm<10) mm='0'+mm
     return dd+'-'+mm+'-'+yyyy
   }
 

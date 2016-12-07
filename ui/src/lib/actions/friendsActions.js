@@ -78,7 +78,7 @@ export const acceptFriendRequest = (friendId) =>
         method: 'PUT',
         headers: getHeaders(),
       })
-      const json = await res.json()
+      await res.json()
       dispatch(acceptFriendRequestSuccess({
         flash: {
           message: 'You are now friends with a fella',
@@ -131,7 +131,7 @@ export const deleteFriend = (friendId) =>
 
       if (res.status === 403) throw new Error('Could not delete the friend')
 
-      const json = await res.json()
+      await res.json()
       dispatch(deleteFriendSuccess({
         flash: {
           message: 'Friend deleted!',
@@ -183,7 +183,7 @@ async function(dispatch) {
 
     if (res.status === 403) throw new Error('Could not report the friend')
 
-    const json = await res.json()
+    await res.json()
     dispatch(reportFriendSuccess({
       flash: {
         message: 'Friend reported!',
