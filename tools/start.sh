@@ -4,11 +4,12 @@
 cd `dirname $0`
 
 git pull origin master
-sudo npm install 
+sudo npm install
 
 cd ..
+atom .
 cd ui
-
+sudo npm install
 set -e
 
 USE_UNITY=0
@@ -36,5 +37,6 @@ fi
 if [ $USE_XFCE -eq 1 ]; then
   xfce4-terminal --tab --command  "npm start"
   cd ../server
+   sudo npm install
    npm start
 fi

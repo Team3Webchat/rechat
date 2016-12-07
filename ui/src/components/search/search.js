@@ -44,7 +44,6 @@ class Search extends Component {
       user.isFriends = (friends.find(f => f.id === user.id) != null || sentFriendRequests.find(f => f.id === user.id)) ? true : false
       return user
     })
-    //user.isFriends = (friends.find(f => f.id === fromUser) != null || friendRequests.find(f => f.id === fromUser)) ? true : false
     return filteredResults
   }
 

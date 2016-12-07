@@ -1,3 +1,4 @@
+import { SHOW_ONE_USER_FAILURE } from '../actions/authActions'
 
 const initialState = {
   message: null,

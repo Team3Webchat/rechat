@@ -3,7 +3,6 @@ import thunk from 'redux-thunk'
 import { hashHistory } from 'react-router'
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux'
 import createLogger from 'redux-logger'
-
 import rootReducer from './reducers'
 import socketMiddleware from './middleware/socketMiddleware'
 

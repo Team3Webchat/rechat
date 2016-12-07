@@ -62,7 +62,6 @@ usersRouter.route('/:id')
     }
   })
   .put(async (req, res, next) => {
-    console.log(req.user.dataValues)
     const user = await User.findOne({ where: { id: req.user.dataValues.id }})
     bcrypt.genSaltAsync(10)
        .then(salt => bcrypt.hashAsync(req.body.password, salt, null))

@@ -15,12 +15,31 @@ export default function chats(state = initialState, action) {
         isLoadingChats: false,
       }
     case actions.SELECT_ACTIVE_CHAT:
-      state.chats.find(c => action.payload.friendId === c.friendId)
+
+      const current = state.chats.find(c => action.payload.friendId === c.friendId)
+
+
+
       return {
         ...state,
         currentChatId: state.chats.find(c => c.friendId === action.payload.friendId)['chatId'],
       }
+
+    case actions.DELEATE_CHAT_HISTORY:
+      return {
+        ...state,
+        chats: state.chats.map(chat => {
+          if (chat.chatId !== action.payload.chatId)
+            return chat
+          return {
+            ...chat,
+            messages: [],
+          }
+        }),
+
+      }
     case actions.RECEIVE_PRIVATE_MESSAGE:
+      console.log(action.payload)
       return {
         ...state,
         chats: state.chats.map(chat => {

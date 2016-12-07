@@ -1,7 +1,7 @@
 import SocketIO from 'socket.io'
 import socketioJwt from 'socketio-jwt'
 
-import { onNewMessage, onPrivateConversation } from './chat'
+import { onNewMessage, onPrivateConversation, onDeleateConversation } from './chat'
 
 export const createSocket = (app, server) => {
 
@@ -10,7 +10,7 @@ export const createSocket = (app, server) => {
   // HACK FOR NOW FIX LATER
   io.set('origins', '*:*')
   return io
-} 
+}
 
 export const startSocket = io => {
   io.sockets.on('connection', socketioJwt.authorize({
@@ -30,4 +30,9 @@ function connection(socket, io) {
     onPrivateConversation(data, socket)
   })
 
+
+  socket.on('deleate_conversation', async data => {
+
+    onDeleateConversation(data, socket)
+  })
 }
