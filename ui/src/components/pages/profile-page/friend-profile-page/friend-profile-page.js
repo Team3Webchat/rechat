@@ -77,7 +77,7 @@ class ProfileContainer extends Component {
         <CardText className="info">
           <div className='key'><p>E-mail</p></div>
           <div className='value'><p>{email}</p></div>
-          <div className='key'><p>Friendes since</p></div>
+          <div className='key'><p> | Friends since</p></div>
           <div className='value'><p>{FriendsSince}</p></div>
         </CardText>
         <CardActions border>

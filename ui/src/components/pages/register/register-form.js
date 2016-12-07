@@ -35,9 +35,9 @@ const RegisterForm = ({ onChange, onSubmit, email, password,
           
         </div>
         { flash.message ? 
-              <FlashMessage message={flash.message} type={flash.type}/> 
-              : ''
-          }
+          <FlashMessage message={flash.message} type={flash.type}/> 
+          : ''
+        }
         {
           password !== passwordConfirm && passwordConfirm.length >= password.length &&
           <FlashMessage message='Passwords are not the same' type='fail' />
