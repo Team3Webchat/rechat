@@ -11,10 +11,9 @@ const Friends = ({ friends, onFriendClick, startConversation }) => {
       <ListItem key={f.id}>
         <Link to={`/profile/${f.id}`}>
           <Gravatar size={32} email={f.email} />
+        </Link>
+        <Link to={`/chat/${f.id}`}>
           <p>{f.firstname} {f.lastname}</p>
-          <Link to={`/chat/${f.id}`}>
-            <Icon name="chat"/>
-          </Link>
         </Link>
       </ListItem>
     )
