@@ -3,6 +3,9 @@
   flex-direction: column !important;
   min-width: 0px;
 }
+.main .mdl-card{
+  margin-top:15px !important;
+}
 
 .content {
   display: flex;
