@@ -32,6 +32,7 @@ const ProfileDisplayer = (props) => {
         <div className="info-row">
           <div className='key'><p>E-mail</p></div>
           <div className='value'><p>{email}</p></div>
+
         </div>
         {friendsSince &&
           <div className="info-row">

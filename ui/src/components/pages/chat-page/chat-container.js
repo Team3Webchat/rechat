@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {  } from 'react-mdl'
 import ChatDisplayer from './chatdisplayer'
 
-import { sendPrivateMessage, selectActiveChat, deleteChat } from '../../../lib/actions/chatActions'
+import { sendPrivateMessage, selectActiveChat, deleateChatHistory } from '../../../lib/actions/chatActions'
 import { getActiveChat } from '../../../lib/reducers/chatsReducer'
 
 import DeleteChatConfirm from './delete-chat-confirm'
@@ -15,7 +15,7 @@ class ChatContainer extends Component {
     this.state = {
       message: '',
       openChatDialog: false,
-      deleteChat: null,
+      deleateChatHistory: null,
     }
   }
 
@@ -23,14 +23,14 @@ class ChatContainer extends Component {
   handleDeleteChatConfirm = chat =>  {
     this.setState({
       openChatDialog: true,
-      deleteChat: chat,
+      deleateChatHistory: chat,
     })
   }
 
   handleCloseChatConfirm = () =>  {
     this.setState({
       openChatDialog: false,
-      deleteChat: null,
+      deleateChatHistory: null,
     })
   }
 
@@ -66,6 +66,8 @@ class ChatContainer extends Component {
 
   render() {
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
+    const { clearChatHistory, activeChat} = this.props
+    console.log(activeChat)
     const { openChatDialog } = this.state
     if (!this.props.isLoading) {
       return (
@@ -87,7 +89,7 @@ class ChatContainer extends Component {
               chat={this.state.deleteChat}
               openChatDialog={this.state.openChatDialog}
               handleCloseChatDialog={this.handleCloseChatConfirm}
-              handleDeleteChat={this.handleDeleteChat}/>
+              clearChatHistory={() => clearChatHistory(activeChat.chatId)}/>
             }
           </div>
         </div>
@@ -111,7 +113,10 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   beginChat: id => dispatch(selectActiveChat({friendId: id})),
   sendMessage: (content, chatId, userId) => dispatch(sendPrivateMessage({content, chatId, userId})),
-  doDeleteChat: (id) => dispatch(deleteChat(id)),
+  clearChatHistory: chatId => {
+    console.log('FITTKRAMP')
+    dispatch(deleateChatHistory({chatId}))
+  },
 })
 
 export default connect(
