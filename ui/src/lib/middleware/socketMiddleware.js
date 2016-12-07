@@ -7,7 +7,7 @@ import {
   connected,
   disconnect,
   START_PRIVATE_CHAT,
-  DELEATE_CHAT_HISTORY,
+  DELETE_CHAT_HISTORY,
 
 } from '../actions/chatActions'
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from '../actions/authActions'
@@ -96,9 +96,7 @@ const socketMiddleware = (function() {
       case 'GET_FRIENDS_SUCCESS':
         const { friends } = action.payload
 
-
         await Promise.all(friends.map(friend =>
-
           socket.emit('private_conversation', {id: friend.id}))
         )
 
@@ -115,15 +113,8 @@ const socketMiddleware = (function() {
           userId: action.payload.userId,
           chatId: action.payload.chatId,
         })
-
-        next(action)
-        break
-      case DELEATE_CHAT_HISTORY:
-        console.log('MIDDLE WARE SOCKET SHIT')
-        socket.emit('deleate_conversation', {chatId: action.payload.chatId})
-        next(action)
-        break
-
+        return next()
+      case DELETE_CHAT_HISTORY:
         return next(action)
       case SEND_FRIEND_REQUEST_SUCCESS:
         socket.emit('friend_request', { id: action.payload.friendId })
@@ -132,11 +123,8 @@ const socketMiddleware = (function() {
       case DELETE_FRIEND_SUCCESS:
         socket.emit('delete_friend', { id: action.payload.friendId })
         return next(action)
-
-
       default:
         return next(action)
-
     }
   }
 })()

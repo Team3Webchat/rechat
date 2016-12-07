@@ -25,15 +25,24 @@
 }
 
 /* INFORMATION */
+
 .profileCard .info{
   position:relative;
   padding-top: 25px;
   left: 160px;
   min-height: 60px;
 }
-
+.profileCard .info-row{
+  display: flex;
+  width: 100%;
+  padding: 2px 0;
+}
+.profileCard .info .key {
+    flex-basis: 20%;
+    float:left;
+}
 .profileCard .info .key p{
-  float:left;
+
   padding-right: 10px;
   margin-bottom: 0px;
   border-right: 1px solid #d0cdcd;
@@ -85,7 +94,7 @@
   align-items: center;
   justify-content: center;
   padding-top: 0;
-}  
+}
 
 .profileCard .changePasswordTitle{
   margin-top:0px !important;

@@ -3033,6 +3033,10 @@ nocache@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/nocache/-/nocache-2.0.0.tgz#202b48021a0c4cbde2df80de15a17443c8b43980"
 
+node-cron:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/node-cron/-/node-cron-1.1.2.tgz#6f7f6e14e05f3885f8ebc6eee2882a6e17e6b9a7"
+
 node-pre-gyp@^0.6.29:
   version "0.6.31"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.31.tgz#d8a00ddaa301a940615dbcc8caad4024d58f6017"

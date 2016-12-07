@@ -35,11 +35,17 @@
   margin: 0 !important;
   border-bottom: 1px solid #bfbfbf;
 }
-
+#searchBox ul a{
+  width: 100%;
+}
 #searchBox ul p{
+  font-size: 16px;
   width: 76%;
   float: left;
-  margin: 4px 0 !important;
+  margin: 9px 0 !important;
+}
+#searchBox ul button{
+  float: left;
 }
 .addUser{
   width: 17%;

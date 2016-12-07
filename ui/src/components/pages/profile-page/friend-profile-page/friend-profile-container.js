@@ -96,10 +96,7 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    //const { email, fristname, lastname, id } = this.props.friend
-    //this.setUserToState()
     const { openFriendDialog, friend } = this.state
-    //const FriendsSince = this.getWholeDate()
     return (
       <div>
       {friend != null &&

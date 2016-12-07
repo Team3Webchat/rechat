@@ -7,10 +7,12 @@ import helmet from 'helmet'
 import httpStatus from 'http-status'
 import winston from 'winston'
 import expressWinston from 'express-winston'
+import cron from 'node-cron'
 
 import { createSocket, startSocket } from '../lib/socket'
 import routes from './routes'
 import passport from '../lib/auth'
+import { clearOldChatHistory } from '../lib/chat-history-cleaner'
 
 async function createServer() {
 
@@ -55,6 +57,9 @@ async function createServer() {
     const err = new Error('API not found', httpStatus.NOT_FOUND)
     return next(err)
   })
+
+  // setup chat history clearing, runs once every night at 00.00
+  cron.schedule('0 0 0 * * *', clearOldChatHistory)
 
   
 
