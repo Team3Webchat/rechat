@@ -6,7 +6,7 @@ import Gravatar from 'react-gravatar'
 const Friends = ({ friends, onFriendClick, startConversation }) => {
   return (
     <List className='friends'>
-    {friends.length > 0 ?
+    {friends.length > 0 || friends === undefined?
     friends.map(f =>
       <ListItem key={f.id}>
         <Link to={`/profile/${f.id}`}>

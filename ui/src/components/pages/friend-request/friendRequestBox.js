@@ -1,5 +1,6 @@
 import React from 'react'
 import {  Card, List, ListItem, Icon, ListItemContent, ListItemAction } from 'react-mdl'
+import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 import './style.css'
 
@@ -13,7 +14,11 @@ const FriendRequestBox = ({ friendRequests, onAccept, onDeny }) => {
         {friendRequests.length > 0 ?
           friendRequests.map(f =>
           <ListItem key={f.id}>
-            <ListItemContent className='displayName'><Gravatar className='searchPic' email={f.email} size={40} /> {f.firstname} {f.lastname}</ListItemContent>
+            <ListItemContent className='displayName'>
+            <Link to={`/profile/${f.id}`}>
+              <Gravatar className='searchPic' email={f.email} size={40} /> {f.firstname} {f.lastname}
+            </Link>
+            </ListItemContent>
             <ListItemAction>
               <Icon onClick={() => onAccept(f.id)} name="add_circle_outline" className="accept"/>
               <Icon onClick={() => onDeny(f.id)} name="block" className="deny"/>

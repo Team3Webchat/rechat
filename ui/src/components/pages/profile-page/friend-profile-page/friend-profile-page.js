@@ -49,7 +49,6 @@ const ProfileDisplayer = (props) => {
       }
       </CardActions>
 
-      <div>
         { openFriendDialog &&
           <DeleteFriendConfirm
           friend={''}
@@ -57,9 +56,6 @@ const ProfileDisplayer = (props) => {
           handleCloseFriendDialog={handleCloseFriendConfirm}
           handleDeleteFriend={handleDeleteFriend}/>
         }
-      </div>
-
-      <div>
         { openReportDialog &&
           <ReportFriendConfirm
           friend={''}
@@ -67,7 +63,6 @@ const ProfileDisplayer = (props) => {
           handleCloseReportDialog={handleCloseReportConfirm}
           handleReportFriend={handleReportFriend}/>
         }
-      </div>
 
     </Card>
   )

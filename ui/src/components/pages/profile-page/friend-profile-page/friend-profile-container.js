@@ -18,36 +18,22 @@ class ProfileContainer extends Component {
       friend: null,
     }
   }
-
   //DELETE FRIEND CONFIRM
   handleDeleteFriendConfirm = friend =>  {
     this.setState({
       openFriendDialog: true,
     })
   }
-
-  handleCloseFriendConfirm = () =>  {
-    this.setState({
-      openFriendDialog: false,
-    })
-  }
-
-  handleDeleteFriend = (id) =>  {
-    this.props.doDeleteFriend(id)
-    this.handleCloseFriendConfirm()
-  }
-  //END - DELETE FREIND CONFIRM
-
   //REPORT FRIEND CONFIRM
   handleReportFriendConfirm = friend =>  {
     this.setState({
       openReportDialog: true,
     })
   }
-
-   handleCloseReportConfirm = () =>  {
+  handleCloseConfirms = () =>  {
     this.setState({
       openReportDialog: false,
+      openFriendDialog: false,
     })
   }
 
@@ -55,7 +41,11 @@ class ProfileContainer extends Component {
     this.props.doReportFriend(id)
     this.handleCloseReportConfirm()
   }
-  //END - REPORT FRIEND CONFIRM
+  handleDeleteFriend = (id) =>  {
+    this.props.doDeleteFriend(id)
+    this.handleCloseFriendConfirm()
+  }
+
 
   getWholeDate = () => {
     const today = new Date(this.props.friend['friendship.updatedAt'])
@@ -75,6 +65,7 @@ class ProfileContainer extends Component {
       })
 
       const json = await res.json()
+      console.log(json);
       this.setState({
         friend: json,
       })
