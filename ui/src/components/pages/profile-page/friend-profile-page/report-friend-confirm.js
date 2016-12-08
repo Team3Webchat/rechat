@@ -2,7 +2,6 @@ import React from 'react'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button} from 'react-mdl'
 
 const ReportFriendConfirm = (props) => {
-  console.log(props.friend)
   const { firstname, lastname, id } = props.friend
   const {  handleCloseReportDialog, openReportDialog, handleReportFriend } = props
   return (
