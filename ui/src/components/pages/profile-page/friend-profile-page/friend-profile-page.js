@@ -3,8 +3,6 @@ import { Card, CardActions, Button, CardTitle, CardMenu, CardText, IconButton} f
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
-import DeleteFriendConfirm from './delete-friend-confirm'
-import ReportFriendConfirm from './report-friend-confirm'
 
 import './../../style-card-common.css'
 
@@ -13,7 +11,7 @@ const ProfileDisplayer = (props) => {
   //const { email, fristname, lastname, id } = props.friend
   console.log(props.friend)
   const {firstname, lastname, email, id, friendsSince} = props.friend//{firstname: 'inget', lastname: 'nada', email:'rebecca@awesome.com'}
-  const { openFriendDialog, openReportDialog, handleDeleteFriendConfirm, handleReportFriendConfirm, handleReportFriend, handleCloseReportConfirm, handleCloseFriendConfirm, handleDeleteFriend, addFriend } = props
+  const { handleDeleteFriendConfirm, handleReportFriendConfirm, addFriend } = props
 
   return (
     <Card className="profileCard" shadow={0}>
@@ -49,20 +47,7 @@ const ProfileDisplayer = (props) => {
       }
       </CardActions>
 
-        { openFriendDialog &&
-          <DeleteFriendConfirm
-          friend={''}
-          openFriendDialog={openFriendDialog}
-          handleCloseFriendDialog={handleCloseFriendConfirm}
-          handleDeleteFriend={handleDeleteFriend}/>
-        }
-        { openReportDialog &&
-          <ReportFriendConfirm
-          friend={''}
-          openReportDialog={openReportDialog}
-          handleCloseReportDialog={handleCloseReportConfirm}
-          handleReportFriend={handleReportFriend}/>
-        }
+
 
     </Card>
   )

@@ -5,7 +5,11 @@ import { baseUrl } from '../../../../lib/actions/index'
 import { getHeaders } from '../../../../lib/api'
 
 import ProfileDisplayer from './friend-profile-page'
+import DeleteFriendConfirm from './delete-friend-confirm'
+import ReportFriendConfirm from './report-friend-confirm'
+
 import { deleteFriend, sendFriendRequest, reportFriend } from '../../../../lib/actions/friendsActions'
+
 
 import './../../style-card-common.css'
 
@@ -65,7 +69,6 @@ class ProfileContainer extends Component {
       })
 
       const json = await res.json()
-      console.log(json);
       this.setState({
         friend: json,
       })
@@ -113,17 +116,24 @@ class ProfileContainer extends Component {
         <ProfileDisplayer
         friend={friend}
 
-        openFriendDialog={openFriendDialog}
         handleDeleteFriendConfirm={this.handleDeleteFriendConfirm}
-        handleCloseFriendConfirm={this.handleCloseFriendConfirm}
-        handleDeleteFriend={this.handleDeleteFriend}
-
-        openReportDialog={openReportDialog}
         handleReportFriendConfirm={this.handleReportFriendConfirm}
-        handleCloseReportConfirm={this.handleCloseReportConfirm}
-        handleReportFriend={this.handleReportFriend}
 
         addFriend={this.props.doAddFriend}/>
+      }
+      { openFriendDialog &&
+        <DeleteFriendConfirm
+        friend={friend}
+        openFriendDialog={openFriendDialog}
+        handleCloseFriendDialog={this.handleCloseConfirms}
+        handleDeleteFriend={this.handleDeleteFriend}/>
+      }
+      { openReportDialog &&
+        <ReportFriendConfirm
+        friend={friend}
+        openReportDialog={openReportDialog}
+        handleCloseReportDialog={this.handleCloseConfirms}
+        handleReportFriend={this.handleReportFriend}/>
       }
       </div>
     )
