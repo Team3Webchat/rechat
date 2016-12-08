@@ -4,7 +4,6 @@ import { routerReducer } from 'react-router-redux'
 import auth from './authReducer'
 import search from './searchReducer'
 import flash from './flashReducer'
-import menuDrawer from './menuDrawerReducer'
 import friends from './friendsReducer'
 import chats from './chatsReducer'
 
@@ -13,7 +12,6 @@ const appReducer = combineReducers({
   search,
   auth,
   flash,
-  menuDrawer,
   friends,
   chats,
 })

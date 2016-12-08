@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Drawer, Navigation } from 'react-mdl'
 import {Link} from 'react-router'
-import { toggleProfile, toggleChatFriend, composeNewMessage } from '../../lib/actions/menuDrawerActions'
 
 import Friends from './friends'
 import Gravatar from 'react-gravatar'
@@ -80,9 +79,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  doToggleProfile: () => dispatch(toggleProfile()),
-  doComposeNewMessage: () => dispatch(composeNewMessage()),
-  doToggleChatFriend: () => dispatch(toggleChatFriend()),
 })
 
 export default connect(
