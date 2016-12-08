@@ -121,7 +121,6 @@ const deleteFriendFailure = ({ flash }) => ({
 
 export const deleteFriend = (friendId) =>
   async function(dispatch) {
-    console.log('DELTE FRIEND')
     const id = getUserId()
     try {
       const res = await fetch(`${baseUrl}users/${id}/friends/${friendId}`, {
@@ -171,11 +170,8 @@ const reportFriendFailure = ({ flash }) => ({
 
 export const reportFriend = (friendId) =>
 async function(dispatch) {
-
-  console.log(friendId)
   const id = getUserId()
   try {
-    console.log(friendId)
     const res = await fetch(`${baseUrl}users/${id}/friends/${friendId}`, {
       method: 'PUT',
       headers: getHeaders(),
