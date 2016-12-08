@@ -73,6 +73,33 @@ usersRouter.route('/:id')
 
   })
 
+
+usersRouter.route('/:id/report')
+.all(authenticateToken)
+.get(async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] }})
+    return res
+      .status(200)
+      .json(user)
+  } catch(e) {
+    return res
+      .status(400)
+      .json(e)
+  }
+})
+.put(async (req, res, next) => {
+  console.log(req.body.reportedByOthersCount)
+  console.log(req.body)
+  const user = await User.findOne({ where: { id: req.body.friendID }})
+  user.update({ reportedByOthersCount: req.body.reportedByOthersCount })
+ .then(()=> User.findOne({ where: { id: req.body.friendID}}))
+ .then(()=>  res.json('Your reportedByOthersCount is updated'))
+ .catch(err => res.json(err))
+    //  .catch(err => res.json('something went wrong'))
+
+})
 usersRouter.route('/:id/friends')
   .all(authenticateToken)
   .get(async (req, res, next) => {

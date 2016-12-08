@@ -9,5 +9,7 @@ export function getUserId() {
   return store.getState().auth.id
 }
 
+export function getReportedByOthersCount() {
 
-
+  return store.getState().auth.reportedByOthersCount
+}
