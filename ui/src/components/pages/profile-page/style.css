@@ -31,24 +31,26 @@
   padding-top: 25px;
   left: 160px;
   min-height: 60px;
+  flex-direction: column;
+  display: flex;
+  
 }
 .profileCard .info-row{
   display: flex;
-  width: 100%;
   padding: 2px 0;
 }
-.profileCard .info .key {
-    flex-basis: 20%;
-    float:left;
-}
-.profileCard .info .key p{
 
+.profileCard .info .key {
+    flex-basis: 20%;  
+}
+
+.profileCard .info .key p{
   padding-right: 10px;
   margin-bottom: 0px;
   border-right: 1px solid #d0cdcd;
 }
 .profileCard .info .value p{
-  float:left;
+ 
   font-weight: bold;
   margin-left:10px;
   margin-bottom: 0px;
@@ -93,9 +95,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 0;
+  padding: 16px;
 }
 
+.profileCard .info .key {
+    flex-basis: unset;  
+}
+
+/* CHANGE PASSWORD */
 .profileCard .changePasswordTitle{
   margin-top:0px !important;
 }
