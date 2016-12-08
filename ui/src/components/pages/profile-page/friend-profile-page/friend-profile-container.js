@@ -5,7 +5,7 @@ import { baseUrl } from '../../../../lib/actions/index'
 import { getHeaders } from '../../../../lib/api'
 
 import ProfileDisplayer from './friend-profile-page'
-import { deleteFriend, sendFriendRequest } from '../../../../lib/actions/friendsActions'
+import { deleteFriend, sendFriendRequest, reportFriend } from '../../../../lib/actions/friendsActions'
 
 import './../../style-card-common.css'
 
@@ -19,7 +19,7 @@ class ProfileContainer extends Component {
     }
   }
 
-  //DELETE FREIND CONFIRM
+  //DELETE FRIEND CONFIRM
   handleDeleteFriendConfirm = friend =>  {
     this.setState({
       openFriendDialog: true,
@@ -37,6 +37,25 @@ class ProfileContainer extends Component {
     this.handleCloseFriendConfirm()
   }
   //END - DELETE FREIND CONFIRM
+
+  //REPORT FRIEND CONFIRM
+  handleReportFriendConfirm = friend =>  {
+    this.setState({
+      openReportDialog: true,
+    })
+  }
+
+   handleCloseReportConfirm = () =>  {
+    this.setState({
+      openReportDialog: false,
+    })
+  }
+
+  handleReportFriend = (id) =>  {
+    this.props.doReportFriend(id)
+    this.handleCloseReportConfirm()
+  }
+  //END - REPORT FRIEND CONFIRM
 
   getWholeDate = () => {
     const today = new Date(this.props.friend['friendship.updatedAt'])
@@ -96,16 +115,23 @@ class ProfileContainer extends Component {
   }
 
   render() {
-    const { openFriendDialog, friend } = this.state
+    const { openFriendDialog, openReportDialog, friend } = this.state
     return (
       <div>
       {friend != null &&
         <ProfileDisplayer
         friend={friend}
+
         openFriendDialog={openFriendDialog}
         handleDeleteFriendConfirm={this.handleDeleteFriendConfirm}
         handleCloseFriendConfirm={this.handleCloseFriendConfirm}
         handleDeleteFriend={this.handleDeleteFriend}
+
+        openReportDialog={openReportDialog}
+        handleReportFriendConfirm={this.handleReportFriendConfirm}
+        handleCloseReportConfirm={this.handleCloseReportConfirm}
+        handleReportFriend={this.handleReportFriend}
+
         addFriend={this.props.doAddFriend}/>
       }
       </div>
@@ -119,6 +145,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   doDeleteFriend: (id) => dispatch(deleteFriend(id)),
+  doReportFriend: (id) => dispatch(reportFriend(id)),
   doAddFriend: id => dispatch(sendFriendRequest(id)),
 })
 

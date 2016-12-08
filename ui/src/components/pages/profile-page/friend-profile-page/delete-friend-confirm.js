@@ -2,6 +2,7 @@ import React from 'react'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button} from 'react-mdl'
 
 const DeleteFriendConfirm = (props) => {
+  
   const { firstname, lastname, id } = props.friend
   const {  handleCloseFriendDialog, openFriendDialog, handleDeleteFriend } = props
   return (
