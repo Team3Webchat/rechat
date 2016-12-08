@@ -177,7 +177,7 @@ async function(dispatch) {
   try {
     console.log(friendId)
     const res = await fetch(`${baseUrl}users/${id}/friends/${friendId}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: getHeaders(),
     })
 
