@@ -67,7 +67,6 @@ class ChatContainer extends Component {
   render() {
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
     const { clearChatHistory, activeChat} = this.props
-    console.log(activeChat)
     const { openChatDialog } = this.state
     if (!this.props.isLoading) {
       return (

@@ -22,8 +22,7 @@ class FlashMessage extends Component {
   render(){
     const { message, type, inline } = this.props
     const { isSnackbarActive } = this.state
-    const className = `flash-message flash-${type} active-${isSnackbarActive}`
-
+    const className = `flash-message flash-${type} active-${isSnackbarActive} inline-${inline}`
     return (
       <div>
         {inline ?
@@ -31,7 +30,7 @@ class FlashMessage extends Component {
             { message }
           </div>
         :
-        <div className={className} style={{boxShadow: '0px 0px 5px 0px rgba(0,0,0,0.75)'}}>
+        <div className={className} >
           { this.handleTimeoutSnackbar() }
           <p>{ message }</p>
         </div>

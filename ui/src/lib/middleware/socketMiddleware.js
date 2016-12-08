@@ -115,6 +115,14 @@ const socketMiddleware = (function() {
         })
         return next(action)
       case DELETE_CHAT_HISTORY:
+        console.log('I MIDDLEWARE');
+        console.log(action.payload.chatId);
+        //
+        socket.emit('new_message', {
+          content: 'A user in this chat has deleted the chat-history for security reasons',
+          userId: 'system',
+          chatId: action.payload.chatId,
+        })
         return next(action)
       case SEND_FRIEND_REQUEST_SUCCESS:
         socket.emit('friend_request', { id: action.payload.friendId })

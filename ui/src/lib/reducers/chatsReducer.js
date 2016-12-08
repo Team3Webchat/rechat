@@ -14,12 +14,9 @@ export default function chats(state = initialState, action) {
         chats: [...state.chats, action.payload],
         isLoadingChats: false,
       }
+
     case actions.SELECT_ACTIVE_CHAT:
-
       const current = state.chats.find(c => action.payload.friendId === c.friendId)
-
-
-
       return {
         ...state,
         currentChatId: state.chats.find(c => c.friendId === action.payload.friendId)['chatId'],
@@ -36,8 +33,8 @@ export default function chats(state = initialState, action) {
             messages: [],
           }
         }),
-
       }
+
     case actions.RECEIVE_PRIVATE_MESSAGE:
       console.log(action.payload)
       return {

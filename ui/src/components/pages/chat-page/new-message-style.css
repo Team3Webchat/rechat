@@ -19,7 +19,8 @@
   float: right;
   background: #c8dbef;
 }
-.messageField .friend{
+.messageField .system{
+  opacity: 0.4;
 }
 .arrow-left {
   position: relative;
