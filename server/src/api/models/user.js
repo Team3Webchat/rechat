@@ -32,6 +32,24 @@ export default (sequelize, DataTypes) => {
         notEmpty: true,
         allowNull: false,
       },
+      isAdmin: {
+        type: DataTypes.BOOLEAN,
+        notEmpty: false,
+        allowNull: false,
+      },
+      isBanned: {
+        type: DataTypes.BOOLEAN,
+        notEmpty: false,
+        allowNull: false,
+      },
+      reportedByOthersCount: {
+        type: DataTypes.INTEGER,
+        notEmpty: false,
+        allowNull: false,
+      },
+
+
+
 
     },
     {
@@ -68,7 +86,7 @@ export default (sequelize, DataTypes) => {
          * Both friends that added you and friends that you added are returned from the database.
          * It saves us a row in the db for each friendship.
          */
-        
+
         friendships() {
           return sequelize.query(
             `SELECT "user"."id", "user"."email", "user"."firstname",
@@ -99,7 +117,7 @@ export default (sequelize, DataTypes) => {
 
         sentFriendRequests() {
           return this.friendships()
-            .then(friends => friends.filter(f => !f['friendship.accepted'] && f['friendship.senderId'] === this.id)) 
+            .then(friends => friends.filter(f => !f['friendship.accepted'] && f['friendship.senderId'] === this.id))
         },
 
 

@@ -1,6 +1,6 @@
 import { baseUrl } from './'
 import { getHeaders } from '../api'
-import { getUserId } from '../selectors'
+import { getUserId, getReportedByOthersCount } from '../selectors'
 
 export const SEND_FRIEND_REQUEST_SUCCESS = 'SEND_FRIEND_REQUEST_SUCCESS'
 export const SEND_FRIEND_REQUEST_FAILURE = 'SEND_FRIEND_REQUEST_FAILURE'
@@ -169,33 +169,61 @@ const reportFriendFailure = ({ flash }) => ({
 })
 
 export const reportFriend = (friendId) =>
-async function(dispatch) {
-  const id = getUserId()
-  try {
-    const res = await fetch(`${baseUrl}users/${id}/friends/${friendId}`, {
-      method: 'PUT',
-      headers: getHeaders(),
-    })
+function(dispatch) {
+  fetch(`${baseUrl}users/${friendId}`,{
+    method: 'GET',
+    headers: getHeaders(),
+  }).then(function (resp) {
+    return resp.json()
+  })
+  .then(function (jsonres) {
+    let res = null
+    console.log(jsonres.reportedByOthersCount)
+    const reportCount = jsonres.reportedByOthersCount + 1
+    console.log('SKÄKRPNING!! ' + reportCount)
+    try {
+      if(reportCount < 3){
+        res =  fetch(`${baseUrl}users/${friendId}/report`, {
+          method: 'PUT',
+          headers: getHeaders(),
+          body: JSON.stringify({
+            'reportedByOthersCount': reportCount,
+            'friendID': friendId,
+          }),
+        })
+      }else{
+        res =  fetch(`${baseUrl}users/${friendId}/report`, {
+          method: 'PUT',
+          headers: getHeaders(),
+          body: JSON.stringify({
+            'reportedByOthersCount': reportCount,
+            'isBanned': true,
+            'friendID': friendId,
+          }),
+        })
+      }
+      if (res.status === 403) throw new Error('Could not report the friend')      
+      dispatch(reportFriendSuccess({
+        flash: {
+          message: 'Friend reported!',
+          type: 'success',
+        },
+        friendId,
+      }))
 
-    if (res.status === 403) throw new Error('Could not report the friend')
+    } catch (e) {
+      console.log(e)
+      dispatch(reportFriendFailure({
+        flash: {
+          message: e.message,
+          type: 'fail',
+        },
+      }))
+    }
 
-    await res.json()
-    dispatch(reportFriendSuccess({
-      flash: {
-        message: 'Friend reported!',
-        type: 'success',
-      },
-      friendId,
-    }))
+  })
+//  const reportCount = getReportedByOthersCount() + 1
 
-  } catch (e) {
-    dispatch(reportFriendFailure({
-      flash: {
-        message: e.message,
-        type: 'fail',
-      },
-    }))
-  }
 }
 
 
