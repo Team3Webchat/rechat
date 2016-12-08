@@ -43,7 +43,7 @@ class ProfileContainer extends Component {
 
   handleReportFriend = (id) =>  {
     this.props.doReportFriend(id)
-    this.handleCloseReportConfirm()
+    this.handleCloseConfirms()
   }
   handleDeleteFriend = (id) =>  {
     this.props.doDeleteFriend(id)
