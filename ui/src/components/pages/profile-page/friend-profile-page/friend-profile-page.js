@@ -9,7 +9,6 @@ import './../../style-card-common.css'
 const ProfileDisplayer = (props) => {
 
   //const { email, fristname, lastname, id } = props.friend
-  console.log(props.friend)
   const {firstname, lastname, email, id, friendsSince} = props.friend//{firstname: 'inget', lastname: 'nada', email:'rebecca@awesome.com'}
   const { handleDeleteFriendConfirm, handleReportFriendConfirm, addFriend } = props
 
