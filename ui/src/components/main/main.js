@@ -108,9 +108,6 @@ const mapStateToProps = state => ({
   email: state.auth.email,
   flash: state.flash,
   friendRequests: state.friends.friendRequests,
-  toggleProfile: state.menuDrawer.showProfile,
-  toggleChatFriend: state.menuDrawer.showChatFriend,
-  composeNewMessage: state.menuDrawer.showNewMessage,
   token: state.auth.token,
 })
 

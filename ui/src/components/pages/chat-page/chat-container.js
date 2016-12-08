@@ -100,7 +100,6 @@ class ChatContainer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  isNewMessage: state.menuDrawer.isEditing,
   token: state.auth.token,
   id: state.auth.id,
   activeChat: getActiveChat(state),
