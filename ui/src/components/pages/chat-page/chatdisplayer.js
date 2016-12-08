@@ -14,9 +14,8 @@ class ChatDisplayer extends Component {
   }
 
   render () {
-
-
     const { onChange, onSubmit, messages, id, message, friendsName, deleteChatConfirm } = this.props
+    let type
 
     return (
       <Card shadow={0}>
@@ -36,7 +35,13 @@ class ChatDisplayer extends Component {
                 {messages.map((m, i) =>
                   id === m.userId ?
                   <ComposeNewMessage type='me' message={m.content} key={i} /> :
-                  <ComposeNewMessage type='friend' message={m.content} key={i}/>
+                  <div>
+                    {m.userId === 'system' ?
+                    <ComposeNewMessage type='system' message={m.content} key={i}/>
+                    :
+                    <ComposeNewMessage type='friend' message={m.content} key={i}/>
+                    }
+                  </div>
                 )}
               </div>
 

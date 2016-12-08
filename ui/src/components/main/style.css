@@ -3,6 +3,16 @@
   flex-direction: column !important;
   min-width: 0px;
 }
+.main .nothing{
+  line-height: 40px;
+  font-size: xx-large;
+  text-align: center;
+  opacity: 0.2;
+  margin: auto;
+  margin-top: 30%;
+  width: 40%;
+  height: 50%;
+}
 .main .mdl-card{
   margin-top:15px !important;
 }
@@ -16,6 +26,7 @@
 }
 
 .mdl-layout__header-row .navIcon{
+  cursor: pointer;
   float: right !important;
   color: #5C272D !important;
   font-size: 24px !important;

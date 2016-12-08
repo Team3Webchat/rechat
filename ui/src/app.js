@@ -9,8 +9,8 @@ import RegisterContainer from './components/pages/register/register-container'
 
 
 import FriendProfile from './components/pages/profile-page/friend-profile-page/friend-profile-container'
-import ProfileContainer from './components/pages/profile-page/profile-container'
 import ChangePassword from './components/pages/profile-page/profile-container'
+import ProfileContainer from './components/pages/profile-page/profiledisplayer'
 import ChatContainer from './components/pages/chat-page/chat-container'
 
 import { loginUserSuccess } from './lib/actions/authActions'

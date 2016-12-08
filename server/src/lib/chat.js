@@ -69,7 +69,8 @@ export const onPrivateConversation = async (data, socket) => {
 
 
 export const onDeleteConversation = async ({ chatId } , io) => {
-  return Message.destroy({
+  //Delete conversation
+  Message.destroy({
     where: {
       chatId,
     },

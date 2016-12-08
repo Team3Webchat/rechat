@@ -1,38 +1,56 @@
-import React from 'react'
-import { CardTitle, CardMenu, CardText, IconButton } from 'react-mdl'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Card, CardTitle, CardMenu, CardText, IconButton } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
 import './style.css'
 import './../style-card-common.css'
 
-const ProfileDisplayer = (props) => {
-  const { email, name } = props.user
-  const { doToggleEdit } = props
-//to={`/me/edit`} <- edit
-  return (
-    <div>
-      <Gravatar email={email} size={130}/>
-      <CardTitle className="cardTitle">
-        <h3>{name}</h3>
-      </CardTitle>
-      <CardMenu className="cardMenu">
-        <Link>
-          <IconButton name="mode_edit" className="iconButton" onClick={doToggleEdit}/>
-        </Link>
-        <Link to={`/`}>
-          <IconButton name="close" className="iconButton"/>
-        </Link>
-      </CardMenu>
-      <CardText className='info'>
-        <div className='key'><p>E-mail</p></div>
-        <div className='value'><p>{email}</p></div>
-      </CardText>
-    </div>
-  )
+//const ProfileDisplayer = (props) => {
+class ProfileDisplayer extends Component {
+  render(){
+    const { email, name } = this.props.user
+    return (
+      <Card className='profileCard' shadow={0}>
+        <Gravatar email={email} size={130}/>
+        <CardTitle className="cardTitle">
+          <h3>{name}</h3>
+        </CardTitle>
+        <CardMenu className="cardMenu">
+          <Link to={`/me/edit`}>
+            <IconButton name="mode_edit" className="iconButton" />
+          </Link>
+          <Link to={`/`}>
+            <IconButton name="close" className="iconButton"/>
+          </Link>
+        </CardMenu>
+        <CardText className='info'>
+          <div className="info-row">
+            <div className='key'><p>E-mail</p></div>
+            <div className='value'><p>{email}</p></div>
+          </div>
+        </CardText>
+      </Card>
+    )
+  }
 }
 /*
 <Card className='profileCard' shadow={0} >
 </Card>
 */
-export default ProfileDisplayer
+const mapStateToProps = state => ({
+  user: {
+    email: state.auth.email,
+    id: state.auth.id,
+    name: state.auth.name,
+  },
+  isAuthenticating: state.auth.isAuthenticating,
+  flash: state.flash,
+})
+const mapDispatchToProps = dispatch => ({
+})
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileDisplayer)

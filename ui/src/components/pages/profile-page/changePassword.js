@@ -1,14 +1,15 @@
 import React, { PropTypes } from 'react'
+
+import { Link } from 'react-router'
 import {  CardActions, Button, Textfield, CardTitle, CardMenu, IconButton, CardText } from 'react-mdl'
 
 import FlashMessage from '../../flash-message/flash-message'
 
 import './style.css'
-import './../style-card-common.css'
 
 const ChangePassword = (props) => {
   const { email } = props.user
-  const { onChange, password, doToggleProfile, newPasswordConfirm, newPassword, onSubmit, flash } = props
+  const { onChange, onSubmit, password, newPasswordConfirm, newPassword, flash } = props
 
   return (
     <div>
@@ -16,7 +17,9 @@ const ChangePassword = (props) => {
         <h3 className="changePasswordTitle">Change password</h3>
       </CardTitle>
       <CardMenu className="cardMenu">
-        <IconButton name="close" onClick={doToggleProfile}  className="iconButton"/>
+        <Link to={`/me`}>
+          <IconButton name="close" className="iconButton"/>
+        </Link>
       </CardMenu>
       <form onSubmit={onSubmit}>
       <CardText className='ChangePasswordForm'>
@@ -43,9 +46,8 @@ const ChangePassword = (props) => {
             onChange={onChange('password')}
         /></div>
         <div>
-          { flash.message ?
-              <FlashMessage message={flash.message} type={flash.type} inline={true}/>
-              : ''
+          { flash.message &&
+            <FlashMessage message={flash.message} type={flash.type} inline={true}/>
           }
         {
           newPassword !== newPasswordConfirm &&
@@ -75,16 +77,16 @@ const ChangePassword = (props) => {
         password.length === 0 ||
         newPassword.length < 6 }
         >Save</Button>
-        <Button type='button' onClick={doToggleProfile}>Cancel</Button>
+        <Link to={`/me`}>
+          <Button type='button'>Cancel</Button>
+        </Link>
+
       </CardActions>
       </form>
     </div>
   )
 }
-/*
-<Card className='profileCard'  shadow={0}>
-</Card>
-*/
+
 ChangePassword.propTypes = {
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
@@ -92,5 +94,6 @@ ChangePassword.propTypes = {
   newPassword: PropTypes.string.isRequired,
   newPasswordConfirm: PropTypes.string.isRequired,
 }
+
 
 export default ChangePassword

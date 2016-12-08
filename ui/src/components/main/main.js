@@ -84,10 +84,15 @@ class Main extends Component {
             <FlashMessage
             message={flash.message}
             type={flash.type}
+            inline={false}
             />
           }
 
-          {this.props.children}
+          {this.props.children ?
+            this.props.children
+            :
+            <p className='nothing'>Search for friends and start a conversation</p>
+          }
 
 
           </main>
