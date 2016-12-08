@@ -25,7 +25,6 @@ const SearchBox = (props) => {
 
 const SearchResults = (props) => {
   const { searchResults, addFriend } = props
-  console.log(searchResults)
   return (
     <List>
       {searchResults.map(function (user) {

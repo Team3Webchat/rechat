@@ -39,10 +39,12 @@ class Search extends Component {
   }
 
   filterSearchResults = () => {
-    const { searchResults, friends, sentFriendRequests } = this.props
-    const filteredResults = searchResults.map((user) => {
-      user.isFriends = (friends.find(f => f.id === user.id) != null || sentFriendRequests.find(f => f.id === user.id)) ? true : false
-      return user
+    const { searchResults, friends, sentFriendRequests, userId } = this.props
+    let count = 0
+    const filteredResults = searchResults.filter((user) => {
+      const id = user.id
+      user.isFriends = (friends.find(f => f.id === user.id) != null || sentFriendRequests.find(f => f.id === user.id) || user.id === userId) ? true : false
+      return id !== userId
     })
     return filteredResults
   }
