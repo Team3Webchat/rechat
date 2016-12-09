@@ -62,3 +62,14 @@
   width: 40px !important;
   margin-right: 10px !important;
 }
+
+@media screen and (max-width: 600px){
+  #searchBox{
+  margin: unset;
+  position: absolute !important;
+  left:0;
+  width:100%;
+  
+}
+
+}
