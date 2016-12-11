@@ -66,15 +66,11 @@ class Main extends Component {
       <div>
          <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>
 
-          <Header title="ReChat" >
+          <Header title={<div className="title">ReChat</div>}>
              <Navigation>
-
                <Search toggleShowSearch={this.toggleShowSearch} showSearch={showSearch} searchValue={searchValue}/>
-
                <FriendRequestContainer toggleShowRequests={this.toggleShowRequests} showRequests={showRequests}/>
-
                <Icon name="exit_to_app" className='navIcon' onClick={doLogout}/>
-
             </Navigation>
           </Header>
 
@@ -98,6 +94,7 @@ class Main extends Component {
           </main>
         </Layout>
       </div>
+
     )
   }
 }

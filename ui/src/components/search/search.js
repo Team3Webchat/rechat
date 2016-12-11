@@ -66,10 +66,10 @@ class Search extends Component {
     const { addFriend, showSearch, failure } = this.props
 
     return (
-      <div>
+      <div className="search">
         <form id='searchForm' onSubmit={this.handleSubmit} autoComplete="off">
           <Textfield
-            label='Name'
+            label="Name"
             required
             value={searchValue}
             onChange={this.handleChange('searchValue')}

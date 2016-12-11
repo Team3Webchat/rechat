@@ -7,9 +7,7 @@
 #searchForm .mdl-button:hover {
     background-color: transparent !important;
 }
-#searchForm{
-  max-width: 1200px;
-}
+
 #searchForm .material-icons{
   transition: 0.3s ease;
   color: #5C272D !important;
@@ -21,6 +19,7 @@
 #searchForm input{
   max-width: 100% !important;
 }
+
 #searchForm .mdl-textfield{
   padding: 20px;
 }
@@ -64,12 +63,26 @@
 }
 
 @media screen and (max-width: 600px){
-  #searchBox{
+#searchBox{
   margin: unset;
   position: absolute !important;
   left:0;
   width:100%;
-  
+  margin-right:0 !important;
+  top:60px !important;
+  }
+
+#searchForm{
+  position: absolute;
+	right:112px !important;
+  top:-5px !important;
+  height: 60px !important;
+  z-index: 10 !important;
+}
+
+#searchForm .mdl-textfield{
+  padding-right:0;
+  padding-left:0;
 }
 
 }
