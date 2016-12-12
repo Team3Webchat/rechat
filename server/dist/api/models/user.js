@@ -40,6 +40,21 @@ exports.default = function (sequelize, DataTypes) {
       type: DataTypes.STRING,
       notEmpty: true,
       allowNull: false
+    },
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      notEmpty: false,
+      allowNull: false
+    },
+    isBanned: {
+      type: DataTypes.BOOLEAN,
+      notEmpty: false,
+      allowNull: false
+    },
+    reportedByOthersCount: {
+      type: DataTypes.INTEGER,
+      notEmpty: false,
+      allowNull: false
     }
 
   }, {

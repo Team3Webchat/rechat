@@ -31,28 +31,24 @@ var search = exports.search = function () {
           case 6:
             users = _context.sent;
 
-
-            if (users.length == 0) {
+            if (users.length === 0) {
               _message = JSON.stringify({ results: { status: 'error', code: ['User not found'] } });
 
               res.send(_message);
             } else {
               res.send(JSON.stringify({ results: users }));
-              console.log(users);
             }
-            _context.next = 15;
+            _context.next = 14;
             break;
 
           case 10:
             _context.prev = 10;
             _context.t0 = _context['catch'](0);
-
-            console.log(_context.t0);
             _message2 = JSON.stringify({ results: { status: 'error', code: _context.t0 } });
 
             res.send(_message2);
 
-          case 15:
+          case 14:
           case 'end':
             return _context.stop();
         }
