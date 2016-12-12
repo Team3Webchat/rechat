@@ -14,9 +14,9 @@ var createServer = function () {
           case 0:
             app = (0, _express2.default)();
             server = _http2.default.createServer(app);
-            io = (0, _chat.createSocket)(app, server);
+            io = (0, _socket.createSocket)(app, server);
 
-            (0, _chat.startSocket)(io);
+            (0, _socket.startSocket)(io);
 
             // Apply 3rd party middleware
             app.use((0, _cors2.default)());
@@ -55,9 +55,12 @@ var createServer = function () {
               return next(err);
             });
 
+            // setup chat history clearing, runs once every night at 00.00
+            _nodeCron2.default.schedule('0 0 0 * * *', _chatHistoryCleaner.clearOldChatHistory);
+
             return _context.abrupt('return', server);
 
-          case 14:
+          case 15:
           case 'end':
             return _context.stop();
         }
@@ -138,11 +141,11 @@ var _expressWinston = require('express-winston');
 
 var _expressWinston2 = _interopRequireDefault(_expressWinston);
 
-var _socket = require('socket.io');
+var _nodeCron = require('node-cron');
 
-var _socket2 = _interopRequireDefault(_socket);
+var _nodeCron2 = _interopRequireDefault(_nodeCron);
 
-var _chat = require('../lib/chat');
+var _socket = require('../lib/socket');
 
 var _routes = require('./routes');
 
@@ -152,7 +155,7 @@ var _auth = require('../lib/auth');
 
 var _auth2 = _interopRequireDefault(_auth);
 
-var _models = require('./models');
+var _chatHistoryCleaner = require('../lib/chat-history-cleaner');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

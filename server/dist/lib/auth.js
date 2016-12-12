@@ -144,7 +144,7 @@ function login(req, res, next, message) {
 
   _passport2.default.authenticate('local', function () {
     var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(err, user, info) {
-      var _ref4, _ref5, friends, friendRequests, sentFriendRequests;
+      var _ref4, _ref5, friends, friendRequests, sentFriendRequests, chats;
 
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
@@ -158,33 +158,37 @@ function login(req, res, next, message) {
               return _context3.abrupt('return', next(err));
 
             case 2:
-              if (user) {
-                _context3.next = 4;
+              console.log('is banned : ' + user.dataValues.isBanned);
+
+              if (!(!user || user.dataValues.isBanned)) {
+                _context3.next = 5;
                 break;
               }
 
               return _context3.abrupt('return', res.status(401).json({ status: 'error', code: 'unauthorized' }));
 
-            case 4:
-              _context3.next = 6;
-              return _bluebird2.default.all([user.friends(), user.friendRequests(), user.sentFriendRequests()]);
+            case 5:
+              _context3.next = 7;
+              return _bluebird2.default.all([user.friends(), user.friendRequests(), user.sentFriendRequests(), user.getChats()]);
 
-            case 6:
+            case 7:
               _ref4 = _context3.sent;
-              _ref5 = _slicedToArray(_ref4, 3);
+              _ref5 = _slicedToArray(_ref4, 4);
               friends = _ref5[0];
               friendRequests = _ref5[1];
               sentFriendRequests = _ref5[2];
+              chats = _ref5[3];
               return _context3.abrupt('return', res.json({
                 message: message,
                 token: _jsonwebtoken2.default.sign({ email: user.email, fullname: user.fullname(), id: user.id }, jwtSecret),
                 user: user,
                 friends: friends,
                 friendRequests: friendRequests,
-                sentFriendRequests: sentFriendRequests
+                sentFriendRequests: sentFriendRequests,
+                chats: chats
               }));
 
-            case 12:
+            case 14:
             case 'end':
               return _context3.stop();
           }
