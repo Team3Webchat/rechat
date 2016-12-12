@@ -16,8 +16,10 @@ import {
   ACCEPT_FRIEND_REQUEST_SUCCESS,
   DELETE_FRIEND_SUCCESS,
 } from '../actions/friendsActions'
+import { API_URL } from '../config'
 
 const socketMiddleware = (function() {
+  console.log(API_URL)
   let socket = null
   let authenticated = false
 
@@ -25,7 +27,6 @@ const socketMiddleware = (function() {
     socket.emit('authenticate', { token })
     .on('authenticated', () => {
       authenticated = true
-      console.log('Socket connection authenticated with token')
     })
     .on('unauthorized', function(msg) {
       console.log('unauthorized: ' + JSON.stringify(msg.data))
@@ -68,7 +69,7 @@ const socketMiddleware = (function() {
     switch (action.type) {
       case LOGIN_USER_SUCCESS:
 
-        socket = io('http://localhost:8000')
+        socket = io(API_URL)
 
         socket.on('connect', () => onConnect(socket, store, action.payload.token))
         socket.on('disconnect', () => onDisconnect(socket, store))
