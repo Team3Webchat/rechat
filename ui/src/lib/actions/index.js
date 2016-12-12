@@ -1,11 +1,10 @@
+import { API_URL } from '../config'
+
 export const REQUEST_TEST_DATA = 'REQUEST_TEST_DATA'
 export const RECEIVE_TEST_DATA = 'RECEIVE_TEST_DATA'
 
-const env = process.env.NODE_ENV || 'production'
-
-export const baseUrl = env === 'production' 
-  ? 'https://apirechat.herokuapp.com/api/'
-  : 'http://localhost:8000/api/'
+export const baseUrl = `${API_URL}/api/`
+console.log(API_URL)
 export function requestTestData() {
   return {
     type: REQUEST_TEST_DATA,
