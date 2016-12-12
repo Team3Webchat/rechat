@@ -144,7 +144,7 @@ function login(req, res, next, message) {
 
   _passport2.default.authenticate('local', function () {
     var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(err, user, info) {
-      var _ref4, _ref5, friends, friendRequests, sentFriendRequests;
+      var _ref4, _ref5, friends, friendRequests, sentFriendRequests, chats;
 
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
@@ -167,24 +167,26 @@ function login(req, res, next, message) {
 
             case 4:
               _context3.next = 6;
-              return _bluebird2.default.all([user.friends(), user.friendRequests(), user.sentFriendRequests()]);
+              return _bluebird2.default.all([user.friends(), user.friendRequests(), user.sentFriendRequests(), user.getChats()]);
 
             case 6:
               _ref4 = _context3.sent;
-              _ref5 = _slicedToArray(_ref4, 3);
+              _ref5 = _slicedToArray(_ref4, 4);
               friends = _ref5[0];
               friendRequests = _ref5[1];
               sentFriendRequests = _ref5[2];
+              chats = _ref5[3];
               return _context3.abrupt('return', res.json({
                 message: message,
                 token: _jsonwebtoken2.default.sign({ email: user.email, fullname: user.fullname(), id: user.id }, jwtSecret),
                 user: user,
                 friends: friends,
                 friendRequests: friendRequests,
-                sentFriendRequests: sentFriendRequests
+                sentFriendRequests: sentFriendRequests,
+                chats: chats
               }));
 
-            case 12:
+            case 13:
             case 'end':
               return _context3.stop();
           }
