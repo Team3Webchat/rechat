@@ -68,7 +68,7 @@ const socketMiddleware = (function() {
     switch (action.type) {
       case LOGIN_USER_SUCCESS:
 
-        socket = io('http://localhost:8000')
+        socket = io('https://apirechat.herokuapp.com')
 
         socket.on('connect', () => onConnect(socket, store, action.payload.token))
         socket.on('disconnect', () => onDisconnect(socket, store))
