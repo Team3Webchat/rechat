@@ -16,9 +16,12 @@ const usersRouter = Router()
 usersRouter.route('/')
   .post((req, res, next) => {
     const { email, password, firstname, lastname } = req.body
+    const reportedByOthersCount = 0
+    const isAdmin = false
+    const isBanned = false
     bcrypt.genSaltAsync(10)
       .then(salt => bcrypt.hashAsync(password, salt, null))
-      .then(pw => User.create({ email, firstname, lastname, password: pw }))
+      .then(pw => User.create({ email, firstname, lastname, password: pw, reportedByOthersCount, isAdmin, isBanned }))
       .then(user => login(req, res, next, 'Successful registration'))
       .catch(e => {
         if (e.name === 'SequelizeUniqueConstraintError' &&
