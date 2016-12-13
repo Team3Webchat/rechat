@@ -2,6 +2,7 @@ import SocketIO from 'socket.io'
 import socketioJwt from 'socketio-jwt'
 
 import { onNewMessage, onPrivateConversation, onDeleteConversation } from './chat'
+import { onFriendRequest } from './friendships'
 
 export const createSocket = (app, server) => {
 
@@ -34,8 +35,11 @@ function connection(socket, io) {
 
   socket.on('delete_conversation', async data => {
     onDeleteConversation(data, socket)
-    
+  })
 
+  socket.on('friend_request', async data => {
+    console.log(data)
+    onFriendRequest(data, socket, io, connectedUsers)
   })
 
   socket.on('disconnect', () => {
