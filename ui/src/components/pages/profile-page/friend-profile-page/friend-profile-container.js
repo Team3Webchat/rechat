@@ -20,6 +20,7 @@ class ProfileContainer extends Component {
     this.state = {
       openFriendDialog: false,
       friend: null,
+      reportDetails:'',
     }
   }
   //DELETE FRIEND CONFIRM
@@ -44,10 +45,20 @@ class ProfileContainer extends Component {
   handleReportFriend = (id) =>  {
     this.props.doReportFriend(id)
     this.handleCloseConfirms()
+    const { reportDetails } = this.state
+    this.setState({
+      reportDetails: '',
+    })
   }
   handleDeleteFriend = (id) =>  {
     this.props.doDeleteFriend(id)
     this.handleCloseFriendConfirm()
+  }
+
+  handleChange = e => {
+    this.setState({
+      reportDetails: e.target.value,
+    })
   }
 
 
@@ -114,26 +125,29 @@ class ProfileContainer extends Component {
       <div>
       {friend != null &&
         <ProfileDisplayer
-        friend={friend}
-
-        handleDeleteFriendConfirm={this.handleDeleteFriendConfirm}
-        handleReportFriendConfirm={this.handleReportFriendConfirm}
-
-        addFriend={this.props.doAddFriend}/>
+          friend={friend}
+          handleDeleteFriendConfirm={this.handleDeleteFriendConfirm}
+          handleReportFriendConfirm={this.handleReportFriendConfirm}
+          addFriend={this.props.doAddFriend}
+        />
       }
       { openFriendDialog &&
         <DeleteFriendConfirm
-        friend={friend}
-        openFriendDialog={openFriendDialog}
-        handleCloseFriendDialog={this.handleCloseConfirms}
-        handleDeleteFriend={this.handleDeleteFriend}/>
+          friend={friend}
+          openFriendDialog={openFriendDialog}
+          handleCloseFriendDialog={this.handleCloseConfirms}
+          handleDeleteFriend={this.handleDeleteFriend}
+        />
       }
       { openReportDialog &&
         <ReportFriendConfirm
-        friend={friend}
-        openReportDialog={openReportDialog}
-        handleCloseReportDialog={this.handleCloseConfirms}
-        handleReportFriend={this.handleReportFriend}/>
+          onChange={this.handleChange}
+          friend={friend}
+          openReportDialog={openReportDialog}
+          handleCloseReportDialog={this.handleCloseConfirms}
+          handleReportFriend={this.handleReportFriend}
+          reportDetails={this.state.reportDetails}
+        />
       }
       </div>
     )
