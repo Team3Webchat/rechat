@@ -12,9 +12,14 @@ import {
 } from '../actions/chatActions'
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from '../actions/authActions'
 import {
+  SEND_FRIEND_REQUEST,
   SEND_FRIEND_REQUEST_SUCCESS,
   ACCEPT_FRIEND_REQUEST_SUCCESS,
   DELETE_FRIEND_SUCCESS,
+  sendFriendRequest,
+  sendFriendRequestFailure,
+  sendFriendRequestSuccess,
+  gotFriendRequest,
 } from '../actions/friendsActions'
 import { API_URL } from '../config'
 
@@ -36,7 +41,6 @@ const socketMiddleware = (function() {
   }
 
   const onDisconnect = (ws, store) => {
-
     store.dispatch(disconnect())
   }
 
@@ -58,8 +62,21 @@ const socketMiddleware = (function() {
     }))
   }
 
-  const onFriendRequest = (ws, store, data) => {
+
+  const onSentFriendRequests = (ws, store, data) => {
     console.log(data)
+    store.dispatch(sendFriendRequestSuccess({
+      flash: {
+        message: 'Sent friend request to a fella',
+        type: 'success',
+      }, 
+      sentFriendRequests: data.sentFriendRequests,
+    }))
+  }
+
+  const onGottenFriendRequest = (ws, store, data) => {
+    console.log(data)
+    store.dispatch(gotFriendRequest(data.friend))
   }
 
   const onDeleteFriend = (ws, store, data) => {
@@ -75,7 +92,8 @@ const socketMiddleware = (function() {
         socket.on('disconnect', () => onDisconnect(socket, store))
         socket.on('private_conversation_start', data => onPrivateConversationStart(socket, store, data))
         socket.on('new_message', data => onNewMessage(socket, store, data))
-        socket.on('friend_request', data => onFriendRequest(socket, store, data))
+        socket.on('friend_request_sent', data => onSentFriendRequests(socket, store, data))
+        socket.on('friend_request_gotten', data => onGottenFriendRequest(socket, store, data))
         socket.on('delete_friend', data => onDeleteFriend(socket, store, data))
 
         socket.on('private_conversation_start', data => {
@@ -116,16 +134,14 @@ const socketMiddleware = (function() {
         })
         return next(action)
       case DELETE_CHAT_HISTORY:
-        console.log('I MIDDLEWARE');
-        console.log(action.payload.chatId);
-        //
         socket.emit('new_message', {
           content: 'A user in this chat has deleted the chat-history for security reasons',
           userId: 'system',
           chatId: action.payload.chatId,
         })
         return next(action)
-      case SEND_FRIEND_REQUEST_SUCCESS:
+      case SEND_FRIEND_REQUEST:
+        console.log(action.payload)
         socket.emit('friend_request', { id: action.payload.friendId })
         return next(action)
 
