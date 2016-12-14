@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import {  } from 'react-mdl'
+import { Spinner } from 'react-mdl'
 import ChatDisplayer from './chatdisplayer'
 
 import { sendPrivateMessage, selectActiveChat, deleteChatHistory } from '../../../lib/actions/chatActions'
@@ -66,7 +66,6 @@ class ChatContainer extends Component {
     if (!this.props.isLoading) {
       return (
         <div>
-          <div>
             <ChatDisplayer
               onChange={this.handleChange}
               onSubmit={this.sendMessage}
@@ -76,8 +75,6 @@ class ChatContainer extends Component {
               friendsName={`${this.props.friend.firstname} ${this.props.friend.lastname}`}
               deleteChatConfirm={this.handleDeleteChatConfirm}
             />
-          </div>
-          <div>
             { openChatDialog &&
               <DeleteChatConfirm
               chat={this.state.deleteChat}
@@ -85,11 +82,10 @@ class ChatContainer extends Component {
               handleCloseChatDialog={this.handleCloseChatConfirm}
               clearChatHistory={() => clearChatHistory(activeChat.chatId, friendId)}/>
             }
-          </div>
         </div>
       )
     } else {
-      return <p>Loading...</p>
+      return <div className='loading-chat'><Spinner /></div>
     }
   }
 }

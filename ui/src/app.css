@@ -1,1 +1,24 @@
-
+@keyframes changeColor {
+  0%   {color: blue;}
+  30%  {color: red;}
+  55%  {color: rgb(214, 148, 0);}
+  80%  {color: green;}
+  100%   {color: blue;}
+}
+.loading-app{
+  width: 230px;
+  height: 230px;
+  margin-top: 15%!important;
+  margin: auto;
+}
+.loading-app .mdl-spinner{
+  width: 100%;
+  height: 100%;
+}
+.loading-app h4{
+  font-size: 20px;
+  color: blue;
+  animation-name: changeColor;
+  animation-duration: 6s;
+  animation-iteration-count: infinite;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Layout, Header, Navigation, Icon} from 'react-mdl'
+import { Layout, Header, Navigation, Icon } from 'react-mdl'
 import { push } from 'react-router-redux'
 import Search from '../search/search'
 import DrawerClass from '../drawer/drawer'
@@ -10,6 +10,7 @@ import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
 import { endSearch } from '../../lib/actions/searchActions'
 
+import AdminList from '../pages/Admin-page/Admin-list'
 
 import './style.css'
 
@@ -84,13 +85,13 @@ class Main extends Component {
             />
           }
 
+          <AdminList/>
+
           {this.props.children ?
             this.props.children
             :
             <p className='nothing'>Search for friends and start a conversation</p>
           }
-
-
           </main>
         </Layout>
       </div>

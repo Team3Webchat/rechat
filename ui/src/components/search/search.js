@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Textfield } from 'react-mdl'
 
-import { searchUser, endSearch } from '../../lib/actions/searchActions'
+import { searchUser, searchUserFailure } from '../../lib/actions/searchActions'
 import { sendFriendRequest } from '../../lib/actions/friendsActions'
 import SearchBox from './searchBox'
 
@@ -40,8 +40,10 @@ class Search extends Component {
 
   filterSearchResults = () => {
     const { searchResults, friends, sentFriendRequests, userId } = this.props
+
     if (!searchResults) return []
     let count = 0
+
     const filteredResults = searchResults.filter((user) => {
       const id = user.id
       user.isFriends = (friends.find(f => f.id === user.id) != null || sentFriendRequests.find(f => f.id === user.id) || user.id === userId) ? true : false
@@ -103,7 +105,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   doSearch: (searchValue) => dispatch(searchUser(searchValue)),
-  endSearch: () => dispatch(endSearch()),
+  searchUserFailure: () => dispatch(searchUserFailure()),
   addFriend: id => dispatch(sendFriendRequest(id)),
 })
 
