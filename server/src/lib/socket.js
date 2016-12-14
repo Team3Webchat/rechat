@@ -34,7 +34,8 @@ function connection(socket, io) {
   })
 
   socket.on('delete_conversation', async data => {
-    onDeleteConversation(data, socket)
+    console.log(data)
+    onDeleteConversation(data, io, connectedUsers)
   })
 
   socket.on('friend_request', async data => {

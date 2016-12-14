@@ -59,11 +59,16 @@ export const onPrivateConversation = async (data, socket) => {
 }
 
 
-export const onDeleteConversation = async ({ chatId } , io) => {
+export const onDeleteConversation = async ({ chatId, friendId }, io, connectedUsers) => {
   //Delete conversation
-  Message.destroy({
+  await Message.destroy({
     where: {
       chatId,
     },
   })
+  console.log(friendId)
+  console.log(connectedUsers)
+  io.to(connectedUsers[friendId]).emit('delete_conversation', { chatId })
+
+  
 }
