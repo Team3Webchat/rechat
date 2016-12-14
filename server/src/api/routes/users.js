@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken'
 Promise.promisifyAll(jwt)
 Promise.promisifyAll(bcrypt)
 
-const { User, Friendship } = models
+const { User, Friendship, Chat } = models
 const usersRouter = Router()
 
 
@@ -65,6 +65,9 @@ usersRouter.route('/:id')
     }
   })
   .put(async (req, res, next) => {
+    if (req.params.id !== req.user.dataValues.id) {
+      return res.status(403).json({ message: 'Cannot update someone elses password '})
+    }
     const user = await User.findOne({ where: { id: req.user.dataValues.id }})
     bcrypt.genSaltAsync(10)
        .then(salt => bcrypt.hashAsync(req.body.password, salt, null))
@@ -74,6 +77,20 @@ usersRouter.route('/:id')
        .catch(err => res.json(err))
       //  .catch(err => res.json('something went wrong'))
 
+  })
+  .delete(async (req, res, next) => {
+    const { user } = req
+    const { id } = user.dataValues
+    if (id !== req.params.id && !user.isAdmin) {
+      return res.status(403).json({ message: 'You cannot delete this account'})
+    }
+    await User.destroy({
+      where: {
+        id: user.dataValues.id,
+      }
+    })
+
+    res.status(200).json({ message: 'Deleted kinda'})
   })
 
 

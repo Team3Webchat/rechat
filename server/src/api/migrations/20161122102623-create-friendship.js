@@ -20,12 +20,14 @@ module.exports = {
         type: Sequelize.DATE
       },
       userId: {
-        allowNull: false,
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        references: { model: 'users', key: 'id' },
+        onDelete: 'cascade'
       },
       friendId: {
-        allowNull: false,
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        references: { model: 'users', key: 'id' },
+        onDelete: 'cascade'
         
       }
     });

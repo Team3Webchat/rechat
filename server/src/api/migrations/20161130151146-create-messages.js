@@ -23,12 +23,14 @@ module.exports = {
       userId: {
         type: Sequelize.UUID,
         allowNull: false,
-        references: { model: 'users', key: 'id'}
+        references: { model: 'users', key: 'id'},
+        onDelete: 'cascade'
       }, 
       chatId: {
         type: Sequelize.UUID,
         allowNull: false,
-        references: { model: 'chats', key: 'id'}
+        references: { model: 'chats', key: 'id'},
+        cascade: 'cascade'
       }
     })
   },
