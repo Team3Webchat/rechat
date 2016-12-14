@@ -15,7 +15,7 @@ class FriendRequestContainer extends Component {
   deny = id => {
     this.props.deny(id)
   }
-
+  
   render() {
     const { friendRequests, toggleShowRequests, showRequests } = this.props
 

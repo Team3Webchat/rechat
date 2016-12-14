@@ -65,12 +65,14 @@ export default (sequelize, DataTypes) => {
           models.User.belongsToMany(models.User,
             {
               as: 'friends',
-              through: models.Friendship,
+              through: models.Friendship
             }
           )
           models.User.belongsToMany(models.Chat, {
             through: models.ChatParticipant,
             as: 'chats',
+            onDelete: 'cascade',
+            hooks: true
           })
 
           models.User.hasMany(models.Message)

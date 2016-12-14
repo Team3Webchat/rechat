@@ -2,10 +2,12 @@ import { baseUrl } from './'
 import { getHeaders } from '../api'
 import { getUserId, getReportedByOthersCount } from '../selectors'
 
+export const SEND_FRIEND_REQUEST = 'SEND_FRIEND_REQUEST'
+export const GOT_FRIEND_REQUEST = 'GOT_FRIEND_REQUEST'
 export const SEND_FRIEND_REQUEST_SUCCESS = 'SEND_FRIEND_REQUEST_SUCCESS'
 export const SEND_FRIEND_REQUEST_FAILURE = 'SEND_FRIEND_REQUEST_FAILURE'
 
-const sendFriendRequestSuccess = ({ flash, sentFriendRequests }) => ({
+export const sendFriendRequestSuccess = ({ flash, sentFriendRequests }) => ({
   type: SEND_FRIEND_REQUEST_SUCCESS,
   payload: {
     flash,
@@ -13,42 +15,65 @@ const sendFriendRequestSuccess = ({ flash, sentFriendRequests }) => ({
   },
 })
 
-const sendFriendRequestFailure = ({ flash }) => ({
+export const sendFriendRequestFailure = ({ flash }) => ({
   type: SEND_FRIEND_REQUEST_FAILURE,
   payload: {
     flash,
   },
 })
 
-export const sendFriendRequest = (friendId) =>
-  async function(dispatch) {
-    try {
-      const res = await fetch(`${baseUrl}users/${friendId}/friends`, {
-        method: 'POST',
-        headers: getHeaders(),
-      })
 
-      if (res.status === 400)
-        throw new Error('You are already friends with this person')
-
-      const json = await res.json()
-      dispatch(sendFriendRequestSuccess({
-        flash: {
-          message: 'Friend request sent',
-          type: 'success',
-        },
-        sentFriendRequests: json.sentFriendRequests,
-      }))
-
-    } catch(e) {
-      dispatch(sendFriendRequestFailure({
-        flash: {
-          message: e.message,
-          type: 'fail',
-        },
-      }))
-    }
+export const sendFriendRequest = (friendId) => ({
+  type: SEND_FRIEND_REQUEST,
+  payload: {
+    friendId,
   }
+})
+
+export const gotFriendRequest = friend => ({
+  type: GOT_FRIEND_REQUEST,
+  payload: {
+    flash: {
+      message: 'Got a friend request',
+      type: 'success',
+    },
+    friend
+  }
+})
+  // async function(dispatch) {
+  //   dispatch({
+  //     type: SEND_FRIEND_REQUEST,
+  //     payload: {
+  //       friendId,
+  //     }
+  //   })
+  //   try {
+  //     const res = await fetch(`${baseUrl}users/${friendId}/friends`, {
+  //       method: 'POST',
+  //       headers: getHeaders(),
+  //     })
+
+  //     if (res.status === 400)
+  //       throw new Error('You are already friends with this person')
+
+  //     const json = await res.json()
+  //     dispatch(sendFriendRequestSuccess({
+  //       flash: {
+  //         message: 'Friend request sent',
+  //         type: 'success',
+  //       },
+  //       sentFriendRequests: json.sentFriendRequests,
+  //     }))
+
+  //   } catch(e) {
+  //     dispatch(sendFriendRequestFailure({
+  //       flash: {
+  //         message: e.message,
+  //         type: 'fail',
+  //       },
+  //     }))
+  //   }
+  // }
 
 
 

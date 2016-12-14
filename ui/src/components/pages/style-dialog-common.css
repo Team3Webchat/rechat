@@ -1,0 +1,34 @@
+.mdl-dialog {
+  padding:0 !important;
+}
+
+.dialogMedium {
+  width:500px !important;
+}
+
+.mdl-dialog__title {
+  font-size: 20px !important;
+}
+
+.bold{
+  font-weight:bold;
+  color:black;
+}
+
+.dialogMedium .mdl-textfield{
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding-top:0px !important;
+  margin-top:16px !important;
+}
+
+.dialogActionsBorder{
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+@media screen and (max-width: 600px){
+
+.dialogMedium {
+  width:unset !important;
+}
+
+}

@@ -4,6 +4,7 @@ import {
   SEND_FRIEND_REQUEST_SUCCESS,
   ACCEPT_FRIEND_REQUEST_SUCCESS,
   DELETE_FRIEND_SUCCESS,
+  GOT_FRIEND_REQUEST,
 } from '../actions/friendsActions'
 
 const initialState = {
@@ -40,6 +41,12 @@ export default function friends(state = initialState, action) {
         ...state,
         sentFriendRequests: action.payload.sentFriendRequests,
       }
+    case GOT_FRIEND_REQUEST:
+      console.log(action.payload)
+      return {
+        ...state,
+        friendRequests: [...state.friendRequests, action.payload.friend],
+      }
     case DELETE_FRIEND_SUCCESS:
       const { friendId } = action.payload
       return {
@@ -48,6 +55,7 @@ export default function friends(state = initialState, action) {
         friendRequests: state.friendRequests.filter(f => f.id !== friendId),
         sentFriendRequests: state.sentFriendRequests.filter(f => f.id !== friendId),
       }
+    
 
     default:
       return state
