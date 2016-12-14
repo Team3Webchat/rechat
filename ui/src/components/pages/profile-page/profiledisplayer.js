@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Card, CardTitle, CardMenu, CardText, IconButton } from 'react-mdl'
+import { Card, CardTitle, CardMenu, CardText, IconButton, CardActions, Button } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
@@ -11,6 +11,7 @@ import './../style-card-common.css'
 class ProfileDisplayer extends Component {
   render(){
     const { email, name } = this.props.user
+    const { id, handleDeleteAccountConfirm } = this.props
     return (
       <Card className='profileCard' shadow={0}>
         <Gravatar email={email} size={130}/>
@@ -31,6 +32,9 @@ class ProfileDisplayer extends Component {
             <div className='value'><p>{email}</p></div>
           </div>
         </CardText>
+        <CardActions border>
+          <Button className='buttons' onClick={handleDeleteAccountConfirm}>Delete my Account</Button>
+        </CardActions>
       </Card>
     )
   }

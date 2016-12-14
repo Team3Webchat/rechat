@@ -14,7 +14,7 @@ const DeleteFriendConfirm = (props) => {
           <p>Remove <span className="bold">{firstname} {lastname}</span> from your contacts?</p>
         </DialogContent>
       <DialogActions>
-        <Button type='button' onClick={() => {handleDeleteFriend(id)}}>Confirm</Button>
+        <Button type='button' onClick={() => {handleDeleteFriend(id)}}>Remove</Button>
         <Button type='button' onClick={handleCloseFriendDialog}>Cancel</Button>
       </DialogActions>
     </Dialog>
