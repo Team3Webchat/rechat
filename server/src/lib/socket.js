@@ -2,7 +2,7 @@ import SocketIO from 'socket.io'
 import socketioJwt from 'socketio-jwt'
 
 import { onNewMessage, onPrivateConversation, onDeleteConversation } from './chat'
-import { onFriendRequest } from './friendships'
+import { onFriendRequest, onFriendRequestAccept } from './friendships'
 
 export const createSocket = (app, server) => {
 
@@ -49,7 +49,8 @@ function connection(socket, io) {
 
   socket.on('friend_request_accepted', async data => {
     console.log(data)
-    io.to(connectedUsers[data.id]).emit('friend_request_accepted', data)
+    onFriendRequestAccept(data, socket, io, connectedUsers)
+    
   })
 
 }
