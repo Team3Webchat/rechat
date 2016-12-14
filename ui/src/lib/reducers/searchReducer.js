@@ -2,7 +2,7 @@ import {
   SEARCH_USER_REQUEST,
   SEARCH_USER_SUCCESS,
   SEARCH_USER_FAILURE,
-  END_SEARCH,
+  SET_FAILURE,
 } from '../actions/searchActions'
 import { LOGOUT_USER } from '../actions/authActions'
 
@@ -37,7 +37,7 @@ function search(state = initialState, action) {
         failure: true,
         searchResults: action.payload.error,
       }
-    case END_SEARCH:
+
     case LOGOUT_USER:
       return initialState
     default:

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Router, Route } from 'react-router'
 import { Provider } from 'react-redux'
 import store, { history } from './lib/store'
+import { Spinner } from 'react-mdl'
 
 import Main from './components/main/main'
 import SignInContainer from './components/pages/sign-in/sign-in-container'
@@ -76,7 +77,8 @@ class App extends Component {
 
 
   render() {
-    if (this.state.loaded) {
+    //this.state.loaded
+    if (false) {
       return (
         <div className="App">
           <Provider store={store}>
@@ -95,10 +97,9 @@ class App extends Component {
       )
     } else {
       return (
-        <div>
-          <h1>This is a splash screen</h1>
+        <div className='loading-app'>
+          <Spinner />
           <h4>The application is loading</h4>
-          <p>Awesomesauce</p>
         </div>
       )
     }

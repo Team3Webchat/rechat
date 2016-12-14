@@ -5,6 +5,7 @@ export const SEARCH_USER_REQUEST = 'SEARCH_USER_REQUEST'
 export const SEARCH_USER_SUCCESS = 'SEARCH_USER_SUCCESS'
 export const SEARCH_USER_FAILURE = 'SEARCH_USER_FAILURE'
 export const END_SEARCH = 'END_SEARCH'
+export const SET_FAILURE = 'SET_FAILURE'
 
 export const searchUserRequest = () => ({
   type: SEARCH_USER_REQUEST,
@@ -26,6 +27,10 @@ export const searchUserFailure = (error) => ({
 
 export const endSearch = () => ({
   type: END_SEARCH,
+})
+
+export const setFailure = () => ({
+  type: SET_FAILURE,
 })
 
 

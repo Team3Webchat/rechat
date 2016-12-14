@@ -42,7 +42,7 @@ class AppDrawer extends React.Component {
       <Drawer>
         <Navigation id='profileLink'>
           <header>
-            <Gravatar size={40} email={email} />
+            <Gravatar size={50} email={email} />
             <Link to={`/me`}>{name}</Link>
           </header>
         </Navigation>
