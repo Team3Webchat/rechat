@@ -59,7 +59,7 @@ class Main extends Component {
             showSearch: true,
             searchResults: null,
             failure: true,
-          }
+          },
         })
       }
     }catch(e) {
@@ -92,7 +92,7 @@ class Main extends Component {
   }
 
   onClickOutside = (e) => {
-    if(!e.target.parentElement.classList.contains( 'addUser' ) &&
+    if(!e.target.classList.contains( 'addUser' ) &&
       !e.target.parentElement.classList.contains( 'searchResult' ) &&
       !e.target.parentElement.classList.contains( 'toRequests' )){
       console.log('onlick utanför ')
@@ -107,7 +107,6 @@ class Main extends Component {
     const { doLogout, flash } = this.props
     const { showRequests } = this.state
     const { showSearch, searchValue, searchResults, failure } = this.state.search
-    console.log(searchResults);
     return (
       <div>
          <Layout fixedHeader fixedDrawer onClick={this.onClickOutside} ref='layout'>

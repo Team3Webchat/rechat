@@ -54,10 +54,12 @@ class Search extends Component {
     return searchResults
   }
 
-  clearInput = () => {
-    this.setState({
-      searchValue: '',
-    })
+  clearInput = e => {
+    if(e.target.tagName !== 'INPUT'){
+      this.setState({
+        searchValue: '',
+      })
+    }
   }
 
 
