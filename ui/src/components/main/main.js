@@ -8,9 +8,7 @@ import FriendRequestContainer from '../pages/friend-request/friend-container'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
-
-import { baseUrl } from '../../lib/actions/index'
-import { getHeaders } from '../../lib/api'
+import { endSearch } from '../../lib/actions/searchActions'
 
 
 import './style.css'
@@ -21,105 +19,56 @@ class Main extends Component {
     super(props)
     this.state = {
       showRequests: false,
-      search: {
-        showSearch: false,
-        searchValue: '',
-        searchResults: [],
-        failure: true,
-      },
+      showSearch: false,
+      searchValue: '',
     }
-    this.getSearchResults = this.getSearchResults.bind(this)
   }
 
-  async getSearchResults(value){
-    try {
-      const res = await fetch(baseUrl + 'search', {
-        method: 'POST',
-        body: JSON.stringify({
-          searchValue: value,
-        }),
-        headers: getHeaders(),
-      })
-
-      const json = await res.json()
-      console.log(json.results)
-      if(json.results.length > 0){
-        this.setState({
-          search: {
-            searchValue: this.state.searchValue,
-            showSearch: true,
-            searchResults: json.results,
-            failure: false,
-          },
-        })
-      }else{
-        this.setState({
-          search: {
-            searchValue: this.state.searchValue,
-            showSearch: true,
-            searchResults: null,
-            failure: true,
-          },
-        })
-      }
-    }catch(e) {
-      console.log('wrong in getSearchResults')
-      //TODO: retunera felmeddelande NOT DONE YET
-    }
+  componentDidMount() {
+    // Just test code for sockets ignore..
   }
 
   toggleShowRequests = e => {
-    this.setState({
+    const state = {
       showRequests: !this.state.showRequests,
-      search: {
-        searchValue: '',
-        showSearch: false,
-        searchResults: null,
-        failure: true,
-      },
-    })
+      showSearch: false,
+      searchValue: '',
+    }
+    this.setState(state)
   }
-
-  closeSearchBox = () => {
-    this.setState({
-      search: {
-        searchValue: '',
-        showSearch: false,
-        searchResults: null,
-        failure: true,
-      },
-    })
+  toggleShowSearch = searchValue => {
+    const state = {
+      showRequests: false,
+      showSearch: !this.state.showSearch,
+      searchValue: searchValue,
+    }
+    this.setState(state)
   }
-
   onClickOutside = (e) => {
-    if(!e.target.classList.contains( 'addUser' ) &&
+    if(!e.target.parentElement.classList.contains( 'addUser' ) &&
       !e.target.parentElement.classList.contains( 'searchResult' ) &&
       !e.target.parentElement.classList.contains( 'toRequests' )){
-      console.log('onlick utanför ')
-      this.closeSearchBox()
-      console.log(this.input)
-      this.input.clear()
+      this.props.endSearch()
+      this.setState({
+        showRequests: false,
+        showSearch: false,
+        searchValue: '',
+      })
     }
   }
 
-
   render(){
+
     const { doLogout, flash } = this.props
-    const { showRequests } = this.state
-    const { showSearch, searchValue, searchResults, failure } = this.state.search
+    const { showRequests, showSearch, searchValue } = this.state
+
     return (
       <div>
-         <Layout fixedHeader fixedDrawer onClick={this.onClickOutside} ref='layout'>
+         <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>
 
           <Header title={<div className="title">ReChat</div>}>
              <Navigation>
-               <Search showSearch={showSearch}
-               searchValue={searchValue}
-               getSearchResults={this.getSearchResults}
-               closeSearchBox={this.closeSearchBox}
-               searchResults={searchResults}
-               failure={failure}
-              inputRef={input => this.input = input}/>
+               <Search toggleShowSearch={this.toggleShowSearch} showSearch={showSearch} searchValue={searchValue}/>
                <FriendRequestContainer toggleShowRequests={this.toggleShowRequests} showRequests={showRequests}/>
                <Icon name="exit_to_app" className='navIcon' onClick={doLogout}/>
             </Navigation>
@@ -169,6 +118,7 @@ const mapDispatchToProps = dispatch => ({
     }))
     dispatch(push('/sign-in'))
   },
+  endSearch: () => dispatch(endSearch()),
 })
 
 export default connect(
