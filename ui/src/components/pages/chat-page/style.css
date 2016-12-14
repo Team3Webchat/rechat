@@ -1,4 +1,13 @@
-
+.loading-chat{
+  width: 100px;
+  height: 100px;
+  margin-top: 15%!important;
+  margin: auto;
+}
+.loading-chat .mdl-spinner{
+  width: 100%;
+  height: 100%;
+}
 .cardTitle img{
   float: left;
   border-radius: 50px;
