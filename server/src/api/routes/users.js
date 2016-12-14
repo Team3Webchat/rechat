@@ -28,7 +28,6 @@ usersRouter.route('/')
             e.errors[0].path === 'email') {
           return res.status(400)
             .json({ message: 'The email is already registered' })
-
         }
 
         return res.status(400)
@@ -84,11 +83,22 @@ usersRouter.route('/:id')
     if (id !== req.params.id && !user.isAdmin) {
       return res.status(403).json({ message: 'You cannot delete this account'})
     }
-    await User.destroy({
-      where: {
-        id: user.dataValues.id,
-      }
-    })
+    const chats = await user.getChats()
+    console.log(chats)
+    // await User.destroy({
+    //   where: {
+    //     id: user.dataValues.id,
+    //   },
+    // })
+    await Promise.all(chats.map(async chat => {
+      const messages = await chat.getMessages()
+      await Promise.all(messages.map(message => message.destroy()))
+      await chat.destroy()
+    }))
+
+    await user.destroy()
+
+
 
     res.status(200).json({ message: 'Deleted kinda'})
   })
@@ -221,6 +231,8 @@ usersRouter.route('/:id/friends/:friendId')
           ],
         },
       })
+
+
 
       if (!(user.id === id &&
            (user.id === friendship.friendId ||

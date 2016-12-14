@@ -6,6 +6,7 @@ export const SEND_FRIEND_REQUEST = 'SEND_FRIEND_REQUEST'
 export const GOT_FRIEND_REQUEST = 'GOT_FRIEND_REQUEST'
 export const SEND_FRIEND_REQUEST_SUCCESS = 'SEND_FRIEND_REQUEST_SUCCESS'
 export const SEND_FRIEND_REQUEST_FAILURE = 'SEND_FRIEND_REQUEST_FAILURE'
+export const FRIEND_REQUEST_ACCEPTED = 'FRIEND_REQUEST_ACCEPTED'
 
 export const sendFriendRequestSuccess = ({ flash, sentFriendRequests }) => ({
   type: SEND_FRIEND_REQUEST_SUCCESS,
@@ -37,8 +38,15 @@ export const gotFriendRequest = friend => ({
       message: 'Got a friend request',
       type: 'success',
     },
-    friend
-  }
+    friend,
+  },
+})
+
+export const friendRequestAccepted = ({friendId}) => ({
+  type: FRIEND_REQUEST_ACCEPTED,
+  payload: {
+    friendId,
+  },
 })
   // async function(dispatch) {
   //   dispatch({
@@ -274,6 +282,7 @@ const getFriendsFailure = ({ flash }) => ({
 export const getFriends = (id = getUserId()) =>
   async function(dispatch) {
     try {
+
       const res = await fetch(`${baseUrl}users/${id}/friends`, {
         method: 'GET',
         headers: getHeaders(),

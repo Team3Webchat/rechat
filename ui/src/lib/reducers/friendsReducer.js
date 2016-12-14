@@ -5,6 +5,7 @@ import {
   ACCEPT_FRIEND_REQUEST_SUCCESS,
   DELETE_FRIEND_SUCCESS,
   GOT_FRIEND_REQUEST,
+  FRIEND_REQUEST_ACCEPTED,
 } from '../actions/friendsActions'
 
 const initialState = {
@@ -54,6 +55,12 @@ export default function friends(state = initialState, action) {
         friends: state.friends.filter(f => f.id !== friendId),
         friendRequests: state.friendRequests.filter(f => f.id !== friendId),
         sentFriendRequests: state.sentFriendRequests.filter(f => f.id !== friendId),
+      }
+    case FRIEND_REQUEST_ACCEPTED:
+      return {
+        ...state,
+        friends: [...state.friends, state.sentFriendRequests.find(f => f.id === action.payload.friendId)],
+        sentFriendRequests: state.sentFriendRequests.filter(f => f.id !== action.payload.friendId),
       }
     
 

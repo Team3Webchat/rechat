@@ -5,11 +5,11 @@ import Gravatar from 'react-gravatar'
 import './style.css'
 
 const SearchBox = (props) => {
-  const { failure, searchResults, addFriend } = props
+  const { searchResults, addFriend } = props
   return (
 
     <Card id='searchBox' shadow={0}>
-    { failure ?
+    { searchResults.length <= 0 ?
         <List>
           <ListItem className='searchResult'>
           <Icon name='face'></Icon>Couldn't find any users</ListItem>
