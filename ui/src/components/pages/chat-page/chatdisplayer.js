@@ -35,11 +35,11 @@ class ChatDisplayer extends Component {
                 {messages.map((m, i) =>
                   id === m.userId ?
                   <ComposeNewMessage type='me' message={m.content} key={i} /> :
-                  <div>
+                  <div key={i}>
                     {m.userId === 'system' ?
-                    <ComposeNewMessage type='system' message={m.content} key={i}/>
+                    <ComposeNewMessage type='system' message={m.content} />
                     :
-                    <ComposeNewMessage type='friend' message={m.content} key={i}/>
+                    <ComposeNewMessage type='friend' message={m.content} />
                     }
                   </div>
                 )}

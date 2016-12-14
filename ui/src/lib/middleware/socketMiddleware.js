@@ -20,6 +20,7 @@ import {
   sendFriendRequestFailure,
   sendFriendRequestSuccess,
   gotFriendRequest,
+  friendRequestAccepted,
 } from '../actions/friendsActions'
 import { API_URL } from '../config'
 
@@ -82,9 +83,16 @@ const socketMiddleware = (function() {
   const onDeleteFriend = (ws, store, data) => {
     console.log(data)
   }
+
+  const onFriendRequestAccepted = (ws, store, data) => {
+    console.log(data)
+    store.dispatch(friendRequestAccepted(data))
+
+  }
   return store => next => async action => {
     switch (action.type) {
       case LOGIN_USER_SUCCESS:
+      case 'REGISTER_USER_SUCCESS':
 
         socket = io(API_URL)
 
@@ -95,6 +103,7 @@ const socketMiddleware = (function() {
         socket.on('friend_request_sent', data => onSentFriendRequests(socket, store, data))
         socket.on('friend_request_gotten', data => onGottenFriendRequest(socket, store, data))
         socket.on('delete_friend', data => onDeleteFriend(socket, store, data))
+        socket.on('friend_request_accepted', data => onFriendRequestAccepted(socket, store, data))
 
         socket.on('private_conversation_start', data => {
           store.dispatch(connectChat({ chatId: data.chatId, messages: data.messages, friendId: data.friendId}))
@@ -145,6 +154,16 @@ const socketMiddleware = (function() {
 
       case DELETE_FRIEND_SUCCESS:
         socket.emit('delete_friend', { id: action.payload.friendId })
+        return next(action)
+      case ACCEPT_FRIEND_REQUEST_SUCCESS:
+        console.log(action.payload)
+        console.error('ACCET_FRIEND_REQUEST_SUCCESS', action.payload.friendId)
+        socket.emit('friend_request_accepted', { id: action.payload.friendId, friendId: store.getState().auth.id })
+        socket.emit('private_conversation', { id: action.payload.friendId})
+        return next(action)
+      case 'FRIEND_REQUEST_ACCEPTED':
+        console.error('FRINED_REQUEST_ACCEPTED', action.payload.friendId)
+        socket.emit('private_conversation', { id: action.payload.friendId})
         return next(action)
       default:
         return next(action)

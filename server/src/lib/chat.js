@@ -28,6 +28,8 @@ export const onNewMessage = async (data, io) => {
 }
 
 export const onPrivateConversation = async (data, socket) => {
+  console.log('_____ON PRIVATE CONVERSATION START_______________')
+  console.log(data)
   const { id } = data
   const { decoded_token } = socket
   const [from, to] = await Promise.all([

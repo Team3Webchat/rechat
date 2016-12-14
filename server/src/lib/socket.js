@@ -47,4 +47,9 @@ function connection(socket, io) {
     socket.emit('user_disconnected', { userId: socket.decoded_token.id})
   })
 
+  socket.on('friend_request_accepted', async data => {
+    console.log(data)
+    io.to(connectedUsers[data.id]).emit('friend_request_accepted', data)
+  })
+
 }
