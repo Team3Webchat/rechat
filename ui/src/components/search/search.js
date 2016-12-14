@@ -40,6 +40,7 @@ class Search extends Component {
 
   filterSearchResults = () => {
     const { searchResults, friends, sentFriendRequests, userId } = this.props
+    if (!searchResults) return []
     let count = 0
     const filteredResults = searchResults.filter((user) => {
       const id = user.id

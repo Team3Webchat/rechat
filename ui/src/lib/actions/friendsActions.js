@@ -274,6 +274,7 @@ const getFriendsFailure = ({ flash }) => ({
 export const getFriends = (id = getUserId()) =>
   async function(dispatch) {
     try {
+
       const res = await fetch(`${baseUrl}users/${id}/friends`, {
         method: 'GET',
         headers: getHeaders(),

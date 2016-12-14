@@ -114,7 +114,7 @@ const socketMiddleware = (function() {
         return next(action)
       case 'GET_FRIENDS_SUCCESS':
         const { friends } = action.payload
-
+        
         await Promise.all(friends.map(friend =>
           socket.emit('private_conversation', {id: friend.id}))
         )
@@ -134,9 +134,7 @@ const socketMiddleware = (function() {
         })
         return next(action)
       case DELETE_CHAT_HISTORY:
-        socket.emit('new_message', {
-          content: 'A user in this chat has deleted the chat-history for security reasons',
-          userId: 'system',
+        socket.emit('delete_conversation', {
           chatId: action.payload.chatId,
         })
         return next(action)
