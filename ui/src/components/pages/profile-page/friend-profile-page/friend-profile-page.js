@@ -40,9 +40,9 @@ const ProfileDisplayer = (props) => {
 
       <CardActions border>
       {friendsSince ?
-        <Button className='buttons' onClick={handleDeleteFriendConfirm}>Remove friend</Button>
+        <Button className='buttons' onClick={handleDeleteFriendConfirm}>Remove Friend</Button>
         :
-        <Button className='buttons' onClick={() => addFriend(id)}>Add as friend</Button>
+        <Button className='buttons' onClick={() => addFriend(id)}>Add as Friend</Button>
       }
       </CardActions>
 
