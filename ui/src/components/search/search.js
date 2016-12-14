@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Textfield } from 'react-mdl'
 
-//import { searchUser, endSearch } from '../../lib/actions/searchActions'
 import { sendFriendRequest } from '../../lib/actions/friendsActions'
 import SearchBox from './searchBox'
 
@@ -39,34 +38,6 @@ class Search extends Component {
   handleSubmit = e => {
     e.preventDefault()
   }
-
-  /*handleBlur = e => {
-    const layout = document.getElementById('mdl-layout__content')
-    console.log(e.target.parentElement.classList);
-
-    if(!e.target.parentElement.classList.contains( 'mdl-textfield__expandable-holder' )){
-      //&& !e.target.parentElement.classList.contains( 'searchResult' )
-      //&& !e.target.parentElement.classList.contains( 'toRequests' ))
-
-      //this.props.endSearch()
-      console.log('onlick utanför i search');
-      this.setState({
-        searchValue: this.state.searchValue,
-        showSearch: false,
-        searchResults: null,
-        failure: false,
-      })
-    }else{
-      console.log('inannaför i search');
-      this.setState({
-        searchValue: this.state.searchValue,
-        showSearch: true,
-        searchResults: null,
-        failure: false,
-      })
-    }
-  }*/
-
 
 
   filterSearchResults = () => {
