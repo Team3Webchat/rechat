@@ -23,6 +23,7 @@ export default function chats(state = initialState, action) {
       }
 
     case actions.DELETE_CHAT_HISTORY:
+    case actions.FRIEND_DELETED_CHAT_HISTORY:
       return {
         ...state,
         chats: state.chats.map(chat => {
@@ -48,7 +49,6 @@ export default function chats(state = initialState, action) {
           }
         }),
       }
-
     default:
       return state
   }

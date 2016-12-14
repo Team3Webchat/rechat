@@ -8,6 +8,7 @@ import {
   disconnect,
   START_PRIVATE_CHAT,
   DELETE_CHAT_HISTORY,
+  friendDeletedChatHistory
 
 } from '../actions/chatActions'
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from '../actions/authActions'
@@ -21,6 +22,7 @@ import {
   sendFriendRequestSuccess,
   gotFriendRequest,
   friendRequestAccepted,
+  
 } from '../actions/friendsActions'
 import { API_URL } from '../config'
 
@@ -81,7 +83,12 @@ const socketMiddleware = (function() {
   }
 
   const onDeleteFriend = (ws, store, data) => {
-    console.log(data)
+    
+  }
+
+  const onDeletedHistory = (ws, store, data) => {
+    const { chatId } = data
+    store.dispatch(friendDeletedChatHistory({chatId}))
   }
 
   const onFriendRequestAccepted = (ws, store, data) => {
@@ -104,6 +111,7 @@ const socketMiddleware = (function() {
         socket.on('friend_request_gotten', data => onGottenFriendRequest(socket, store, data))
         socket.on('delete_friend', data => onDeleteFriend(socket, store, data))
         socket.on('friend_request_accepted', data => onFriendRequestAccepted(socket, store, data))
+        socket.on('delete_conversation', data => onDeletedHistory(socket, store, data))
 
         socket.on('private_conversation_start', data => {
           store.dispatch(connectChat({ chatId: data.chatId, messages: data.messages, friendId: data.friendId}))
@@ -113,16 +121,14 @@ const socketMiddleware = (function() {
           // On login with credentials, GET_FRIENDS_SUCCESS is never fired since the friends
           // are sent with the success login body, so this is a workaround to connect to all
           // private chats. Would probably need a redesign of the flow here but it works for now
-
-
           await Promise.all(action.payload.friends.map(friend =>
-
             socket.emit('private_conversation', {id: friend.id}))
           )
         }
         return next(action)
       case 'GET_FRIENDS_SUCCESS':
         const { friends } = action.payload
+        console.log(friends)
         
         await Promise.all(friends.map(friend =>
           socket.emit('private_conversation', {id: friend.id}))
@@ -143,27 +149,26 @@ const socketMiddleware = (function() {
         })
         return next(action)
       case DELETE_CHAT_HISTORY:
+        console.log("DELETIOONG DELETING DLEITING")
+        console.log(action.payload)
         socket.emit('delete_conversation', {
           chatId: action.payload.chatId,
+          friendId: action.payload.friendId,
         })
         return next(action)
       case SEND_FRIEND_REQUEST:
-        console.log(action.payload)
+
         socket.emit('friend_request', { id: action.payload.friendId })
         return next(action)
 
       case DELETE_FRIEND_SUCCESS:
-        socket.emit('delete_friend', { id: action.payload.friendId })
         return next(action)
       case ACCEPT_FRIEND_REQUEST_SUCCESS:
-        console.log(action.payload)
-        console.error('ACCET_FRIEND_REQUEST_SUCCESS', action.payload.friendId)
         socket.emit('friend_request_accepted', { id: action.payload.friendId, friendId: store.getState().auth.id })
         socket.emit('private_conversation', { id: action.payload.friendId})
         return next(action)
       case 'FRIEND_REQUEST_ACCEPTED':
-        console.error('FRINED_REQUEST_ACCEPTED', action.payload.friendId)
-        socket.emit('private_conversation', { id: action.payload.friendId})
+        socket.emit('private_conversation', { id: action.payload.friendId })
         return next(action)
       default:
         return next(action)

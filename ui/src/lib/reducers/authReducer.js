@@ -76,6 +76,7 @@ function auth(state = initialState, action) {
         token: action.payload.token,
         message: action.payload.message,
         name: action.payload.name,
+        id: decoded.id,
         failure: false,
       }
     }

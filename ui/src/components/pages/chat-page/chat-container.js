@@ -33,11 +33,6 @@ class ChatContainer extends Component {
       deleteChatHistory: null,
     })
   }
-
-  handleDeleteChat = (id) =>  {
-    this.props.doDeleteChat(id)
-    this.handleCloseChatConfirm()
-  }
   //END - DELETE CHAT CONFIRM
 
   handleChange = e => {
@@ -66,7 +61,7 @@ class ChatContainer extends Component {
 
   render() {
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
-    const { clearChatHistory, activeChat} = this.props
+    const { clearChatHistory, activeChat, friendId } = this.props
     const { openChatDialog } = this.state
     if (!this.props.isLoading) {
       return (
@@ -88,7 +83,7 @@ class ChatContainer extends Component {
               chat={this.state.deleteChat}
               openChatDialog={this.state.openChatDialog}
               handleCloseChatDialog={this.handleCloseChatConfirm}
-              clearChatHistory={() => clearChatHistory(activeChat.chatId)}/>
+              clearChatHistory={() => clearChatHistory(activeChat.chatId, friendId)}/>
             }
           </div>
         </div>
@@ -111,8 +106,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   beginChat: id => dispatch(selectActiveChat({friendId: id})),
   sendMessage: (content, chatId, userId) => dispatch(sendPrivateMessage({content, chatId, userId})),
-  clearChatHistory: chatId => {
-    dispatch(deleteChatHistory({chatId}))
+  clearChatHistory: (chatId, friendId) => {
+    dispatch(deleteChatHistory({chatId, friendId}))
   },
 })
 
