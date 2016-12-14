@@ -5,10 +5,12 @@ import auth from './authReducer'
 import flash from './flashReducer'
 import friends from './friendsReducer'
 import chats from './chatsReducer'
+import search from './searchReducer'
 
 const appReducer = combineReducers({
   routing: routerReducer,
   auth,
+  search,
   flash,
   friends,
   chats,
