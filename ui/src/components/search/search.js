@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Textfield } from 'react-mdl'
 
-import { searchUser, endSearch } from '../../lib/actions/searchActions'
+//import { searchUser, endSearch } from '../../lib/actions/searchActions'
 import { sendFriendRequest } from '../../lib/actions/friendsActions'
 import SearchBox from './searchBox'
+
+
 
 class Search extends Component {
   constructor(props) {
@@ -15,21 +17,21 @@ class Search extends Component {
   }
 
   handleChange = key => {
+    const { getSearchResults, closeSearchBox } = this.props
     return function(e) {
       const state = {}
-      const props = this.props
       state[key] = e.target.value
       this.setState(state)
 
+      const value = e.target.value
       if (this.promise)
         clearInterval(this.promise)
-
       if (e.target.value !== ''){
-        this.promise = setTimeout(function(){
-          props.doSearch(state.searchValue)
+        this.promise = setTimeout(() => {
+          getSearchResults(value)
         }, 500)
       }else{
-        props.endSearch()
+        closeSearchBox()
       }
     }.bind(this)
   }
@@ -38,32 +40,60 @@ class Search extends Component {
     e.preventDefault()
   }
 
-  filterSearchResults = () => {
-    const { searchResults, friends, sentFriendRequests, userId } = this.props
-    let count = 0
-    const filteredResults = searchResults.filter((user) => {
-      const id = user.id
-      user.isFriends = (friends.find(f => f.id === user.id) != null || sentFriendRequests.find(f => f.id === user.id) || user.id === userId) ? true : false
-      return id !== userId
-    })
-    return filteredResults
-  }
+  /*handleBlur = e => {
+    const layout = document.getElementById('mdl-layout__content')
+    console.log(e.target.parentElement.classList);
 
-  componentWillReceiveProps(nextProps) {
-    //Om isDone är true, men bara första gången
-    if (this.props.isDoneSearching !== nextProps.isDoneSearching && nextProps.isDoneSearching === true)
-      this.props.toggleShowSearch(this.state.searchValue)
-    if(this.props.searchValue !== nextProps.searchValue){
+    if(!e.target.parentElement.classList.contains( 'mdl-textfield__expandable-holder' )){
+      //&& !e.target.parentElement.classList.contains( 'searchResult' )
+      //&& !e.target.parentElement.classList.contains( 'toRequests' ))
+
+      //this.props.endSearch()
+      console.log('onlick utanför i search');
       this.setState({
-        searchValue: nextProps.searchValue,
+        searchValue: this.state.searchValue,
+        showSearch: false,
+        searchResults: null,
+        failure: false,
+      })
+    }else{
+      console.log('inannaför i search');
+      this.setState({
+        searchValue: this.state.searchValue,
+        showSearch: true,
+        searchResults: null,
+        failure: false,
       })
     }
+  }*/
 
+
+
+  filterSearchResults = () => {
+    const { friends, sentFriendRequests, userId, searchResults, failure } = this.props
+
+    if (!failure) {
+      const filteredResults = searchResults.filter((user) => {
+        const id = user.id
+        user.isFriends = (friends.find(f => f.id === user.id) != null || sentFriendRequests.find(f => f.id === user.id) || user.id === userId) ? true : false
+        return id !== userId
+      })
+      return filteredResults
+    }
+    return searchResults
   }
+
+  clearInput = () => {
+    this.setState({
+      searchValue: '',
+    })
+  }
+
+
 
   render() {
     const { searchValue } = this.state
-    const { addFriend, showSearch, failure } = this.props
+    const { addFriend, failure, showSearch } = this.props
 
     return (
       <div className="search">
@@ -73,9 +103,10 @@ class Search extends Component {
             required
             value={searchValue}
             onChange={this.handleChange('searchValue')}
+            onBlur={this.clearInput}
+            ref={this.props.inputRef}
             expandable
             expandableIcon="search"
-            onBlur={this.handleBlur}
           />
         </form>
         { showSearch &&
@@ -92,17 +123,11 @@ class Search extends Component {
 const mapStateToProps = state => ({
   userId: state.auth.id,
   token: state.auth.token,
-  isDoneSearching: state.search.isDoneSearching,
-  isSearching: state.search.isSearching,
-  searchResults: state.search.searchResults,
-  failure: state.search.failure,
   friends: state.friends.friends,
   sentFriendRequests: state.friends.sentFriendRequests,
 })
 
 const mapDispatchToProps = dispatch => ({
-  doSearch: (searchValue) => dispatch(searchUser(searchValue)),
-  endSearch: () => dispatch(endSearch()),
   addFriend: id => dispatch(sendFriendRequest(id)),
 })
 

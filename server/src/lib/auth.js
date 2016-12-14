@@ -37,7 +37,6 @@ export function login(req, res, next, message) {
   passport.authenticate('local', async (err, user, info) => {
     if (err)
       return next(err)
-    console.log('is banned : '+user.dataValues.isBanned)
     if (!user || user.dataValues.isBanned)
       return res.status(401).json({ status: 'error', code: 'unauthorized' })
 

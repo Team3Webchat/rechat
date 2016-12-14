@@ -28,6 +28,8 @@
   margin: 'auto';
   min-height: 0px !important;
   position: absolute !important;
+  overflow: auto;
+  max-height: 90%;
 }
 #searchBox ul{
   padding: 0 !important;

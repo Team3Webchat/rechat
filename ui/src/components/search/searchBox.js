@@ -11,7 +11,8 @@ const SearchBox = (props) => {
     <Card id='searchBox' shadow={0}>
     { failure ?
         <List>
-          <ListItem className='searchResult'>Hittar ingen användare</ListItem>
+          <ListItem className='searchResult'>
+          <Icon name='face'></Icon>Couldn't find any users</ListItem>
         </List>
         :
         <SearchResults
