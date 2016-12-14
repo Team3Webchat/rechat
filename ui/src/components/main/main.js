@@ -8,7 +8,6 @@ import FriendRequestContainer from '../pages/friend-request/friend-container'
 
 import FlashMessage from '../flash-message/flash-message'
 import { logout } from '../../lib/actions/authActions'
-import { endSearch } from '../../lib/actions/searchActions'
 
 import { baseUrl } from '../../lib/actions/index'
 import { getHeaders } from '../../lib/api'
@@ -96,7 +95,6 @@ class Main extends Component {
     if(!e.target.parentElement.classList.contains( 'addUser' ) &&
       !e.target.parentElement.classList.contains( 'searchResult' ) &&
       !e.target.parentElement.classList.contains( 'toRequests' )){
-      //this.props.endSearch()
       console.log('onlick utanför ')
       this.closeSearchBox()
       console.log(this.input)
@@ -172,7 +170,6 @@ const mapDispatchToProps = dispatch => ({
     }))
     dispatch(push('/sign-in'))
   },
-  endSearch: () => dispatch(endSearch()),
 })
 
 export default connect(
