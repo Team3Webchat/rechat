@@ -77,8 +77,7 @@ class App extends Component {
 
 
   render() {
-    //this.state.loaded
-    if (false) {
+    if (this.state.loaded) {
       return (
         <div className="App">
           <Provider store={store}>
