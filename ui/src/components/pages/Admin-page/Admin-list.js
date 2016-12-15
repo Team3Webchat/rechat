@@ -51,14 +51,13 @@ class AdminList extends Component {
     }
   }
 
-  async banUser(){
+  async banUser(id){
     try {
-      const res = await fetch(baseUrl + '/users/reported', {
-        method: 'GET',
+      const res = await fetch(baseUrl + '/'+id+'/ban', {
+        method: 'POST',
         headers: getHeaders(),
       })
       const json = await res.json()
-      return json.users
     }catch(e) {
       console.log('wrong in Admin main getAdminProps')
     }
@@ -90,6 +89,7 @@ class AdminList extends Component {
             { activeTab === 0 &&
               <ReportList
                 users={reportedUsers}
+                banUser={this.banUser}
                 />
             }
             { activeTab === 1 &&
