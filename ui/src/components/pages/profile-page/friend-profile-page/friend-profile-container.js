@@ -43,9 +43,9 @@ class ProfileContainer extends Component {
   }
 
   handleReportFriend = (id) =>  {
-    this.props.doReportFriend(id)
-    this.handleCloseConfirms()
     const { reportDetails } = this.state
+    this.props.doReportFriend(id, reportDetails)
+    this.handleCloseConfirms()
     this.setState({
       reportDetails: '',
     })
@@ -158,7 +158,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   doDeleteFriend: (id) => dispatch(deleteFriend(id)),
-  doReportFriend: (id) => dispatch(reportFriend(id)),
+  doReportFriend: (id, reportDetails) => dispatch(reportFriend(id,reportDetails)),
   doAddFriend: id => dispatch(sendFriendRequest(id)),
 })
 

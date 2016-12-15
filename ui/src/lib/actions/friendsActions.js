@@ -165,7 +165,7 @@ const reportFriendFailure = ({ flash }) => ({
   },
 })
 
-export const reportFriend = (friendId) =>
+export const reportFriend = (friendId, message) =>
 function(dispatch) {
   fetch(`${baseUrl}users/${friendId}`,{
     method: 'GET',
@@ -176,29 +176,17 @@ function(dispatch) {
   .then(function (jsonres) {
     let res = null
     console.log(jsonres.reportedByOthersCount)
-    const reportCount = jsonres.reportedByOthersCount + 1
-    console.log('SKÄKRPNING!! ' + reportCount)
+
+    console.log('SKÄKRPNING!! ' + message, getUserId())
     try {
-      if(reportCount < 3){
-        res =  fetch(`${baseUrl}users/${friendId}/report`, {
-          method: 'PUT',
-          headers: getHeaders(),
-          body: JSON.stringify({
-            'reportedByOthersCount': reportCount,
-            'friendID': friendId,
-          }),
-        })
-      }else{
-        res =  fetch(`${baseUrl}users/${friendId}/report`, {
-          method: 'PUT',
-          headers: getHeaders(),
-          body: JSON.stringify({
-            'reportedByOthersCount': reportCount,
-            'isBanned': true,
-            'friendID': friendId,
-          }),
-        })
-      }
+      res =  fetch(`${baseUrl}users/${friendId}/reports`, {
+        method: 'post',
+        headers: getHeaders(),
+        body: JSON.stringify({
+          'message': message,
+          'id': getUserId(),
+        }),
+      })
       if (res.status === 403) throw new Error('Could not report the friend')
       dispatch(reportFriendSuccess({
         flash: {

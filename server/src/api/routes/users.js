@@ -207,6 +207,9 @@ usersRouter.route('/:id/reports')
     const { id } = req.params
     const { message } = req.body
     const { id: currentUserId } = req.user
+    console.log('id: ' + id)
+    console.log('message: ' + message)
+    console.log('currentUserId: ' + currentUserId)
     const friendship = await Friendship.findOne({ where: { $or: [{ friendId: id, userId: currentUserId }, { friendId: currentUserId, userId: id }]}})
     if (!friendship || !friendship.accepted) {
       return res.status(403).json({message: 'Unauthorized'})
