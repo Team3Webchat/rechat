@@ -19,42 +19,55 @@ class AdminList extends Component {
   constructor(props){
     super(props)
     this.state = {
-      users: null,
+      reportedUsers: null,
+      bannedUsers: null,
       activeTab: 2,
     }
   }
 
-  async getAdminProps(){
+  async getBannedUsers(){
+    try {
+      const res = await fetch(baseUrl + '/users/banned', {
+        method: 'GET',
+        headers: getHeaders(),
+      })
+      const json = await res.json()
+      return json.bannedUsers
+    }catch(e) {
+      console.log('wrong in Admin main getAdminProps')
+    }
+  }
+
+  async getReportedUsers(){
     try {
       const res = await fetch(baseUrl + '/users/reported', {
         method: 'GET',
         headers: getHeaders(),
       })
       const json = await res.json()
-      console.log(json)
-      return json
+      return json.users
     }catch(e) {
       console.log('wrong in Admin main getAdminProps')
     }
   }
 
   async componentWillMount(){
-    const { getAdminProps } = this
-    const { users } = await getAdminProps()
-    this.setState({users})
+    const banned = await this.getBannedUsers()
+    const reported = await this.getReportedUsers()
+    this.setState({
+      reportedUsers: reported,
+      bannedUsers: banned,
+      activeTab: this.state.activeTab,
+    })
     console.log(this.state)
-    //kalla på get adrmin
-    //sätt dem till state
   }
 
   render(){
-    const { users, activeTab } = this.state
-    console.log(users)
+    const { reportedUsers, bannedUsers, activeTab } = this.state
     return (
-
       <div className="tabs">
-        <Tabs activeTab={activeTab} 
-        onChange={(tabId) => this.setState({ activeTab: tabId })} 
+        <Tabs activeTab={activeTab}
+        onChange={(tabId) => this.setState({ activeTab: tabId })}
         ripple>
             <Tab className="reported">Reported Users</Tab>
             <Tab className="banned">Banned Users</Tab>
@@ -62,24 +75,19 @@ class AdminList extends Component {
         <section>
             <div className="content">
             { activeTab === 0 &&
-              <p> This page you'll see all reported accounts</p>
+              <ReportList
+                users={reportedUsers}
+                />
             }
             { activeTab === 1 &&
-              <p> This page you'll see all banned accounts</p>
-            }</div>
+              <BannedList
+                users={bannedUsers}
+                />
+            }
+            </div>
         </section>
 
-      { activeTab === 0 &&
-        <ReportList
-          users={this.state.users}
-          />
-      }
-      { activeTab === 1 &&
-        users.isBanned &&
-        <BannedList
-          users={this.state.users}
-          />
-      }
+
         </div>
     )
   }
