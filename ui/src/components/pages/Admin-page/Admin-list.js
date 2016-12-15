@@ -53,7 +53,19 @@ class AdminList extends Component {
 
   async banUser(id){
     try {
-      const res = await fetch(baseUrl + '/'+id+'/ban', {
+      const res = await fetch(baseUrl + 'users/'+id+'/ban', {
+        method: 'POST',
+        headers: getHeaders(),
+      })
+      const json = await res.json()
+    }catch(e) {
+      console.log('wrong in Admin main getAdminProps')
+    }
+  }
+
+  async unBanUser(id){
+    try {
+      const res = await fetch(baseUrl + 'users/'+id+'/unBan', {
         method: 'POST',
         headers: getHeaders(),
       })
@@ -95,6 +107,7 @@ class AdminList extends Component {
             { activeTab === 1 &&
               <BannedList
                 users={bannedUsers}
+                unBanUser={this.unBanUser}
                 />
             }
             </div>

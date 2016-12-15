@@ -144,6 +144,19 @@ usersRouter.route('/:id/ban')
     return res.status(200).json({message:'User is now banned'})
   })
 
+usersRouter.route('/:id/unBan')
+  .all(authenticateToken)
+  .post(async (req, res, next) => {
+    const { id } = req.params
+    const { user: currentUser } = req
+    if (!currentUser.isAdmin) {
+      return res.status(403).json({message: 'Unauthorized'})
+    }
+    await User.findOne({ where: { id }})
+      .then(user => user.update({isBanned: false}))
+    return res.status(200).json({message:'User is now banned'})
+  })
+
 
 usersRouter.route('/:id/friends')
   .all(authenticateToken)
