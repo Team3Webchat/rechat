@@ -22,7 +22,6 @@ class Main extends Component {
       showRequests: false,
       showSearch: false,
       searchValue: '',
-      isAdmin: false,
     }
   }
 
@@ -61,8 +60,10 @@ class Main extends Component {
 
   render(){
 
-    const { doLogout, flash } = this.props
+    const { doLogout, flash, isAdmin } = this.props
     const { showRequests, showSearch, searchValue } = this.state
+
+    console.log(isAdmin)
 
     return (
       <div>
@@ -86,7 +87,7 @@ class Main extends Component {
             />
           }
 
-          {this.state.isAdmin &&
+          {isAdmin &&
             <AdminList/>
           }
 
