@@ -152,10 +152,9 @@ usersRouter.route('/:id/unBan')
     if (!currentUser.isAdmin) {
       return res.status(403).json({message: 'Unauthorized'})
     }
-    // await User.findOne({ where: { id }})
-    //   .then(user => user.update({isBanned: false}))
-    //return res.status(200).json({message:'User is now banned'})
-    return res.status(405).json({message:'WROING'})
+    await User.findOne({ where: { id }})
+      .then(user => user.update({isBanned: false}))
+    return res.status(200).json({message:'User is now banned'})
   })
 
 
