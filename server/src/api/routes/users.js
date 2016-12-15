@@ -130,9 +130,9 @@ usersRouter.route('/:id/ban')
   .post(async (req, res, next) => {
     const { id } = req.params
     const { user: currentUser } = req
-    // if (!currentUser.isAdmin) {
-    //   return res.status(403).json({message: 'Unauthorized'})
-    // }
+     if (!currentUser.isAdmin) {
+       return res.status(403).json({message: 'Unauthorized'})
+     }
     await User.findOne({ where: { id }})
       .then(user => user.update({isBanned: true}))
     return res.status(200).json({message:'User is now banned'})
