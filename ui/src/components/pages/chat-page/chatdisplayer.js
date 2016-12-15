@@ -48,11 +48,14 @@ class ChatDisplayer extends Component {
         </CardText>
         <div className='textBox'>
           <form onSubmit={onSubmit} autoComplete="off">
-            <Textfield className='textInput'
+            <Textfield 
+              className='textInput'
               onChange={onChange}
               label="Write your message..."
               value={message}
+              maxLength="255"
             />
+            
             <CardActions className='send'>
               <Button raised colored type="submit"
                 disabled={message.length === 0}
@@ -60,6 +63,7 @@ class ChatDisplayer extends Component {
             </CardActions>
           </form>
         </div>
+        <p className="hintText">Maximum number of characters is 255.</p>
       </Card>
     )
   }
