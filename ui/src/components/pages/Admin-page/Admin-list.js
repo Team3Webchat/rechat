@@ -51,6 +51,19 @@ class AdminList extends Component {
     }
   }
 
+  async banUser(){
+    try {
+      const res = await fetch(baseUrl + '/users/reported', {
+        method: 'GET',
+        headers: getHeaders(),
+      })
+      const json = await res.json()
+      return json.users
+    }catch(e) {
+      console.log('wrong in Admin main getAdminProps')
+    }
+  }
+
   async componentWillMount(){
     const banned = await this.getBannedUsers()
     const reported = await this.getReportedUsers()
