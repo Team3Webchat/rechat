@@ -1,7 +1,7 @@
-import React, { PropTypes, Component } from 'react'
-import { Link } from 'react-router'
+import React, { Component } from 'react'
+
 import { connect } from 'react-redux'
-import { Tab, Tabs, List, ListItem } from 'react-mdl'
+import { Tab, Tabs} from 'react-mdl'
 
 import { baseUrl } from '../../../lib/actions/index'
 import { getHeaders } from '../../../lib/api'
@@ -32,8 +32,11 @@ class AdminList extends Component {
         headers: getHeaders(),
       })
       const json = await res.json()
+      if (json.message)
+        throw json.message
       return json.bannedUsers
     }catch(e) {
+      //create flash message
       console.log('wrong in Admin main getAdminProps')
     }
   }
@@ -45,8 +48,11 @@ class AdminList extends Component {
         headers: getHeaders(),
       })
       const json = await res.json()
+      if (json.message)
+        throw json.message
       return json.users
     }catch(e) {
+      //create flash message
       console.log('wrong in Admin main getAdminProps')
     }
   }
@@ -58,7 +64,10 @@ class AdminList extends Component {
         headers: getHeaders(),
       })
       const json = await res.json()
+      if (json.message)
+        throw json.message
     }catch(e) {
+      //create flash message
       console.log('wrong in Admin main getAdminProps')
     }
   }
@@ -70,8 +79,12 @@ class AdminList extends Component {
         headers: getHeaders(),
       })
       const json = await res.json()
+      if (json.message)
+        throw json.message
+
     }catch(e) {
-      console.log('wrong in Admin main getAdminProps')
+      //create flash message
+      console.log(e)
     }
   }
 

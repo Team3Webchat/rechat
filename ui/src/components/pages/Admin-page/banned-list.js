@@ -1,12 +1,9 @@
 import React from 'react'
 import { FABButton, Icon, TableHeader, DataTable } from 'react-mdl'
 
-
-
 import './style.css'
 
 const BannedForm = ( {users, unBanUser} ) => {
-
   const rows = []
   users.map(u => {
     const button = <FABButton mini ripple onClick={() => {unBanUser(u.id)}}> <Icon name="settings_backup_restore" /> </FABButton>
@@ -17,8 +14,7 @@ const BannedForm = ( {users, unBanUser} ) => {
     <div className="ghf">
       <DataTable
         shadow={1}
-        rows={rows}
-    >
+        rows={rows}>
         <TableHeader name="Name" >Name</TableHeader>
         <TableHeader numeric name="email" >Email</TableHeader>
         <TableHeader numeric name="unBan" tooltip="Un-bann the user">Remove ban</TableHeader>
