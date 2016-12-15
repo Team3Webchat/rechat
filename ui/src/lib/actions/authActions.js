@@ -66,10 +66,9 @@ export const loginUser = (email, password) =>
       const json = await res.json()
       const { token, user, friends, friendRequests, sentFriendRequests } = json
       jwtDecode(json.token) // on fail, throws error
-
+      console.log(user);
       dispatch(loginUserSuccess({
         token: token,
-        user: user,
         flash: {
           message: 'Successful login',
           type: 'success',

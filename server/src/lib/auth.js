@@ -49,7 +49,7 @@ export function login(req, res, next, message) {
 
     return res.json({
       message,
-      token: jwt.sign({email: user.email, fullname: user.fullname(), id: user.id}, jwtSecret),
+      token: jwt.sign({email: user.email, fullname: user.fullname(), id: user.id, isAdmin: user.isAdmin}, jwtSecret),
       user: {
         email: user.email,
         fullname: user.fullname(),

@@ -105,32 +105,6 @@ usersRouter.route('/:id')
   })
 
 
-// usersRouter.route('/:id/report')
-// .all(authenticateToken)
-// .get(async (req, res, next) => {
-//   try {
-//     const { id } = req.params
-//     const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] }})
-//     return res
-//       .status(200)
-//       .json(user)
-//   } catch(e) {
-//     return res
-//       .status(400)
-//       .json(e)
-//   }
-// })
-// .put(async (req, res, next) => {
-//   console.log(req.body.reportedByOthersCount)
-//   console.log(req.body)
-//   const user = await User.findOne({ where: { id: req.body.friendID }})
-//   user.update({ reportedByOthersCount: req.body.reportedByOthersCount })
-//  .then(()=> User.findOne({ where: { id: req.body.friendID}}))
-//  .then(()=>  res.json('Your reportedByOthersCount is updated'))
-//  .catch(err => res.json(err))
-//     //  .catch(err => res.json('something went wrong'))
-//
-// })
 usersRouter.route('/:id/friends')
   .all(authenticateToken)
   .get(async (req, res, next) => {
@@ -175,6 +149,7 @@ usersRouter.route('/:id/friends')
     res.json({ message: 'Friend added!', sentFriendRequests})
   })
 
+/*REPORTS*/
 usersRouter.route('/:id/reports')
   .all(authenticateToken)
   .get(async(req, res, next) => {
@@ -198,6 +173,19 @@ usersRouter.route('/:id/reports')
     }
     const report = await Report.create({userId: id, message, id: uuid.v4()})
     return res.status(200).json({report})
+  })
+
+usersRouter.route('/reports')
+  .all(authenticateToken)
+  .get(async (req, res, next) => {
+    const { user: currentUser } = req
+    if (!currentUser.isAdmin) {
+      return res.status(403).json({message: 'Unauthorized'})
+    }
+    //Get all users that is reported
+    //Array with objects with name and reasons
+    //const reports = await Reports.get
+    return res.status(403).json({message: 'THIS FUNCTION IS NOT DONE'})
   })
 
 usersRouter.route('/:id/friends/:friendId')
