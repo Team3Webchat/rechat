@@ -22,7 +22,7 @@ import {
   sendFriendRequestSuccess,
   gotFriendRequest,
   friendRequestAccepted,
-  
+
 } from '../actions/friendsActions'
 import { API_URL } from '../config'
 
@@ -72,7 +72,7 @@ const socketMiddleware = (function() {
       flash: {
         message: 'Sent friend request to a fella',
         type: 'success',
-      }, 
+      },
       sentFriendRequests: data.sentFriendRequests,
     }))
   }
@@ -83,7 +83,7 @@ const socketMiddleware = (function() {
   }
 
   const onDeleteFriend = (ws, store, data) => {
-    
+
   }
 
   const onDeletedHistory = (ws, store, data) => {
@@ -129,11 +129,12 @@ const socketMiddleware = (function() {
       case 'GET_FRIENDS_SUCCESS':
         const { friends } = action.payload
         console.log(friends)
-        
-        await Promise.all(friends.map(friend =>
-          socket.emit('private_conversation', {id: friend.id}))
-        )
 
+        if (friends) {
+          await Promise.all(friends.map(friend =>
+            socket.emit('private_conversation', {id: friend.id}))
+          )
+        }
         return next(action)
       case LOGOUT_USER:
         if (socket !== null)

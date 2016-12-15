@@ -46,10 +46,15 @@ export function login(req, res, next, message) {
       user.sentFriendRequests(),
       user.getChats(),
     ])
+
     return res.json({
       message,
       token: jwt.sign({email: user.email, fullname: user.fullname(), id: user.id}, jwtSecret),
-      user,
+      user: {
+        email: user.email,
+        fullname: user.fullname(),
+        isAdmin: user.isAdmin,
+      },
       friends,
       friendRequests,
       sentFriendRequests,
@@ -80,7 +85,7 @@ export function getUserFromToken(token) {
 }
 
 export function getUserFromEmail(email) {
-  return User.findOne({ where: { email }})
+  return User.findOne({ where: { email }} )
 }
 
 export function verifyPassword(requestPw, userPw) {

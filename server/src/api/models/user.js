@@ -42,15 +42,6 @@ export default (sequelize, DataTypes) => {
         notEmpty: false,
         allowNull: false,
       },
-      reportedByOthersCount: {
-        type: DataTypes.INTEGER,
-        notEmpty: false,
-        allowNull: false,
-      },
-
-
-
-
     },
     {
       // getterMethods: {
@@ -65,17 +56,18 @@ export default (sequelize, DataTypes) => {
           models.User.belongsToMany(models.User,
             {
               as: 'friends',
-              through: models.Friendship
+              through: models.Friendship,
             }
           )
           models.User.belongsToMany(models.Chat, {
             through: models.ChatParticipant,
             as: 'chats',
             onDelete: 'cascade',
-            hooks: true
+            hooks: true,
           })
 
           models.User.hasMany(models.Message)
+          models.User.hasMany(models.Report)
         },
       },
       instanceMethods: {

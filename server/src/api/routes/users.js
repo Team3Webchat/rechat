@@ -5,11 +5,12 @@ import bcrypt from 'bcrypt-nodejs'
 import { login } from '../../lib/auth'
 import Promise from 'bluebird'
 import jwt from 'jsonwebtoken'
+import uuid from 'uuid'
 
 Promise.promisifyAll(jwt)
 Promise.promisifyAll(bcrypt)
 
-const { User, Friendship, Chat } = models
+const { User, Friendship, Chat, Report } = models
 const usersRouter = Router()
 
 
@@ -104,32 +105,32 @@ usersRouter.route('/:id')
   })
 
 
-usersRouter.route('/:id/report')
-.all(authenticateToken)
-.get(async (req, res, next) => {
-  try {
-    const { id } = req.params
-    const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] }})
-    return res
-      .status(200)
-      .json(user)
-  } catch(e) {
-    return res
-      .status(400)
-      .json(e)
-  }
-})
-.put(async (req, res, next) => {
-  console.log(req.body.reportedByOthersCount)
-  console.log(req.body)
-  const user = await User.findOne({ where: { id: req.body.friendID }})
-  user.update({ reportedByOthersCount: req.body.reportedByOthersCount })
- .then(()=> User.findOne({ where: { id: req.body.friendID}}))
- .then(()=>  res.json('Your reportedByOthersCount is updated'))
- .catch(err => res.json(err))
-    //  .catch(err => res.json('something went wrong'))
-
-})
+// usersRouter.route('/:id/report')
+// .all(authenticateToken)
+// .get(async (req, res, next) => {
+//   try {
+//     const { id } = req.params
+//     const user = await User.findOne({ where: { id }, attributes: { exclude: ['password'] }})
+//     return res
+//       .status(200)
+//       .json(user)
+//   } catch(e) {
+//     return res
+//       .status(400)
+//       .json(e)
+//   }
+// })
+// .put(async (req, res, next) => {
+//   console.log(req.body.reportedByOthersCount)
+//   console.log(req.body)
+//   const user = await User.findOne({ where: { id: req.body.friendID }})
+//   user.update({ reportedByOthersCount: req.body.reportedByOthersCount })
+//  .then(()=> User.findOne({ where: { id: req.body.friendID}}))
+//  .then(()=>  res.json('Your reportedByOthersCount is updated'))
+//  .catch(err => res.json(err))
+//     //  .catch(err => res.json('something went wrong'))
+//
+// })
 usersRouter.route('/:id/friends')
   .all(authenticateToken)
   .get(async (req, res, next) => {
@@ -174,6 +175,30 @@ usersRouter.route('/:id/friends')
     res.json({ message: 'Friend added!', sentFriendRequests})
   })
 
+usersRouter.route('/:id/reports')
+  .all(authenticateToken)
+  .get(async(req, res, next) => {
+    const { id } = req.params
+    const { user: currentUser } = req
+    if (!currentUser.isAdmin) {
+      return res.status(403).json({message: 'Unauthorized'})
+    }
+    const user = await User.findOne({where: {id}})
+
+    const reports = await user.getReports()
+    return res.status(200).json({reports})
+  })
+  .post(async(req, res, next) => {
+    const { id } = req.params
+    const { message } = req.body
+    const { id: currentUserId } = req.user
+    const friendship = await Friendship.findOne({ where: { $or: [{ friendId: id, userId: currentUserId }, { friendId: currentUserId, userId: id }]}})
+    if (!friendship || !friendship.accepted) {
+      return res.status(403).json({message: 'Unauthorized'})
+    }
+    const report = await Report.create({userId: id, message, id: uuid.v4()})
+    return res.status(200).json({report})
+  })
 
 usersRouter.route('/:id/friends/:friendId')
   .all(authenticateToken)

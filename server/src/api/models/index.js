@@ -10,9 +10,9 @@ const { database, username, password, host, dialect } = db[env]
 
 
 const sequelize = new Sequelize(
-  database, 
-  username, 
-  password, 
+  database,
+  username,
+  password,
   {
     host,
     dialect,
@@ -34,6 +34,8 @@ Object.keys(models).forEach(model => {
     models[model].associate(models)
   }
 })
+
+
 
 
 
