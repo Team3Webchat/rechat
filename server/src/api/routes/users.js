@@ -56,7 +56,7 @@ usersRouter.route('/reported')
     if (!currentUser.isAdmin) {
       return res.status(403).json({message: 'Unauthorized'})
     }
-    const reportedUsers = await Promise.filter(User.findAll(), async user => {
+    const reportedUsers = await Promise.filter(User.findAll({attributes: { exclude: ['password'] }}), async user => {
       const reports = await user.getReports()
       return reports.length > 0
     })
@@ -78,7 +78,7 @@ usersRouter.route('/banned')
       return res.status(403).json({message: 'Unauthorized'})
     }
 
-    const bannedUsers = await Promise.filter(User.findAll(), async user => {
+    const bannedUsers = await Promise.filter(User.findAll({attributes: { exclude: ['password'] }}), async user => {
       return user.isBanned
     })
 
