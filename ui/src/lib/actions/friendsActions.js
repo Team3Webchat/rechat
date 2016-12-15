@@ -48,42 +48,6 @@ export const friendRequestAccepted = ({friendId}) => ({
     friendId,
   },
 })
-  // async function(dispatch) {
-  //   dispatch({
-  //     type: SEND_FRIEND_REQUEST,
-  //     payload: {
-  //       friendId,
-  //     }
-  //   })
-  //   try {
-  //     const res = await fetch(`${baseUrl}users/${friendId}/friends`, {
-  //       method: 'POST',
-  //       headers: getHeaders(),
-  //     })
-
-  //     if (res.status === 400)
-  //       throw new Error('You are already friends with this person')
-
-  //     const json = await res.json()
-  //     dispatch(sendFriendRequestSuccess({
-  //       flash: {
-  //         message: 'Friend request sent',
-  //         type: 'success',
-  //       },
-  //       sentFriendRequests: json.sentFriendRequests,
-  //     }))
-
-  //   } catch(e) {
-  //     dispatch(sendFriendRequestFailure({
-  //       flash: {
-  //         message: e.message,
-  //         type: 'fail',
-  //       },
-  //     }))
-  //   }
-  // }
-
-
 
 export const ACCEPT_FRIEND_REQUEST_SUCCESS = 'ACCEPT_FRIEND_REQUEST_SUCCESS'
 export const ACCEPT_FRIEND_REQUEST_FAILURE = 'ACCEPT_FRIEND_REQUEST_FAILURE'
@@ -235,7 +199,7 @@ function(dispatch) {
           }),
         })
       }
-      if (res.status === 403) throw new Error('Could not report the friend')      
+      if (res.status === 403) throw new Error('Could not report the friend')
       dispatch(reportFriendSuccess({
         flash: {
           message: 'Friend reported!',

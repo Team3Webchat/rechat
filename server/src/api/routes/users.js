@@ -70,6 +70,21 @@ usersRouter.route('/reported')
     return res.status(200).json({users: ret})
   })
 
+usersRouter.route('/banned')
+  .all(authenticateToken)
+  .get(async (req, res, next) => {
+    const { user: currentUser } = req
+    if (!currentUser.isAdmin) {
+      return res.status(403).json({message: 'Unauthorized'})
+    }
+
+    const bannedUsers = await Promise.filter(User.findAll(), async user => {
+      return user.isBanned
+    })
+
+    return res.status(200).json({bannedUsers})
+  })
+
 usersRouter.route('/:id')
   .all(authenticateToken)
   .get(async (req, res, next) => {
@@ -107,21 +122,12 @@ usersRouter.route('/:id')
     }
     const chats = await user.getChats()
     console.log(chats)
-    // await User.destroy({
-    //   where: {
-    //     id: user.dataValues.id,
-    //   },
-    // })
     await Promise.all(chats.map(async chat => {
       const messages = await chat.getMessages()
       await Promise.all(messages.map(message => message.destroy()))
       await chat.destroy()
     }))
-
     await user.destroy()
-
-
-
     res.status(200).json({ message: 'Deleted kinda'})
   })
 
