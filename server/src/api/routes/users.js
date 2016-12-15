@@ -53,9 +53,9 @@ usersRouter.route('/reported')
   .all(authenticateToken)
   .get(async (req, res, next) => {
     const { user: currentUser } = req
-    if (!currentUser.isAdmin) {
-      return res.status(403).json({message: 'Unauthorized'})
-    }
+    // if (!currentUser.isAdmin) {
+    //   return res.status(403).json({message: 'Unauthorized'})
+    // }
     //Get all users that is reported
     //Array with objects with name and reasons
     //const reports = await Reports.get
@@ -64,8 +64,13 @@ usersRouter.route('/reported')
       return reports.length > 0
     })
 
-
-    return res.status(200).json({reportedUsers})
+    const ret = await Promise.all(reportedUsers.map(async u => {
+      return {
+        user: u,
+        reports: await u.getReports(),
+      }
+    }))
+    return res.status(200).json({users: ret})
   })
 
 usersRouter.route('/:id')
