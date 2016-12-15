@@ -6,11 +6,11 @@ import FlashMessage from '../../flash-message/flash-message'
 
 import './style.css'
 
-const ReportedForm = ({ users }) => {
+const ReportedForm = ({ users, banUser }) => {
 
   const rows = []
   users.map(user => {
-    const button = <FABButton mini> <Icon name="https" /> </FABButton>
+    const button = <FABButton mini ripple onClick={() => {banUser(user.user.id)}}> <Icon name="https" /> </FABButton>
     return rows.push({Name: `${user.user.firstname} ${user.user.lastname}`, Email: `${user.user.email}`, TimesBanned: `${user.reports.length}`, Message: 'Message for report', Ban: button})
   })
 
@@ -23,9 +23,9 @@ const ReportedForm = ({ users }) => {
     >
         <TableHeader numeric name="Name" tooltip="Name of the reported user">Name</TableHeader>
         <TableHeader numeric name="Email" tooltip="Mail of the reported user">Email</TableHeader>
-        <TableHeader numeric name="TimesBanned" tooltip="The number of times the user has been banned">Times Banned</TableHeader>
+        <TableHeader numeric name="TimesBanned" tooltip="The number of times the user has been banned">Times reported</TableHeader>
         <TableHeader numeric name="Message" tooltip="Messages">See messages from report</TableHeader>
-        <TableHeader numeric name="Ban" tooltip="Ban User">Remove ban</TableHeader>
+        <TableHeader numeric name="Ban" tooltip="Ban User">ban user</TableHeader>
     </DataTable>
     </div>
   )
