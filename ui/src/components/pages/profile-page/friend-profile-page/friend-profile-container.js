@@ -98,12 +98,10 @@ class ProfileContainer extends Component {
         friend: friend,
       })
     }else{
-      //set to localstate
       this.getUser(id)
     }
   }
 
-//Hittar ni någon bättre lösnign så säg till
   componentDidUpdate(prevProps, prevState){
     if(this.state.friend == null){
       this.setUserToState()

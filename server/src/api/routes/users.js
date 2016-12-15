@@ -56,9 +56,6 @@ usersRouter.route('/reported')
     if (!currentUser.isAdmin) {
       return res.status(403).json({message: 'Unauthorized'})
     }
-    //Get all users that is reported
-    //Array with objects with name and reasons
-    //const reports = await Reports.get
     const reportedUsers = await Promise.filter(User.findAll(), async user => {
       const reports = await user.getReports()
       return reports.length > 0
@@ -89,7 +86,7 @@ usersRouter.route('/:id')
     }
   })
   .put(async (req, res, next) => {
-    if (req.params.id !== req.user.dataValues.id) {
+    if (req.params.id !== req.user.dataValues.id || !req.user.isAdmin) {
       return res.status(403).json({ message: 'Cannot update someone elses password '})
     }
     const user = await User.findOne({ where: { id: req.user.dataValues.id }})
@@ -126,6 +123,19 @@ usersRouter.route('/:id')
 
 
     res.status(200).json({ message: 'Deleted kinda'})
+  })
+
+usersRouter.route('/:id/ban')
+  .all(authenticateToken)
+  .post(async (req, res, next) => {
+    const { id } = req.params
+    const { user: currentUser } = req
+    // if (!currentUser.isAdmin) {
+    //   return res.status(403).json({message: 'Unauthorized'})
+    // }
+    await User.findOne({ where: { id }})
+      .then(user => user.update({isBanned: true}))
+    return res.status(200).json({message:'User is now banned'})
   })
 
 
