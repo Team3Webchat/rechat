@@ -52,7 +52,7 @@ class ProfileContainer extends Component {
   }
   handleDeleteFriend = (id) =>  {
     this.props.doDeleteFriend(id)
-    this.handleCloseFriendConfirm()
+    this.handleCloseConfirms()
   }
 
   handleChange = e => {

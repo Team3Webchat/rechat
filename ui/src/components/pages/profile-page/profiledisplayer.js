@@ -3,16 +3,44 @@ import { connect } from 'react-redux'
 import { Card, CardTitle, CardMenu, CardText, IconButton, CardActions, Button } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
+import { deleteAccount } from '../../../lib/actions/userActions'
+import DeleteAccountConfirm from './delete-account-confirm'
 
 import './style.css'
 import './../style-card-common.css'
 
 //const ProfileDisplayer = (props) => {
 class ProfileDisplayer extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.handleOpenDialog = this.handleOpenDialog.bind(this);
+    this.handleCloseDialog = this.handleCloseDialog.bind(this);
+  }
+
+  handleOpenDialog() {
+    this.setState({
+      openDialog: true
+    });
+  }
+
+  handleCloseDialog() {
+    this.setState({
+      openDialog: false
+    });
+  }
+
+  handleDeleteAccount = (id) =>  {
+    this.props.doDeleteAccount(id)
+    this.handleCloseConfirms()
+  }
+
   render(){
     const { email, name } = this.props.user
-    const { id, handleDeleteAccountConfirm } = this.props
-    return (
+    const { user} = this.props
+    const { openDialog } = this.state
+    return (     
       <Card className='profileCard' shadow={0}>
         <Gravatar email={email} size={130}/>
         <CardTitle className="cardTitle">
@@ -33,8 +61,20 @@ class ProfileDisplayer extends Component {
           </div>
         </CardText>
         <CardActions border>
-          <Button className='buttons' onClick={handleDeleteAccountConfirm}>Delete my Account</Button>
+          <Button className='buttons' onClick={this.handleOpenDialog}>Delete my Account</Button>
         </CardActions>
+
+        <div>
+          { openDialog &&
+            <DeleteAccountConfirm
+              user={user}
+              openAccountDialog={this.state.openDialog}
+              handleCloseAccountDialog={this.handleCloseDialog}
+              handleDeleteAccount={this.handleDeleteAccount}
+            />
+          }
+        </div>
+
       </Card>
     )
   }
@@ -53,6 +93,7 @@ const mapStateToProps = state => ({
   flash: state.flash,
 })
 const mapDispatchToProps = dispatch => ({
+  doDeleteAccount: (id) => dispatch(deleteAccount(id)),
 })
 export default connect(
   mapStateToProps,
