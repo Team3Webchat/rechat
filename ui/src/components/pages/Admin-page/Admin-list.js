@@ -5,7 +5,7 @@ import { Tab, Tabs} from 'react-mdl'
 
 import { baseUrl } from '../../../lib/actions/index'
 import { getHeaders } from '../../../lib/api'
-
+import { banUser, unbanUser} from '../../../lib/actions/adminActions'
 import FlashMessage from '../../flash-message/flash-message'
 
 import ReportList from './reported-list'
@@ -22,6 +22,7 @@ class AdminList extends Component {
       reportedUsers: null,
       bannedUsers: null,
       activeTab: 2,
+      isBannedOrUnbanned: null,
     }
   }
 
@@ -57,38 +58,43 @@ class AdminList extends Component {
     }
   }
 
-  async banUser(id){
-    try {
-      const res = await fetch(baseUrl + 'users/'+id+'/ban', {
-        method: 'POST',
-        headers: getHeaders(),
-      })
-      const json = await res.json()
-      if (json.message)
-        throw json.message
-    }catch(e) {
-      //create flash message
-      console.log('wrong in Admin main getAdminProps')
-    }
+  banTheUser = (id) =>{
+    console.log(id)
+    this.props.doBanUser(id)
+    this.updateState()
+    // try {
+    //   const res = await fetch(baseUrl + 'users/'+id+'/ban', {
+    //     method: 'POST',
+    //     headers: getHeaders(),
+    //   })
+    //   const json = await res.json()
+    //   if (json.message)
+    //     throw json.message
+    // }catch(e) {
+    //   //create flash message
+    //   console.log('wrong in Admin main getAdminProps')
+    // }
   }
 
-  async unBanUser(id){
-    try {
-      const res = await fetch(baseUrl + 'users/'+id+'/unBan', {
-        method: 'POST',
-        headers: getHeaders(),
-      })
-      const json = await res.json()
-      if (json.message)
-        throw json.message
+  unBanUser = (id) =>{
 
-    }catch(e) {
-      //create flash message
-      console.log(e)
-    }
+    this.props.doUnbanUser(id)
+    this.updateState()
+    // try {
+    //   const res = await fetch(baseUrl + 'users/'+id+'/unBan', {
+    //     method: 'POST',
+    //     headers: getHeaders(),
+    //   })
+    //   const json = await res.json()
+    //   if (json.message)
+    //     throw json.message
+    //
+    // }catch(e) {
+    //   //create flash message
+    //   console.log(e)
+    // }
   }
-
-  async componentWillMount(){
+  async updateState(){
     const banned = await this.getBannedUsers()
     const reported = await this.getReportedUsers()
     this.setState({
@@ -97,6 +103,9 @@ class AdminList extends Component {
       activeTab: this.state.activeTab,
     })
     console.log(this.state)
+  }
+  componentWillMount(){
+    this.updateState()
   }
 
   render(){
@@ -114,7 +123,7 @@ class AdminList extends Component {
             { activeTab === 0 &&
               <ReportList
                 users={reportedUsers}
-                banUser={this.banUser}
+                banTheUser={this.banTheUser}
                 />
             }
             { activeTab === 1 &&
@@ -142,7 +151,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-
+  doBanUser: (id) => dispatch(banUser(id)),
+  doUnbanUser: (id) => dispatch(unbanUser(id)),
 })
 
 export default connect(
