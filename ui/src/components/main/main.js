@@ -22,6 +22,7 @@ class Main extends Component {
       showRequests: false,
       showSearch: false,
       searchValue: '',
+      isAdmin: false,
     }
   }
 
@@ -85,7 +86,9 @@ class Main extends Component {
             />
           }
 
-          <AdminList/>
+          {this.state.isAdmin &&
+            <AdminList/>
+          }
 
           {this.props.children ?
             this.props.children
@@ -107,6 +110,7 @@ const mapStateToProps = state => ({
   flash: state.flash,
   friendRequests: state.friends.friendRequests,
   token: state.auth.token,
+  isAdmin: state.auth.isAdmin,
 })
 
 const mapDispatchToProps = dispatch => ({

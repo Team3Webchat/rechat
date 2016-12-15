@@ -3,7 +3,12 @@ import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { Textfield, Button, Spinner, Card, Tab, Tabs } from 'react-mdl'
 
+// import { baseUrl } from './'
+// import { getHeaders } from '../../../lib/api'
+
 import FlashMessage from '../../flash-message/flash-message'
+
+import './style.css'
 
 
 class AdminList extends Component {
@@ -17,9 +22,27 @@ class AdminList extends Component {
       activeTabs: 2,
     }
   }
+
+  // async getAdminProps(id){
+  //   try {
+  //     const res = await fetch(baseUrl + 'admin', {
+  //       method: 'POST',
+  //       body: JSON.stringify({
+  //         adminID: id,
+  //       }),
+  //       headers: getHeaders(),
+  //     })
+
+  //     const json = await res.json()
+  //   }catch(e) {
+  //     console.log('wrong in Admin main getAdminProps')
+  //     //TODO: retunera felmeddelande NOT DONE YET
+  //   }
+  // }
+
   render(){
     const { onChange, onSubmit, isAuthenticating, 
-      firstname, lastname, flash, reports, checkReportMessages, nowActiveTab} = this.props
+      firstname, lastname, flash, reports, checkReportMessages} = this.props
     //const { email, name } = props.user
 
     //console.log(email, name)
@@ -29,12 +52,21 @@ class AdminList extends Component {
         <Tabs activeTab={this.state.activeTab} 
         onChange={(tabId) => this.setState({ activeTab: tabId })} 
         ripple>
-            <Tab>Reported Users</Tab>
-            <Tab>Banned Users</Tab>
-            <Tab>Messages</Tab>
+            <Tab className="reported">Reported Users</Tab>
+            <Tab className="banned">Banned Users</Tab>
+            <Tab className="message">Messages</Tab>
         </Tabs>
         <section>
-            <div className="content">Content for the tab: {this.state.activeTab}</div>
+            <div className="content">
+            { this.state.activeTab === 0 &&
+              <p> This page you'll see all reported accounts</p>
+            }
+            { this.state.activeTab === 1 &&
+              <p> This page you'll see all banned accounts</p>
+            }
+            { this.state.activeTab === 2 &&
+              <p> This page you'll see all messages from reported accounts</p>
+            }</div>
         </section>
 
       { this.state.activeTab === 0 &&
