@@ -1,12 +1,15 @@
 import React, { PropTypes, Component } from 'react'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { Textfield, Button, Spinner, Card, Tab, Tabs } from 'react-mdl'
+import { Tab, Tabs, List, ListItem } from 'react-mdl'
 
-// import { baseUrl } from './'
-// import { getHeaders } from '../../../lib/api'
+import { baseUrl } from '../../../lib/actions/index'
+import { getHeaders } from '../../../lib/api'
 
 import FlashMessage from '../../flash-message/flash-message'
+
+import ReportList from './reported-list'
+import BannedList from './banned-list'
 
 import './style.css'
 
@@ -16,67 +19,66 @@ class AdminList extends Component {
   constructor(props){
     super(props)
     this.state = {
-      showRequests: false,
-      showSearch: false,
-      searchValue: '',
-      activeTabs: 2,
+      users: null,
+      activeTab: 2,
     }
   }
 
-  // async getAdminProps(id){
-  //   try {
-  //     const res = await fetch(baseUrl + 'admin', {
-  //       method: 'POST',
-  //       body: JSON.stringify({
-  //         adminID: id,
-  //       }),
-  //       headers: getHeaders(),
-  //     })
+  async getAdminProps(){
+    try {
+      const res = await fetch(baseUrl + '/users/reported', {
+        method: 'GET',
+        headers: getHeaders(),
+      })
+      const json = await res.json()
+      console.log(json)
+      return json
+    }catch(e) {
+      console.log('wrong in Admin main getAdminProps')
+    }
+  }
 
-  //     const json = await res.json()
-  //   }catch(e) {
-  //     console.log('wrong in Admin main getAdminProps')
-  //     //TODO: retunera felmeddelande NOT DONE YET
-  //   }
-  // }
+  async componentWillMount(){
+    const { getAdminProps } = this
+    const { users } = await getAdminProps()
+    this.setState({users})
+    console.log(this.state)
+    //kalla på get adrmin
+    //sätt dem till state
+  }
 
   render(){
-    const { onChange, onSubmit, isAuthenticating, 
-      firstname, lastname, flash, reports, checkReportMessages} = this.props
-    //const { email, name } = props.user
-
-    //console.log(email, name)
+    const { users, activeTab } = this.state
+    console.log(users)
     return (
 
       <div className="tabs">
-        <Tabs activeTab={this.state.activeTab} 
+        <Tabs activeTab={activeTab} 
         onChange={(tabId) => this.setState({ activeTab: tabId })} 
         ripple>
             <Tab className="reported">Reported Users</Tab>
             <Tab className="banned">Banned Users</Tab>
-            <Tab className="message">Messages</Tab>
         </Tabs>
         <section>
             <div className="content">
-            { this.state.activeTab === 0 &&
+            { activeTab === 0 &&
               <p> This page you'll see all reported accounts</p>
             }
-            { this.state.activeTab === 1 &&
+            { activeTab === 1 &&
               <p> This page you'll see all banned accounts</p>
-            }
-            { this.state.activeTab === 2 &&
-              <p> This page you'll see all messages from reported accounts</p>
             }</div>
         </section>
 
-      { this.state.activeTab === 0 &&
-        <h5>Add Reported Users</h5>
+      { activeTab === 0 &&
+        <ReportList
+          users={this.state.users}
+          />
       }
-      { this.state.activeTab === 1 &&
-        <h5>Add Banned Users</h5>
-      }
-      { this.state.activeTab === 2 &&
-        <h5>Add Messages for reported users</h5>
+      { activeTab === 1 &&
+        users.isBanned &&
+        <BannedList
+          users={this.state.users}
+          />
       }
         </div>
     )
@@ -100,37 +102,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(AdminList)
-
-/*
-<div className="demo-tabs">
-        <Tabs activeTab={nowActiveTab}
-        onChange={(tabId) => this.setState({ activeTab: tabId })} 
-        ripple>
-            <Tab>Reported Users</Tab>
-            <Tab>Banned Users</Tab>
-            <Tab>Messages</Tab>
-        </Tabs>
-        <section>
-            <div className="content">Content for the tab: {nowActiveTab}</div>
-        </section>
-    </div>  
-
-
-
-//this is for the main.js in main later.
-async getAdminProps(id){
-    try {
-      const res = await fetch(baseUrl + '/admin', {
-        method: 'POST',
-        body: JSON.stringify({
-          adminID: id,
-        }),
-        headers: getHeaders(),
-      })
-
-      const json = await res.json()
-    }catch(e) {
-      console.log('wrong in Admin main getAdminProps')
-      //TODO: retunera felmeddelande NOT DONE YET
-    }
-  }*/

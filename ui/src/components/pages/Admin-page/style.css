@@ -22,7 +22,7 @@
     display: inline-block;
     font-size: 20px;
 }
-.message {
+.reportMessage {
     background-color: #e7e7e7; color: black;
     border: none;
     color: darkorange !important; 
@@ -44,8 +44,14 @@
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
-.message:hover {
+.reportMessage:hover {
     background-color: #C0C0C0; color: black;
     color:black !important;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.ReportedUserList p{
+    max-width: 800px;
+    color: black;
+    font-size: 25px;
 }
