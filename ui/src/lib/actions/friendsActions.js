@@ -28,7 +28,7 @@ export const sendFriendRequest = (friendId) => ({
   type: SEND_FRIEND_REQUEST,
   payload: {
     friendId,
-  }
+  },
 })
 
 export const gotFriendRequest = friend => ({
