@@ -49,6 +49,25 @@ usersRouter.route('/')
     }
   })
 
+usersRouter.route('/reported')
+  .all(authenticateToken)
+  .get(async (req, res, next) => {
+    const { user: currentUser } = req
+    if (!currentUser.isAdmin) {
+      return res.status(403).json({message: 'Unauthorized'})
+    }
+    //Get all users that is reported
+    //Array with objects with name and reasons
+    //const reports = await Reports.get
+    const reportedUsers = await Promise.filter(User.findAll(), async user => {
+      const reports = await user.getReports()
+      return reports.length > 0
+    })
+
+
+    return res.status(200).json({reportedUsers})
+  })
+
 usersRouter.route('/:id')
   .all(authenticateToken)
   .get(async (req, res, next) => {
@@ -175,18 +194,6 @@ usersRouter.route('/:id/reports')
     return res.status(200).json({report})
   })
 
-usersRouter.route('/reports')
-  .all(authenticateToken)
-  .get(async (req, res, next) => {
-    const { user: currentUser } = req
-    if (!currentUser.isAdmin) {
-      return res.status(403).json({message: 'Unauthorized'})
-    }
-    //Get all users that is reported
-    //Array with objects with name and reasons
-    //const reports = await Reports.get
-    return res.status(403).json({message: 'THIS FUNCTION IS NOT DONE'})
-  })
 
 usersRouter.route('/:id/friends/:friendId')
   .all(authenticateToken)
