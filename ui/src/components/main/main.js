@@ -87,12 +87,11 @@ class Main extends Component {
             />
           }
 
-          {isAdmin &&
-            <AdminList/>
-          }
-
           {this.props.children ?
             this.props.children
+            :
+            isAdmin ?
+              <AdminList/>
             :
             <p className='nothing'>Search for friends and start a conversation</p>
           }

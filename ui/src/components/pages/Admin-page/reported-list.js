@@ -1,22 +1,27 @@
-import React, { PropTypes } from 'react'
-import { Link } from 'react-router'
-import { FABButton, DataTable, TableHeader, Icon } from 'react-mdl'
-
-import FlashMessage from '../../flash-message/flash-message'
+import React from 'react'
+import { FABButton, DataTable, TableHeader, Icon, Tooltip } from 'react-mdl'
 
 import './style.css'
 
 const ReportedForm = ({ users, banTheUser }) => {
 
   const rows = []
-  users.map(user => {
-    const button = <FABButton mini ripple onClick={() => {banTheUser(user.user.id)}}> <Icon name="https" /> </FABButton>
-    return rows.push({Name: `${user.user.firstname} ${user.user.lastname}`, Email: `${user.user.email}`, TimesBanned: `${user.reports.length}`, Message: 'Message for report', Ban: button})
-  })
+  if(users){
+    users.map(user => {
+      const button = <FABButton mini ripple onClick={() => {banTheUser(user.user.id)}}> <Icon name="https" /> </FABButton>
+      const tooltip = <Tooltip label="Follow" position="left">Reasons</Tooltip>
+      return rows.push({Name: `${user.user.firstname} ${user.user.lastname}`,
+        Email: `${user.user.email}`,
+        TimesBanned: `${user.reports.length}`,
+        Message: tooltip,
+        Ban: button})
+    })
+  }
+
 
 
   return (
-    <div className="ghf">
+    <div className="list">
       <DataTable
         shadow={1}
         rows={rows}

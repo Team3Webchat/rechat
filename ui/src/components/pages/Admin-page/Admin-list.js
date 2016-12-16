@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 
 import { connect } from 'react-redux'
-import { Tab, Tabs} from 'react-mdl'
+import { Tab, HeaderTabs} from 'react-mdl'
 
 import { baseUrl } from '../../../lib/actions/index'
 import { getHeaders } from '../../../lib/api'
-import { banUser, unbanUser} from '../../../lib/actions/adminActions'
-import FlashMessage from '../../flash-message/flash-message'
+import { banUser, unbanUser, banUserFailure} from '../../../lib/actions/adminActions'
 
 import ReportList from './reported-list'
 import BannedList from './banned-list'
@@ -21,14 +20,13 @@ class AdminList extends Component {
     this.state = {
       reportedUsers: null,
       bannedUsers: null,
-      activeTab: 2,
-      isBannedOrUnbanned: null,
+      activeTab: 0,
     }
   }
 
   async getBannedUsers(){
     try {
-      const res = await fetch(baseUrl + '/users/banned', {
+      const res = await fetch(baseUrl + 'users/banned', {
         method: 'GET',
         headers: getHeaders(),
       })
@@ -37,14 +35,13 @@ class AdminList extends Component {
         throw json.message
       return json.bannedUsers
     }catch(e) {
-      //create flash message
-      console.log('wrong in Admin main getAdminProps')
+      this.props.doWriteFlashMessage(e)
     }
   }
 
   async getReportedUsers(){
     try {
-      const res = await fetch(baseUrl + '/users/reported', {
+      const res = await fetch(baseUrl + 'users/reported', {
         method: 'GET',
         headers: getHeaders(),
       })
@@ -53,46 +50,16 @@ class AdminList extends Component {
         throw json.message
       return json.users
     }catch(e) {
-      //create flash message
-      console.log('wrong in Admin main getAdminProps')
+      this.props.doWriteFlashMessage(e)
     }
   }
 
   banTheUser = (id) =>{
-    console.log(id)
     this.props.doBanUser(id)
-    this.updateState()
-    // try {
-    //   const res = await fetch(baseUrl + 'users/'+id+'/ban', {
-    //     method: 'POST',
-    //     headers: getHeaders(),
-    //   })
-    //   const json = await res.json()
-    //   if (json.message)
-    //     throw json.message
-    // }catch(e) {
-    //   //create flash message
-    //   console.log('wrong in Admin main getAdminProps')
-    // }
   }
 
   unBanUser = (id) =>{
-
     this.props.doUnbanUser(id)
-    this.updateState()
-    // try {
-    //   const res = await fetch(baseUrl + 'users/'+id+'/unBan', {
-    //     method: 'POST',
-    //     headers: getHeaders(),
-    //   })
-    //   const json = await res.json()
-    //   if (json.message)
-    //     throw json.message
-    //
-    // }catch(e) {
-    //   //create flash message
-    //   console.log(e)
-    // }
   }
   async updateState(){
     const banned = await this.getBannedUsers()
@@ -102,7 +69,6 @@ class AdminList extends Component {
       bannedUsers: banned,
       activeTab: this.state.activeTab,
     })
-    console.log(this.state)
   }
   componentWillMount(){
     this.updateState()
@@ -112,12 +78,12 @@ class AdminList extends Component {
     const { reportedUsers, bannedUsers, activeTab } = this.state
     return (
       <div className="tabs">
-        <Tabs activeTab={activeTab}
+        <HeaderTabs activeTab={activeTab}
         onChange={(tabId) => this.setState({ activeTab: tabId })}
         ripple>
-            <Tab className="reported">Reported Users</Tab>
-            <Tab className="banned">Banned Users</Tab>
-        </Tabs>
+            <Tab className="admin-tab">Reported Users</Tab>
+            <Tab className="admin-tab">Banned Users</Tab>
+        </HeaderTabs>
         <section>
             <div className="content">
             { activeTab === 0 &&
@@ -134,7 +100,6 @@ class AdminList extends Component {
             }
             </div>
         </section>
-
 
         </div>
     )
@@ -153,6 +118,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   doBanUser: (id) => dispatch(banUser(id)),
   doUnbanUser: (id) => dispatch(unbanUser(id)),
+  doWriteFlashMessage: (m) => dispatch(banUserFailure(m)),
 })
 
 export default connect(

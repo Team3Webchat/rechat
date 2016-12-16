@@ -14,20 +14,20 @@ const banUserSuccess = ({ flash }) => ({
     flash,
   },
 })
-
-const banUserFailure = ({ flash }) => ({
+export const banUserFailure = ({ flash }) => ({
   type: BAN_USER_FAILURE,
   payload: {
     flash,
   },
 })
+
+
 const unbanUserSuccess = ({ flash }) => ({
   type: BAN_USER_SUCCESS,
   payload: {
     flash,
   },
 })
-
 const unbanUserFailure = ({ flash }) => ({
   type: BAN_USER_FAILURE,
   payload: {

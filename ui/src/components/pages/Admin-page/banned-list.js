@@ -11,7 +11,7 @@ const BannedForm = ( {users, unBanUser} ) => {
   })
 
   return (
-    <div className="ghf">
+    <div className="list">
       <DataTable
         shadow={1}
         rows={rows}>
