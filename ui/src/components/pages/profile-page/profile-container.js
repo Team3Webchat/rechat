@@ -13,7 +13,7 @@ class ProfileContainer extends Component {
       password: '',
       newPasswordConfirm: '',
       newPassword: '',
-      isAuthenticating: false, 
+      isAuthenticating: false,
     }
   }
 
@@ -34,7 +34,6 @@ class ProfileContainer extends Component {
 
   render() {
     const { user } = this.props
-    const { openDialog } = this.state
     return (
       <Card className='profileCard' shadow={0}>
         <ChangePassword
@@ -48,7 +47,7 @@ class ProfileContainer extends Component {
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}
         />
-      </Card> 
+      </Card>
     )
   }
 }

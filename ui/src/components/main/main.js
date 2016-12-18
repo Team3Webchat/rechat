@@ -62,9 +62,6 @@ class Main extends Component {
 
     const { doLogout, flash, isAdmin } = this.props
     const { showRequests, showSearch, searchValue } = this.state
-
-    console.log(isAdmin)
-
     return (
       <div>
          <Layout fixedHeader fixedDrawer onClick={this.onClickOutside}>

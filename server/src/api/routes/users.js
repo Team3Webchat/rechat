@@ -10,7 +10,7 @@ import uuid from 'uuid'
 Promise.promisifyAll(jwt)
 Promise.promisifyAll(bcrypt)
 
-const { User, Friendship, Chat, Report } = models
+const { User, Friendship, Report } = models
 const usersRouter = Router()
 
 

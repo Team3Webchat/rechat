@@ -9,38 +9,37 @@ import DeleteAccountConfirm from './delete-account-confirm'
 import './style.css'
 import './../style-card-common.css'
 
-//const ProfileDisplayer = (props) => {
 class ProfileDisplayer extends Component {
 
   constructor(props) {
-    super(props);
-    this.state = {};
-    this.handleOpenDialog = this.handleOpenDialog.bind(this);
-    this.handleCloseDialog = this.handleCloseDialog.bind(this);
-  }
-
-  handleOpenDialog() {
-    this.setState({
-      openDialog: true
-    });
-  }
-
-  handleCloseDialog() {
-    this.setState({
+    super(props)
+    this.state = {
       openDialog: false
-    });
+    }
+  }
+
+  handleOpenDialog = () => {
+    this.setState({
+      openDialog: true,
+    })
+  }
+
+  handleCloseDialog = () => {
+    this.setState({
+      openDialog: false,
+    })
   }
 
   handleDeleteAccount = (id) =>  {
     this.props.doDeleteAccount(id)
-    this.handleCloseConfirms()
+    this.handleCloseDialog()
   }
 
   render(){
     const { email, name } = this.props.user
     const { user} = this.props
     const { openDialog } = this.state
-    return (     
+    return (
       <Card className='profileCard' shadow={0}>
         <Gravatar email={email} size={130}/>
         <CardTitle className="cardTitle">
@@ -79,10 +78,6 @@ class ProfileDisplayer extends Component {
     )
   }
 }
-/*
-<Card className='profileCard' shadow={0} >
-</Card>
-*/
 const mapStateToProps = state => ({
   user: {
     email: state.auth.email,
