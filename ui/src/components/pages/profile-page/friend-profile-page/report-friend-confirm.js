@@ -11,16 +11,15 @@ const ReportFriendConfirm = (props) => {
       <DialogTitle>Report this person</DialogTitle>
         <form onSubmit={onSubmit}>
           <DialogContent>
-            <p>Report <span className="bold">{firstname} {lastname}</span> for inappropriate behavior. 
+            <p>Report <span className="bold">{firstname} {lastname}</span> for inappropriate behavior.
             The report will be submitted for review and our administration will look for violations of our Terms of use.</p>
-            
+
             <div>
               <Textfield
                 className='textInput'
                 onChange={onChange}
                 label="Write details..."
                 required
-                multiLine={true}
                 rows={3}
                 value={reportDetails}
               />
@@ -28,7 +27,7 @@ const ReportFriendConfirm = (props) => {
 
         </DialogContent>
         <DialogActions className="dialogActionsBorder">
-          <Button raised colored disabled={reportDetails.length === 0} type="submit" onClick={() => {handleReportFriend(id)}}>Report</Button>
+          <Button raised colored disabled={reportDetails.length === 0} type="submit" onClick={() => {handleReportFriend(id, reportDetails)}}>Report</Button>
           <Button type='button' onClick={handleCloseReportDialog}>Cancel</Button>
       </DialogActions>
       </form>

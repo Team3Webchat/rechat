@@ -3,13 +3,11 @@ import { Card, CardActions, Button, CardTitle, CardMenu, CardText, IconButton} f
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
-
 import './../../style-card-common.css'
 
 const ProfileDisplayer = (props) => {
 
-  //const { email, fristname, lastname, id } = props.friend
-  const {firstname, lastname, email, id, friendsSince} = props.friend//{firstname: 'inget', lastname: 'nada', email:'rebecca@awesome.com'}
+  const {firstname, lastname, email, id, friendsSince} = props.friend
   const { handleDeleteFriendConfirm, handleReportFriendConfirm, addFriend } = props
 
   return (

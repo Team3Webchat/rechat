@@ -24,13 +24,13 @@ class ProfileContainer extends Component {
     }
   }
   //DELETE FRIEND CONFIRM
-  handleDeleteFriendConfirm = friend =>  {
+  handleDeleteFriendConfirm = () =>  {
     this.setState({
       openFriendDialog: true,
     })
   }
   //REPORT FRIEND CONFIRM
-  handleReportFriendConfirm = friend =>  {
+  handleReportFriendConfirm = () =>  {
     this.setState({
       openReportDialog: true,
     })
@@ -42,10 +42,10 @@ class ProfileContainer extends Component {
     })
   }
 
-  handleReportFriend = (id) =>  {
-    this.props.doReportFriend(id)
+  handleReportFriend = (id, message) =>  {
+    console.log(message);
+    this.props.doReportFriend(id, message)
     this.handleCloseConfirms()
-    const { reportDetails } = this.state
     this.setState({
       reportDetails: '',
     })
@@ -158,7 +158,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   doDeleteFriend: (id) => dispatch(deleteFriend(id)),
-  doReportFriend: (id) => dispatch(reportFriend(id)),
+  doReportFriend: (id, message) => dispatch(reportFriend(id, message)),
   doAddFriend: id => dispatch(sendFriendRequest(id)),
 })
 

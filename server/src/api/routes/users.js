@@ -17,9 +17,6 @@ const usersRouter = Router()
 usersRouter.route('/')
   .post((req, res, next) => {
     const { email, password, firstname, lastname } = req.body
-    // const reportedByOthersCount = 0
-    // const isAdmin = false
-    // const isBanned = false
     bcrypt.genSaltAsync(10)
       .then(salt => bcrypt.hashAsync(password, salt, null))
       .then(pw => User.create({ email, firstname, lastname, password: pw, reportedByOthersCount: 0, isAdmin: false, isBanned: false }))
@@ -202,8 +199,7 @@ usersRouter.route('/:id/friends')
     res.json({ message: 'Friend added!', sentFriendRequests})
   })
 
-/*REPORTS*/
-usersRouter.route('/:id/reports')
+usersRouter.route('/:id/report')
   .all(authenticateToken)
   .get(async(req, res, next) => {
     const { id } = req.params
