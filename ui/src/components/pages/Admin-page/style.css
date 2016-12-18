@@ -29,6 +29,7 @@
     font-size: 25px;
 }
 .list .mdl-tooltip p{
+  font-size: 12px !important;
   margin:0;
 }
 .list .mdl-tooltip .reason{
