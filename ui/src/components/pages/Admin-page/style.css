@@ -28,3 +28,9 @@
     color: black;
     font-size: 25px;
 }
+.list .mdl-tooltip p{
+  margin:0;
+}
+.list .mdl-tooltip .reason{
+  border-bottom: 1px solid;
+}

@@ -5,7 +5,7 @@ import { Tab, HeaderTabs} from 'react-mdl'
 
 import { baseUrl } from '../../../lib/actions/index'
 import { getHeaders } from '../../../lib/api'
-import { banUser, unbanUser, banUserFailure} from '../../../lib/actions/adminActions'
+import { banUser, unbanUser, failureMessage} from '../../../lib/actions/adminActions'
 
 import ReportList from './reported-list'
 import BannedList from './banned-list'
@@ -22,6 +22,15 @@ class AdminList extends Component {
       bannedUsers: null,
       activeTab: 0,
     }
+  }
+
+  getWholeDate = (today) => {
+    let dd = today.getDate()
+    let mm = today.getMonth()+1 //January is 0!
+    const yyyy = today.getFullYear()
+    if(dd<10) dd='0'+dd
+    if(mm<10) mm='0'+mm
+    return dd+'-'+mm+'-'+yyyy
   }
 
   async getBannedUsers(){
@@ -90,6 +99,7 @@ class AdminList extends Component {
               <ReportList
                 users={reportedUsers}
                 banTheUser={this.banTheUser}
+                date={this.getWholeDate}
                 />
             }
             { activeTab === 1 &&
@@ -118,7 +128,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   doBanUser: (id) => dispatch(banUser(id)),
   doUnbanUser: (id) => dispatch(unbanUser(id)),
-  doWriteFlashMessage: (m) => dispatch(banUserFailure(m)),
+  doWriteFlashMessage: (m) => dispatch(failureMessage(m)),
 })
 
 export default connect(

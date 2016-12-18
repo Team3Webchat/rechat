@@ -3,13 +3,25 @@ import { FABButton, DataTable, TableHeader, Icon, Tooltip } from 'react-mdl'
 
 import './style.css'
 
-const ReportedForm = ({ users, banTheUser }) => {
+const ReportedForm = ({ users, banTheUser, date }) => {
 
   const rows = []
   if(users){
     users.map(user => {
       const button = <FABButton mini ripple onClick={() => {banTheUser(user.user.id)}}> <Icon name="https" /> </FABButton>
-      const tooltip = <Tooltip label="Follow" position="left">Reasons</Tooltip>
+      const reasons = <span>{user.reports.map(r => {
+        return <div key={r.id} className='reason'>
+          <p>Date: {date(new Date(r.createdAt))}</p>
+          <p>Message: "{r.message}"</p>
+        </div>
+      }
+      )}</span>
+
+      /*const reasons = user.reports.map(report =>
+        'Date: '+ date(new Date(report.createdAt)) +'\n Message "'+ report.message +'"'
+      )*/
+      console.log(reasons);
+      const tooltip = <Tooltip label={reasons} >Reasons</Tooltip>
       return rows.push({Name: `${user.user.firstname} ${user.user.lastname}`,
         Email: `${user.user.email}`,
         TimesBanned: `${user.reports.length}`,

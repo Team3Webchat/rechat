@@ -6,7 +6,6 @@ export const UNBAN_USER = 'UNBAN_USER'
 export const BAN_USER_SUCCESS = 'BAN_USER_SUCCESS'
 export const BAN_USER_FAILURE = 'BAN_USER_FAILURE'
 export const UNBAN_USER_SUCCESS = 'UNBAN_USER_SUCCESS'
-export const UNBAN_USER_FAILURE = 'UNBAN_USER_FAILURE'
 
 const banUserSuccess = ({ flash }) => ({
   type: BAN_USER_SUCCESS,
@@ -14,26 +13,19 @@ const banUserSuccess = ({ flash }) => ({
     flash,
   },
 })
-export const banUserFailure = ({ flash }) => ({
-  type: BAN_USER_FAILURE,
-  payload: {
-    flash,
-  },
-})
-
-
 const unbanUserSuccess = ({ flash }) => ({
   type: BAN_USER_SUCCESS,
   payload: {
     flash,
   },
 })
-const unbanUserFailure = ({ flash }) => ({
+export const failureMessage = ({ flash }) => ({
   type: BAN_USER_FAILURE,
   payload: {
     flash,
   },
 })
+
 export const banUser = (friendId) =>
 
 function(dispatch) {
@@ -55,7 +47,7 @@ function(dispatch) {
 
   } catch (e) {
     console.log(e)
-    dispatch(banUserFailure({
+    dispatch(failureMessage({
       flash: {
         message: e.message,
         type: 'failed to ban user',
@@ -85,7 +77,7 @@ function(dispatch) {
 
   } catch (e) {
     console.log(e)
-    dispatch(unbanUserFailure({
+    dispatch(failureMessage({
       flash: {
         message: e.message,
         type: 'failed to unban user',
