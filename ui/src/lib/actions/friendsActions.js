@@ -167,14 +167,14 @@ const reportFriendFailure = ({ flash }) => ({
 
 export const reportFriend = (friendId,message) =>
 function(dispatch) {
-  console.log(message);
-  fetch(`${baseUrl}users/${friendId}`,{
-    method: 'GET',
-    headers: getHeaders(),
-  }).then(function (resp) {
-    return resp.json()
-  })
-  .then(function (jsonres) {
+  // console.log(message);
+  // fetch(`${baseUrl}users/${friendId}`,{
+  //   method: 'POST',
+  //   headers: getHeaders(),
+  // }).then(function (resp) {
+  //   return resp.json()
+  // })
+  // .then(function (jsonres) {
     try {
       const res =  fetch(`${baseUrl}users/${friendId}/report`, {
         method: 'POST',
@@ -202,7 +202,7 @@ function(dispatch) {
       }))
     }
 
-  })
+  // })
 //  const reportCount = getReportedByOthersCount() + 1
 
 }
