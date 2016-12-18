@@ -39,7 +39,6 @@ _bluebird2.default.promisifyAll(_bcryptNodejs2.default);
 
 var User = _models2.default.User,
     Friendship = _models2.default.Friendship,
-    Chat = _models2.default.Chat,
     Report = _models2.default.Report;
 
 var usersRouter = (0, _express.Router)();
@@ -50,9 +49,6 @@ usersRouter.route('/').post(function (req, res, next) {
       password = _req$body.password,
       firstname = _req$body.firstname,
       lastname = _req$body.lastname;
-  // const reportedByOthersCount = 0
-  // const isAdmin = false
-  // const isBanned = false
 
   _bcryptNodejs2.default.genSaltAsync(10).then(function (salt) {
     return _bcryptNodejs2.default.hashAsync(password, salt, null);
@@ -587,8 +583,7 @@ usersRouter.route('/:id/friends').all(_auth.authenticateToken).get(function () {
   };
 }());
 
-/*REPORTS*/
-usersRouter.route('/:id/reports').all(_auth.authenticateToken).get(function () {
+usersRouter.route('/:id/report').all(_auth.authenticateToken).get(function () {
   var _ref19 = _asyncToGenerator(regeneratorRuntime.mark(function _callee15(req, res, next) {
     var id, currentUser, user, reports;
     return regeneratorRuntime.wrap(function _callee15$(_context15) {
