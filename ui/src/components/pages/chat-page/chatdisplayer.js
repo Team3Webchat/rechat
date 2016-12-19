@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {  Card, CardActions, Button, Textfield, IconButton, CardMenu, CardTitle, CardText } from 'react-mdl'
+import {  Card, CardActions, Button, Textfield, IconButton, CardMenu, CardTitle, CardText, Tooltip, Icon } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 import ComposeNewMessage from './compose-new-message'
@@ -57,9 +57,33 @@ class ChatDisplayer extends Component {
             />
             
             <CardActions className='send'>
-              <Button raised colored type="submit"
+              <Tooltip label="Upload a photo.">
+                <Button className="mdl-button--icon">
+                  <Icon name="insert_photo"/>
+                  <input 
+                    type="file" 
+                    id="upload-file" 
+                    accept=".jpg,.gif,.png,.svg"
+                  />
+                </Button>
+              </Tooltip>
+              <Tooltip label="Upload a file (non photo).">
+                <Button className="mdl-button--icon">
+                  <Icon name="attachment"/>
+                  <input 
+                    type="file" 
+                    id="upload-file" 
+                    accept=".pdf,.txt"
+                  />
+                </Button>
+              </Tooltip>
+              <Button
+                className="sendButton"
+                raised colored 
+                type="submit"
                 disabled={message.length === 0}
-                >Send</Button>
+                >Send
+              </Button>
             </CardActions>
           </form>
         </div>

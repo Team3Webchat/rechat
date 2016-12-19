@@ -5,13 +5,13 @@
   padding:16px 16px 16px 16px !important;
 }
 
-.cardMenu i{
+.iconButton i{
   transition: color 0.3s ease;
   color: #5c272d !important;
   font-weight: normal;
 }
 
-.cardMenu i:hover{
+.iconButton i:hover{
   color: #f28d52 !important;
 }
 

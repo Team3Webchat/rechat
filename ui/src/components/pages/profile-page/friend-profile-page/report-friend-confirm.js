@@ -22,6 +22,7 @@ const ReportFriendConfirm = (props) => {
                 required
                 rows={3}
                 value={reportDetails}
+                maxLength="255"
               />
             </div>
 
