@@ -3,8 +3,11 @@ import { connect } from 'react-redux'
 import { Card, CardTitle, CardMenu, CardText, IconButton, CardActions, Button } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
+
 import { deleteAccount } from '../../../lib/actions/userActions'
 import DeleteAccountConfirm from './delete-account-confirm'
+import { baseUrl } from '../../../lib/actions/index'
+import { getHeaders } from '../../../lib/api'
 
 import './style.css'
 import './../style-card-common.css'
@@ -14,8 +17,10 @@ class ProfileDisplayer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      openDialog: false
+      openDialog: false,
+      timesReported: null,
     }
+    this.getTimesReported()
   }
 
   handleOpenDialog = () => {
@@ -35,10 +40,29 @@ class ProfileDisplayer extends Component {
     this.handleCloseDialog()
   }
 
+  async getTimesReported(){
+    try {
+      const res = await fetch(baseUrl + 'users/'+this.props.user.id+'/report', {
+        method: 'GET',
+        headers: getHeaders(),
+      })
+      const json = await res.json()
+      if (json.message)
+        throw json.message
+      this.setState({
+        timesReported: json.reports.length,
+      })
+    }catch(e) {
+      this.setState({
+        timesReported: 'Could not get data',
+      })
+    }
+  }
   render(){
     const { email, name } = this.props.user
     const { user} = this.props
-    const { openDialog } = this.state
+    //const timesReported = await this.getTimesReported()
+    const { openDialog, timesReported } = this.state
     return (
       <Card className='profileCard' shadow={0}>
         <Gravatar email={email} size={130}/>
@@ -57,6 +81,10 @@ class ProfileDisplayer extends Component {
           <div className="info-row">
             <div className='key'><p>E-mail</p></div>
             <div className='value'><p>{email}</p></div>
+          </div>
+          <div className="info-row">
+            <div className='key'><p>Times reported</p></div>
+            <div className='value'><p>{timesReported}</p></div>
           </div>
         </CardText>
         <CardActions border>

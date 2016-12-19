@@ -133,9 +133,9 @@ usersRouter.route('/:id/ban')
   .post(async (req, res, next) => {
     const { id } = req.params
     const { user: currentUser } = req
-     if (!currentUser.isAdmin) {
-       return res.status(403).json({message: 'Unauthorized'})
-     }
+    if (!currentUser.isAdmin) {
+      return res.status(403).json({message: 'Unauthorized'})
+    }
     await User.findOne({ where: { id }})
       .then(user => user.update({isBanned: true}))
     return res.status(200).json({message:'User is now banned'})
@@ -175,7 +175,6 @@ usersRouter.route('/:id/friends')
     const { id } = req.params
     const { authorization } = req.headers
 
-
     if (id === user.id)
       return res
         .status(400)
@@ -204,12 +203,15 @@ usersRouter.route('/:id/report')
   .get(async(req, res, next) => {
     const { id } = req.params
     const { user: currentUser } = req
+    console.log(id !== currentUser.id);
     if (!currentUser.isAdmin) {
-      return res.status(403).json({message: 'Unauthorized'})
+      if(id !== currentUser.id)
+        return res.status(403).json({message: 'Unauthorized'})
     }
     const user = await User.findOne({where: {id}})
 
     const reports = await user.getReports()
+    console.log(reports);
     return res.status(200).json({reports})
   })
   .post(async(req, res, next) => {
