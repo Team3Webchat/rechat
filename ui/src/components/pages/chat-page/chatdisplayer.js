@@ -14,7 +14,7 @@ class ChatDisplayer extends Component {
   }
 
   render () {
-    const { onChange, onSubmit, messages, id, message, friendsName, deleteChatConfirm, addFriendToChatBox } = this.props
+    const { onChange, onSubmit, messages, id, message, friendsName, deleteChatConfirm, AddNewFriendToChat } = this.props
     let type
 
     return (
@@ -25,7 +25,7 @@ class ChatDisplayer extends Component {
         </CardTitle>
         <CardMenu className="cardMenu">
           <Tooltip label="Add a friend to the conversation">
-            <IconButton name="add_friend"  onClick={addFriendToChatBox} className="iconButton"/>
+            <IconButton name="add_friend"  onClick={AddNewFriendToChat} className="iconButton"/>
           </Tooltip>  
           <Tooltip label="Delete conversation.">
             <IconButton name="delete_forever"  onClick={deleteChatConfirm} className="iconButton"/>
