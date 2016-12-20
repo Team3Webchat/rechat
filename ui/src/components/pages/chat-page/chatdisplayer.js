@@ -24,9 +24,13 @@ class ChatDisplayer extends Component {
           <p>{friendsName}</p>
         </CardTitle>
         <CardMenu className="cardMenu">
-          <IconButton name="delete_forever"  onClick={deleteChatConfirm} className="iconButton"/>
+          <Tooltip label="Delete conversation.">
+            <IconButton name="delete_forever"  onClick={deleteChatConfirm} className="iconButton"/>
+          </Tooltip>  
           <Link to={'/'}>
+            <Tooltip label="Close">
               <IconButton name="close" className="iconButton"/>
+            </Tooltip>  
           </Link>
         </CardMenu>
         <CardText className="cardText">

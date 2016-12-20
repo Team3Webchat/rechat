@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router'
-import { List, ListItem } from 'react-mdl'
+import { List, ListItem, Tooltip } from 'react-mdl'
 import Gravatar from 'react-gravatar'
 
 const Friends = ({ friends, onFriendClick, startConversation }) => {
@@ -10,10 +10,14 @@ const Friends = ({ friends, onFriendClick, startConversation }) => {
     friends.map(f =>
       <ListItem key={f.id}>
         <Link to={`/profile/${f.id}`}>
-          <Gravatar size={32} email={f.email} />
+          <Tooltip label="View profile.">
+            <Gravatar size={32} email={f.email} />
+          </Tooltip>  
         </Link>
         <Link to={`/chat/${f.id}`}>
-          <p>{f.firstname} {f.lastname}</p>
+          <Tooltip label="View conversation.">
+            <p>{f.firstname} {f.lastname}</p>
+          </Tooltip>  
         </Link>
       </ListItem>
     )

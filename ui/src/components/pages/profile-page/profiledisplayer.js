@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Card, CardTitle, CardMenu, CardText, IconButton, CardActions, Button } from 'react-mdl'
+import { Card, CardTitle, CardMenu, CardText, IconButton, CardActions, Button, Tooltip } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
@@ -71,10 +71,14 @@ class ProfileDisplayer extends Component {
         </CardTitle>
         <CardMenu className="cardMenu">
           <Link to={`/me/edit`}>
-            <IconButton name="mode_edit" className="iconButton" />
+            <Tooltip label="Edit your password.">
+              <IconButton name="mode_edit" className="iconButton" />
+            </Tooltip>
           </Link>
           <Link to={`/`}>
-            <IconButton name="close" className="iconButton"/>
+            <Tooltip label="Close">
+              <IconButton name="close" className="iconButton"/>
+            </Tooltip>
           </Link>
         </CardMenu>
         <CardText className='info'>

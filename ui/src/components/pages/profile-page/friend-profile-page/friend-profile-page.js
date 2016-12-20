@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardActions, Button, CardTitle, CardMenu, CardText, IconButton} from 'react-mdl'
+import { Card, CardActions, Button, CardTitle, CardMenu, CardText, IconButton, Tooltip} from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 
@@ -17,9 +17,13 @@ const ProfileDisplayer = (props) => {
         <h3>{firstname} {lastname}</h3>
       </CardTitle>
       <CardMenu className='cardMenu'>
-        <IconButton name="report" className="iconButton" onClick={handleReportFriendConfirm}/>
+        <Tooltip label="Report this person for inappropriate behavior.">
+          <IconButton name="report" className="iconButton" onClick={handleReportFriendConfirm}/>
+        </Tooltip>  
         <Link to={`/`}>
-          <IconButton name="close" className="iconButton"/>
+          <Tooltip label="Close">
+            <IconButton name="close" className="iconButton"/>
+          </Tooltip>  
         </Link>
       </CardMenu>
       <CardText className="info">

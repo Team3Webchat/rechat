@@ -74,7 +74,13 @@
 .mdl-navigation .friends li a{
   text-decoration: none;
   color: #dbdde0;
+  outline: none;
 }
+
+*:focus{
+  outline: none;
+}
+
 .mdl-navigation .friends li img{
   float: left;
   border-radius: 50px;
