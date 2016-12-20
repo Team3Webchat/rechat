@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 import { Spinner } from 'react-mdl'
 import ChatDisplayer from './chatdisplayer'
 
-import { sendPrivateMessage, selectActiveChat, deleteChatHistory } from '../../../lib/actions/chatActions'
+import { sendPrivateMessage, selectActiveChat, deleteChatHistory, addFriendNew } from '../../../lib/actions/chatActions'
 import { getActiveChat } from '../../../lib/reducers/chatsReducer'
 
 import DeleteChatConfirm from './delete-chat-confirm'
+import AddNewFriendToChat from './addNewFriendToChat'
 
 class ChatContainer extends Component {
 
@@ -15,6 +16,8 @@ class ChatContainer extends Component {
     this.state = {
       message: '',
       openChatDialog: false,
+      openAddFriendsDialog: false,
+      addFriendNew: null,
       deleteChatHistory: null,
     }
   }
@@ -34,6 +37,22 @@ class ChatContainer extends Component {
     })
   }
   //END - DELETE CHAT CONFIRM
+
+  //add friend CONFIRM
+  handleAddFriendConfirm = friend =>  {
+    this.setState({
+      openAddFriendsDialog: true,
+      addFriendNew: friend,
+    })
+  }
+
+  handleCloseAddFriendConfirm = () =>  {
+    this.setState({
+      openAddFriendsDialog: false,
+      addFriendNew: null,
+    })
+  }
+  //END - add friend CONFIRM
 
   handleChange = e => {
     this.setState({
@@ -61,8 +80,8 @@ class ChatContainer extends Component {
 
   render() {
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
-    const { clearChatHistory, activeChat, friendId } = this.props
-    const { openChatDialog } = this.state
+    const { clearChatHistory, activeChat, friendId, addFriend } = this.props
+    const { openChatDialog, openAddFriendsDialog } = this.state
     if (!this.props.isLoading) {
       return (
         <div>
@@ -74,6 +93,7 @@ class ChatContainer extends Component {
               message={this.state.message}
               friendsName={`${this.props.friend.firstname} ${this.props.friend.lastname}`}
               deleteChatConfirm={this.handleDeleteChatConfirm}
+              AddNewFriendToChat={this.handleAddFriendConfirm}
             />
             { openChatDialog &&
               <DeleteChatConfirm
@@ -81,6 +101,13 @@ class ChatContainer extends Component {
               openChatDialog={this.state.openChatDialog}
               handleCloseChatDialog={this.handleCloseChatConfirm}
               clearChatHistory={() => clearChatHistory(activeChat.chatId, friendId)}/>
+            }
+            { openAddFriendsDialog &&
+              <AddNewFriendToChat
+              friend={this.state.addFriend}
+              openAddFriendsDialog={this.state.openAddFriendsDialog}
+              handleCloseAddFriendConfirm={this.handleCloseAddFriendConfirm}
+              addFriend={() => addFriend(activeChat.chatId, friendId)}/>
             }
         </div>
       )
@@ -104,6 +131,9 @@ const mapDispatchToProps = dispatch => ({
   sendMessage: (content, chatId, userId) => dispatch(sendPrivateMessage({content, chatId, userId})),
   clearChatHistory: (chatId, friendId) => {
     dispatch(deleteChatHistory({chatId, friendId}))
+  },
+  addFriend: (chatId, friendId) => {
+    dispatch(addFriendNew({chatId, friendId}))
   },
 })
 
