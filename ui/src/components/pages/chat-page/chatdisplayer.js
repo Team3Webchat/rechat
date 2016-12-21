@@ -18,7 +18,7 @@ class ChatDisplayer extends Component {
     let type
 
     return (
-      <Card shadow={0}>
+      <Card shadow={0} className='chatCard'>
         <CardTitle className="cardTitle">
           <Gravatar size={40} email="rebecca@awesome.com" />
           <p>{friendsName}</p>
@@ -26,14 +26,14 @@ class ChatDisplayer extends Component {
         <CardMenu className="cardMenu">
           <Tooltip label="Add a friend to the conversation">
             <IconButton name="add_friend"  onClick={AddNewFriendToChat} className="iconButton"/>
-          </Tooltip>  
+          </Tooltip>
           <Tooltip label="Delete conversation.">
             <IconButton name="delete_forever"  onClick={deleteChatConfirm} className="iconButton"/>
-          </Tooltip>  
+          </Tooltip>
           <Link to={'/'}>
             <Tooltip label="Close">
               <IconButton name="close" className="iconButton"/>
-            </Tooltip>  
+            </Tooltip>
           </Link>
         </CardMenu>
         <CardText className="cardText">
@@ -55,21 +55,21 @@ class ChatDisplayer extends Component {
         </CardText>
         <div className='textBox'>
           <form onSubmit={onSubmit} autoComplete="off">
-            <Textfield 
+            <Textfield
               className='textInput'
               onChange={onChange}
               label="Write your message..."
               value={message}
               maxLength="255"
             />
-            
+
             <CardActions className='send'>
               <Tooltip label="Upload a photo.">
                 <Button className="mdl-button--icon">
                   <Icon name="insert_photo"/>
-                  <input 
-                    type="file" 
-                    id="upload-file" 
+                  <input
+                    type="file"
+                    id="upload-file"
                     accept=".jpg,.gif,.png,.svg"
                   />
                 </Button>
@@ -77,16 +77,16 @@ class ChatDisplayer extends Component {
               <Tooltip label="Upload a file (non photo).">
                 <Button className="mdl-button--icon">
                   <Icon name="attachment"/>
-                  <input 
-                    type="file" 
-                    id="upload-file" 
+                  <input
+                    type="file"
+                    id="upload-file"
                     accept=".pdf,.txt"
                   />
                 </Button>
               </Tooltip>
               <Button
                 className="sendButton"
-                raised colored 
+                raised colored
                 type="submit"
                 disabled={message.length === 0}
                 >Send
