@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import { Textfield, Button, Spinner, Card } from 'react-mdl'
+import { Textfield, Button, Spinner, Card, CardTitle, CardActions, Header, HeaderRow } from 'react-mdl'
 
 import FlashMessage from '../../flash-message/flash-message'
 
@@ -11,6 +11,10 @@ const RegisterForm = ({ onChange, onSubmit, email, password,
   return (
     <div className="signin-register">
     <Card shadow={0} className="signin-register-card">
+      <Header>
+        <HeaderRow title={<div className="title">ReChat</div>}/>
+        <HeaderRow title={<div className="sub-title">Register</div>}/>
+      </Header>  
       <form onSubmit={onSubmit}>
         <div>
           <Textfield label="Email" required type="email" floatingLabel
@@ -46,19 +50,21 @@ const RegisterForm = ({ onChange, onSubmit, email, password,
         { isAuthenticating 
             ? <Spinner /> 
             : <div>
-                <Button className="buttons" primary raised ripple
-                  disabled={email.length === 0 || password.length === 0 || password !== passwordConfirm}
-                  type="submit"
-                >
-                  Register
-                </Button>
-                <Link to="/sign-in">
-                  <Button className="buttons" primary raised 
-                    ripple type='submit'
-                    >
-                      Back
+                <CardActions border>
+                  <Link to="/sign-in">
+                    <Button className="buttons" primary raised 
+                      ripple type='submit'
+                      >
+                        Back
+                    </Button>
+                  </Link>
+                  <Button className="buttons" primary raised ripple
+                    disabled={email.length === 0 || password.length === 0 || password !== passwordConfirm}
+                    type="submit"
+                  >
+                    Register
                   </Button>
-                </Link>
+                </CardActions>
               </div>
         }
       </form>

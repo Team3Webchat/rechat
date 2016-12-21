@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import { Textfield, Button, Spinner, Card } from 'react-mdl'
+import { Textfield, Button, Spinner, Card, CardTitle, CardText, Header, CardActions, HeaderRow } from 'react-mdl'
 
 import FlashMessage from '../../flash-message/flash-message'
 
@@ -9,6 +9,11 @@ const SignInForm = (props) => {
   return (
     <div className="signin-register">
       <Card shadow={0} className="signin-register-card">
+        <Header>
+          <HeaderRow title={<div className="title">ReChat</div>}/>
+          <HeaderRow title={<div className="sub-title">Sign in</div>}/>
+        </Header>
+        <CardText className="info-text">Please enter your username and password to sign in.</CardText>
         <form onSubmit={onSubmit}>
           <div>
             <Textfield label="Email" required type="email" floatingLabel
@@ -24,15 +29,17 @@ const SignInForm = (props) => {
           }
           { isAuthenticating ? <Spinner />
               : <div>
-                  <Button primary raised ripple type="submit" className="buttons"
-                    disabled={email.length === 0 || password.length === 0} >
-                    Sign in
-                  </Button>
-                  <Link to="/register">
-                    <Button primary raised ripple type='submit' className="buttons" >
-                      Register
+                  <CardActions border>
+                    <Link to="/register">
+                      <Button primary raised ripple type='submit' className="buttons" >
+                        Register
+                      </Button>
+                    </Link>
+                    <Button primary raised ripple type="submit" className="buttons"
+                      disabled={email.length === 0 || password.length === 0} >
+                      Sign in
                     </Button>
-                  </Link>
+                  </CardActions>
                 </div>
           }
         </form>

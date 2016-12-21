@@ -4,4 +4,26 @@
 .signin-register button{
   background-color: #F28D52 !important;
 }
+
+.info-text{
+  text-align: left;
+  font-size: 16px !important;
+}
+
+.signin-register .mdl-layout__header {
+  padding: 16px !important;
+  background-color: #F28D52 !important;
+}
+
+.signin-register .mdl-layout__header-row{
+  padding: 0 !important;
+  margin: 0 !important;
+  height: unset !important;
+}
+
+.sub-title {
+  font-size: 16px !important;
+  color: rgba(255, 255, 255, 0.5);
+  padding-top: 5px;
+}
 /*#F28D52*/
