@@ -59,16 +59,43 @@ export const onPrivateConversation = async (data, socket) => {
 }
 
 
+const getWholeDate = () => {
+  const today = new Date()
+  let dd = today.getDate()
+  let mm = today.getMonth()+1 //January is 0!
+  const yyyy = today.getFullYear()
+  if(dd<10) dd='0'+dd
+  if(mm<10) mm='0'+mm
+  return yyyy+'-'+mm+'-'+dd
+}
 export const onDeleteConversation = async ({ chatId, friendId }, io, connectedUsers) => {
   //Delete conversation
-  await Message.destroy({
-    where: {
-      chatId,
-    },
-  })
-  console.log(friendId)
-  console.log(connectedUsers)
-  io.to(connectedUsers[friendId]).emit('delete_conversation', { chatId })
+  try {
+    await Message.destroy({
+      where: {
+        chatId,
+      },
+    })
+    const admin = await User.find({where: {isAdmin: true}})
+    const message = await Message.create({
+      id: uuid.v4(),
+      content: 'This conversation was deleted '+getWholeDate()+'.',
+      userId: admin.id,
+      chatId: chatId,
+    })
+    console.log(message)
+    io.to(connectedUsers[friendId]).emit('delete_conversation', { chatId })
+    io.to(chatId).emit('new_message', {
+      id: message.id,
+      content: message.content,
+      userId: message.userId,
+      chatId: message.chatId,
+      createdAt: message.createdAt,
+      updatedAt: message.updatedAt,
+    })
+  }catch(e){
+    console.log(e)
+  }
 
-  
+
 }

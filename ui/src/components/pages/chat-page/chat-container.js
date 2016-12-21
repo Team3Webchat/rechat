@@ -70,7 +70,6 @@ class ChatContainer extends Component {
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
     const { clearChatHistory, activeChat, friendId } = this.props
     const { openChatDialog, openAddFriendsDialog } = this.state
-    console.log(activeChat);
     if (!this.props.isLoading) {
       return (
         <div>
