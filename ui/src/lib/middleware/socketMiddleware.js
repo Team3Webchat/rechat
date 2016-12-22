@@ -6,7 +6,7 @@ import {
   receivePrivateMessage,
   connected,
   disconnect,
-  START_PRIVATE_CHAT,
+  ADD_FREINDS_TO_CHAT,
   DELETE_CHAT_HISTORY,
   friendDeletedChatHistory,
   onPrivateGroupConversation,
@@ -73,7 +73,6 @@ const socketMiddleware = (function() {
   const onPrivateGroupeConversationStart = (ws, store, data) => {
     store.dispatch(onPrivateGroupConversation({
       chatId: data.chatId,
-      messages: data.messages,
       friendIds: data.friendIds,
     }))
   }
@@ -157,6 +156,7 @@ const socketMiddleware = (function() {
         socket = null
         store.dispatch(disconnect())
         return next(action)
+
       case 'SEND_PRIVATE_MESSAGE':
         socket.emit('new_message', {
           content: action.payload.content,
@@ -164,28 +164,34 @@ const socketMiddleware = (function() {
           chatId: action.payload.chatId,
         })
         return next(action)
+
       case DELETE_CHAT_HISTORY:
-        console.log("DELETIOONG DELETING DLEITING")
-        console.log(action.payload)
         socket.emit('delete_conversation', {
           chatId: action.payload.chatId,
           friendId: action.payload.friendId,
         })
         return next(action)
-      case SEND_FRIEND_REQUEST:
 
+      case SEND_FRIEND_REQUEST:
         socket.emit('friend_request', { id: action.payload.friendId })
         return next(action)
 
       case DELETE_FRIEND_SUCCESS:
         return next(action)
+
       case ACCEPT_FRIEND_REQUEST_SUCCESS:
         socket.emit('friend_request_accepted', { id: action.payload.friendId, friendId: store.getState().auth.id })
         socket.emit('private_conversation', { id: action.payload.friendId})
         return next(action)
+
       case 'FRIEND_REQUEST_ACCEPTED':
         socket.emit('private_conversation', { id: action.payload.friendId })
         return next(action)
+
+      case ADD_FREINDS_TO_CHAT:
+        socket.emit('private_group_conversation', { friends: action.payload.friends, chatId: action.payload.chatId })
+        return next(action)
+
       default:
         return next(action)
     }

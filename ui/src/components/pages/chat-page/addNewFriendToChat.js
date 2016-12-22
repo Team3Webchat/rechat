@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Checkbox} from 'react-mdl'
 
+import { addFriendsToChat } from '../../../lib/actions/chatActions'
 import './../style-dialog-common.css'
 
 class AddNewFriendToChat extends Component {
@@ -58,8 +59,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   addFriends: (chatId, friends) => {
-    console.log('socketa något här');
-    //dispatch(addFriendstoChat({chatId, friends}))
+    dispatch(addFriendsToChat({friends, chatId}))
   },
 })
 

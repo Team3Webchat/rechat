@@ -30,7 +30,8 @@ function connection(socket, io) {
     onNewMessage(data, io)
   })
   socket.on('private_group_conversation', async data =>{
-    onPrivateGroupConversation(data, socket)
+    console.log('HÄR SKA VI KOMMA');
+    //onPrivateGroupConversation(data, socket)
   })
   socket.on('private_conversation', async data => {
     onPrivateConversation(data, socket)
