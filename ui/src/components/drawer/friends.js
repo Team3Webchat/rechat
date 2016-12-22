@@ -10,12 +10,12 @@ const Friends = ({ friends, onFriendClick, startConversation }) => {
     friends.map(f =>
       <ListItem key={f.id}>
         <Link to={`/profile/${f.id}`}>
-          <Tooltip label="View profile.">
+          <Tooltip label="View profile">
             <Gravatar size={32} email={f.email} />
           </Tooltip>  
         </Link>
         <Link to={`/chat/${f.id}`}>
-          <Tooltip label="View conversation.">
+          <Tooltip label="View conversation">
             <p>{f.firstname} {f.lastname}</p>
           </Tooltip>  
         </Link>

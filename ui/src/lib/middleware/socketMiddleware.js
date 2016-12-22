@@ -49,6 +49,7 @@ const socketMiddleware = (function() {
   }
 
   const onNewMessage = (ws, store, data) => {
+    console.log('newwwww');
     store.dispatch(receivePrivateMessage({
       chatId: data.chatId,
       content: data.content,

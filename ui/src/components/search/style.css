@@ -50,13 +50,25 @@
   float: left;
 }
 .addUser{
-  width: 17%;
   float: right;
-  padding-right: 10px;
+  padding-right: 5px;
 }
+
+.icon-medium {
+  min-width: 42px !important;
+  min-height: 42px !important;
+}
+
 .addUser i{
-  font-size: 33px !important;
+  font-size: 32px !important;
+  left:15px !important;
 }
+
+.icon-inactive{
+ color: rgba(0, 0, 0, 0.3);
+ padding-right: 10px;
+}
+
 .avatarPic{
   height: 40px !important;
   min-width: 40px !important;

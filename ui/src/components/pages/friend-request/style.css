@@ -12,19 +12,29 @@
 #friendRequestBox li{
   padding: 0px 10px !important;
 }
+#friendRequestBox li .displayName a{
+  text-decoration: none;
+  color: inherit;
+  font-size: 17px;
+}
+#friendRequestBox li .displayName a img{
+  margin-right: 10px;
+}
 #friendRequestBox .mdl-list__item-secondary-content i{
-  font-weight: bold !important;
   font-size: xx-large !important;
+  letter-spacing: 10px!important;
+  cursor: pointer;
+}
+#friendRequestBox .mdl-list__item-secondary-content i:hover{
+  text-shadow: 0px 0px 4px #b9b9b9;
 }
 #friendRequestBox .accept{
-  color: #33b733;
+  color: #8bc34a;
 }
 #friendRequestBox .deny{
-  color: #e24d1d;
+  color: #f44336;
 }
-#friendRequestBox .emptyRequests{
 
-}
 #friendRequestBox .emptyRequests i{
   padding-right: 20px;
 }
@@ -38,5 +48,5 @@
   position: absolute !important;
   left:0;
   width:100%;
-  } 
+  }
 }

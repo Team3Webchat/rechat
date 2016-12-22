@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, FABButton, Icon, List, ListItem } from 'react-mdl'
+import { Card, FABButton, Icon, List, ListItem, Tooltip, IconButton } from 'react-mdl'
 import { Link } from 'react-router'
 import Gravatar from 'react-gravatar'
 import './style.css'
@@ -33,17 +33,21 @@ const SearchResults = (props) => {
           <ListItem className='searchResult' key={user.id}>
             <Link to={`/profile/${user.id}`}>
               <FABButton className="avatarPic">
-                <Gravatar size={40} email={user.email} />
+                <Gravatar size={40} email={user.email} /> 
               </FABButton>
-              <p>{user.firstname}  {user.lastname}</p>
+              <Tooltip label="View profile">
+                <p>{user.firstname}&nbsp;{user.lastname}</p>
+              </Tooltip>
             </Link>
             {user.isFriends ?
-              <div className='addUser'>
+              <div className='addUser icon-inactive'>
                 <Icon name='person_outline'/>
               </div>
               :
               <div className='addUser'>
-                <Icon name='person_add' onClick={() => addFriend(user.id)}/>
+                <Tooltip label="Add as friend">
+                  <IconButton name='person_add' onClick={() => addFriend(user.id)} className="icon-medium"/>
+                </Tooltip>
               </div>
             }
 

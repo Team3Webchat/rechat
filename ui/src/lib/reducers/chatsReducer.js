@@ -37,7 +37,6 @@ export default function chats(state = initialState, action) {
       }
 
     case actions.RECEIVE_PRIVATE_MESSAGE:
-      console.log(action.payload)
       return {
         ...state,
         chats: state.chats.map(chat => {
