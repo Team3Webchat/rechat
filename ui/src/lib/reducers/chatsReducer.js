@@ -15,6 +15,13 @@ export default function chats(state = initialState, action) {
         isLoadingChats: false,
       }
 
+    case actions.CONNECT_TO_GROUP_CHAT:
+      return {
+        ...state,
+        chats: [...state.chats, action.payload],
+        isLoadingChats: false,
+      }
+
     case actions.SELECT_ACTIVE_CHAT:
       const current = state.chats.find(c => action.payload.friendId === c.friendId)
       return {

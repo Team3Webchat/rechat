@@ -35,12 +35,12 @@ export const onPrivateGroupConversation = async (data, socket) => {
   const oldChat = await Chat.find({id: chatId})
   const oldChatUsers = await oldChat.getUsers()
   const oldChatMessages = await oldChat.getMessages()
+
   const to = await Promise.all(friends.map(async id => {
     return await User.findOne({ where: {id}})
   }))
   to.push.apply(to, oldChatUsers)
-//Hämta chat från id, hämta messages från chat
-//Kopisera messages till nya chattar
+//Kolla alla konversationer om de har to arrayn med användare i sig
 
 //göra ny chatt med nya anändare
   const newChat = await Chat.create({ id: uuid.v4() })
@@ -49,29 +49,12 @@ export const onPrivateGroupConversation = async (data, socket) => {
     to.map(user => newChat.addUser(user)),
     oldChatMessages.map(m => newChat.addMessages(m)),
   ])
-  const hej = await newChat.getMessages()
-
-  /*const newChat = await Promise.all(await from.getChats().map(async chat => ({
-    chat: chat,
-    users: await chat.getUsers(),
-  })))*/
-
-  /*const theChat = chats.findOrCreate(c => {
-    console.log(c)
-    console.log(to)
-    console.log(from)
-    return (c.users[0].dataValues.id === from.dataValues.id && c.users[1].dataValues.id === to[1].dataValues.id) ||
-           (c.users[1].dataValues.id === from.dataValues.id && c.users[0].dataValues.id === to.dataValues.id)
-  })
-
-  theChat.users.forEach(u => console.log(u.dataValues.email))
-*/
   const messages = await newChat.getMessages()
-  const friendsId = await newChat.getUsers().map(u => {return u.id})
+  const friendIds = await newChat.getUsers().map(u => {return u.id})
 
   socket.join(newChat.id)
   socket.emit('private_group_conversation_start', {
-    friendsId,
+    friendIds,
     chatId: newChat.id,
     messages,
   })

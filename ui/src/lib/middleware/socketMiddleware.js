@@ -2,14 +2,13 @@ import io from 'socket.io-client'
 
 import {
   connectChat,
-  endPrivateMessage,
+  connectToGroupChat,
   receivePrivateMessage,
   connected,
   disconnect,
   ADD_FREINDS_TO_CHAT,
   DELETE_CHAT_HISTORY,
   friendDeletedChatHistory,
-  onPrivateGroupConversation,
 
 } from '../actions/chatActions'
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from '../actions/authActions'
@@ -71,9 +70,7 @@ const socketMiddleware = (function() {
   }
 
   const onPrivateGroupeConversationStart = (ws, store, data) => {
-    console.log('HÄR ÄR VI TILLBAKA');
-    console.log(data);
-    store.dispatch(onPrivateGroupConversation({
+    store.dispatch(connectToGroupChat({
       chatId: data.chatId,
       friendIds: data.friendIds,
     }))
