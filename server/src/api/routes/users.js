@@ -203,7 +203,6 @@ usersRouter.route('/:id/report')
   .get(async(req, res, next) => {
     const { id } = req.params
     const { user: currentUser } = req
-    console.log(id !== currentUser.id);
     if (!currentUser.isAdmin) {
       if(id !== currentUser.id)
         return res.status(403).json({message: 'Unauthorized'})

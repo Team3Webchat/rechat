@@ -29,7 +29,6 @@ class AddNewFriendToChat extends Component {
   }
   render(){
     const { friends, openDialog, handleCloseConfirm } = this.props
-    console.log(friends)
     return (
       <div>
         <Dialog open={openDialog}>

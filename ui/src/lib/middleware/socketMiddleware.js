@@ -71,6 +71,8 @@ const socketMiddleware = (function() {
   }
 
   const onPrivateGroupeConversationStart = (ws, store, data) => {
+    console.log('HÄR ÄR VI TILLBAKA');
+    console.log(data);
     store.dispatch(onPrivateGroupConversation({
       chatId: data.chatId,
       friendIds: data.friendIds,
@@ -79,7 +81,6 @@ const socketMiddleware = (function() {
 
 
   const onSentFriendRequests = (ws, store, data) => {
-    console.log(data)
     store.dispatch(sendFriendRequestSuccess({
       flash: {
         message: 'Sent friend request to a fella',
@@ -118,6 +119,7 @@ const socketMiddleware = (function() {
         socket.on('connect', () => onConnect(socket, store, action.payload.token))
         socket.on('disconnect', () => onDisconnect(socket, store))
         socket.on('private_conversation_start', data => onPrivateConversationStart(socket, store, data))
+        socket.on('private_group_conversation_start', data => onPrivateGroupeConversationStart(socket, store, data))
         socket.on('new_message', data => onNewMessage(socket, store, data))
         socket.on('friend_request_sent', data => onSentFriendRequests(socket, store, data))
         socket.on('friend_request_gotten', data => onGottenFriendRequest(socket, store, data))
