@@ -6,7 +6,18 @@ export const CONNECT_CHAT = 'CONNECT_CHAT'
 export const SELECT_ACTIVE_CHAT = 'SELECT_ACTIVE_CHAT'
 export const DELETE_CHAT_HISTORY = 'DELETE_CHAT_HISTORY'
 export const FRIEND_DELETED_CHAT_HISTORY = 'FRIEND_DELETED_CHAT_HISTORY'
+export const PRIVATE_GROUP_CONVERSATION = 'PRIVATE_GROUP_CONVERSATION'
 
+
+
+export const connectToGroupChat = ({friendIds, chatId, messages}) => ({
+  type: PRIVATE_GROUP_CONVERSATION,
+  payload: {
+    friendIds,
+    chatId,
+    messages,
+  },
+})
 export const connectChat = ({ friendId, chatId, messages }) => ({
   type: CONNECT_CHAT,
   payload: {
