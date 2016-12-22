@@ -1,7 +1,7 @@
 import SocketIO from 'socket.io'
 import socketioJwt from 'socketio-jwt'
 
-import { onNewMessage, onPrivateConversation, onDeleteConversation } from './chat'
+import { onNewMessage, onPrivateConversation, onDeleteConversation, onPrivateGroupConversation } from './chat'
 import { onFriendRequest, onFriendRequestAccept } from './friendships'
 
 export const createSocket = (app, server) => {
@@ -29,6 +29,9 @@ function connection(socket, io) {
   socket.on('new_message', async data => {
     onNewMessage(data, io)
   })
+  socket.on('private_group_conversation', async data =>{
+    onPrivateGroupConversation(data, socket)
+  })
   socket.on('private_conversation', async data => {
     onPrivateConversation(data, socket)
   })
@@ -51,7 +54,7 @@ function connection(socket, io) {
   socket.on('friend_request_accepted', async data => {
     console.log(data)
     onFriendRequestAccept(data, socket, io, connectedUsers)
-    
+
   })
 
 }

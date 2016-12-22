@@ -26,7 +26,43 @@ export const onNewMessage = async (data, io) => {
     updatedAt: message.dataValues.updatedAt,
   })
 }
+export const onPrivateGroupConversation = async (data, socket) => {
 
+  const { id } = data
+  const { decoded_token } = socket
+  const from = await Promise.all([
+    User.findOne({ where: { id: socket.decoded_token.id }}),
+  ])
+  let to = null
+
+  for (var i = 0; i < id.length; i++) {
+    to[i] = User.findOne({ where: {id: id[i] }})
+  }
+
+  const chats = await Promise.all(await from.getChats().map(async chat => ({
+    chat: chat,
+    users: await chat.getUsers(),
+  })))
+
+  const theChat = chats.findOrCreate(c => {
+    console.log(c)
+    console.log(to)
+    console.log(from)
+    return (c.users[0].dataValues.id === from.dataValues.id && c.users[1].dataValues.id === to[1].dataValues.id) ||
+           (c.users[1].dataValues.id === from.dataValues.id && c.users[0].dataValues.id === to.dataValues.id)
+  })
+
+  theChat.users.forEach(u => console.log(u.dataValues.email))
+
+  const { chat, users } = theChat // meh
+  const messages = await chat.getMessages()
+  socket.join(chat.dataValues.id)
+  socket.emit('private_group_conversation_start', {
+    friendId: id,
+    chatId: chat.dataValues.id,
+    messages,
+  })
+}
 export const onPrivateConversation = async (data, socket) => {
 
   const { id } = data
@@ -70,5 +106,5 @@ export const onDeleteConversation = async ({ chatId, friendId }, io, connectedUs
   console.log(connectedUsers)
   io.to(connectedUsers[friendId]).emit('delete_conversation', { chatId })
 
-  
+
 }

@@ -8,7 +8,8 @@ import {
   disconnect,
   START_PRIVATE_CHAT,
   DELETE_CHAT_HISTORY,
-  friendDeletedChatHistory
+  friendDeletedChatHistory,
+  onPrivateGroupConversation,
 
 } from '../actions/chatActions'
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from '../actions/authActions'
@@ -57,11 +58,22 @@ const socketMiddleware = (function() {
     }))
   }
 
+//TODO gör en sån här
+//TODO Kopiera meddelanden
+//TODO Make groupchat
   const onPrivateConversationStart = (ws, store, data) => {
     store.dispatch(connectChat({
       chatId: data.chatId,
       messages: data.messages,
       friendId: data.friendId,
+    }))
+  }
+
+  const onPrivateGroupeConversationStart = (ws, store, data) => {
+    store.dispatch(onPrivateGroupConversation({
+      chatId: data.chatId,
+      messages: data.messages,
+      friendIds: data.friendIds,
     }))
   }
 
@@ -112,6 +124,8 @@ const socketMiddleware = (function() {
         socket.on('delete_friend', data => onDeleteFriend(socket, store, data))
         socket.on('friend_request_accepted', data => onFriendRequestAccepted(socket, store, data))
         socket.on('delete_conversation', data => onDeletedHistory(socket, store, data))
+
+
 
         socket.on('private_conversation_start', data => {
           store.dispatch(connectChat({ chatId: data.chatId, messages: data.messages, friendId: data.friendId}))
