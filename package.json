@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.7.19",
+    "dotenv": "^2.0.0",
+    "multer": "^1.2.1",
+    "multer-s3": "^2.5.0"
   },
   "engines": {
     "node": "6.x.x"
