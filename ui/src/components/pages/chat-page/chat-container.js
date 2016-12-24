@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { Spinner } from 'react-mdl'
 import ChatDisplayer from './chatdisplayer'
 
-import { sendPrivateMessage, selectActiveChat, deleteChatHistory } from '../../../lib/actions/chatActions'
-import { getActiveChat } from '../../../lib/reducers/chatsReducer'
+import { sendPrivateMessage, selectActivePrivateChat, deleteChatHistory } from '../../../lib/actions/chatActions'
+import { getActivePrivateChat } from '../../../lib/reducers/chatsReducer'
 
 import DeleteChatConfirm from './delete-chat-confirm'
 import AddNewFriendToChat from './addNewFriendToChat'
@@ -107,7 +107,7 @@ class ChatContainer extends Component {
 const mapStateToProps = (state, ownProps) => ({
   token: state.auth.token,
   id: state.auth.id,
-  activeChat: getActiveChat(state),
+  activeChat: getActivePrivateChat(state),
   friendId: ownProps.params.id,
   friend : state.friends.friends.find(f => f.id === ownProps.params.id),
   friends : state.friends.friends,
@@ -115,7 +115,7 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  beginChat: id => dispatch(selectActiveChat({friendId: id})),
+  beginChat: id => dispatch(selectActivePrivateChat({friendId: id})),
   sendMessage: (content, chatId, userId) => dispatch(sendPrivateMessage({content, chatId, userId})),
   clearChatHistory: (chatId, friendId) => {
     dispatch(deleteChatHistory({chatId, friendId}))

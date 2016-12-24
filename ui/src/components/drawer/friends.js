@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import { List, ListItem, Tooltip } from 'react-mdl'
 import Gravatar from 'react-gravatar'
 
-const Friends = ({ friends, onFriendClick, startConversation }) => {
+const Friends = ({ friends }) => {
   return (
     <List className='friends'>
     {(friends && friends.length > 0)  ?
@@ -12,12 +12,12 @@ const Friends = ({ friends, onFriendClick, startConversation }) => {
         <Link to={`/profile/${f.id}`}>
           <Tooltip label="View profile">
             <Gravatar size={32} email={f.email} />
-          </Tooltip>  
+          </Tooltip>
         </Link>
         <Link to={`/chat/${f.id}`}>
           <Tooltip label="View conversation">
             <p>{f.firstname} {f.lastname}</p>
-          </Tooltip>  
+          </Tooltip>
         </Link>
       </ListItem>
     )

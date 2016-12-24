@@ -27,7 +27,6 @@ import {
 import { API_URL } from '../config'
 
 const socketMiddleware = (function() {
-  console.log(API_URL)
   let socket = null
   let authenticated = false
 
@@ -37,7 +36,6 @@ const socketMiddleware = (function() {
       authenticated = true
     })
     .on('unauthorized', function(msg) {
-      console.log('unauthorized: ' + JSON.stringify(msg.data))
       throw new Error(msg.data.type)
     })
     store.dispatch(connected())
@@ -48,7 +46,6 @@ const socketMiddleware = (function() {
   }
 
   const onNewMessage = (ws, store, data) => {
-    console.log('newwwww');
     store.dispatch(receivePrivateMessage({
       chatId: data.chatId,
       content: data.content,
@@ -58,9 +55,6 @@ const socketMiddleware = (function() {
     }))
   }
 
-//TODO gör en sån här
-//TODO Kopiera meddelanden
-//TODO Make groupchat
   const onPrivateConversationStart = (ws, store, data) => {
     store.dispatch(connectChat({
       chatId: data.chatId,
@@ -71,8 +65,10 @@ const socketMiddleware = (function() {
 
   const onPrivateGroupeConversationStart = (ws, store, data) => {
     store.dispatch(connectToGroupChat({
+      friendNames: data.friendNames,
       chatId: data.chatId,
       friendIds: data.friendIds,
+      messages: data.messages,
     }))
   }
 
@@ -88,7 +84,6 @@ const socketMiddleware = (function() {
   }
 
   const onGottenFriendRequest = (ws, store, data) => {
-    console.log(data)
     store.dispatch(gotFriendRequest(data.friend))
   }
 
@@ -102,10 +97,9 @@ const socketMiddleware = (function() {
   }
 
   const onFriendRequestAccepted = (ws, store, data) => {
-    console.log(data)
     store.dispatch(friendRequestAccepted(data))
-
   }
+
   return store => next => async action => {
     switch (action.type) {
       case LOGIN_USER_SUCCESS:
@@ -141,7 +135,6 @@ const socketMiddleware = (function() {
         return next(action)
       case 'GET_FRIENDS_SUCCESS':
         const { friends } = action.payload
-        console.log(friends)
 
         if (friends) {
           await Promise.all(friends.map(friend =>
