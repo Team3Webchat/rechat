@@ -16,6 +16,7 @@ import ChatContainer from './components/pages/chat-page/chat-container'
 
 import { loginUserSuccess } from './lib/actions/authActions'
 import { getFriends } from './lib/actions/friendsActions'
+import { getGroupConversations } from './lib/actions/chatActions'
 
 import './app.css'
 
@@ -60,9 +61,9 @@ class App extends Component {
       Promise.all([
         store.dispatch(loginUserSuccess({token, message: 'Welcome back'})),
         store.dispatch(getFriends()),
+        store.dispatch(getGroupConversations()),
       ])
       .then(() => {
-        console.log('DONE')
         this.setState({
           loaded: true,
         })

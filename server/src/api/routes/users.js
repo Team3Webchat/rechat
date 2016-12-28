@@ -10,7 +10,7 @@ import uuid from 'uuid'
 Promise.promisifyAll(jwt)
 Promise.promisifyAll(bcrypt)
 
-const { User, Friendship, Report } = models
+const { User, Friendship, Report, Chat } = models
 const usersRouter = Router()
 
 
@@ -127,6 +127,56 @@ usersRouter.route('/:id')
     await user.destroy()
     res.status(200).json({ message: 'Deleted kinda'})
   })
+
+  usersRouter.route('/:id/groupConversations')
+    //.all(authenticateToken)
+    .get(async (req, res, next) => {
+      const { user: currentUser } = req
+      const { id } = req.params
+      //if (!currentUser.id !== id)
+      //  return res.status(403).json({message: 'Unauthorized'})
+      const all = await Chat.findAll()
+      await new Promise(resolve => {
+        all.map(async chat => {
+          try{
+            const friends = []
+            let messages = []
+            const users = await chat.getUsers()
+  //om jag inte har denna wait så kör map klart innan denna är klar
+  //men om jag ahr den await så går inte promise.map till sin then-funktion
+            await new Promise(async resolve => {
+              if (users.length > 2) {
+                await users.filter(async user => {
+                  if (user.id === id){
+                    const messages = await chat.getMessages()
+                    const friends = users
+                    resolve({messages, friends})
+                  }
+                })
+              }
+            }).then(({messages, friends}) => {
+              const chatObj = {
+                friendNames: friends.map(f => f.firstname +' '+f.lastname),
+                friendIds: friends.map(f => f.id),
+                chatId: chat.id,
+                messages,
+              }
+              resolve(chatObj)
+              return chatObj
+            })
+          }catch (e) {
+            console.log(e);
+          }
+        })//map
+      }).then((chats) => {
+        //nu blir chats ingen array längre... 
+        console.log(chats);
+          if (chats.length > 0)
+            return res.status(200).json(chats)
+
+          return res.status(200).json({chats: 'No groupchats'})
+      })
+    })
 
 usersRouter.route('/:id/ban')
   .all(authenticateToken)
