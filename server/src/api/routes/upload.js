@@ -5,11 +5,9 @@ const uploadRouter = Router()
 
 uploadRouter.route('/')
   .post(upload, (req, res, next) => {
+    console.log(`Received file ${req.file.originalname}`);
     console.log(req.file)
-    res.status(200).json({
-      message: 'Succelful file upload!',
-      fileUrl: req.file.location
-    })
+    res.json(req.file.location)
   })
 
 export default uploadRouter
