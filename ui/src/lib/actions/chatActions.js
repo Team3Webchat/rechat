@@ -118,6 +118,7 @@ export const getGroupConversations = (id = getUserId()) =>
 
       const json = await res.json()
       console.log(json);
+      //Lägg i staten
 
 
     } catch (e) {

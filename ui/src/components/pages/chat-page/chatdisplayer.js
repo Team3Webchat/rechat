@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {  Card, CardActions, Button, Textfield, IconButton, CardMenu, CardTitle, CardText, Tooltip, Icon } from 'react-mdl'
 import { Link } from 'react-router'
+import Dropzone from 'react-dropzone'
 import Gravatar from 'react-gravatar'
 import ComposeNewMessage from './compose-new-message'
 
@@ -14,7 +15,18 @@ class ChatDisplayer extends Component {
   }
 
   render () {
-    const { onChange, onSubmit, messages, id, message, friendsName, deleteChatConfirm, AddNewFriendToChat } = this.props
+    const { 
+      onChange, 
+      onSubmit, 
+      messages, 
+      id, 
+      message, 
+      friendsName, 
+      deleteChatConfirm, 
+      AddNewFriendToChat,
+      onDrop,
+      uploadedFile
+    } = this.props
     let type
 
     return (
@@ -55,35 +67,34 @@ class ChatDisplayer extends Component {
         </CardText>
         <div className='textBox'>
           <form onSubmit={onSubmit} autoComplete="off">
-            <Textfield
-              className='textInput'
-              onChange={onChange}
-              label="Write your message..."
-              value={message}
-              maxLength="255"
-            />
-
-            <CardActions className='send'>
-              <Tooltip label="Upload a photo.">
-                <Button className="mdl-button--icon">
-                  <Icon name="insert_photo"/>
-                  <input
-                    type="file"
-                    id="upload-file"
-                    accept=".jpg,.gif,.png,.svg"
-                  />
-                </Button>
-              </Tooltip>
+            
+              <Textfield
+                className='textInput'
+                onChange={onChange}
+                label="Write your message..."
+                value={message}
+                maxLength="255"
+              />
+            <Dropzone 
+              onDrop={onDrop} 
+              multiple={false} 
+              accept='image/png,image/jpg,application/pdf,text/*,'
+              style={{
+                width: '100%',
+                border: '1px dashed black',
+                cursor: 'pointer',
+                borderRadius: '1px',
+                padding: 5
+            }}>
+              <div>
               <Tooltip label="Upload a file (non photo).">
-                <Button className="mdl-button--icon">
-                  <Icon name="attachment"/>
-                  <input
-                    type="file"
-                    id="upload-file"
-                    accept=".pdf,.txt"
-                  />
-                </Button>
+                <Icon name="attachment"/>
               </Tooltip>
+              {uploadedFile && <p>{uploadedFile.name}</p>}
+              </div>
+            </Dropzone>
+
+            <CardActions className='send'>              
               <Button
                 className="sendButton"
                 raised colored
