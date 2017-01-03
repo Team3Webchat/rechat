@@ -6,7 +6,6 @@ const { User, Friendship, Chat} = models
 
 export const onFriendRequest = async (data, socket, io, connectedUsers) => {
   const { id } = data
-  console.log(data)
   const { decoded_token } = socket
 
   if (id === decoded_token.id) {
@@ -15,22 +14,22 @@ export const onFriendRequest = async (data, socket, io, connectedUsers) => {
     })
   }
 
-  const friendship = await Friendship.findOne({ 
-    where: { 
+  const friendship = await Friendship.findOne({
+    where: {
       $or: [
-        { friendId: id, userId: decoded_token.id }, 
+        { friendId: id, userId: decoded_token.id },
         { friendId: decoded_token.id, userId: id },
       ],
     },
   })
-  if (friendship) { 
+  if (friendship) {
     return io.to(connectedUsers[decoded_token].id)
       .emit('add_friend_error', { message: ' You are already friends with this person'})
   }
-  
-  // Create the chat upon a sent friend request. Otherwise, the 
-  // client will try to the chat before it was created upon 
-  // accepting a friend request. This is not optimal 
+
+  // Create the chat upon a sent friend request. Otherwise, the
+  // client will try to the chat before it was created upon
+  // accepting a friend request. This is not optimal
   const [receiver, sender] = await Promise.all([
     User.findOne({ where: { id }}),
     User.findOne({ where: { id: decoded_token.id }}),
@@ -51,7 +50,6 @@ export const onFriendRequest = async (data, socket, io, connectedUsers) => {
     userId: id,
   })
 
-  console.log(connectedUsers[id])
   io.to(connectedUsers[id]).emit('friend_request_gotten', {
     friend: sender,
   })

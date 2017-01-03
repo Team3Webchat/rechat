@@ -37,12 +37,10 @@ function connection(socket, io) {
   })
 
   socket.on('delete_conversation', async data => {
-    console.log(data)
     onDeleteConversation(data, io, connectedUsers)
   })
 
   socket.on('friend_request', async data => {
-    console.log(data)
     onFriendRequest(data, socket, io, connectedUsers)
   })
 
@@ -52,7 +50,6 @@ function connection(socket, io) {
   })
 
   socket.on('friend_request_accepted', async data => {
-    console.log(data)
     onFriendRequestAccept(data, socket, io, connectedUsers)
 
   })

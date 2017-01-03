@@ -75,6 +75,7 @@ class Main extends Component {
           </Header>
 
           <DrawerClass name={this.props.name}/>
+          
           <main className="mdl-layout__content main">
           { flash.message &&
             <FlashMessage

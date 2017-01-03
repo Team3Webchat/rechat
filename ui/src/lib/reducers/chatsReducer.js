@@ -1,8 +1,9 @@
 import * as actions from '../actions/chatActions'
 
 const initialState = {
+  privateChats: [],
+  groupChats: [],
   currentChatId: '',
-  chats: [],
   isLoadingChats: true,
 }
 
@@ -11,29 +12,32 @@ export default function chats(state = initialState, action) {
     case actions.CONNECT_CHAT:
       return {
         ...state,
-        chats: [...state.chats, action.payload],
+        privateChats: [...state.privateChats, action.payload],
         isLoadingChats: false,
       }
 
     case actions.CONNECT_TO_GROUP_CHAT:
       return {
         ...state,
-        chats: [...state.chats, action.payload],
+        groupChats: [...state.groupChats, action.payload],
         isLoadingChats: false,
       }
 
-    case actions.SELECT_ACTIVE_CHAT:
-      const current = state.chats.find(c => action.payload.friendId === c.friendId)
+    case actions.SELECT_ACTIVE_PRIVATE_CHAT:
+      const current = state.privateChats.find(c => action.payload.friendId === c.friendId)
       return {
         ...state,
-        currentChatId: state.chats.find(c => c.friendId === action.payload.friendId)['chatId'],
+        currentChatId: state.privateChats.find(c => c.friendId === action.payload.friendId)['chatId'],
       }
+      
+    case actions.SELECT_ACTIVE_GROUP_CHAT:
+      console.log('SELECT_ACTIVE_GROUP_CHAT');
 
     case actions.DELETE_CHAT_HISTORY:
     case actions.FRIEND_DELETED_CHAT_HISTORY:
       return {
         ...state,
-        chats: state.chats.map(chat => {
+        privateChats: state.privateChats.map(chat => {
           if (chat.chatId !== action.payload.chatId)
             return chat
           return {
@@ -46,7 +50,7 @@ export default function chats(state = initialState, action) {
     case actions.RECEIVE_PRIVATE_MESSAGE:
       return {
         ...state,
-        chats: state.chats.map(chat => {
+        privateChats: state.privateChats.map(chat => {
           if (chat.chatId !== action.payload.chatId)
             return chat
           return {
@@ -60,9 +64,7 @@ export default function chats(state = initialState, action) {
   }
 }
 
-export const getActiveChat = state => {
-
-  const { currentChatId, chats } = state.chats
-
-  return chats.find(c => c.chatId === currentChatId)
+export const getActivePrivateChat = state => {
+  const { currentChatId, privateChats } = state.chats
+  return privateChats.find(c => c.chatId === currentChatId)
 }

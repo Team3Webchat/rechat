@@ -18,6 +18,7 @@
     "jwt-decode": "^2.1.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
+    "react-dropzone": "^3.8.0",
     "react-gravatar": "^2.6.1",
     "react-mdl": "^1.7.2",
     "react-redux": "^4.4.5",

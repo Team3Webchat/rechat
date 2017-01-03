@@ -10,7 +10,7 @@ import uuid from 'uuid'
 Promise.promisifyAll(jwt)
 Promise.promisifyAll(bcrypt)
 
-const { User, Friendship, Report } = models
+const { User, Friendship, Report, Chat } = models
 const usersRouter = Router()
 
 
@@ -108,7 +108,6 @@ usersRouter.route('/:id')
        .then(()=> User.findOne({ where: { id: req.user.dataValues.id }}))
        .then(()=>  res.json('Your password is updated'))
        .catch(err => res.json(err))
-      //  .catch(err => res.json('something went wrong'))
 
   })
   .delete(async (req, res, next) => {
@@ -118,7 +117,6 @@ usersRouter.route('/:id')
       return res.status(403).json({ message: 'You cannot delete this account'})
     }
     const chats = await user.getChats()
-    console.log(chats)
     await Promise.all(chats.map(async chat => {
       const messages = await chat.getMessages()
       await Promise.all(messages.map(message => message.destroy()))
@@ -127,6 +125,46 @@ usersRouter.route('/:id')
     await user.destroy()
     res.status(200).json({ message: 'Deleted kinda'})
   })
+
+  usersRouter.route('/:id/groupConversations')
+    //.all(authenticateToken)
+    .get(async (req, res, next) => {
+      const { user: currentUser } = req
+      const { id } = req.params
+      //if (!currentUser.id !== id)
+      //  return res.status(403).json({message: 'Unauthorized'})
+      const all = await Chat.findAll()
+      const map = all.map(async chat => {
+        try {
+          const users = await chat.getUsers()
+          if (users.length > 2) {
+            return new Promise(async resolve => {
+              await users.filter(async user => {
+                if (user.id === id){
+                  const messages = await chat.getMessages()
+                  const friends = users
+                  resolve({
+                    friendNames: friends.map(f => f.firstname +' '+f.lastname),
+                    friendIds: friends.map(f => f.id),
+                    chatId: chat.id,
+                    messages,
+                  })
+                }
+              })
+            })
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      })
+      Promise.all(map).then(values => {
+        const chats = values.filter(c => c)//Tar bort det som är undefined
+        if (chats.length > 0)
+          return res.status(200).json(chats)
+
+        return res.status(200).json({chats: 'No groupchats'})
+      });
+    })
 
 usersRouter.route('/:id/ban')
   .all(authenticateToken)

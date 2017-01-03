@@ -8,14 +8,20 @@ import httpStatus from 'http-status'
 import winston from 'winston'
 import expressWinston from 'express-winston'
 import cron from 'node-cron'
+import multer from 'multer'
+import multerS3 from 'multer-s3'
+import AWS from 'aws-sdk'
 
 import { createSocket, startSocket } from '../lib/socket'
 import routes from './routes'
 import passport from '../lib/auth'
 import { clearOldChatHistory } from '../lib/chat-history-cleaner'
+import { upload } from '../lib/file-upload'
+
 
 async function createServer() {
-
+  
+  console.log(process.env.S3_SECRET)
   const app = express()
   const server = http.createServer(app)
   const io = createSocket(app, server)
