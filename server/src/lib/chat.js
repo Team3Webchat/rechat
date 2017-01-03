@@ -27,22 +27,25 @@ export const onNewMessage = async (data, io) => {
   })
 }
 export const onPrivateGroupConversation = async (data, socket) => {
-
+  console.log('ny gruppchatt');
+  console.log(data.chatId);
   const { friends, chatId } = data
   const { id } = socket.decoded_token
   const from = await User.findOne({ where: { id }})
-  const oldChat = await Chat.find({id: chatId})
+  const oldChat = await Chat.find({where: {id: chatId}})
   const oldChatUsers = await oldChat.getUsers()
   const oldChatMessages = await oldChat.getMessages()
 
   const to = await Promise.all(friends.map(async id => {
-    return await User.findOne({ where: {id}})
+    const user =  await User.findOne({ where: {id}})
+    console.log(user.firstname);
+    return user
   }))
   to.push.apply(to, oldChatUsers)
   //to.forEach(u => console.log(u.firstname))
-//Kolla alla konversationer om de har to arrayn med användare i sig
+//TODO: Kolla alla konversationer om de har to arrayn med användare i sig
 
-//göra ny chatt med nya anändare
+  //göra ny chatt med nya anändare
   const newChat = await Chat.create({ id: uuid.v4() })
   await Promise.all([
     newChat.addUser(from),

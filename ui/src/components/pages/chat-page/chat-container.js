@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Spinner } from 'react-mdl'
 import ChatDisplayer from './chatdisplayer'
-import { sendPrivateMessage, selectActiveChat, deleteChatHistory } from '../../../lib/actions/chatActions'
-import { getActiveChat } from '../../../lib/reducers/chatsReducer'
+import { sendPrivateMessage, selectActivePrivateChat, deleteChatHistory } from '../../../lib/actions/chatActions'
+import { getActivePrivateChat } from '../../../lib/reducers/chatsReducer'
 import { getHeaders } from '../../../lib/api'
 import DeleteChatConfirm from './delete-chat-confirm'
 import AddNewFriendToChat from './addNewFriendToChat'
@@ -119,8 +119,7 @@ class ChatContainer extends Component {
             { openAddFriendsDialog &&
               <AddNewFriendToChat
               openDialog={this.state.openAddFriendsDialog}
-              handleCloseConfirm={this.handleCloseallConfirms}
-              activeChatId={activeChat.chatId}/>
+              handleCloseConfirm={this.handleCloseallConfirms}/>
             }
         </div>
       )

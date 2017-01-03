@@ -117,8 +117,15 @@ export const getGroupConversations = (id = getUserId()) =>
       })
 
       const json = await res.json()
-      console.log(json);
       //Lägg i staten
+      json.forEach(chat => {
+        dispatch(connectToGroupChat({
+          friendNames: chat.friendNames,
+          chatId: chat.chatId,
+          friendIds: chat.friendIds,
+          messages: chat.messages,
+        }))
+      })
 
 
     } catch (e) {

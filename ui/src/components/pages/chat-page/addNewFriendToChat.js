@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Checkbox} from 'react-mdl'
-
+import { getActivePrivateChat } from '../../../lib/reducers/chatsReducer'
 import { addFriendsToChat } from '../../../lib/actions/chatActions'
 import './../style-dialog-common.css'
 
@@ -23,8 +23,8 @@ class AddNewFriendToChat extends Component {
   }
 
   addFriends = () => {
-    const { addFriends, handleCloseConfirm, activeChatId } = this.props
-    addFriends(activeChatId, this.state.friends)
+    const { addFriends, handleCloseConfirm, activeChat } = this.props
+    addFriends(activeChat.chatId, this.state.friends)
     handleCloseConfirm()
   }
   render(){
@@ -54,6 +54,7 @@ class AddNewFriendToChat extends Component {
 }
 const mapStateToProps = (state, ownProps) => ({
   friends : state.friends.friends,
+  activeChat: getActivePrivateChat(state),
 })
 
 const mapDispatchToProps = dispatch => ({
