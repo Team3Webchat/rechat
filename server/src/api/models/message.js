@@ -1,5 +1,5 @@
 export default function(sequelize, DataTypes) {
-  const Message = sequelize.define('message', 
+  const Message = sequelize.define('message',
     {
       id: {
         type: DataTypes.UUID,
@@ -12,7 +12,11 @@ export default function(sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-    }, 
+      messageType: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
     {
       classMethods: {
         associate(models) {
@@ -27,7 +31,7 @@ export default function(sequelize, DataTypes) {
           return user.fullname()
         },
       },
-    }  
+    }
   )
 
   return Message

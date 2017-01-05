@@ -50,6 +50,7 @@ const socketMiddleware = (function() {
       chatId: data.chatId,
       content: data.content,
       userId: data.userId,
+      messageType: data.messageType,
       id: data.id,
       createdAt: data.createdAt,
     }))
@@ -154,6 +155,7 @@ const socketMiddleware = (function() {
           content: action.payload.content,
           userId: action.payload.userId,
           chatId: action.payload.chatId,
+          messageType: action.payload.messageType,
         })
         return next(action)
 

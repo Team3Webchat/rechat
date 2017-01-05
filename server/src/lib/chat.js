@@ -11,6 +11,7 @@ export const onNewMessage = async (data, io) => {
   const message = await Message.create({
     id: uuid.v4(),
     content: data.content,
+    messageType: data.messageType,
     userId: data.userId,
     chatId: data.chatId,
   })
@@ -20,6 +21,7 @@ export const onNewMessage = async (data, io) => {
   io.to(data.chatId).emit('new_message', {
     id: message.dataValues.id,
     content: data.content,
+    messageType: data.messageType,
     userId: data.userId,
     chatId: data.chatId,
     createdAt: message.dataValues.createdAt,

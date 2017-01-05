@@ -18,6 +18,7 @@ class ChatContainer extends Component {
       openAddFriendsDialog: false,
       deleteChatHistory: null,
       uploadedFile: null,
+      messageType: 'text',
     }
   }
 
@@ -64,7 +65,8 @@ class ChatContainer extends Component {
     .then(res => {
       this.setState({
         message: res,
-        uploadedFile: file
+        uploadedFile: file,
+        messageType: 'file',
       })
     })
   }
@@ -78,14 +80,14 @@ class ChatContainer extends Component {
     e.preventDefault()
     e.stopPropagation()
 
-    const { message } = this.state
+    const { message, messageType } = this.state
     const { sendMessage, id, activeChat } = this.props
     this.setState({
       message: '',
-      uploadedFile: null
+      uploadedFile: null,
     })
 
-    sendMessage(message, activeChat.chatId, id)
+    sendMessage(message, messageType, activeChat.chatId, id)
   }
 
   render() {
@@ -140,7 +142,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   beginChat: id => dispatch(selectActivePrivateChat({friendId: id})),
-  sendMessage: (content, chatId, userId) => dispatch(sendPrivateMessage({content, chatId, userId})),
+  sendMessage: (content, messageType, chatId, userId) => dispatch(sendPrivateMessage({content, messageType, chatId, userId})),
   clearChatHistory: (chatId, friendId) => {
     dispatch(deleteChatHistory({chatId, friendId}))
   },

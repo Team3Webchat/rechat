@@ -59,7 +59,7 @@ class App extends Component {
       Promise.all([
         store.dispatch(loginUserSuccess({token, message: 'Welcome back'})),
         store.dispatch(getFriends()),
-        store.dispatch(getGroupConversations()),
+        //store.dispatch(getGroupConversations()),
       ])
       .then(() => {
         this.setState({
