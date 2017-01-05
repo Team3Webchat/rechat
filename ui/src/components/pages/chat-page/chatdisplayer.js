@@ -15,14 +15,14 @@ class ChatDisplayer extends Component {
   }
 
   render () {
-    const { 
-      onChange, 
-      onSubmit, 
-      messages, 
-      id, 
-      message, 
-      friendsName, 
-      deleteChatConfirm, 
+    const {
+      onChange,
+      onSubmit,
+      messages,
+      id,
+      message,
+      friendsName,
+      deleteChatConfirm,
       AddNewFriendToChat,
       onDrop,
       uploadedFile
@@ -53,21 +53,23 @@ class ChatDisplayer extends Component {
               <div className='messageField' ref={(ref) => this.messageField = ref }>
                 {messages.map((m, i) =>
                   id === m.userId ?
-                  <ComposeNewMessage type='me' message={m.content} key={i} /> :
+                  <ComposeNewMessage person='me' message={m.content} key={i} />
+                  :
                   <div key={i}>
-                    {m.userId === 'system' ?
-                    <ComposeNewMessage type='system' message={m.content} />
-                    :
-                    <ComposeNewMessage type='friend' message={m.content} />
-                    }
+                    <ComposeNewMessage person='friend' message={m.content} />
                   </div>
                 )}
+                /*Fuckhack till åsa :)*/
+                <ComposeNewMessage person='system' type='text' message={'Ny conversation mellan din och en vän //systemet'} />
+                <ComposeNewMessage person='me' type='text' message={'Jag skickar en bild till min kompis'} />
+                <ComposeNewMessage person='me' type='file' message={'http://www.lanlinglaurel.com/data/out/94/4753461-picture.jpg'} />
+                <ComposeNewMessage person='friend' type='text' message={'Åh tack! Så söt!!!'} />
               </div>
 
         </CardText>
         <div className='textBox'>
           <form onSubmit={onSubmit} autoComplete="off">
-            
+
               <Textfield
                 className='textInput'
                 onChange={onChange}
@@ -75,9 +77,9 @@ class ChatDisplayer extends Component {
                 value={message}
                 maxLength="255"
               />
-            <Dropzone 
-              onDrop={onDrop} 
-              multiple={false} 
+            <Dropzone
+              onDrop={onDrop}
+              multiple={false}
               accept='image/png,image/jpg,application/pdf,text/*,'
               style={{
                 width: '100%',
@@ -94,7 +96,7 @@ class ChatDisplayer extends Component {
               </div>
             </Dropzone>
 
-            <CardActions className='send'>              
+            <CardActions className='send'>
               <Button
                 className="sendButton"
                 raised colored

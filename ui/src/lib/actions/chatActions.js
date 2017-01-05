@@ -117,6 +117,7 @@ const flashFailure = ({flash}) => ({
 export const getGroupConversations = (id = getUserId()) =>
   async function(dispatch) {
     try {
+      console.log(id);
       const res = await fetch(`${baseUrl}users/${id}/groupConversations`, {
         method: 'GET',
         headers: getHeaders(),

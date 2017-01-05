@@ -5,11 +5,11 @@ import './new-message-style.css'
 const ComposeNewMessage = (props) => {
 
   //const { email } = props.user
-  const { type, message } = props
+  const { person, message, type } = props
   // just a hack for checking if the message is a link to the bucket
   // needs to be checked with message-type later from the db!
-  const isLink = message.match('https://rechat-bucket.s3.eu-west-2.amazonaws.com') 
-  const className = `message ${type}`
+  const isLink = message.match('https://rechat-bucket.s3.eu-west-2.amazonaws.com')
+  const className = `message ${person} ${type}`
 
 //Måste ha card två gånger annars hamnar arrows itne rätt :)
   return (
@@ -20,7 +20,7 @@ const ComposeNewMessage = (props) => {
     </div>
       <Card shadow={0} className={className}>
         {isLink ? <a href={message}>{message}</a> : message}
- 
+
       </Card>
 
     </div>
