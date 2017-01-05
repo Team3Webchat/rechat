@@ -59,7 +59,6 @@ class Main extends Component {
   }
 
   render(){
-
     const { doLogout, flash, isAdmin } = this.props
     const { showRequests, showSearch, searchValue } = this.state
     return (
@@ -75,7 +74,7 @@ class Main extends Component {
           </Header>
 
           <DrawerClass name={this.props.name}/>
-          
+
           <main className="mdl-layout__content main">
           { flash.message &&
             <FlashMessage

@@ -29,8 +29,6 @@ export const onNewMessage = async (data, io) => {
   })
 }
 export const onPrivateGroupConversation = async (data, socket) => {
-  console.log('ny gruppchatt');
-  console.log(data.chatId);
   const { friends, chatId } = data
   const { id } = socket.decoded_token
   const from = await User.findOne({ where: { id }})
@@ -40,7 +38,6 @@ export const onPrivateGroupConversation = async (data, socket) => {
 
   const to = await Promise.all(friends.map(async id => {
     const user =  await User.findOne({ where: {id}})
-    console.log(user.firstname);
     return user
   }))
   to.push.apply(to, oldChatUsers)

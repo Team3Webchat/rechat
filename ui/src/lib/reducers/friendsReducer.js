@@ -43,7 +43,6 @@ export default function friends(state = initialState, action) {
         sentFriendRequests: action.payload.sentFriendRequests,
       }
     case GOT_FRIEND_REQUEST:
-      console.log(action.payload)
       return {
         ...state,
         friendRequests: [...state.friendRequests, action.payload.friend],
@@ -62,7 +61,7 @@ export default function friends(state = initialState, action) {
         friends: [...state.friends, state.sentFriendRequests.find(f => f.id === action.payload.friendId)],
         sentFriendRequests: state.sentFriendRequests.filter(f => f.id !== action.payload.friendId),
       }
-    
+
 
     default:
       return state

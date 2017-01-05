@@ -56,8 +56,6 @@ class App extends Component {
   componentDidMount() {
     const token = localStorage.getItem('token')
     if (token) {
-
-
       Promise.all([
         store.dispatch(loginUserSuccess({token, message: 'Welcome back'})),
         store.dispatch(getFriends()),

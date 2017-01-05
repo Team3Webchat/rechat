@@ -15,14 +15,14 @@ class ChatDisplayer extends Component {
   }
 
   render () {
-    const { 
-      onChange, 
-      onSubmit, 
-      messages, 
-      id, 
-      message, 
-      friendsName, 
-      deleteChatConfirm, 
+    const {
+      onChange,
+      onSubmit,
+      messages,
+      id,
+      message,
+      friendsName,
+      deleteChatConfirm,
       AddNewFriendToChat,
       onDrop,
       uploadedFile
@@ -49,43 +49,43 @@ class ChatDisplayer extends Component {
           </Link>
         </CardMenu>
         <CardText className="cardText">
-          <div className='messageField' ref={(ref) => this.messageField = ref }>
-            {messages.map((m, i) => 
-              id === m.userId 
-              ?
-              <ComposeNewMessage type='me' message={m.content} key={i} /> 
-              :
-              <div key={i}>
-                {m.userId === 'system' 
-                  ?
-                  <ComposeNewMessage type='system' message={m.content} />
+
+              <div className='messageField' ref={(ref) => this.messageField = ref }>
+                {messages.map((m, i) =>
+                  id === m.userId ?
+                  <ComposeNewMessage person='me' message={m.content} key={i} />
                   :
-                  <ComposeNewMessage type='friend' message={m.content} />
-                }
+                  <div key={i}>
+                    <ComposeNewMessage person='friend' message={m.content} />
+                  </div>
+                )}
+                /*Fulhack till åsa :)*/
+                <ComposeNewMessage person='system' type='text' message={'Ny conversation mellan din och en vän //systemet'} />
+                <ComposeNewMessage person='me' type='text' message={'Jag skickar en bild till min kompis'} />
+                <ComposeNewMessage person='me' type='file' message={'http://www.lanlinglaurel.com/data/out/94/4753461-picture.jpg'} />
+                <ComposeNewMessage person='friend' type='text' message={'Åh tack! Så söt!!!'} />
+
               </div>
-            )}
-          </div>
         </CardText>
         <div className='textBox'>
-          <form onSubmit={onSubmit} autoComplete="off">
-            <Textfield
+          <form onSubmit={onSubmit} autoComplete="off">  <Textfield
               className='textInput'
               onChange={onChange}
               label="Write your message..."
               value={message}
               maxLength="255"
             />
-            <Dropzone 
-              onDrop={onDrop} 
-              multiple={false} 
+            <Dropzone
+              onDrop={onDrop}
+              multiple={false}
               accept='image/png,image/jpg,image/jpeg,application/pdf,text/*,'
               className="dropzone"
             >
               <div>
                 <div className="dropText"> Drop a file here, or click to upload.</div>
                 {uploadedFile &&
-                  <div> 
-                    <div>{uploadedFile.type==='image/png'
+                  <div>
+                    <div>{uploadedFile.type==='image/png' || uploadedFile.type==='image/jpg' || uploadedFile.type==='image/jpeg'
                       ?
                       <div className="dropDisplay">
                         <img className="dropImage" src={uploadedFile.preview} />
@@ -101,7 +101,7 @@ class ChatDisplayer extends Component {
               </div>
             </Dropzone>
 
-            <CardActions className='send'>              
+            <CardActions className='send'>
               <Button
                 className="sendButton"
                 raised colored

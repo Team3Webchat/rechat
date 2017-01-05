@@ -127,12 +127,12 @@ usersRouter.route('/:id')
   })
 
   usersRouter.route('/:id/groupConversations')
-    //.all(authenticateToken)
+    .all(authenticateToken)
     .get(async (req, res, next) => {
       const { user: currentUser } = req
       const { id } = req.params
-      //if (!currentUser.id !== id)
-      //  return res.status(403).json({message: 'Unauthorized'})
+      if (!currentUser.id !== id)
+        return res.status(403).json({message: 'Unauthorized'})
       const all = await Chat.findAll()
       const map = all.map(async chat => {
         try {
@@ -155,6 +155,7 @@ usersRouter.route('/:id')
           }
         } catch (e) {
           console.error(e);
+          return res.status(404).json(e)
         }
       })
       Promise.all(map).then(values => {
@@ -162,7 +163,7 @@ usersRouter.route('/:id')
         if (chats.length > 0)
           return res.status(200).json(chats)
 
-        return res.status(200).json({chats: 'No groupchats'})
+        return res.status(204).json({chats: 'No groupchats'})
       });
     })
 
