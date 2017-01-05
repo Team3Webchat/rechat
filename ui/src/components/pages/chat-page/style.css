@@ -73,7 +73,7 @@
 }
 
 label{
-  opacity: 0.5 !important;
+  opacity: 0.38 !important;
 }
 
 .mdl-tooltip{
@@ -105,4 +105,37 @@ label{
 .overflow{
   width:100%;
   overflow:visible
+}
+
+.dropzone{
+  border: 1px dashed rgba(0, 0, 0, 0.38);
+  border-radius: 4px;
+  cursor: pointer;
+  margin:10px 0px 10px 0px!important;
+}
+
+.dropText{
+  color: rgba(0, 0, 0, 0.38);
+  padding: 10px 8px 10px 8px !important;
+}
+
+.dropDisplay{
+  border-top:1px dashed rgba(0, 0, 0, 0.38);
+  padding: 8px;
+}
+
+.dropDisplay p{
+  margin: 0 !important;
+}
+
+.dropImage{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  height:100px;
+  width:100px;
+}
+
+.dropMessage {
+  color: red !important;
 }

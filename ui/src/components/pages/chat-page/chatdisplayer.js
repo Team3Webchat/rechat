@@ -64,35 +64,40 @@ class ChatDisplayer extends Component {
                 <ComposeNewMessage person='me' type='text' message={'Jag skickar en bild till min kompis'} />
                 <ComposeNewMessage person='me' type='file' message={'http://www.lanlinglaurel.com/data/out/94/4753461-picture.jpg'} />
                 <ComposeNewMessage person='friend' type='text' message={'Åh tack! Så söt!!!'} />
-              </div>
 
+              </div>
         </CardText>
         <div className='textBox'>
-          <form onSubmit={onSubmit} autoComplete="off">
-
-              <Textfield
-                className='textInput'
-                onChange={onChange}
-                label="Write your message..."
-                value={message}
-                maxLength="255"
-              />
+          <form onSubmit={onSubmit} autoComplete="off">  <Textfield
+              className='textInput'
+              onChange={onChange}
+              label="Write your message..."
+              value={message}
+              maxLength="255"
+            />
             <Dropzone
               onDrop={onDrop}
               multiple={false}
-              accept='image/png,image/jpg,application/pdf,text/*,'
-              style={{
-                width: '100%',
-                border: '1px dashed black',
-                cursor: 'pointer',
-                borderRadius: '1px',
-                padding: 5
-            }}>
+              accept='image/png,image/jpg,image/jpeg,application/pdf,text/*,'
+              className="dropzone"
+            >
               <div>
-              <Tooltip label="Upload a file (non photo).">
-                <Icon name="attachment"/>
-              </Tooltip>
-              {uploadedFile && <p>{uploadedFile.name}</p>}
+                <div className="dropText"> Drop a file here, or click to upload.</div>
+                {uploadedFile &&
+                  <div>
+                    <div>{uploadedFile.type==='image/png'
+                      ?
+                      <div className="dropDisplay">
+                        <img className="dropImage" src={uploadedFile.preview} />
+                        <p>{uploadedFile.name}</p>
+                      </div>
+                      :
+                      <div className="dropDisplay">
+                        <p>{uploadedFile.name}</p>
+                      </div>}
+                    </div>
+                  </div>
+                }
               </div>
             </Dropzone>
 

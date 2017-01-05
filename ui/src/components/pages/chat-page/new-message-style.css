@@ -18,6 +18,10 @@
   color: rgba(0, 0, 0, 0.87) !important;
 }
 
+.messageField .message a{
+  cursor: pointer;
+}
+
 .messageField .me{
   float: right;
   background: #c8dbef;
