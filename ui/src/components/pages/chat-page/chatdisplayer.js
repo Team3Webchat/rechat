@@ -59,7 +59,7 @@ class ChatDisplayer extends Component {
                     <ComposeNewMessage person='friend' message={m.content} />
                   </div>
                 )}
-                /*Fuckhack till åsa :)*/
+                /*Fulhack till åsa :)*/
                 <ComposeNewMessage person='system' type='text' message={'Ny conversation mellan din och en vän //systemet'} />
                 <ComposeNewMessage person='me' type='text' message={'Jag skickar en bild till min kompis'} />
                 <ComposeNewMessage person='me' type='file' message={'http://www.lanlinglaurel.com/data/out/94/4753461-picture.jpg'} />
@@ -85,7 +85,7 @@ class ChatDisplayer extends Component {
                 <div className="dropText"> Drop a file here, or click to upload.</div>
                 {uploadedFile &&
                   <div>
-                    <div>{uploadedFile.type==='image/png'
+                    <div>{uploadedFile.type==='image/png' || uploadedFile.type==='image/jpg' || uploadedFile.type==='image/jpeg'
                       ?
                       <div className="dropDisplay">
                         <img className="dropImage" src={uploadedFile.preview} />
