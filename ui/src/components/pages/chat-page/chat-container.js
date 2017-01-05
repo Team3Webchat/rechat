@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Spinner } from 'react-mdl'
 import ChatDisplayer from './chatdisplayer'
-import { sendPrivateMessage, selectActivePrivateChat, deleteChatHistory } from '../../../lib/actions/chatActions'
-import { getActivePrivateChat } from '../../../lib/reducers/chatsReducer'
+import { sendPrivateMessage, selectActivePrivateChat, deleteChatHistory, selectActiveGroupChat } from '../../../lib/actions/chatActions'
+import { getActivePrivateChat, getActiveGroupChat } from '../../../lib/reducers/chatsReducer'
 import { getHeaders } from '../../../lib/api'
 import DeleteChatConfirm from './delete-chat-confirm'
 import AddNewFriendToChat from './addNewFriendToChat'
@@ -134,6 +134,7 @@ const mapStateToProps = (state, ownProps) => ({
   token: state.auth.token,
   id: state.auth.id,
   activeChat: getActivePrivateChat(state),
+  activeGroupChat: getActiveGroupChat(state),
   friendId: ownProps.params.id,
   friend : state.friends.friends.find(f => f.id === ownProps.params.id),
   friends : state.friends.friends,
@@ -142,6 +143,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = dispatch => ({
   beginChat: id => dispatch(selectActivePrivateChat({friendId: id})),
+  beginGroupChat: id => dispatch(selectActiveGroupChat({chatId: id})),
   sendMessage: (content, messageType, chatId, userId) => dispatch(sendPrivateMessage({content, messageType, chatId, userId})),
   clearChatHistory: (chatId, friendId) => {
     dispatch(deleteChatHistory({chatId, friendId}))

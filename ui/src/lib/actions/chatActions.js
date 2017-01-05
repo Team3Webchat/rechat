@@ -77,7 +77,7 @@ export const friendDeletedChatHistory = ({chatId}) => {
     type: FRIEND_DELETED_CHAT_HISTORY,
     payload: {
       chatId,
-    }
+    },
   })
 }
 
@@ -119,7 +119,7 @@ const flashFailure = ({flash}) => ({
 export const getGroupConversations = (id = getUserId()) =>
   async function(dispatch) {
     try {
-      console.log(id);
+      console.log(id)
       const res = await fetch(`${baseUrl}users/${id}/groupConversations`, {
         method: 'GET',
         headers: getHeaders(),
