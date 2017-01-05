@@ -49,48 +49,55 @@ class ChatDisplayer extends Component {
           </Link>
         </CardMenu>
         <CardText className="cardText">
-
-              <div className='messageField' ref={(ref) => this.messageField = ref }>
-                {messages.map((m, i) =>
-                  id === m.userId ?
-                  <ComposeNewMessage type='me' message={m.content} key={i} /> :
-                  <div key={i}>
-                    {m.userId === 'system' ?
-                    <ComposeNewMessage type='system' message={m.content} />
-                    :
-                    <ComposeNewMessage type='friend' message={m.content} />
-                    }
-                  </div>
-                )}
+          <div className='messageField' ref={(ref) => this.messageField = ref }>
+            {messages.map((m, i) => 
+              id === m.userId 
+              ?
+              <ComposeNewMessage type='me' message={m.content} key={i} /> 
+              :
+              <div key={i}>
+                {m.userId === 'system' 
+                  ?
+                  <ComposeNewMessage type='system' message={m.content} />
+                  :
+                  <ComposeNewMessage type='friend' message={m.content} />
+                }
               </div>
-
+            )}
+          </div>
         </CardText>
         <div className='textBox'>
           <form onSubmit={onSubmit} autoComplete="off">
-            
-              <Textfield
-                className='textInput'
-                onChange={onChange}
-                label="Write your message..."
-                value={message}
-                maxLength="255"
-              />
+            <Textfield
+              className='textInput'
+              onChange={onChange}
+              label="Write your message..."
+              value={message}
+              maxLength="255"
+            />
             <Dropzone 
               onDrop={onDrop} 
               multiple={false} 
-              accept='image/png,image/jpg,application/pdf,text/*,'
-              style={{
-                width: '100%',
-                border: '1px dashed black',
-                cursor: 'pointer',
-                borderRadius: '1px',
-                padding: 5
-            }}>
+              accept='image/png,image/jpg,image/jpeg,application/pdf,text/*,'
+              className="dropzone"
+            >
               <div>
-              <Tooltip label="Upload a file (non photo).">
-                <Icon name="attachment"/>
-              </Tooltip>
-              {uploadedFile && <p>{uploadedFile.name}</p>}
+                <div className="dropText"> Drop a file here, or click to upload.</div>
+                {uploadedFile &&
+                  <div> 
+                    <div>{uploadedFile.type==='image/png'
+                      ?
+                      <div className="dropDisplay">
+                        <img className="dropImage" src={uploadedFile.preview} />
+                        <p>{uploadedFile.name}</p>
+                      </div>
+                      :
+                      <div className="dropDisplay">
+                        <p>{uploadedFile.name}</p>
+                      </div>}
+                    </div>
+                  </div>
+                }
               </div>
             </Dropzone>
 

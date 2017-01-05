@@ -69,8 +69,6 @@ class ChatContainer extends Component {
     })
   }
 
-
-
   componentWillReceiveProps(nextProps) {
     const { friendId, beginChat } = nextProps
     beginChat(friendId)

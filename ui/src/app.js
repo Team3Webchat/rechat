@@ -99,7 +99,7 @@ class App extends Component {
       return (
         <div className='loading-app'>
           <Spinner />
-          <h4>The application is loading</h4>
+          <h4>The application is loading...</h4>
         </div>
       )
     }
