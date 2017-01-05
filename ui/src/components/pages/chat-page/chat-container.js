@@ -119,6 +119,7 @@ class ChatContainer extends Component {
             { openAddFriendsDialog &&
               <AddNewFriendToChat
               openDialog={this.state.openAddFriendsDialog}
+              activeFriendId={friendId}
               handleCloseConfirm={this.handleCloseallConfirms}/>
             }
         </div>

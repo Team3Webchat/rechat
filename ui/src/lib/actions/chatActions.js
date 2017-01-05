@@ -13,6 +13,7 @@ export const DELETE_CHAT_HISTORY = 'DELETE_CHAT_HISTORY'
 export const FRIEND_DELETED_CHAT_HISTORY = 'FRIEND_DELETED_CHAT_HISTORY'
 export const CONNECT_TO_GROUP_CHAT = 'PRIVATE_GROUP_CONVERSATION'
 export const ADD_FREINDS_TO_CHAT= 'ADD_FREINDS_TO_CHAT'
+export const FLASH_FAILURE = 'FLASH_FAILURE'
 
 
 export const connectToGroupChat = ({ friendNames, friendIds, chatId, messages }) => ({
@@ -106,10 +107,15 @@ export const addFriendsToChat = ({friends, chatId}) => ({
     chatId,
   },
 })
+const flashFailure = ({flash}) => ({
+  type: FLASH_FAILURE,
+  payload: {
+    flash,
+  },
+})
 
 export const getGroupConversations = (id = getUserId()) =>
   async function(dispatch) {
-    console.log('getGroupConversations');
     try {
       const res = await fetch(`${baseUrl}users/${id}/groupConversations`, {
         method: 'GET',
@@ -117,18 +123,25 @@ export const getGroupConversations = (id = getUserId()) =>
       })
 
       const json = await res.json()
-      //Lägg i staten
-      json.forEach(chat => {
-        dispatch(connectToGroupChat({
-          friendNames: chat.friendNames,
-          chatId: chat.chatId,
-          friendIds: chat.friendIds,
-          messages: chat.messages,
-        }))
-      })
-
+      if (json.length > 0) {
+        json.forEach(chat => {
+          dispatch(connectToGroupChat({
+            friendNames: chat.friendNames,
+            chatId: chat.chatId,
+            friendIds: chat.friendIds,
+            messages: chat.messages,
+          }))
+        })
+      }else{
+        throw Error(json.message)
+      }
 
     } catch (e) {
-
+      dispatch(flashFailure({
+        flash: {
+          message: e.message,
+          type: 'fail',
+        },
+      }))
     }
   }

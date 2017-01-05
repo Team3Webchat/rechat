@@ -29,7 +29,7 @@ export default function chats(state = initialState, action) {
         ...state,
         currentChatId: state.privateChats.find(c => c.friendId === action.payload.friendId)['chatId'],
       }
-      
+
     case actions.SELECT_ACTIVE_GROUP_CHAT:
       console.log('SELECT_ACTIVE_GROUP_CHAT');
 
@@ -59,6 +59,14 @@ export default function chats(state = initialState, action) {
           }
         }),
       }
+
+    case actions.FLASH_FAILURE:
+    console.log(action.payload.flash);
+    return {
+      ...state,
+      flash: action.payload.flash,
+    }
+
     default:
       return state
   }
