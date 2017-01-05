@@ -61,10 +61,11 @@ export const disconnect = () => ({
   },
 })
 
-export const sendPrivateMessage = ({content, userId, chatId }) => ({
+export const sendPrivateMessage = ({content, messageType, userId, chatId }) => ({
   type: SEND_PRIVATE_MESSAGE,
   payload: {
     content,
+    messageType,
     userId,
     chatId,
   },
@@ -89,9 +90,10 @@ export const deleteChatHistory = ({chatId, friendId }) => {
   })
 }
 
-export const receivePrivateMessage = ({content, userId, chatId, id, createdAt}) => ({
+export const receivePrivateMessage = ({content, messageType, userId, chatId, id, createdAt}) => ({
   type: RECEIVE_PRIVATE_MESSAGE,
   payload: {
+    messageType,
     content,
     userId,
     chatId,
