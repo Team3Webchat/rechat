@@ -59,12 +59,6 @@ class ChatDisplayer extends Component {
                     <ComposeNewMessage person='friend' message={m.content} />
                   </div>
                 )}
-                /*Fulhack till åsa :)*/
-                <ComposeNewMessage person='system' type='text' message={'Ny conversation mellan din och en vän //systemet'} />
-                <ComposeNewMessage person='me' type='text' message={'Jag skickar en bild till min kompis'} />
-                <ComposeNewMessage person='me' type='file' message={'http://www.lanlinglaurel.com/data/out/94/4753461-picture.jpg'} />
-                <ComposeNewMessage person='friend' type='text' message={'Åh tack! Så söt!!!'} />
-
               </div>
         </CardText>
         <div className='textBox'>

@@ -20,12 +20,36 @@
 
 .messageField .message a{
   cursor: pointer;
+  color: #5c272d;
+  text-decoration: none;
+  position: relative;
+}
+
+.messageField .message a:hover{
+  color: #f28d52;
+}
+
+.dropImage[title]:hover:after {
+        content: attr(title);
+        padding: 10px;
+        background-color: white;
+        position: absolute;  
+    }
+
+.link {
+  padding-left:5px;
 }
 
 .messageField .me{
   float: right;
   background: #c8dbef;
 }
+
+.messageField .friend{
+  float: left;
+  background: rgba(0, 0, 0, 0.05);
+}
+
 .messageField .system{
   opacity: 0.4;
 }

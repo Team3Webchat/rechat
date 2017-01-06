@@ -53,7 +53,7 @@ class ChatContainer extends Component {
     const {token} = this.props
     const data = new FormData()
     const file = files[0]
-    data.append('file', file)
+    data.append('file',file)
     fetch('http://localhost:8000/api/upload', {
       method: 'POST',
       headers: {
