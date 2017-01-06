@@ -17,7 +17,7 @@ const ComposeNewMessage = (props) => {
 //Måste ha card två gånger annars hamnar arrows itne rätt :)
   return (
     <div className="newMessage">
-      {type === 'me' ?
+      {person === 'me' ?
         <div>
           <div className="arrow-right"></div> 
           <Card shadow={0} className={className}>
