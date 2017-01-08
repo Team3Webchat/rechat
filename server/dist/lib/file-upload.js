@@ -23,7 +23,9 @@ var _uuid2 = _interopRequireDefault(_uuid);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 var awsConfig = {
   accessKeyId: process.env.S3_ACCESS_KEY,

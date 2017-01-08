@@ -2,7 +2,10 @@ import AWS from 'aws-sdk'
 import multer from 'multer'
 import multerS3 from 'multer-s3'
 import uuid from 'uuid'
-require('dotenv').config()
+
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const awsConfig = {
   accessKeyId: process.env.S3_ACCESS_KEY,
