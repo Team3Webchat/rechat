@@ -127,44 +127,59 @@ usersRouter.route('/:id')
   })
 
   usersRouter.route('/:id/groupConversations')
-    .all(authenticateToken)
+    //.all(authenticateToken)
     .get(async (req, res, next) => {
       const { user: currentUser } = req
       const { id } = req.params
-      if (!currentUser.id !== id)
-        return res.status(403).json({message: 'Unauthorized'})
-      const all = await Chat.findAll()
+      //if (currentUser.id !== id)
+      //  return res.status(403).json({message: 'Unauthorized'})
+      const all = await Chat.findAll()//TODO: where users > 2
+      console.log(all.length);
       const map = all.map(async chat => {
-        try {
-          const users = await chat.getUsers()
-          if (users.length > 2) {
-            return new Promise(async resolve => {
-              await users.filter(async user => {
-                if (user.id === id){
-                  const messages = await chat.getMessages()
-                  const friends = users
-                  resolve({
-                    friendNames: friends.map(f => f.firstname +' '+f.lastname),
-                    friendIds: friends.map(f => f.id),
-                    chatId: chat.id,
-                    messages,
-                  })
-                }
+          try {
+            const users = await chat.getUsers()
+            if (users.length > 2) {
+              return new Promise((resolve2) => {
+                users.filter(async user => {
+                  if (user.id === id){
+                    console.log('linus är med');
+                    const messages = await chat.getMessages()
+                    const friends = users
+                    return resolve2({
+                      friendNames: friends.map(f => f.firstname +' '+f.lastname),
+                      friendIds: friends.map(f => f.id),
+                      chatId: chat.id,
+                      messages,
+                    })
+                  }
+                })
               })
-            })
+            }
+          } catch (e) {
+            reject(e)
+            console.error(e);
+            return res.status(404).json(e)
           }
-        } catch (e) {
-          console.error(e);
-          return res.status(404).json(e)
-        }
-      })
-      Promise.all(map).then(values => {
-        const chats = values.filter(c => c)//Tar bort det som är undefined
-        if (chats.length > 0)
-          return res.status(200).json(chats)
+        })
 
-        return res.status(204).json({chats: 'No groupchats'})
-      });
+      Promise.all(map).then(values => {
+        try{
+          console.log('then');
+          console.log(values);
+          const chats = values.filter(c => c)//Tar bort det som är undefined
+          if (chats.length > 0)
+            return res.status(200).json(chats)
+
+          return res.status(204).json({chats: 'No groupchats'})
+        }catch(e){
+          console.log(e);
+        }
+
+      })
+      .catch(e => {
+        console.log('i catch');
+        console.log(e);
+      })
     })
 
 usersRouter.route('/:id/ban')

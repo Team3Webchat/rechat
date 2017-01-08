@@ -53,7 +53,7 @@ class AddNewFriendToChat extends Component {
 
 }
 const mapStateToProps = (state, ownProps) => ({
-  friends : state.friends.friends,//.map(f => f.id !== ownProps.activeFriendId)
+  friends : state.friends.friends.filter(f => f.id !== ownProps.activeFriendId),
   activeChat: getActivePrivateChat(state),
 })
 
