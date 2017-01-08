@@ -134,35 +134,36 @@ usersRouter.route('/:id')
       //if (currentUser.id !== id)
       //  return res.status(403).json({message: 'Unauthorized'})
       const all = await Chat.findAll()//TODO: where users > 2
-      console.log(all.length);
-      const map = all.map(async chat => {
+      const promiseArray = all.map(async chat => {
           try {
+            let obj = undefined
             const users = await chat.getUsers()
             if (users.length > 2) {
-              return new Promise((resolve2) => {
-                users.filter(async user => {
+                await users.filter(async user => {//För varje användare i chatten -> kolla om active användare är med
                   if (user.id === id){
-                    console.log('linus är med');
-                    const messages = await chat.getMessages()
-                    const friends = users
-                    return resolve2({
-                      friendNames: friends.map(f => f.firstname +' '+f.lastname),
-                      friendIds: friends.map(f => f.id),
-                      chatId: chat.id,
-                      messages,
+                    obj = new Promise(async (res, rej) => {
+                      try{
+                        const messages = await chat.getMessages()
+                        const friends = users
+                        res({
+                          friendNames: friends.map(f => f.firstname +' '+f.lastname),
+                          friendIds: friends.map(f => f.id),
+                          chatId: chat.id,
+                          messages,
+                        })
+                      }catch(e){
+                        rej(e)
+                      }
                     })
                   }
                 })
-              })
             }
+            return obj
           } catch (e) {
-            reject(e)
-            console.error(e);
             return res.status(404).json(e)
           }
         })
-
-      Promise.all(map).then(values => {
+      Promise.all(promiseArray).then(values => {
         try{
           console.log('then');
           console.log(values);
@@ -180,6 +181,8 @@ usersRouter.route('/:id')
         console.log('i catch');
         console.log(e);
       })
+
+
     })
 
 usersRouter.route('/:id/ban')
