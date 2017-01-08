@@ -178,7 +178,12 @@ function login(req, res, next, message) {
               chats = _ref5[3];
               return _context3.abrupt('return', res.json({
                 message: message,
-                token: _jsonwebtoken2.default.sign({ email: user.email, fullname: user.fullname(), id: user.id, isAdmin: user.isAdmin }, jwtSecret),
+                token: _jsonwebtoken2.default.sign({
+                  email: user.email,
+                  fullname: user.fullname(),
+                  id: user.id,
+                  isAdmin: user.isAdmin
+                }, jwtSecret),
                 user: {
                   email: user.email,
                   fullname: user.fullname(),

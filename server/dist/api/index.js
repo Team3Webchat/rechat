@@ -12,6 +12,8 @@ var createServer = function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
+
+            console.log(process.env.S3_SECRET);
             app = (0, _express2.default)();
             server = _http2.default.createServer(app);
             io = (0, _socket.createSocket)(app, server);
@@ -60,7 +62,7 @@ var createServer = function () {
 
             return _context.abrupt('return', server);
 
-          case 15:
+          case 16:
           case 'end':
             return _context.stop();
         }
@@ -145,6 +147,18 @@ var _nodeCron = require('node-cron');
 
 var _nodeCron2 = _interopRequireDefault(_nodeCron);
 
+var _multer = require('multer');
+
+var _multer2 = _interopRequireDefault(_multer);
+
+var _multerS = require('multer-s3');
+
+var _multerS2 = _interopRequireDefault(_multerS);
+
+var _awsSdk = require('aws-sdk');
+
+var _awsSdk2 = _interopRequireDefault(_awsSdk);
+
 var _socket = require('../lib/socket');
 
 var _routes = require('./routes');
@@ -156,6 +170,8 @@ var _auth = require('../lib/auth');
 var _auth2 = _interopRequireDefault(_auth);
 
 var _chatHistoryCleaner = require('../lib/chat-history-cleaner');
+
+var _fileUpload = require('../lib/file-upload');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
