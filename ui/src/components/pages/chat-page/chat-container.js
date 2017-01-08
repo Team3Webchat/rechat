@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Spinner } from 'react-mdl'
 import ChatDisplayer from './chatdisplayer'
-import { sendPrivateMessage, selectActivePrivateChat, deleteChatHistory, selectActiveGroupChat } from '../../../lib/actions/chatActions'
-import { getActivePrivateChat, getActiveGroupChat } from '../../../lib/reducers/chatsReducer'
+import { sendPrivateMessage, selectActivePrivateChat, deleteChatHistory, selectActiveGroupChat, selectActiveChat } from '../../../lib/actions/chatActions'
+import { getActivePrivateChat, getActiveGroupChat, getActiveGroupChatFriends } from '../../../lib/reducers/chatsReducer'
 import { getHeaders } from '../../../lib/api'
 import DeleteChatConfirm from './delete-chat-confirm'
 import AddNewFriendToChat from './addNewFriendToChat'
@@ -92,33 +92,51 @@ class ChatContainer extends Component {
 
   render() {
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
-    const { clearChatHistory, activeChat, friendId } = this.props
-    const { openChatDialog, openAddFriendsDialog, uploadedFile } = this.state
+    const { clearChatHistory, activeChat, activeGroupChat, friendId, friend, friendNames, id } = this.props
+    const { openChatDialog, openAddFriendsDialog, uploadedFile, message, deleteChat } = this.state
+    const theActiveChat = activeChat ? activeChat : activeGroupChat
+    console.log(activeChat);
     if (!this.props.isLoading) {
       return (
         <div>
-            <ChatDisplayer
-              onChange={this.handleChange}
-              onSubmit={this.sendMessage}
-              messages={messages}
-              id={this.props.id}
-              message={this.state.message}
-              friendsName={`${this.props.friend.firstname} ${this.props.friend.lastname}`}
-              deleteChatConfirm={this.handleDeleteChatConfirm}
-              AddNewFriendToChat={this.handleAddFriendConfirm}
-              onDrop={this.handleOnDrop}
-              uploadedFile={uploadedFile}
-            />
+        {activeChat ?
+          <ChatDisplayer
+            onChange={this.handleChange}
+            onSubmit={this.sendMessage}
+            messages={messages}
+            id={id}
+            message={message}
+            friendsName={`${friend.firstname} ${friend.lastname}`}
+            deleteChatConfirm={this.handleDeleteChatConfirm}
+            AddNewFriendToChat={this.handleAddFriendConfirm}
+            onDrop={this.handleOnDrop}
+            uploadedFile={uploadedFile}
+          />
+          :
+          <ChatDisplayer
+            onChange={this.handleChange}
+            onSubmit={this.sendMessage}
+            messages={messages}
+            id={id}
+            message={message}
+            friendsName={friendNames.toString()}
+            deleteChatConfirm={this.handleDeleteChatConfirm}
+            AddNewFriendToChat={this.handleAddFriendConfirm}
+            onDrop={this.handleOnDrop}
+            uploadedFile={uploadedFile}
+          />
+        }
+
             { openChatDialog &&
               <DeleteChatConfirm
-              chat={this.state.deleteChat}
-              openChatDialog={this.state.openChatDialog}
+              chat={deleteChat}
+              openChatDialog={openChatDialog}
               handleCloseChatDialog={this.handleCloseallConfirms}
-              clearChatHistory={() => clearChatHistory(activeChat.chatId, friendId)}/>
+              clearChatHistory={() => clearChatHistory(theActiveChat.chatId, friendId)}/>
             }
             { openAddFriendsDialog &&
               <AddNewFriendToChat
-              openDialog={this.state.openAddFriendsDialog}
+              openDialog={openAddFriendsDialog}
               activeFriendId={friendId}
               handleCloseConfirm={this.handleCloseallConfirms}/>
             }
@@ -136,14 +154,14 @@ const mapStateToProps = (state, ownProps) => ({
   activeChat: getActivePrivateChat(state),
   activeGroupChat: getActiveGroupChat(state),
   friendId: ownProps.params.id,
-  friend : state.friends.friends.find(f => f.id === ownProps.params.id),
-  friends : state.friends.friends,
+  friend: state.friends.friends.find(f => f.id === ownProps.params.id),
+  friendNames: getActiveGroupChatFriends(state),
   isLoading: state.chats.isLoadingChats,
 })
 
 const mapDispatchToProps = dispatch => ({
-  beginChat: id => dispatch(selectActivePrivateChat({friendId: id})),
-  beginGroupChat: id => dispatch(selectActiveGroupChat({chatId: id})),
+  beginChat: id => dispatch(selectActiveChat({friendId: id})),
+  //beginGroupChat: id => dispatch(selectActiveGroupChat({chatId: id})),
   sendMessage: (content, messageType, chatId, userId) => dispatch(sendPrivateMessage({content, messageType, chatId, userId})),
   clearChatHistory: (chatId, friendId) => {
     dispatch(deleteChatHistory({chatId, friendId}))

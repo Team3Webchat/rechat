@@ -16,7 +16,7 @@ export default function chats(state = initialState, action) {
         isLoadingChats: false,
       }
 
-    case actions.CONNECT_TO_GROUP_CHAT:    
+    case actions.CONNECT_TO_GROUP_CHAT:
       return {
         ...state,
         groupChats: [...state.groupChats, action.payload],
@@ -37,9 +37,18 @@ export default function chats(state = initialState, action) {
         ...state,
         currentChatId: state.groupChats.find(c => c.chatId === action.payload.chatId)['chatId'],
       }
+    case actions.SELECT_ACTIVE_CHAT:
+      console.log('SELECT_ACTIVE_CHAT')
+      const groupChat = state.groupChats.find(c => action.payload.chatId === c.chatId)
+      const privateChat = state.privateChats.find(c => action.payload.friendId === c.friendId)
+      console.log(groupChat);
+      console.log(privateChat);
+      return {
+        ...state,
+        currentChatId: state.groupChats.find(c => c.chatId === action.payload.chatId)['chatId'],
+      }
 
     case actions.DELETE_CHAT_HISTORY:
-    case actions.FRIEND_DELETED_CHAT_HISTORY:
       return {
         ...state,
         privateChats: state.privateChats.map(chat => {
@@ -84,4 +93,9 @@ export const getActivePrivateChat = state => {
 export const getActiveGroupChat = state => {
   const { currentChatId, groupChats } = state.chats
   return groupChats.find(c => c.chatId === currentChatId)
+}
+export const getActiveGroupChatFriends = state => {
+  const { currentChatId, groupChats } = state.chats
+  const chat = groupChats.find(c => c.chatId === currentChatId)
+  return chat.friendNames
 }
