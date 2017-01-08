@@ -94,7 +94,6 @@ class ChatDisplayer extends Component {
                 }
               </div>
             </Dropzone>
-
             <CardActions className='send'>
               <Button
                 className="sendButton"
