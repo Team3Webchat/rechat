@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Textfield } from 'react-mdl'
 
-import { searchUser, searchUserFailure } from '../../lib/actions/searchActions'
+import { searchUser, searchUserFailure, endSearch } from '../../lib/actions/searchActions'
 import { sendFriendRequest } from '../../lib/actions/friendsActions'
 import SearchBox from './searchBox'
 
@@ -29,7 +29,7 @@ class Search extends Component {
           props.doSearch(state.searchValue)
         }, 500)
       }else{
-        props.endSearch()
+        this.props.endSearch()
       }
     }.bind(this)
   }
@@ -105,6 +105,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   doSearch: (searchValue) => dispatch(searchUser(searchValue)),
+  endSearch: () => dispatch(endSearch()),
   searchUserFailure: () => dispatch(searchUserFailure()),
   addFriend: id => dispatch(sendFriendRequest(id)),
 })
