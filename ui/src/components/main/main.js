@@ -46,6 +46,7 @@ class Main extends Component {
     this.setState(state)
   }
   onClickOutside = (e) => {
+    //if search or request is opend
     if(!e.target.parentElement.classList.contains( 'addUser' ) &&
       !e.target.parentElement.classList.contains( 'searchResult' ) &&
       !e.target.parentElement.classList.contains( 'toRequests' )){

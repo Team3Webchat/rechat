@@ -12,7 +12,12 @@ const Chats = ({ chats, onChatClick }) => {
         <ListItem key={c.chatId}>
         <Link to={`/chat/${c.chatId}`}>
           <Tooltip label="View conversation">
-            <p>{c.friendNames[0]}</p>
+            <div>{c.friendNames.map((n, i) =>
+              i+1 < c.friendNames.length ?
+              <p key={i}>{n},</p>
+              :
+              <p key={i}>{n}</p>
+            )}</div>
           </Tooltip>
         </Link>
         </ListItem>

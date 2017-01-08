@@ -71,7 +71,7 @@
 .mdl-navigation .friends li:hover, .chats li:hover{
   background-color: #7e93a9 !important;
 }
-.mdl-navigation .friends li a{
+.mdl-navigation .friends li a, .chats li a{
   text-decoration: none;
   color: #dbdde0;
   outline: none;
@@ -85,7 +85,7 @@
   float: left;
   border-radius: 50px;
 }
-.mdl-navigation .friends li p{
+.mdl-navigation .friends li p, .chats li p{
   font-size: 16px;
   padding-top: 5px;
   margin-bottom: 0;
