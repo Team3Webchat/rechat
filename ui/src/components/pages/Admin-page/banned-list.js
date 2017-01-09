@@ -6,7 +6,7 @@ import './style.css'
 const BannedForm = ( {users, unBanUser} ) => {
   const rows = []
   users.map(u => {
-    const button = <FABButton mini ripple onClick={() => {unBanUser(u.id)}}> <Icon name="settings_backup_restore" /> </FABButton>
+    const button = <div className="td-center"><FABButton mini ripple onClick={() => {unBanUser(u.id)}}> <Icon name="settings_backup_restore" /> </FABButton></div>
     return rows.push({Name: `${u.firstname} ${u.lastname}`, email: `${u.email}`, unBan: button})
   })
 
@@ -15,9 +15,9 @@ const BannedForm = ( {users, unBanUser} ) => {
       <DataTable
         shadow={1}
         rows={rows}>
-        <TableHeader name="Name" >Name</TableHeader>
-        <TableHeader numeric name="email" >Email</TableHeader>
-        <TableHeader numeric name="unBan" tooltip="Un-bann the user">Remove ban</TableHeader>
+        <TableHeader name="Name" tooltip="Name of the reported user">Name</TableHeader>
+        <TableHeader numeric name="email" tooltip="E-mail of the reported user">E-mail</TableHeader>
+        <TableHeader numeric name="unBan" tooltip="Remove ban">Remove ban</TableHeader>
     </DataTable>
     </div>
   )

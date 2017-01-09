@@ -2,9 +2,22 @@
   width: 100%;
 }
 
+th, td {
+  text-align: left !important;
+}
+
+.td-right {
+  text-align: right !important;
+}
+
+.td-center {
+  text-align: center !important;
+}
+
 .tabs .mdl-layout__tab-bar{
   height: 100% !important;
   background-color: rgb(255, 223, 138) !important;
+  width: 100%
 }
 
 .admin-tab {
@@ -14,7 +27,6 @@
   text-shadow: 0.5px 0.5px 10px rgb(199, 172, 103);
 }
 
-
 .tabs .content .list{
   margin: auto;
 }
@@ -23,15 +35,52 @@
   background: #ff3852;
 }
 
-
 .ReportedUserList p{
     color: black;
     font-size: 25px;
 }
-.list .mdl-tooltip p{
-  font-size: 12px !important;
-  margin:0;
+
+.viewReasons .mdl-tooltip {
+  min-width: 300px !important;
+  background-color: white!important;
+  padding:0 !important;
+  border: 1px solid #e7e7e7;
+  border-radius: 2px;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }
-.list .mdl-tooltip .reason{
-  border-bottom: 1px solid;
+
+.viewReasons{
+  cursor: pointer;
+  color: #F28D52 !important;
+  padding:0 !important;
+  margin: 0 !important;
+}
+
+.reasonsCard{
+  min-width: 300px !important;
+  min-height:60px !important;
+  border-bottom: rgba(0, 0, 0, 0.2) 1px solid !important;
+}
+
+.reasonsText  {
+  white-space: normal !important;
+  width: 100% !important;
+  height:100% !important;
+  padding:8px !important;
+}
+
+.cardtext-date, .cardtext-message{
+  line-height: 150% !important;
+  padding-right: 8px !important;
+  font-size: 12px !important;
+}
+
+.cardtext-date{
+  padding-bottom:3px !important;
+  padding-top:-3px !important;
+}
+
+.cardtext-bold {
+  color: rgba(0, 0, 0, 0.54);
+  font-weight: bold;
 }
