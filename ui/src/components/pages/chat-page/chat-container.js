@@ -8,6 +8,8 @@ import { getHeaders } from '../../../lib/api'
 import DeleteChatConfirm from './delete-chat-confirm'
 import AddNewFriendToChat from './addNewFriendToChat'
 
+import { API_URL } from '../../../lib/config'
+
 class ChatContainer extends Component {
 
   constructor() {
@@ -54,7 +56,7 @@ class ChatContainer extends Component {
     const data = new FormData()
     const file = files[0]
     data.append('file',file)
-    fetch('http://localhost:8000/api/upload', {
+    fetch(`${API_URL}/api/upload`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,

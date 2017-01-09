@@ -67,13 +67,13 @@ function connection(socket, io) {
       return _ref.apply(this, arguments);
     };
   }());
-  socket.on('private_conversation', function () {
+  socket.on('private_group_conversation', function () {
     var _ref2 = _asyncToGenerator(regeneratorRuntime.mark(function _callee2(data) {
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              (0, _chat.onPrivateConversation)(data, socket);
+              (0, _chat.onPrivateGroupConversation)(data, socket);
 
             case 1:
             case 'end':
@@ -87,17 +87,15 @@ function connection(socket, io) {
       return _ref2.apply(this, arguments);
     };
   }());
-
-  socket.on('delete_conversation', function () {
+  socket.on('private_conversation', function () {
     var _ref3 = _asyncToGenerator(regeneratorRuntime.mark(function _callee3(data) {
       return regeneratorRuntime.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
-              console.log(data);
-              (0, _chat.onDeleteConversation)(data, io, connectedUsers);
+              (0, _chat.onPrivateConversation)(data, socket);
 
-            case 2:
+            case 1:
             case 'end':
               return _context3.stop();
           }
@@ -110,16 +108,15 @@ function connection(socket, io) {
     };
   }());
 
-  socket.on('friend_request', function () {
+  socket.on('delete_conversation', function () {
     var _ref4 = _asyncToGenerator(regeneratorRuntime.mark(function _callee4(data) {
       return regeneratorRuntime.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
-              console.log(data);
-              (0, _friendships.onFriendRequest)(data, socket, io, connectedUsers);
+              (0, _chat.onDeleteConversation)(data, io, connectedUsers);
 
-            case 2:
+            case 1:
             case 'end':
               return _context4.stop();
           }
@@ -132,21 +129,15 @@ function connection(socket, io) {
     };
   }());
 
-  socket.on('disconnect', function () {
-    delete connectedUsers[socket.decoded_token.id];
-    socket.emit('user_disconnected', { userId: socket.decoded_token.id });
-  });
-
-  socket.on('friend_request_accepted', function () {
+  socket.on('friend_request', function () {
     var _ref5 = _asyncToGenerator(regeneratorRuntime.mark(function _callee5(data) {
       return regeneratorRuntime.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
-              console.log(data);
-              (0, _friendships.onFriendRequestAccept)(data, socket, io, connectedUsers);
+              (0, _friendships.onFriendRequest)(data, socket, io, connectedUsers);
 
-            case 2:
+            case 1:
             case 'end':
               return _context5.stop();
           }
@@ -156,6 +147,32 @@ function connection(socket, io) {
 
     return function (_x5) {
       return _ref5.apply(this, arguments);
+    };
+  }());
+
+  socket.on('disconnect', function () {
+    delete connectedUsers[socket.decoded_token.id];
+    socket.emit('user_disconnected', { userId: socket.decoded_token.id });
+  });
+
+  socket.on('friend_request_accepted', function () {
+    var _ref6 = _asyncToGenerator(regeneratorRuntime.mark(function _callee6(data) {
+      return regeneratorRuntime.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              (0, _friendships.onFriendRequestAccept)(data, socket, io, connectedUsers);
+
+            case 1:
+            case 'end':
+              return _context6.stop();
+          }
+        }
+      }, _callee6, _this);
+    }));
+
+    return function (_x6) {
+      return _ref6.apply(this, arguments);
     };
   }());
 }

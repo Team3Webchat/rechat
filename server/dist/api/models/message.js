@@ -16,6 +16,10 @@ exports.default = function (sequelize, DataTypes) {
     content: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    messageType: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     classMethods: {

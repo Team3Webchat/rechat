@@ -33,12 +33,10 @@ var onFriendRequest = exports.onFriendRequest = function () {
         switch (_context.prev = _context.next) {
           case 0:
             id = data.id;
-
-            console.log(data);
             decoded_token = socket.decoded_token;
 
             if (!(id === decoded_token.id)) {
-              _context.next = 5;
+              _context.next = 4;
               break;
             }
 
@@ -46,66 +44,65 @@ var onFriendRequest = exports.onFriendRequest = function () {
               message: 'Cannot add yourself as friend'
             }));
 
-          case 5:
-            _context.next = 7;
+          case 4:
+            _context.next = 6;
             return Friendship.findOne({
               where: {
                 $or: [{ friendId: id, userId: decoded_token.id }, { friendId: decoded_token.id, userId: id }]
               }
             });
 
-          case 7:
+          case 6:
             friendship = _context.sent;
 
             if (!friendship) {
-              _context.next = 10;
+              _context.next = 9;
               break;
             }
 
             return _context.abrupt('return', io.to(connectedUsers[decoded_token].id).emit('add_friend_error', { message: ' You are already friends with this person' }));
 
-          case 10:
-            _context.next = 12;
+          case 9:
+            _context.next = 11;
             return Promise.all([User.findOne({ where: { id: id } }), User.findOne({ where: { id: decoded_token.id } })]);
 
-          case 12:
+          case 11:
             _ref2 = _context.sent;
             _ref3 = _slicedToArray(_ref2, 2);
             receiver = _ref3[0];
             sender = _ref3[1];
-            _context.next = 18;
+            _context.next = 17;
             return sender.addFriend(receiver);
 
-          case 18:
-            _context.next = 20;
+          case 17:
+            _context.next = 19;
             return sender.sentFriendRequests();
 
-          case 20:
+          case 19:
             sentFriendRequests = _context.sent;
-            _context.next = 23;
+            _context.next = 22;
             return Chat.create({ id: _uuid2.default.v4() });
 
-          case 23:
+          case 22:
             chat = _context.sent;
-            _context.next = 26;
+            _context.next = 25;
             return Promise.all([chat.addUser(receiver), chat.addUser(sender)]);
 
-          case 26:
-            _context.next = 28;
+          case 25:
+            _context.next = 27;
             return io.to(connectedUsers[decoded_token.id]).emit('friend_request_sent', {
               message: 'Friend added!',
               sentFriendRequests: sentFriendRequests,
               userId: id
             });
 
-          case 28:
+          case 27:
 
-            console.log(connectedUsers[id]);
             io.to(connectedUsers[id]).emit('friend_request_gotten', {
               friend: sender
             });
 
-          case 30:
+          case 28:
           case 'end':
             return _context.stop();
         }

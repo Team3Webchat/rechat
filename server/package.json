@@ -42,7 +42,10 @@
     "socket.io": "^1.7.1",
     "socketio-jwt": "^4.5.0",
     "uuid": "^2.0.3",
-    "winston": "^2.3.0"
+    "winston": "^2.3.0",
+    "multer": "^1.2.1",
+    "multer-s3": "^2.5.0",
+    "aws-sdk": "^2.7.19"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
