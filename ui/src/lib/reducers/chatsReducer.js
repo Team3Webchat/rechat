@@ -38,14 +38,12 @@ export default function chats(state = initialState, action) {
         currentChatId: state.groupChats.find(c => c.chatId === action.payload.chatId)['chatId'],
       }
     case actions.SELECT_ACTIVE_CHAT:
-      console.log('SELECT_ACTIVE_CHAT')
-      const groupChat = state.groupChats.find(c => action.payload.chatId === c.chatId)
-      const privateChat = state.privateChats.find(c => action.payload.friendId === c.friendId)
-      console.log(groupChat);
-      console.log(privateChat);
+      const groupChat = state.groupChats.find(c => action.payload.id === c.chatId)
+      const privateChat = state.privateChats.find(c => action.payload.id === c.friendId)
+      const currentChatId = groupChat ? groupChat.chatId : privateChat.chatId
       return {
         ...state,
-        currentChatId: state.groupChats.find(c => c.chatId === action.payload.chatId)['chatId'],
+        currentChatId
       }
 
     case actions.DELETE_CHAT_HISTORY:
@@ -86,16 +84,22 @@ export default function chats(state = initialState, action) {
   }
 }
 
-export const getActivePrivateChat = state => {
+/*export const getActivePrivateChat = state => {
   const { currentChatId, privateChats } = state.chats
   return privateChats.find(c => c.chatId === currentChatId)
 }
 export const getActiveGroupChat = state => {
   const { currentChatId, groupChats } = state.chats
   return groupChats.find(c => c.chatId === currentChatId)
+}*/
+export const getActiveChat = state => {
+  const { currentChatId, groupChats, privateChats } = state.chats
+  const group = groupChats.find(c => c.chatId === currentChatId)
+  const priv = privateChats.find(c => c.chatId === currentChatId)
+  return group ? group : priv
 }
 export const getActiveGroupChatFriends = state => {
   const { currentChatId, groupChats } = state.chats
   const chat = groupChats.find(c => c.chatId === currentChatId)
-  return chat.friendNames
+  return chat ? chat.friendNames : null
 }
