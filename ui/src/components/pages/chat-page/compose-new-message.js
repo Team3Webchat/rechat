@@ -11,7 +11,8 @@ const ComposeNewMessage = (props) => {
   const isLink = message.match('https://rechat-bucket.s3.eu-west-2.amazonaws.com')
   const className = `message ${person} ${type}`
   const filetoken = message.split('/').pop()
-  const filename = filetoken.slice(36)
+  const str = filetoken.slice(36)
+  const filename = str.replace(/%20/g, " ")
   const filetype3 = filetoken.slice(-3)
   const filetype4 = filetoken.slice(-4)
 //Måste ha card två gånger annars hamnar arrows itne rätt :)
