@@ -165,21 +165,19 @@ usersRouter.route('/:id')
         })
       Promise.all(promiseArray).then(values => {
         try{
-          console.log('then');
-          console.log(values);
           const chats = values.filter(c => c)//Tar bort det som är undefined
           if (chats.length > 0)
             return res.status(200).json(chats)
 
-          return res.status(204).json({chats: 'No groupchats'})
+          return res.status(200).json({chats: 'No groupchats'})
         }catch(e){
-          console.log(e);
+          console.error(e);
         }
 
       })
       .catch(e => {
         console.log('i catch');
-        console.log(e);
+        console.error(e);
       })
 
 

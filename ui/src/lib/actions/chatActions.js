@@ -9,6 +9,7 @@ export const DISCONNECT = 'DISCONNECT'
 export const CONNECT_CHAT = 'CONNECT_CHAT'
 export const SELECT_ACTIVE_PRIVATE_CHAT = 'SELECT_ACTIVE_PRIVATE_CHAT'
 export const SELECT_ACTIVE_GROUP_CHAT = 'SELECT_ACTIVE_GROUP_CHAT'
+export const SELECT_ACTIVE_CHAT = 'SELECT_ACTIVE_CHAT'
 export const DELETE_CHAT_HISTORY = 'DELETE_CHAT_HISTORY'
 export const FRIEND_DELETED_CHAT_HISTORY = 'FRIEND_DELETED_CHAT_HISTORY'
 export const CONNECT_TO_GROUP_CHAT = 'PRIVATE_GROUP_CONVERSATION'
@@ -45,6 +46,13 @@ export const selectActiveGroupChat = ({ chatId }) => ({
   type: SELECT_ACTIVE_GROUP_CHAT,
   payload: {
     chatId,
+  },
+})
+
+export const selectActiveChat = (id) => ({
+  type: SELECT_ACTIVE_CHAT,
+  payload: {
+    id,
   },
 })
 
@@ -119,7 +127,6 @@ const flashFailure = ({flash}) => ({
 export const getGroupConversations = (id = getUserId()) =>
   async function(dispatch) {
     try {
-      console.log(id)
       const res = await fetch(`${baseUrl}users/${id}/groupConversations`, {
         method: 'GET',
         headers: getHeaders(),

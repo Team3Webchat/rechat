@@ -4,7 +4,6 @@ import { Link } from 'react-router'
 
 
 const Chats = ({ chats, onChatClick }) => {
-  console.log(chats);
   return (
     <List className="chats">
     {chats.length > 0 ?
