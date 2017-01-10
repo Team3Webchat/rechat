@@ -49,7 +49,6 @@ class ChatDisplayer extends Component {
           </Link>
         </CardMenu>
         <CardText className="cardText">
-
               <div className='messageField' ref={(ref) => this.messageField = ref }>
                 {messages.map((m, i) =>
                   id === m.userId ?

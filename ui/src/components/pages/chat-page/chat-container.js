@@ -78,13 +78,13 @@ class ChatContainer extends Component {
     e.stopPropagation()
 
     const { message, messageType } = this.state
-    //const { sendMessage, id, activeChat } = this.props
+    const { sendMessage, id, activeChat } = this.props
     this.setState({
       message: '',
       uploadedFile: null,
     })
 
-    //sendMessage(message, messageType, activeChat.chatId, id)
+    sendMessage(message, messageType, activeChat.chatId, id)
   }
 
   render() {
