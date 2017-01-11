@@ -24,11 +24,12 @@ class AddNewFriendToChat extends Component {
 
   addFriends = () => {
     const { addFriends, handleCloseConfirm, activeChat } = this.props
+    console.log(this.props);
     addFriends(activeChat.chatId, this.state.friends)
     handleCloseConfirm()
   }
   render(){
-    const { friends, openDialog, handleCloseConfirm } = this.props
+    const { friends, openDialog, handleCloseConfirm, activeChat } = this.props
     return (
       <div>
         <Dialog open={openDialog}>
@@ -53,8 +54,7 @@ class AddNewFriendToChat extends Component {
 
 }
 const mapStateToProps = (state, ownProps) => ({
-  friends : state.friends.friends.filter(f => f.id !== ownProps.activeFriendId),
-  activeChat: getActivePrivateChat(state),
+  friends : state.friends.friends.filter(f => f.id !== ownProps.activeChat.friendId),
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -72,6 +72,11 @@ class ChatContainer extends Component {
     beginChat(friendId)
   }
   //component will mount begin chat with url props
+  componentWillMount(){
+    console.log('componentWillMount');
+    console.log(this.props.params.id);
+    //this.props.beginChat(this.props.params.id)
+  }
 
   sendMessage = (e) => {
     e.preventDefault()
@@ -91,6 +96,8 @@ class ChatContainer extends Component {
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
     const { clearChatHistory, activePrivateChat, activeGroupChat, activeChat, friendId, friend, friendNames, id } = this.props
     const { openChatDialog, openAddFriendsDialog, uploadedFile, message, deleteChat } = this.state
+    console.log('activeChat');
+    console.log(activeChat);
     const friendName = friend ? `${friend.firstname} ${friend.lastname}` : friendNames.toString()
 
     if (!this.props.isLoading) {
@@ -105,7 +112,6 @@ class ChatContainer extends Component {
             message={message}
             friendsName={friendName}
             deleteChatConfirm={this.handleDeleteChatConfirm}
-            AddNewFriendToChat={this.handleAddFriendConfirm}
             onDrop={this.handleOnDrop}
             uploadedFile={uploadedFile}
           />
@@ -123,20 +129,19 @@ class ChatContainer extends Component {
             uploadedFile={uploadedFile}
           />
         }
-
-            { openChatDialog &&
-              <DeleteChatConfirm
-              chat={deleteChat}
-              openChatDialog={openChatDialog}
-              handleCloseChatDialog={this.handleCloseallConfirms}
-              clearChatHistory={() => clearChatHistory(activeChat.chatId, friendId)}/>
-            }
-            { openAddFriendsDialog &&
-              <AddNewFriendToChat
-              openDialog={openAddFriendsDialog}
-              activeFriendId={friendId}
-              handleCloseConfirm={this.handleCloseallConfirms}/>
-            }
+          { openChatDialog &&
+            <DeleteChatConfirm
+            chat={deleteChat}
+            openChatDialog={openChatDialog}
+            handleCloseChatDialog={this.handleCloseallConfirms}
+            clearChatHistory={() => clearChatHistory(activeChat.chatId, friendId)}/>
+          }
+          { openAddFriendsDialog &&
+            <AddNewFriendToChat
+            openDialog={openAddFriendsDialog}
+            activeChat={activeChat}
+            handleCloseConfirm={this.handleCloseallConfirms}/>
+          }
         </div>
       )
     } else {
@@ -150,10 +155,10 @@ const mapStateToProps = (state, ownProps) => ({
   id: state.auth.id,
   //activePrivateChat: getActivePrivateChat(state),
   //activeGroupChat: getActiveGroupChat(state),
-  activeChat: getActiveChat(state),
+  activeChat: getActiveChat(ownProps.params.id, state),
   friendId: ownProps.params.id,
   friend: state.friends.friends.find(f => f.id === ownProps.params.id),
-  friendNames: getActiveGroupChatFriends(state),
+  friendNames: getActiveGroupChatFriends(ownProps.params.id, state),
   isLoading: state.chats.isLoadingChats,
 })
 

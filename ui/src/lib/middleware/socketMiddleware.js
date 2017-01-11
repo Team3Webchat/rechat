@@ -6,9 +6,10 @@ import {
   receivePrivateMessage,
   connected,
   disconnect,
-  ADD_FREINDS_TO_CHAT,
+  ADD_FRIENDS_TO_CHAT,
   DELETE_CHAT_HISTORY,
   friendDeletedChatHistory,
+  selectActiveChat,
 
 } from '../actions/chatActions'
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from '../actions/authActions'
@@ -25,6 +26,8 @@ import {
 
 } from '../actions/friendsActions'
 import { API_URL } from '../config'
+import { browserHistory } from 'react-router';
+
 
 const socketMiddleware = (function() {
   let socket = null
@@ -71,6 +74,11 @@ const socketMiddleware = (function() {
       friendIds: data.friendIds,
       messages: data.messages,
     }))
+    /*store.dispatch(selectActiveChat({
+      id: data.chatId,
+    }))*/
+    //TODO: byt url rendera om
+    browserHistory.push('/chat/'+data.chatId)
   }
 
 
@@ -182,7 +190,7 @@ const socketMiddleware = (function() {
         socket.emit('private_conversation', { id: action.payload.friendId })
         return next(action)
 
-      case ADD_FREINDS_TO_CHAT:
+      case ADD_FRIENDS_TO_CHAT:
         socket.emit('private_group_conversation', { friends: action.payload.friends, chatId: action.payload.chatId })
         return next(action)
 

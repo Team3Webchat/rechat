@@ -36,9 +36,11 @@ class ChatDisplayer extends Component {
           <p>{friendsName}</p>
         </CardTitle>
         <CardMenu className="cardMenu">
+        {AddNewFriendToChat &&
           <Tooltip label="Add a friend to the conversation">
             <IconButton name="add_friend"  onClick={AddNewFriendToChat} className="iconButton"/>
           </Tooltip>
+        }
           <Tooltip label="Delete conversation.">
             <IconButton name="delete_forever"  onClick={deleteChatConfirm} className="iconButton"/>
           </Tooltip>

@@ -13,7 +13,7 @@ export const SELECT_ACTIVE_CHAT = 'SELECT_ACTIVE_CHAT'
 export const DELETE_CHAT_HISTORY = 'DELETE_CHAT_HISTORY'
 export const FRIEND_DELETED_CHAT_HISTORY = 'FRIEND_DELETED_CHAT_HISTORY'
 export const CONNECT_TO_GROUP_CHAT = 'PRIVATE_GROUP_CONVERSATION'
-export const ADD_FREINDS_TO_CHAT= 'ADD_FREINDS_TO_CHAT'
+export const ADD_FRIENDS_TO_CHAT= 'ADD_FRIENDS_TO_CHAT'
 export const FLASH_FAILURE = 'FLASH_FAILURE'
 
 
@@ -35,7 +35,7 @@ export const connectChat = ({ friendId, chatId, messages }) => ({
   },
 })
 
-export const selectActivePrivateChat = ({ friendId }) => ({
+/*export const selectActivePrivateChat = ({ friendId }) => ({
   type: SELECT_ACTIVE_PRIVATE_CHAT,
   payload: {
     friendId,
@@ -48,7 +48,7 @@ export const selectActiveGroupChat = ({ chatId }) => ({
     chatId,
   },
 })
-
+*/
 export const selectActiveChat = (id) => ({
   type: SELECT_ACTIVE_CHAT,
   payload: {
@@ -111,7 +111,7 @@ export const receivePrivateMessage = ({content, messageType, userId, chatId, id,
   },
 })
 export const addFriendsToChat = ({friends, chatId}) => ({
-  type: ADD_FREINDS_TO_CHAT,
+  type: ADD_FRIENDS_TO_CHAT,
   payload: {
     friends,
     chatId,
