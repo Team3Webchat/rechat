@@ -95,9 +95,7 @@ class ChatContainer extends Component {
   render() {
     const messages = this.props.activeChat ? this.props.activeChat.messages : []
     const { clearChatHistory, activePrivateChat, activeGroupChat, activeChat, friendId, friend, friendNames, id } = this.props
-    const { openChatDialog, openAddFriendsDialog, uploadedFile, message, deleteChat } = this.state
-    console.log('activeChat');
-    console.log(activeChat);
+    const { openChatDialog, openAddFriendsDialog, uploadedFile, message, deleteChat } = this.state;
     const friendName = friend ? `${friend.firstname} ${friend.lastname}` : friendNames.toString()
 
     if (!this.props.isLoading) {
@@ -129,19 +127,20 @@ class ChatContainer extends Component {
             uploadedFile={uploadedFile}
           />
         }
-          { openChatDialog &&
-            <DeleteChatConfirm
-            chat={deleteChat}
-            openChatDialog={openChatDialog}
-            handleCloseChatDialog={this.handleCloseallConfirms}
-            clearChatHistory={() => clearChatHistory(activeChat.chatId, friendId)}/>
-          }
-          { openAddFriendsDialog &&
-            <AddNewFriendToChat
-            openDialog={openAddFriendsDialog}
-            activeChat={activeChat}
-            handleCloseConfirm={this.handleCloseallConfirms}/>
-          }
+
+            { openChatDialog &&
+              <DeleteChatConfirm
+              chat={deleteChat}
+              openChatDialog={openChatDialog}
+              handleCloseChatDialog={this.handleCloseallConfirms}
+              clearChatHistory={() => clearChatHistory(activeChat.chatId, friendId)}/>
+            }
+            { openAddFriendsDialog &&
+              <AddNewFriendToChat
+              openDialog={openAddFriendsDialog}
+              activeChat={activeChat}
+              handleCloseConfirm={this.handleCloseallConfirms}/>
+            }
         </div>
       )
     } else {
@@ -153,8 +152,6 @@ class ChatContainer extends Component {
 const mapStateToProps = (state, ownProps) => ({
   token: state.auth.token,
   id: state.auth.id,
-  //activePrivateChat: getActivePrivateChat(state),
-  //activeGroupChat: getActiveGroupChat(state),
   activeChat: getActiveChat(ownProps.params.id, state),
   friendId: ownProps.params.id,
   friend: state.friends.friends.find(f => f.id === ownProps.params.id),

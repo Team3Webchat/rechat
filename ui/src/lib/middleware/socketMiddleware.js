@@ -1,5 +1,5 @@
 import io from 'socket.io-client'
-
+import { push } from 'react-router-redux'
 import {
   connectChat,
   connectToGroupChat,
@@ -10,6 +10,7 @@ import {
   DELETE_CHAT_HISTORY,
   friendDeletedChatHistory,
   selectActiveChat,
+  getGroupConversations
 
 } from '../actions/chatActions'
 import { LOGIN_USER_SUCCESS, LOGOUT_USER } from '../actions/authActions'
@@ -74,11 +75,13 @@ const socketMiddleware = (function() {
       friendIds: data.friendIds,
       messages: data.messages,
     }))
-    /*store.dispatch(selectActiveChat({
+    store.dispatch(selectActiveChat({
       id: data.chatId,
-    }))*/
+    }))
     //TODO: byt url rendera om
-    browserHistory.push('/chat/'+data.chatId)
+    // browserHistory.push('/chat/'+data.chatId)
+    store.dispatch(getGroupConversations(data.chatId))
+    store.dispatch(push(`/chat/${data.chatId}`))
   }
 
 

@@ -61,7 +61,6 @@ export default function chats(state = initialState, action) {
       }
 
     case actions.RECEIVE_PRIVATE_MESSAGE:
-      const chat = getActiveChat()
       return {
         ...state,
         privateChats: state.privateChats.map(chat => {
@@ -97,7 +96,7 @@ export const getActiveChat = (id, state) => {
   const { groupChats, privateChats } = state.chats
   const group = groupChats.find(c => c.chatId === id)
   const priv = privateChats.find(c => c.friendId === id)
-  console.log('getActiveChat----');
+  return priv ? priv : group
 }
 export const getActiveGroupChatFriends = (id, state) => {
   const { groupChats } = state.chats

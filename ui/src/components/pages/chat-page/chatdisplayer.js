@@ -28,7 +28,7 @@ class ChatDisplayer extends Component {
       uploadedFile
     } = this.props
     let type
-
+    console.error(messages);
     return (
       <Card shadow={0} className='chatCard'>
         <CardTitle className="cardTitle">
